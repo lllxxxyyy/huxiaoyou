@@ -1,0 +1,207 @@
+<!--  -->
+<template>
+  <div class="LivePlatform">
+      <div class="PlayerRanking_header">
+          <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
+          <span>短视频平台</span>
+          <span @click="tobind">绑定</span>
+      </div>
+      <ul class="LiveDes">
+          <li> <span>直播平台</span>  <input v-model="LiveName" type="text"></li>
+          <li> <span>直播id</span>  <input v-model="liveId"  type="text"></li>
+      </ul>
+      <div class="delBind" @click="delbind">删除绑定</div>
+      <!-- 提示盒子 -->
+         <transition name="fade">
+            <div class="promptFather" v-if="showPrompt">
+                <div class="prompt" >
+                    {{promptContent}}
+                </div>
+            </div>
+        </transition>
+  </div>
+</template>
+<script>
+import {mapState} from 'vuex'
+import {mapMutations} from 'vuex'
+import qs from 'qs'
+export default {
+    name:"LivePlatform",
+  data () {
+    return {
+        LiveName:'',
+        liveId:'',
+        // 提示盒子
+        promptContent:'', //提示盒子的内容
+        showPrompt:false,//提示盒子的吸收和显示
+  
+    };
+  },
+
+//   components: {},
+
+  computed:{
+        ...mapState(['staticImgH','tokenH'])
+    },
+
+//   mounted: {},
+
+  methods: {
+      toReturn(){
+          this.$router.push('/Mine')
+      },
+      tobind(){
+           var obj=qs.stringify({
+               live_platform:this.LiveName,
+               live_id:this.liveId
+            })
+          this.$http.post('/api/player/bind_live',obj,{
+            headers: {
+                'authorization': this.tokenH
+            }
+         }).then((res)=>{
+             if(res.data.code==200){
+                  var self=this
+                    clearInterval(self.timer2);
+                        this.promptContent='绑定成功'
+                        this.showPrompt=true
+                        self.timer2=setTimeout(function(){
+                            self.showPrompt=false
+                            clearInterval(self.timer2);
+                        },2000)
+                    return false;
+             }else{
+                 var self=this
+                    clearInterval(self.timer2);
+                        this.promptContent=res.data.msg
+                        this.showPrompt=true
+                        self.timer2=setTimeout(function(){
+                            self.showPrompt=false
+                            clearInterval(self.timer2);
+                        },2000)
+                    return false;
+             }  
+
+         })
+      },
+    //   删除绑定
+    delbind(){
+         var obj={
+               live_platform:this.LiveName,
+               live_id:this.liveId
+            }
+        this.$http.delete('/api/player/bind_live',{
+            body:obj,
+            headers: {
+                'authorization': this.tokenH
+            }
+         }).then((res)=>{
+                 var self=this
+                clearInterval(self.timer2);
+                        this.promptContent=res.data.msg
+                        this.showPrompt=true
+                        self.timer2=setTimeout(function(){
+                            self.showPrompt=false
+                            clearInterval(self.timer2);
+                        },2000)
+                    return false;
+         })
+    }
+  }
+}
+
+</script>
+<style scoped lang="stylus">
+.LivePlatform{
+    width:100%;
+    height:100%;
+    background :#fff;
+}
+    .PlayerRanking_header{
+        width:100%
+        height:1.23rem;
+        display :flex;
+        align-items :center;
+        justify-content :space-between;
+        position :relative;
+        padding:0 0.4rem;
+        >img{
+            width:0.32rem;
+            height:0.56rem;
+        }
+        >span{
+            font-size:0.48rem;
+            color:rgba(0, 0, 0, 1);
+        }
+    }
+    .LiveDes{
+        width:9.2rem;
+        margin:0 0.4rem;
+        margin-top:0.27rem;
+        border-radius:0.133rem;
+        box-shadow :0 0rem 0.2rem rgba(253, 229, 231, 1);
+        >li{
+            height:1.253rem;
+            border-bottom:0.02rem solid rgba(204, 204, 204, 0.8);
+            margin-left:0.27rem;
+            font-size:0.32rem;
+            color:rgba(0, 0, 0, 1);
+            display :flex;
+            align-items :center;
+            // justify-content :space-between;
+            >span{
+                width:18%;
+            }   
+            &:last-child{
+                border-bottom:0;
+            }
+            >input{
+                border:0.03rem solid #ccc;
+                outline :none;
+                margin-left:0.27rem;
+            }
+        }
+    }
+    .delBind{
+         width:9.2rem;
+        height:1.253rem;
+        font-size:0.32rem;
+            color:rgba(0, 0, 0, 1);
+            margin:0 auto;
+            margin-top:0.32rem;
+            text-align :center;
+            line-height :1.253rem;
+            border-radius:0.133rem;
+        box-shadow :0 0rem 0.2rem rgba(253, 229, 231, 0.8);
+    }
+
+    // 提示盒子
+.promptFather{
+    width:100%;
+    position :fixed;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    margin:auto;
+    display :flex;
+    justify-content :center;
+    align-items :center;
+    z-index:999;
+    >.prompt{
+        padding:0.2rem 0.35rem;;
+        background :rgba(0,0,0,0.7);
+        color:#fff;
+        border-radius:0.5rem;
+        font-size:0.37rem;
+    }
+}
+.fade-enter-active, .fade-leave-active {
+//   transition: opacity .5s;
+    transition: all .3s ease;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+   transform: translateY(0.32rem);
+  opacity: 0;
+}
+</style>
