@@ -277,8 +277,8 @@ computed:{
                         clearInterval(self.timer2);
                     },1000)
                     self.timer3=setTimeout(function(){
-                        this.addressIdIsSels('true')
-                        this.addressIds(res.data.data.address_id)
+                        self.addressIdIsSels('true')
+                        self.addressIds(res.data.data.address_id)
                         self.$router.push(self.ReceiptAddressAddPage)
                          clearInterval(self.timer3);
                     },1500)

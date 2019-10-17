@@ -22,23 +22,36 @@
               <span>参赛福利</span>
           </li>
       </ul>
+      <!-- 提示盒子 -->
+         <transition name="fade">
+            <div class="promptFather" v-if="showPrompt">
+                <div class="prompt" >
+                    {{promptContent}}
+                </div>
+            </div>
+        </transition>
   </div>
 </template>
 
 <script>
 import {mapState} from 'vuex'
 import {mapMutations} from 'vuex'
+import qs from 'qs'
 export default {
     name:'HomeZone',
   data () {
     return {
+        // 提示盒子
+      promptContent:'', //提示盒子的内容
+      showPrompt:false,//提示盒子的吸收和显示
+      timer2:'',//初始化定时器
     };
   },
 
 //   components: {},
 
     computed:{
-        ...mapState(['staticImgH'])
+        ...mapState(['staticImgH','tokenH'])
     },
 
 //   mounted: {},
@@ -46,7 +59,37 @@ export default {
   methods: {
     //   报名通道
       toSignUp(){
-          this.$router.push('/SignUp')
+          var obj=qs.stringify({
+
+          })
+          this.$http.post('/api/player/is_sign',obj,{
+            headers: {
+                'authorization': this.tokenH
+            }
+            }).then((res)=>{
+                if(res.data.code==200){
+                    if(res.data.data.result==-1){
+                        this.playerIds(res.data.result.id)//保存选手id
+                        this.addressIdIsSels('false') //投票盒子不显示 
+                        this.PlayerDetailPages('/')  //选手详情返回页面
+                        this.playDetailVoteDivs('false') //选手详情的投票盒子的消失
+                        this.$router.push('/PlayerDetails')
+                        this.$router.push('/PlayerDetails')
+                    }else{
+                        this.$router.push('/SignUp')
+                    }
+                }else if(res.data.data.result==1){
+                    var self=this
+                    clearInterval(self.timer2);
+                        this.promptContent=res.data.msg
+                        this.showPrompt=true
+                        self.timer2=setTimeout(function(){
+                                self.showPrompt=false
+                                clearInterval(self.timer2);
+                        },2000)
+                    return false;
+                }
+            })
       },
     //   选手排行
       toPlayerRanking(){
@@ -59,10 +102,10 @@ export default {
     //   参赛福利
       toAiBei(){
           window.location.href="http://app.aibebi.cn/aibei/dist/"
-      }
+      },
+      ...mapMutations(['playerIds','addressIdIsSels','PlayerDetailPages','playDetailVoteDivs']),
   }
 }
-
 </script>
 <style scoped lang='stylus'>
 .zone_list{
@@ -75,7 +118,7 @@ export default {
         flex-direction :column;
         justify-content :space-between;
         align-items :center;
-        margin-top:0.32rem;
+        margin-top:0.4rem;
         >span{
             font-size:0.347rem;
             color:rgba(0, 0, 0, 1);

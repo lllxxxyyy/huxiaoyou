@@ -2,10 +2,11 @@
 <template>
   <div class="home">
       <!-- <HomeHeader/>  -->
+      <!-- <HomeAngel/> -->
       <HomeBanner/>
       <SmallSwiper/>
       <HomeZone/>
-      <HomeAngel/>
+      <wonderfulVideo/>
       <Foot class="PublicFoot" />  <!-- 公共底部 -->
       <div class="footer">
       </div>
@@ -22,11 +23,15 @@
 
 <script>
 import Foot from './../Foot/Foot'
-import HomeHeader from '././page/header'
+
 import HomeBanner from '././page/banner'
-import HomeZone from '././page/HomeZone'
-import HomeAngel from '././page/HomeAngel'
 import SmallSwiper from '././page/SmallSwiper'
+import HomeZone from '././page/HomeZone'
+import wonderfulVideo from '././page/wonderfulVideo'   //精彩视频
+
+// import HomeHeader from '././page/header'
+// import HomeAngel from '././page/HomeAngel'
+
 
 import {mapState} from 'vuex'
 import {mapMutations} from 'vuex'
@@ -47,11 +52,14 @@ export default {
   },
   components: {
       Foot,
-      HomeHeader,
       HomeBanner,
+      SmallSwiper,
       HomeZone,
-      HomeAngel,
-      SmallSwiper
+      wonderfulVideo,
+
+    //   HomeHeader,
+    //   HomeAngel,
+      
   },
   computed:{
         ...mapState(['staticImgH','WpersonInfoH'])

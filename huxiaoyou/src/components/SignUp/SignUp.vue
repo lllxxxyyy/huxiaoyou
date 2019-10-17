@@ -1,4 +1,4 @@
-<!-- 报名 -->
+<!-- 报名通道 -->
 <template>
   <div class="SignUp">
       <div >
@@ -23,6 +23,12 @@
                       <div  class="SignUp_infoName"><span>微信号</span></div>
                       <input   type="text" oninput ="value=value.replace(/[^\w_]/g,'')"  v-model="wechatId" placeholder="请填写您的微信号">
                     </li>
+                    <li>
+                            <div class="SignUp_infoName"><span>性别</span>*</div>
+                            <ul class="sex">
+                                <li @click.stop="sexSelectC(item.id)" v-for="(item,index) in sexData" :key="index"> <img :src="item.id==sexImgIndex?staticImgH+'noselYes.png':staticImgH+'nosel.png'" alt=""> <span>{{item.name}}</span> </li>
+                            </ul>
+                        </li>
                     <li>
                       <div  class="SignUp_infoName"><span>报名赛区</span>*</div>
                       <select v-model="selectValue">
@@ -100,6 +106,16 @@ import qs from 'qs'
 export default {
   data () {
     return {
+      sexData:[
+            {
+                name:'女',
+                id:2,
+            },
+            {
+                name:'男',
+                id:1
+            }
+        ],
       signUpData:[
         {
           name:'报名条件'
@@ -112,6 +128,9 @@ export default {
         },
         {
           name:'投票规则'
+        },
+        {
+          name:'赛区介绍'
         },
       ],
       submitAfterShow:false,
@@ -135,6 +154,9 @@ export default {
        //传图片
       formData:new FormData(), 
       img:'',
+
+      sexImgIndex:2,//性别默认选中下标
+      sex:'2',//性别
     };
   },
   // components: {},
@@ -191,6 +213,12 @@ export default {
     })
   },
   methods: {
+     //   选择性别
+      sexSelectC(id){
+          this.sexImgIndex=id
+          this.sex=id
+          
+      },
     submitAlertCha(){
       this.$router.push('/')
     },
@@ -237,9 +265,11 @@ export default {
 
         // 上传图片 1
         addImg(event){
-              let size = Math.floor(event.target.files[0].size / 1024);
               if(event.target.files[0]){
                 this.uploadimgsOpacity=true
+                var size = Math.floor(event.target.files[0].size / 1024);
+              }else{
+                return false
               }
               if (size > 1*1024*1024) {
                   alert('请选择1M以内的图片！');
@@ -277,6 +307,16 @@ export default {
                   var self=this
                   clearInterval(self.timer2);
                       this.promptContent='请输入您的手机号！'
+                      this.showPrompt=true
+                      self.timer2=setTimeout(function(){
+                            self.showPrompt=false
+                            clearInterval(self.timer2);
+                      },2000)
+                  return;
+            }else if(!this.sex){
+                  var self=this
+                  clearInterval(self.timer2);
+                      this.promptContent='请选择性别！'
                       this.showPrompt=true
                       self.timer2=setTimeout(function(){
                             self.showPrompt=false
@@ -344,7 +384,7 @@ export default {
                 this.formData.append('username',this.username);
                 this.formData.append('tel',this.tel);
                 this.formData.append('wechat_id',this.wechatId);
-                this.formData.append('city',this.cityValue);
+                this.formData.append('sex',this.sex);
                 this.$http.post('api/player/sign_up',this.formData,{
                   headers: {
                       'authorization': this.tokenH
@@ -393,19 +433,24 @@ export default {
 }
 .sign_btn{
   display:flex;
-  margin:0.3rem 0.4rem;
-  justify-content :space-between;
+  flex-wrap:wrap;
+  margin:0.27rem 0.53rem;
   align-items :center;
   >li{
-    width:1.87rem;
-    height:0.64rem;
-    background :rgba(255, 193, 203, 1);
-    font-size:0.32rem;
-    color:#fff;
-    line-height:0.64rem;
-    text-align:center;
-    border-radius:0.08rem;
-  }
+      width:2.4rem;
+        height:0.64rem;
+        background :rgba(255, 157, 172, 1);
+        font-size:0.347rem;
+        color:rgba(255, 255, 255, 1);
+        line-height:0.64rem;
+        text-align:center;
+        border-radius:0.667rem;
+        margin-bottom:0.32rem;
+        margin-right:0.4rem;
+        &:nth-of-child(3){
+          margin-right:0;
+        }
+    }
   
 }
 .upload-imgs{margin: 0.27rem 0 0 0;overflow: hidden;font-size: 0;position :relative;}
@@ -421,11 +466,10 @@ export default {
 .upload-imgs li{width: 3.15rem;height: 3.15rem;font-size: 0.373rem;display: inline-block;padding: 0.27rem;margin-right: 0.67rem;border: 0.053rem dashed #ccc;text-align: center;vertical-align: middle;}
 
 .upload-imgs .add{display: block;background-color: #ccc;color: #ffffff;height: 2.51rem;line-height:2.51rem;padding: 0.213rem 0;}
-.upload-imgs .add .iconfont{padding: 0.27rem 0;font-size: 1.1rem;}
 .upload-imgs li .upload{opacity :0;position: absolute;top: 0;bottom: 0;left: 0;right: 0;width: 3.15rem;height: 3.15rem;}
 .upload-imgs .img img{width:100%;vertical-align: middle;}
 .upload-imgs .img .close{display: none;}
-.upload-imgs li:hover .img .close{display: block;position: absolute;right: -0.16rem;top: -0.27rem;line-height: 1;font-size: 0.6;color: #aaa;}
+.upload-imgs li:hover .img .close{display: block;position: absolute;right: -0.16rem;top: -0.27rem;line-height: 1rem;font-size: 0.6rem;}
 .SignUp{
   width:100%;
   background:#fff;
@@ -470,12 +514,37 @@ export default {
                 color:#000000;
             }
       }
+      // 性别
+      >.sex{
+            display :flex;
+            margin-left:0.27rem;
+            >li{
+                display :flex;
+                align-items :center;
+                margin-right:1.2rem;
+                >img{
+                    width:0.24rem;
+                    height:0.24rem;
+                    margin-right:0.3rem;
+                    background :pink;
+                    border-radius:50%;
+                }
+                >span{
+                    font-size:0.32rem;
+                    color:rgba(0, 0, 0, 0.38)
+                    
+                }
+                >selSex{
+                    color:#000;
+                }
+            }
+        }
       >input{
         width:100%;
         height:0.667rem;
         border:0.02rem solid rgba(112, 112, 112, 0.6);
         outline:none;
-        border-radius:0.08rem;
+        border-radius:0.16rem;
         padding-left:0.1rem;
         &::-webkit-input-placeholder { 
                 font-size:0.32rem;
@@ -527,7 +596,7 @@ export default {
        height:0.667rem;
         border:0.02rem solid rgba(112, 112, 112, 0.6);
         outline:none;
-        border-radius:0.08rem;
+        border-radius:0.16rem;
         padding-left:0.1rem;
         background :#fff;
         color:rgba(0, 0, 0, 0.38);
@@ -601,13 +670,14 @@ export default {
 }
 .SignUp_btn{
   width:9.2rem;
-  height:1.07rem;
-  background :rgba(255, 193, 203, 1);
-  color:#fff;
-  font-size:0.35rem;
+  height:0.8rem;
+  background :rgba(255, 157, 172, 1);
+  color:rgba(255, 255, 255, 1);
+  font-size:0.347rem;
   margin:0.4rem auto;
   text-align :center;
-  line-height:1.07rem;
+  line-height:0.8rem;
+  border-radius:0.667rem;
 }
 .AfterSubmit{
   .AfterSubmit_img{
@@ -701,8 +771,8 @@ export default {
   flex-direction :column;
   padding:0.4rem;
       >.remind_name{
-        color:rgba(255, 0, 0, 1);
-        font-size:0.373rem;
+        color:rgba(236, 10, 66, 1);
+        font-size:0.427rem;
         margin-bottom:0.2rem;
       }
       >.remind_des{
@@ -710,13 +780,14 @@ export default {
         color:rgba(0, 0, 0, 1);
         line-height :0.45rem;
         >span{
-          color:rgba(255, 0, 0, 1);
+          color:rgba(236, 10, 66, 1);
         }
       }
       >.remind_btn{
-           font-size:0.32rem;
-          color:rgba(255, 0, 0, 1);
+           font-size:0.373rem;
+          color:rgba(236, 10, 66, 1);
           margin:0 auto;
+          margin-top:0.27rem;
       }
 
 }

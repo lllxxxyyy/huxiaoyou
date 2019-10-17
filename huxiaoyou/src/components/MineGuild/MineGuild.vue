@@ -127,7 +127,7 @@ export default {
                 id:1
             }
         ],
-        sexImgIndex:-1,
+        sexImgIndex:0,
         LivePlatformData:[
             {
                 name:'花椒'
