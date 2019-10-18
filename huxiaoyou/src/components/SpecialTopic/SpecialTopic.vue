@@ -2,7 +2,7 @@
 <template>
   <div class="SpecialTopic">
       <div class="SpecialTopicHeader">
-          <img :src="staticImgH+'zuojiantou.png'" alt="">
+          <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
           <span>往届大赛风采</span>   
       </div>
 <div class="shopHide"></div>
@@ -10,7 +10,7 @@
           <li v-for="(item,index) in specialList" :key="index" @click="toSpecialDetails(item.id)">
               <div class="SpecialList_left">
                   <span class="SpecialList_name">{{item.title}}</span>
-                  <span class="SpecialList_num">时间：2019-10</span>
+                  <span class="SpecialList_num"></span>
               </div>
               <div class="SpecialList_right">
                   <img :src="item.thumb" alt="">
@@ -56,6 +56,9 @@ export default {
   methods: {
     SpecialBarBtn(index){
           this.SpecialBarindex=index
+      },
+	  toReturn(){
+          this.$router.push('/')
       },
       toSpecialDetails(id){
         var specialDetailInfo={projectId:id,type:3}

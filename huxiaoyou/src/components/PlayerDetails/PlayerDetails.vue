@@ -43,7 +43,7 @@
               <li><span v-if="detailData.union_id">公会成员</span><span v-else>工会未认证</span></li>
           </ul>
           <div class="player_btnList">
-              <span class="voteBtn">投票</span>
+              <span class="voteBtn" @click="vote">投票</span>
               <span class="attentionBtn">+关注</span>
               <span class="shareBtn">为Ta分享</span>
               <span class="EnterBtn">我也参赛</span>
@@ -435,6 +435,30 @@ export default {
       },
     //   点击投票
       vote(){
+        var obj=qs.stringify({
+          player_id: player.id
+        })
+        this.$http.post('api/user/spend_vote/',obj,{
+          headers: {
+            'authorization': this.tokenH
+          }
+        }).then((res)=>{
+          if(res.data.code===200){
+            this.alert('投票成功')
+          }else{
+            var self=this
+            clearInterval(self.timer2);
+            this.promptContent=res.data.msg
+            this.showPrompt=true
+            self.timer2=setTimeout(function(){
+              self.showPrompt=false
+              clearInterval(self.timer2);
+            },2000)
+            return false;
+          }
+
+        });
+        console.log("投票")
           this.addressIdIsSels('false')   // 没点击投票 （都要设置false,来进行重新选择地址）
           this.voteShow=true   //投票盒子显示
       },
@@ -812,7 +836,7 @@ BigplayerImg_list{
     position:fixed;
     top:0;
     left:0;
-    >li
+    >li{}
 
 }
 // 提示盒子
@@ -826,8 +850,8 @@ BigplayerImg_list{
     justify-content :center;
     align-items :center;
     >.prompt{
-        padding:0.15rem 0.3rem;;
-        background :rgba(0,0,0,0.7);
+        padding:0.15rem 0.3rem;
+        background:rgba(0,0,0,0.7);
         color:#fff;
         border-radius:0.5rem;
         font-size:0.32rem;

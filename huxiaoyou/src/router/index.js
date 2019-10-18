@@ -12,6 +12,8 @@ import shopList from '@/components/shopList/shopList' //商品列表
 import ShopDetails from '@/components/ShopDetails/ShopDetails' //商品详情
 import orderList from '@/components/orderList/orderList' //订单列表
 import PlayerRanking from '@/components/PlayerRanking/PlayerRanking' //选手排行
+import PlayerRankingList from '@/components/PlayerRankingList/PlayerRankingList' //选手排行
+import TopList from '@/components/TopList/TopList' //选手排行
 import PlayerShow from '@/components/PlayerShow/PlayerShow' //选手展示
 import AngelUnion from '@/components/AngelUnion/AngelUnion' //天使工会
 import PresentVideo from '@/components/PresentVideo/PresentVideo' //视频介绍
@@ -95,6 +97,16 @@ export default new Router({
             name: 'PlayerRanking',
             component: PlayerRanking
         },
+      { //选手
+        path: '/PlayerRankingList',
+        name: 'PlayerRankingList',
+        component: PlayerRankingList
+      },
+      { //top榜
+        path: '/TopList',
+        name: 'TopList',
+        component: TopList
+      },
         { //选手排行
             path: '/PlayerShow',
             name: 'PlayerShow',

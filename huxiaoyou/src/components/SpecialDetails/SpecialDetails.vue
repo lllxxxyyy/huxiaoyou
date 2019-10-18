@@ -4,9 +4,10 @@
     
       <div class="SpecialDetailsHeader">
           <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
-          <span>专题详情</span>
+          <span>往届大赛风采</span>
       </div>
       <div class="shopHide"></div>
+	  <div class="SpecialDetails_thumb"><img :src="specialDetailData.thumb" alt=""></div>
       <div class="SpecialDetails_title">
           {{specialDetailData.title}}
       </div>
@@ -15,6 +16,7 @@
             <span>10万+人浏览</span>
       </div> -->
       <div class="SpecialDetails_Con" v-html="specialDetailData.content"></div>
+	  <div class="SpecialDetails_But"><button>立即报名</button></div>
       <!-- <ul class="SpecialDetails_foot">
           <li class="SpecialDetails_collect">
               <img src="" alt="">
@@ -63,7 +65,7 @@ export default {
 
   methods: {
     toReturn(){
-
+		this.$router.push('/SpecialTopic')
     }
   }
 }
@@ -81,7 +83,6 @@ export default {
   justify-content:center;
   align-items :center;
   position :fixed;
-  border-bottom:0.03rem solid #F1F1F1;
   background :#fff;
    >img{
         width:0.32rem;
@@ -100,7 +101,7 @@ export default {
 .SpecialDetails_title{
     width:100%;
     text-align :center;
-    font-size:0.4rem;
+    font-size:0.5rem;
     font-weight:600;
     margin-top:0.44rem;
     margin-bottom:0.71rem;
@@ -108,6 +109,12 @@ export default {
 }
 .SpecialDetails_Con{
   padding:0 0.4rem;
+  font-size:0.4rem;
+  >img{ width:100%;}
+}
+.SpecialDetails_thumb{
+  padding:0.2rem 0.4rem;
+  >img{ width:100%;}
 }
 .SpecialDetails_des{
     display :flex;
@@ -153,4 +160,6 @@ export default {
         }
     }
 }
+.SpecialDetails_But{ padding:0.9rem 0.4rem; text-align:center;}
+.SpecialDetails_But button{ border:0; background:#FF9DAC; width:100%; text-align:center; border-radius:100px; height:0.916rem; color:#Fff; font-size:0.40rem;}
 </style>
