@@ -3,7 +3,7 @@
   <div class="wonderfulVideo">
       <div class="wonderfulVideo_title"><span>精彩视频</span> </div>
       <ul class="voideo_list">
-        <li>
+        <li v-for="(item,index) in videoImg" :key="index">
           <img class="bofangBtn" :src="staticImgH+'bofangBtn.png'" alt="">
           <img class="videoImg"  alt="">
         </li>
@@ -12,21 +12,33 @@
 </template>
 
 <script>
+import qs from 'qs'
 import {mapState} from 'vuex'
 import {mapMutations} from 'vuex'
 export default {
   data () {
     return {
+      videoImg:'',
     };
   },
 
   components: {},
 
   computed:{
-        ...mapState(['staticImgH'])
+        ...mapState(['staticImgH','tokenH'])
     },
 
-  mounted: {},
+  mounted(){
+    var obj=qs.stringify({
+          })
+    this.$http.post('/api/first/first_index',obj,{
+            headers: {
+                    'authorization':this.tokenH
+                }
+        }).then((res)=>{
+          this.videoImg=res.data.data.data
+        })
+  },
 
   methods: {}
 }

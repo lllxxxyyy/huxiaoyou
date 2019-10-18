@@ -441,7 +441,7 @@ export default {
                     },2000)
                 return false;
           }else{
-               var self=this
+                    var self=this
                     clearInterval(self.timer2);
                             this.promptContent=res.data.msg
                             this.showPrompt=true

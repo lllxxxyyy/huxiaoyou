@@ -262,6 +262,37 @@ export default {
   },
 
   methods: {
+    //   保存
+    saveYes(){
+         var obj=qs.stringify({
+          type:2,
+          nickname:this.nickname,
+        phone:this.phone,
+        wechat_id:this.wechatId,
+        is_number:this.isNumber,
+        sex:this.sex,
+        age:this.age,
+        software:this.software,
+        soft_id:this.softId,
+        is_video:this.isVideo,
+        video_id:this.videoId,
+        shop_name:this.shopName,
+        is_shop:this.isShop,
+        signature1:-1,//签名
+        weight1:-1,
+        height1:-1,
+        constellation1:-1,
+        strong:-1,
+        career:-1
+      })
+        this.$http.post('api/user/me_gong',obj,{
+            headers: {
+                'authorization': this.tokenH
+            }
+         }).then((res)=>{
+             console.log(res)
+         })
+    },
     //   编辑
     editYes(){
         this.disabledXiu=false
@@ -293,14 +324,14 @@ export default {
     },
     //   点击网店平台列表
     shopNameC(name){
-        if(this.disabledXiu==false){
+        if(!this.disabledXiu){
              this.shopName=name
              this.onlineShopListxShow=false
         }
        
     },
       wangNameC(){
-          if(this.disabledXiu==false){
+          if(!this.disabledXiu){
               this.onlineShopListxShow=true
           }
           
@@ -347,14 +378,14 @@ export default {
       },
     //   选择性别
       sexSelectC(id){
-          if(this.sexSelectC==false){
+          if(!this.disabledXiu){
                 this.sexImgIndex=id
                 this.sex=id
           }
           
       },
       whetherBtnDefa(){
-          if(this.disabledXiu==false){
+          if(!this.disabledXiu){
               this.softId=''
                 this.platformImgIndex=-1
                 this.showplatformotherinput=false
@@ -371,7 +402,7 @@ export default {
           
       },
       DuanBtnDefa(){
-          if(this.disabledXiu==false){
+          if(!this.disabledXiu){
               this.shortVodeoImgIndex=-1
                 this.shortVodeootherImgIndex=false
                 this.duanShow=false
@@ -388,7 +419,7 @@ export default {
           
       },
       WangBtnDefa(){
-           if(this.disabledXiu==false){
+           if(!this.disabledXiu){
                this.shopName='淘宝'
                 this.isShop='',
                 this.WangisDefault==0?this.WangisDefault=1:this.WangisDefault=0
@@ -402,7 +433,7 @@ export default {
       },
     //   选择直播平台列表
       platfromSelC(index,name){
-          if(this.disabledXiu==false){
+          if(!this.disabledXiu){
               this.platformImgIndex=index
                 this.software=name
                 this.platformotherImgIndex=false
@@ -411,7 +442,7 @@ export default {
           
       },
       shortVideoSelC(index,name){
-          if(this.disabledXiu==false){
+          if(!this.disabledXiu){
               this.shortVodeoImgIndex=index
                 this.isVideo=name
                 this.shortVodeootherImgIndex=false
@@ -420,7 +451,7 @@ export default {
           
       },
       platformotherC(){
-          if(this.disabledXiu==false){
+          if(!this.disabledXiu){
               this.platformImgIndex=-1;
                 this.software='';
                 this.inputSoftware=''
@@ -434,7 +465,7 @@ export default {
           
       },
       shortVodeootherC(){
-          if(this.disabledXiu==false){
+          if(!this.disabledXiu){
               this.shortVodeoImgIndex=-1
                 this.isVideo=''
                 this.inputduanValue=''

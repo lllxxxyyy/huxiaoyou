@@ -1,16 +1,13 @@
-<!-- 小轮播翻页 -->
+<!-- home_轮播 -->
 <template>
-    <div class="smallBanner">
-          <div class="smallList_wrap">
-              <swiper class="smallbanner_list" v-if="slidersDataTwo.length>=1"  :options="swiperOption">
-                    <!-- slides -->
-                    <swiper-slide  class="banner_li" v-for="(item,index) in slidersDataTwo" :key="index">
-                          {{item.nickname}}
-                    </swiper-slide>
-              </swiper>
-          </div>
-    </div>
-  
+  <div class="smallBanner">
+      <swiper class="smallbanner_list swiper-no-swiping" v-if="slidersData.length>=1"  :options="swiperOption">
+            <!-- slides -->
+            <swiper-slide     class="banner_li" v-for="(item,index) in slidersData" :key="index">
+                  {{item.nickname}}
+            </swiper-slide>
+      </swiper>
+  </div>
 </template>
 
 <script>
@@ -21,16 +18,15 @@ export default {
   name:'banner',
   data () {
     return {
-         slidersDataTwo:[],  //banner数据
+         slidersData:[],  //banner数据
            swiperOption: {//swiper3
                 direction: 'vertical',
-                observer:true,
                 observeParents:true,
-                loop:true,
                 autoplay: {
-            　　    disableOnInteraction: false,
-            　　},
-                speed:1000,
+       				 delay: 1500,
+       				 disableOnInteraction: false,
+      			},
+                speed:300,
             },
     };
   },
@@ -49,7 +45,7 @@ computed:{
                     'authorization':this.tokenH
                 }
         }).then((res)=>{
-         this.slidersDataTwo=res.data.data
+         this.slidersData=res.data.data
         })
   },
   methods: {
@@ -78,23 +74,19 @@ computed:{
     margin:0 auto;
 //  margin-bottom:0.453rem;
     font-size:0.32rem;
+    
     border-radius:0.16rem;
     box-shadow :0 0.05rem 0.3rem rgba(255, 204, 212, 0.3);
-    display :flex;
-    align-items :center;
-    justify-content :center;
-}
-.smallList_wrap{
-  padding: 0.27 0.32rem;
+    padding:0.2rem 0.32rem;
 }
 .smallbanner_list{
     width:9.2rem;
-    height:88px;
+    height:1.2rem;
+	  text-height:1.2rem;
+	  padding:0.14rem 0 0.32rem;
     >.swiper-wrapper{
         >.banner_li{
             width:100%;
-            height:0.53rem!important;
-            line-height :0.53rem;
         }
     }  
 }

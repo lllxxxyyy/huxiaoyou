@@ -7,9 +7,10 @@
         <span class="submit" @click="submit">提交</span>
       </div>
       <ul class="MineInfo_List">
-        <li>
+        <li @click="">
           <span>头像</span>
           <img :src="headPicM" alt="">
+          <input type="file" class="upload" @change="uploadFile" ref="inputer" accept="image/*"/>
         </li>
         <li>
           <span>姓名（或昵称）</span>
@@ -170,6 +171,35 @@ export default {
     })
   },
   methods: {
+    // 获取图片
+     uploadFile(){
+        let inputDOM = this.$refs.inputer;
+        // 通过DOM取文件数据
+        this.fil = inputDOM.files;
+        let oldLen=this.imgLen;
+        let len=this.fil.length+oldLen;
+        if(len>1){
+          alert('最多可上传1张');
+          return false;
+        }
+        for (let i=0; i < this.fil.length; i++) {
+          let size = Math.floor(this.fil[i].size / 1024);
+          if (size > 5*1024*1024) {
+            alert('请选择5M以内的图片！');
+            return false
+          }
+          this.imgLen++;
+           this.formData.append('photo_introduction[]',this.fil[i])
+        }
+        
+        this.$http.post('api/player/photo_introduction', this.formData,{
+            headers: {
+                    'authorization': this.tokenH
+                }
+            }).then(res => {
+                 this.videoData()
+            });
+      },
     // 修改昵称
     changeName(){
         this.nickNamePerXs(this.nickNameM)
