@@ -7,10 +7,13 @@
         <span class="submit" @click="submit">提交</span>
       </div>
       <ul class="MineInfo_List">
-        <li @click="">
+        <li>
           <span>头像</span>
-          <img :src="headPicM" alt="">
-          <input type="file" class="upload" @change="uploadFile" ref="inputer" accept="image/*"/>
+          <div class="imgInput">
+              <img :src="headPicM" alt="">
+              <input type="file" class="upload" @change="uploadFile" ref="inputer" accept="image/*"/>
+          </div>
+          
         </li>
         <li>
           <span>姓名（或昵称）</span>
@@ -118,6 +121,11 @@ export default {
         promptContent:'', //提示盒子的内容
         showPrompt:false,//提示盒子的吸收和显示
         timer2:'',//定时器
+
+      // 上传图片
+      formData:new FormData(),
+      imgLen:0,
+      fil:'',
     };
   },
   // components: {},
@@ -125,59 +133,62 @@ export default {
         ...mapState(['staticImgH','tokenH','nickNamePerX','SignaturePerX','cityNamePerX','tokenH'])
     },
   mounted(){
-    var obj=qs.stringify({
-        
-    })
-    this.$http.post('api/player/per_sonals',obj,{
-          headers: {
-              'authorization': this.tokenH
-          }
-    }).then((res)=>{
-        if(res.data.code==200){
-            var personData=res.data.data
-            this.headPicM=personData.head_pic
-            if(this.nickNamePerX){
-                this.nickNameM=this.nickNamePerX;
-            }else{
-               this.nickNameM=''
-            }
-            if(this.SignaturePerX){
-              this.signatureM=this.SignaturePerX
-            }else{
-              this.signatureM=personData.signature
-            }
-            this.sexM=personData.sex
-            this.ageM=personData.age
-            this.heightM=personData.height
-            this.weightM=personData.weight
-            if(this.cityNamePerX){
-              this.cityM=this.cityNamePerX
-            }else{
-                this.cityM=personData.city
-            }
-            
-            this.constellationM=personData.constellation
-        }else{
-          var self=this
-            clearInterval(self.timer2);
-                this.promptContent=res.data.msg
-                this.showPrompt=true
-                self.timer2=setTimeout(function(){
-                    self.showPrompt=false
-                    clearInterval(self.timer2);
-                },2000)
-            return false;
-        }
-    })
-  },
+        this.getInformation()
+   },
   methods: {
+    // 获取用户信息接口
+    getInformation(){
+       var obj=qs.stringify({
+        
+      })
+      this.$http.post('api/player/per_sonals',obj,{
+            headers: {
+                'authorization': this.tokenH
+            }
+      }).then((res)=>{
+          if(res.data.code==200){
+              var personData=res.data.data
+              this.headPicM=personData.head_pic
+              if(this.nickNamePerX){
+                  this.nickNameM=this.nickNamePerX;
+              }else{
+                this.nickNameM=personData.username
+              }
+              if(this.SignaturePerX){
+                this.signatureM=this.SignaturePerX
+              }else{
+                this.signatureM=personData.signature
+              }
+              this.sexM=personData.sex
+              this.ageM=personData.age
+              this.heightM=personData.height
+              this.weightM=personData.weight
+              if(this.cityNamePerX){
+                this.cityM=this.cityNamePerX
+              }else{
+                  this.cityM=personData.city
+              }
+              
+              this.constellationM=personData.constellation
+          }else{
+            var self=this
+              clearInterval(self.timer2);
+                  this.promptContent=res.data.msg
+                  this.showPrompt=true
+                  self.timer2=setTimeout(function(){
+                      self.showPrompt=false
+                      clearInterval(self.timer2);
+                  },2000)
+              return false;
+          }
+      })
+    },
     // 获取图片
      uploadFile(){
         let inputDOM = this.$refs.inputer;
         // 通过DOM取文件数据
         this.fil = inputDOM.files;
-        let oldLen=this.imgLen;
-        let len=this.fil.length+oldLen;
+        let len=this.fil.length;
         if(len>1){
           alert('最多可上传1张');
           return false;
@@ -188,17 +199,15 @@ export default {
             alert('请选择5M以内的图片！');
             return false
           }
-          this.imgLen++;
-           this.formData.append('photo_introduction[]',this.fil[i])
+           this.formData.append('avatar',this.fil[i])
         }
-        
-        this.$http.post('api/player/photo_introduction', this.formData,{
+        this.$http.post('api/user/avatar', this.formData,{
             headers: {
                     'authorization': this.tokenH
                 }
-            }).then(res => {
-                 this.videoData()
-            });
+        }).then(res => {
+              this.getInformation()
+        });
       },
     // 修改昵称
     changeName(){
@@ -252,7 +261,6 @@ export default {
               'authorization': this.tokenH
           }
         }).then((res)=>{
-            console.log(res)
             if(res.data.code==200){
                 var self=this
                 clearInterval(self.timer2);
@@ -315,12 +323,30 @@ export default {
     padding:0.4rem 0;
     font-size:0.347rem;
     border-bottom:0.03rem solid rgba(241, 241, 241, 1);
-    >img{
+    >.imgInput{
         width:1.07rem;
         height:1.07rem;
-        border-radius:50%;
-        background :pink;
+        position :relative;
+        >img{
+            width:1.07rem;
+            height:1.07rem;
+            border-radius:50%;
+            background :pink;
+        }
+        >input{
+          width:1.07rem;
+            height:1.07rem;
+            border-radius:50%;
+            position :absolute;
+            top:0;
+            left:0;
+            opacity :0;
+            overflow :hidden;
+            
+        }
+
     }
+    
     >.MineInfo_ListRight{
       color:rgba(51, 51, 51, 0.6);
       font-size:0.32rem;

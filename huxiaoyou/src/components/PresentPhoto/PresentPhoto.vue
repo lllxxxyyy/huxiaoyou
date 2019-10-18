@@ -24,7 +24,6 @@ export default {
   data () {
     return {
         formData:new FormData(),
-        imgs: {},
         imgLen:0,
         fil:'',
         photoDataList:'',

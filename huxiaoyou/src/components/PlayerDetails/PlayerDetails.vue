@@ -6,20 +6,28 @@
           <span>选手详情</span>
       </div>
       <div class="playerBigImg">
-
           <img :src="detailData.head_pic" alt="">
       </div>
      <div class="player_des">
-          <div class="player_des_top">
+            <div class="player_des_top">
                 <img class="player_desImg" :src="detailData.head_pic" alt="">
                 <ul>
-                    <li @click.stop="vote">投票</li>
-                    <li>选手风采</li>
+                    <li @click.stop="vote"><img src="" alt=""><span class="username">{{detailData.username}}</span> </li>
+                    <li> <span class="playerId">参赛编号：{{detailData.player_id}}</span></li>
                 </ul>
             </div>
-          <div class="player_desName"> {{detailData.username}} <span>{{detailData.names}}</span>  </div>
-          <div class="playNum">+{{detailData.user_id}}</div>
+            <ul class="piao_list">
+                <li>
+                    <span class="piao_list_top">{{detailData.votes}}</span><span class="piao_list_bottom">总票数</span>
+                </li>
+                <li>
+                    <span class="piao_list_top">{{detailData.division_ranking}}</span><span class="piao_list_bottom">赛区排名</span>
+                </li>
+                <span>华北赛区</span>
+          </ul>
           <div class="palylike">{{detailData.signature}}</div>
+          <!-- <div class="player_desName"> {{}} <span>{{detailData.names}}</span>  </div> -->
+          <div class="playNum" v-if="detailData.user_id">+{{detailData.user_id}}</div>
           <ul class="player_listdes">
                 <li>
                   <img v-if="personData.sex==2" :src="staticImgH+'gril.png'" alt="">
@@ -32,18 +40,27 @@
               <li v-if="detailData.constellation">{{detailData.constellation}}</li>
               <li v-if="detailData.height">{{detailData.height}}cm</li>
               <li v-if="detailData.weight">{{detailData.weight}}kg</li>
-              <li><span v-if="detailData.union_id">{{detailData.union_id}}</span><span v-else>工会未认证</span></li>
+              <li><span v-if="detailData.union_id">公会成员</span><span v-else>工会未认证</span></li>
           </ul>
-          <ul class="piao_list">
-              <li>
-                  <span class="piao_list_top">{{detailData.votes}}</span><span class="piao_list_bottom">总票数</span>
-              </li>
-              <li>
-                  <span class="piao_list_top">{{detailData.division_ranking}}</span><span class="piao_list_bottom">赛区排名</span>
-              </li>
-          </ul>
+          <div class="player_btnList">
+              <span class="voteBtn">投票</span>
+              <span class="attentionBtn">+关注</span>
+              <span class="shareBtn">为Ta分享</span>
+              <span class="EnterBtn">我也参赛</span>
+          </div>
+      </div>
+      <div v-if="detailData.user_introduction">
+
+        <video id="video1" width="399" height="300" poster="video_bg.jpg">
+            <source :src="detailData.user_introduction" type="video/mp4" />
+        </video>
       </div>
       <ul class="playerImg_list">
+          <li v-for="(item,index) in detailData.photo_introduction" :key="index">
+              <img :src="item.src" alt="">
+          </li>
+      </ul>
+      <ul class="BigplayerImg_list">
           <li v-for="(item,index) in detailData.photo_introduction" :key="index">
               <img :src="item.src" alt="">
           </li>
@@ -160,6 +177,7 @@ export default {
             }
         }).then((res)=>{
             if(res.data.code==200){
+                console.log(res)
                 this.detailData=res.data.data
             }else{
                  var self=this
@@ -484,7 +502,7 @@ export default {
 }
 .playerBigImg{
     width:100%;
-    height:6.213rem;
+    height:8.533rem;
     display :flex;
     >img{
         width:100%;
@@ -493,44 +511,49 @@ export default {
     }
 }
 .player_des{
-    width:9.04rem;
+    width:9.2rem;
     display :flex;
     flex-direction :column;
-    // align-items :center;
     background :#fff;
-    box-shadow :0 0rem 0.3rem rgba(254, 222, 227, 0.6);
-    border-radius:0.08rem;
+    box-shadow :0 0rem 0.3rem rgba(254, 208, 215, 0.5);
+    border-radius:0.4rem 0.4rem 0 0rem;
     margin:0 auto;
-    margin-top:-2.16rem;
-    padding:0 0.55rem;
+    margin-top:-3.73rem;
+    padding:0 0.4rem;
     .player_des_top{
         display :flex;
-        position :relative;
+        justify-content :space-between;
         margin-bottom:0.32rem;
         >.player_desImg{
-            width:2.133rem;
-            height:2.133rem;
+            width:1.87rem;
+            height:1.87rem;
             background :blue;
             border-radius:50%;
-            margin-top:-0.667rem;
+            margin-top:-0.53rem;
+            border:0.1rem solid rgba(255, 255, 255, 1);
         }
         >ul{
-            display:flex;
-            position :absolute;
-            right:0rem;
-            top:0.4rem;
             >li{
-                width:1.867rem;
-                height:0.747rem;
-                font-size:0.373rem;
-                color:#fff;
+                font-size:0.347rem;
+                color:rgba(0, 0, 0, 1);
                 line-height :0.747rem;
                 text-align:center;
                 margin-right:0.32rem;
-                background :rgba(75, 170, 249, 1);
                 border-radius:0.08rem;
+                display:flex;
+                align-items:center;
                 &:last-child{
                     margin-right:0;
+                }
+                >img{
+                    width:0.293rem;
+                    height:0.293rem;
+                    background:pink;
+                    margin-right:0.347rem;
+                }
+                >.username{
+                    font-size:0.53rem;
+                    color:rgba(51, 51, 51, 1);
                 }
             }
         }
@@ -569,6 +592,33 @@ export default {
             }
         }
     }
+    .player_btnList{
+        display:flex;
+        justify-content :space-between;
+        margin-bottom:0.53rem;
+        letter-spacing:0.04rem;
+        >span{
+            padding:0.2rem 0.25rem;
+            font-size:0.427rem;
+            border-radius:0.5rem;
+        }
+        >.voteBtn{
+            background:rgba(255, 157, 172, 0.2);
+            color:rgba(255, 157, 172, 1);
+        }
+        >.attentionBtn{
+            background:rgba(74, 171, 249, 0.2);
+            color:rgba(74, 171, 249, 1);
+        }
+        >.shareBtn{
+            background:rgba(92, 216, 192, 0.2);
+            color:rgba(92, 216, 192, 1);
+        }
+        >.EnterBtn{
+            background:rgba(254, 217, 67, 0.2);
+            color:rgba(254, 217, 67, 1);
+        }
+    }
     >.playNum{
         font-size:0.32rem;
         color:rgba(0, 0, 0, 1);
@@ -579,6 +629,13 @@ export default {
         display :flex;
         align-items :center;
         margin-bottom:0.4rem;
+        position:relative;
+        >span{
+            position:absolute;
+            right:0;
+            font-size:0.32rem;
+            color:rgba(0, 0, 0, 0.36);
+        }
         >li{
             display :flex;
             flex-direction :column;
@@ -747,6 +804,16 @@ export default {
             line-height :0.853rem;
         }
     }
+}
+// 大图图片列表
+BigplayerImg_list{
+    width:100%;
+    height:100%;
+    position:fixed;
+    top:0;
+    left:0;
+    >li
+
 }
 // 提示盒子
 .promptFather{

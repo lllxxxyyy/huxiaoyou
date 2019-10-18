@@ -40,11 +40,11 @@ const mutations = {
     },
     // 个人资料名字
     nickNamePerXs(state, nickNamePerX) {
-        localStorage.setItem('nickNamePerX', JSON.stringify(nickNamePerX));
+        localStorage.setItem('nickNamePerX', nickNamePerX);
         state.nickNamePerX = nickNamePerX
     },
     specialInfos(state, specialInfo) {
-        localStorage.setItem('specialInfo', JSON.stringify(specialInfo));
+        localStorage.setItem('specialInfo', specialInfo);
         state.specialInfo = specialInfo
     },
     specialDetailInfos(state, specialDetailInfo) {
