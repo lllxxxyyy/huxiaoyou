@@ -3,14 +3,14 @@
   <div class="SpecialTopic">
       <div class="SpecialTopicHeader">
           <img :src="staticImgH+'zuojiantou.png'" alt="">
-          <span>专题</span>   
+          <span>往届大赛风采</span>   
       </div>
 <div class="shopHide"></div>
       <ul class="Special_list">
           <li v-for="(item,index) in specialList" :key="index" @click="toSpecialDetails(item.id)">
               <div class="SpecialList_left">
                   <span class="SpecialList_name">{{item.title}}</span>
-                  <span class="SpecialList_num"></span>
+                  <span class="SpecialList_num">时间：2019-10</span>
               </div>
               <div class="SpecialList_right">
                   <img :src="item.thumb" alt="">
@@ -36,7 +36,7 @@ export default {
    computed:{
         ...mapState(['staticImgH','specialInfo','tokenH'])
     },
-
+	
   mounted(){
     var obj=qs.stringify({
         type:this.specialInfo.type,
@@ -71,7 +71,6 @@ export default {
 .SpecialTopic{
   width:100%;
   height:100%;
-  background :#f1f1f1;
 }
 .shopHide{
   width:100%;
@@ -85,7 +84,6 @@ export default {
   justify-content:center;
   align-items :center;
   position :fixed;
-  border-bottom:0.03rem solid #F1F1F1;
   background :#fff;
    >img{
         width:0.32rem;
@@ -141,16 +139,18 @@ export default {
 }
 // 列表
 .Special_list{
-    margin-top:0.27rem;
+    padding-top:0.27rem;
     
     >li{
-        width:100%;
         height:3.396rem;
         display :flex;
         justify-content :space-between;
         // align-items :center;
         padding:0.4rem 0.267rem;
+		box-shadow:0px 3px 12px 0px rgba(254,216,222,0.5);
+		border-radius:12px;
         background :#fff;
+		margin:0 0.27rem;
         margin-bottom:0.2rem;
        >.SpecialList_left{
            display :flex;
@@ -159,6 +159,7 @@ export default {
            font-size:0.32rem;
            >.SpecialList_name{
             color:#494949;
+			font-size:16px;
            }
            >.SpecialList_num{
                color:#797979;
@@ -169,9 +170,10 @@ export default {
            align-items :center;
            justify-content :center;
            >img{
-               width:3.43rem;
-               height:2.58rem;
                background :skyblue;
+			   width:2.58rem;
+               height:2.58rem;
+			   border-radius:10px;
            }
        }
     }
