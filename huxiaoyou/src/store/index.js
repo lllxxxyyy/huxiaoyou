@@ -7,8 +7,8 @@ const state = {
     idxNowH: localStorage.getItem('idxNowH'),
     staticImgH: '../../static/mock/img/',
     apiH: 'http://app.aibebi.net',
-    playerId: localStorage.getItem('playerId'),
-    addressId: localStorage.getItem('addressId'),
+    playerId: localStorage.getItem('playerId'), //选手编号
+    addressId: localStorage.getItem('addressId'), //收货地址id
     addressIdIsSel: localStorage.getItem('addressIdIsSel'), //投助力票时判断是否选中了地址
     editAddressDes: localStorage.getItem('editAddressDes'), //编辑地址页面信息
     myOrderListPage: localStorage.getItem('myOrderListPage'), //订单列表页
@@ -17,17 +17,40 @@ const state = {
     HomeSearchPage: localStorage.getItem('HomeSearchPage'), //  搜索页面返回
     PlayerDetailPage: localStorage.getItem('PlayerDetailPage'), //选手详情页面返回
     playDetailVoteDiv: localStorage.getItem('playDetailVoteDiv'), //选手详情的投票盒子的显示与消失
-    ReceiptAddressPage: localStorage.getItem('ReceiptAddressPage'), //地址列表盒子返回哪
-    ReceiptAddressAddPage: localStorage.getItem('ReceiptAddressAddPage'), //添加地址列表盒子返回哪
-    playDetailShopDES: JSON.parse(localStorage.getItem('playDetailShopDES')) || {}, //选手详情  助力商品id
-    specialInfo: JSON.parse(localStorage.getItem('specialInfo')) || {}, //专题列表 专题详情信息
-    specialDetailInfo: JSON.parse(localStorage.getItem('specialDetailInfo')) || {}, //专题详情 专题详情信息
+    ReceiptAddressPage: localStorage.getItem('ReceiptAddressPage'), //地址列表返回哪
+    ReceiptAddressAddPage: localStorage.getItem('ReceiptAddressAddPage'), //添加地址列表返回哪
+    playDetailShopDES: JSON.parse(localStorage.getItem('playDetailShopDES')) || {}, //选手详情 为goods_buyer接口保存参数对应数据(助力商品goodid，选手playerId),以及保存被选中商品的下标,
+    specialInfo: JSON.parse(localStorage.getItem('specialInfo')) || {}, //专题列表 专题列表信息 为ad/comment_list接口保存参数字段（type，project_id）
+    specialDetailInfo: JSON.parse(localStorage.getItem('specialDetailInfo')) || {}, //专题详情 专题详情信息  为/ad/comment_lis接口保存参数字段（type，project_id）
+    shopgoodId: localStorage.getItem('shopgoodId'), //卡包详情商品的goodsid
+    barcolorIndexShop: localStorage.getItem('barcolorIndexShop'), //卡包详情返回选手详情里被选中商品的下标
+    shopDetatilshow: localStorage.getItem('shopDetatilshow'), //判断是不是从卡包返回到选手详情
+    shopDetailReturn: localStorage.getItem('shopDetailReturn'), //卡包详情返回哪
 
     nickNamePerX: localStorage.getItem('ReceiptAddressAddPage'), //个人资料名字
     SignaturePerX: localStorage.getItem('ReceiptAddressAddPage'), //个人资料个性签名
     cityNamePerX: localStorage.getItem('cityNamePerX'), //个人资料城市
 }
 const mutations = {
+    // 卡包详情返回哪
+    shopDetailReturns(state, shopDetailReturn) {
+        localStorage.setItem('shopDetailReturn', shopDetailReturn);
+        state.shopDetailReturn = shopDetailReturn
+    },
+    shopDetatilshows(state, shopDetatilshow) {
+        localStorage.setItem('shopDetatilshow', shopDetatilshow);
+        state.shopDetatilshow = shopDetatilshow
+    },
+    //卡包详情返回选手详情里被选中商品的下标
+    barcolorIndexShops(state, barcolorIndexShop) {
+        localStorage.setItem('barcolorIndexShop', barcolorIndexShop);
+        state.barcolorIndexShop = barcolorIndexShop
+    },
+    //卡包详情商品的goodsid
+    shopgoodIds(state, shopgoodId) {
+        localStorage.setItem('shopgoodId', shopgoodId);
+        state.shopgoodId = shopgoodId
+    },
     // 个人资料城市名
     cityNamePerXs(state, cityNamePerX) {
         localStorage.setItem('cityNamePerX', cityNamePerX);
@@ -44,7 +67,7 @@ const mutations = {
         state.nickNamePerX = nickNamePerX
     },
     specialInfos(state, specialInfo) {
-        localStorage.setItem('specialInfo', specialInfo);
+        localStorage.setItem('specialInfo', JSON.stringify(specialInfo));
         state.specialInfo = specialInfo
     },
     specialDetailInfos(state, specialDetailInfo) {

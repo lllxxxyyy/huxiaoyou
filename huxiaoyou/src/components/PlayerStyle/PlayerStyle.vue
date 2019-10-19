@@ -64,7 +64,6 @@ export default {
               'authorization':this.token
           }
     }).then((res)=>{
-        console.log(res)
         if(res.data.code==200){
             this.PlayerStyleData=res.data.data.data
         }else{

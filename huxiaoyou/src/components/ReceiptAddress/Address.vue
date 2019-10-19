@@ -103,7 +103,7 @@ export default {
         if(this.addressIdIsSel=="false"){
             this.addressIdIsSels('true')
             this.addressIds(addressId)
-            this.$router.push('/PlayerDetails')
+            this.$router.push(this.ReceiptAddressPage)
         }
     },
     ...mapMutations(['addressIds','addressIdIsSels','ReceiptAddressPages','ReceiptAddressAddPages','editAddressDess']),

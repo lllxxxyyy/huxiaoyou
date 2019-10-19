@@ -37,6 +37,8 @@ import MineGuild from '@/components/MineGuild/MineGuild' //我的公会
 
 import City from '@/components/City/City' //常驻城市
 import ShortVideo from '@/components/ShortVideo/ShortVideo' //绑定短视频id
+
+import shopDetail from '@/components/shopDetail/shopDetail' //卡包详情
 Vue.use(Router)
 
 export default new Router({
@@ -194,6 +196,11 @@ export default new Router({
             path: '/ShortVideo',
             name: 'ShortVideo',
             component: ShortVideo
+        },
+        { //卡包详情
+            path: '/shopDetail',
+            name: 'shopDetail',
+            component: shopDetail
         },
     ]
 })

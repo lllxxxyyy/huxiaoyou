@@ -53,7 +53,6 @@ export default {
                     'authorization': this.tokenH
                 }
     }).then((res)=>{
-      console.log(res)
       if(res.data.code==200){
           this.specialDetailData=res.data.data.result[0]
           console.log(this.specialDetailData)
