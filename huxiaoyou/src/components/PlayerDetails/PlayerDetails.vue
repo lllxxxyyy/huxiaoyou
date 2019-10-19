@@ -103,21 +103,20 @@
       </div>
       <!-- 提示盒子 -->
         <transition name="fade">
-        <div class="promptFather" v-if="showPrompt">
-            <div class="prompt" >
-                {{promptContent}}
+            <div class="promptFather" v-if="showPrompt">
+                <div class="prompt" >
+                    {{promptContent}}
+                </div>
             </div>
-        </div>
-    </transition>
+        </transition>
   </div>
 </template>
 
 <script>
 import {mapState} from 'vuex'
 import {mapMutations} from 'vuex'
-// import wx from 'weixin-jsapi'
+import wx from 'weixin-jsapi'
 import qs from 'qs'
-
 export default {
     name:"PlayerDetails",
   data () {
@@ -162,7 +161,6 @@ export default {
    computed:{
             ...mapState(['staticImgH','playerId','addressIdIsSel','addressId','PlayerDetailPage','playDetailVoteDiv','tokenH','playDetailShopDES','apiH','shopDetatilshow','barcolorIndexShop','shopgoodId'])
         },
-
   mounted(){
     //  判断是否是分享出去的
         var shopUrl = window.location.href
@@ -211,6 +209,7 @@ export default {
                 }
             }).then((res)=>{
                 if(res.data.code==200){
+                    console.log(res)
                     this.detailData=res.data.data
                 }else{
                     var self=this
@@ -247,7 +246,11 @@ export default {
     //   获取免费票数 
         this.getpaioNUm()
     //   微信分享
-        this.$http.post('/api/wechat/get_sign',obj,{
+        var Wobj=qs.stringify({
+            player_id:this.playerId,
+            type:2,
+        })
+        this.$http.post('/api/wechat/get_sign',Wobj,{
             headers: {
                     'authorization': this.tokenH
                 }
@@ -283,7 +286,6 @@ export default {
                     'authorization': this.tokenH
                 }
         }).then((res)=>{
-            console.log(res)
             this.smallSwiper=res.data.data
         })
   },
@@ -297,7 +299,8 @@ export default {
         this.barcolorIndexShops(this.barcolorIndex) //为了返回到当前页面的时候 显示哪个商品被选中状态
         this.shopDetatilshows('true')  // 判断是不是商品详情页返回到此页面
         this.shopgoodIds(goodid)  //给商品页传gooid
-        this.playerIds(this.playerId) //给商品页传选手id
+        this.userIdHs(this.detailData.user_id) //给商品页传选手id
+        this.playerIds(this.playerId)
         this.$router.push('/shopDetail')  
     },
     //   隐藏放大的图片
@@ -473,6 +476,7 @@ export default {
         },
         //支付  wx.chooseWXPay
         payLe(){
+                this.addressIdIsSels('false') //商品页默认地址不选中
                 var vm=this
                 wx.ready(function(){
                     wx.chooseWXPay({
@@ -488,6 +492,7 @@ export default {
                             vm.$router.push('/orderList')  //支付成功后跳订单列表
                         },
                         fail(){
+                            
                             alert('支付失败')
                         }
                     });
@@ -541,7 +546,7 @@ export default {
       })
     },
     
-    ...mapMutations(['playDetailVoteDivs','ReceiptAddressPages','ReceiptAddressAddPages','orderTypes','orderNums','playDetailShopDESs','addressIdIsSels','myOrderListPages','playerIds','shopgoodIds','barcolorIndexShops','shopDetatilshows','shopDetailReturns']),
+    ...mapMutations(['playDetailVoteDivs','ReceiptAddressPages','ReceiptAddressAddPages','orderTypes','orderNums','playDetailShopDESs','addressIdIsSels','myOrderListPages','playerIds','shopgoodIds','barcolorIndexShops','shopDetatilshows','shopDetailReturns','userIdHs']),
   }
 }
 

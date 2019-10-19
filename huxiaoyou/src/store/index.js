@@ -8,6 +8,7 @@ const state = {
     staticImgH: '../../static/mock/img/',
     apiH: 'http://app.aibebi.net',
     playerId: sessionStorage.getItem('playerId'), //选手编号
+    userIdH: sessionStorage.getItem('userIdH'), //给卡包详情页面传userId
     addressId: sessionStorage.getItem('addressId'), //收货地址id
     addressIdIsSel: sessionStorage.getItem('addressIdIsSel'), //投助力票时判断是否选中了地址
     editAddressDes: sessionStorage.getItem('editAddressDes'), //编辑地址页面信息
@@ -93,6 +94,10 @@ const mutations = {
     playerIds(state, playerId) {
         sessionStorage.setItem('playerId', playerId);
         state.playerId = playerId
+    },
+    userIdHs(state, userIdH) {
+        sessionStorage.setItem('userIdH', userIdH);
+        state.userIdH = userIdH
     },
     addressIds(state, addressId) {
         sessionStorage.setItem('addressId', addressId);

@@ -26,6 +26,15 @@
         <div class="shopDetail_btn" @click="AssistTicket">
                 立即购买 
         </div>
+
+        <!-- 提示盒子 -->
+        <transition name="fade">
+            <div class="promptFather" v-if="showPrompt">
+                <div class="prompt" >
+                    {{promptContent}}
+                </div>
+            </div>
+        </transition>
   </div>
 </template>
 
@@ -52,37 +61,136 @@ export default {
           },
           loop: true,
         },
+        // 提示盒子
+        promptContent:'', //提示盒子的内容
+        showPrompt:false,//提示盒子的吸收和显示
+        timer2:'',
+        BshopId:'',//定义一个本页面的goodsId
+        BuserIdH:"",//定义一个本页面的playerId
+        test:'',//微信分享认证信息
     };
   },
 
   components: {},
 
   computed:{
-        ...mapState(['staticImgH','tokenH','shopgoodId','shopDetailReturn','playerId','addressId','addressIdIsSel'])
+        ...mapState(['staticImgH','tokenH','shopgoodId','shopDetailReturn','playerId','addressId','addressIdIsSel','userIdH'])
     },
 
   mounted(){
-      
+      //  判断是否是分享出去的
+        var shopUrl = window.location.href
+            //var shopUrl = 'http://mobile.aibebi.cn/aibei/shopList.html?goods_id=1482'
+            //截取？后的商品id
+            var shopCan, value;  //初始化 
+            shopCan = shopUrl.indexOf("#")  //找到？的下标
+            shopUrl=shopUrl.substr(shopCan+1)
+            shopCan=shopUrl.indexOf('?')
+            if(shopCan > 0){
+                shopUrl = shopUrl.substr(shopCan + 1)  //截取？后面的内容
+                var shopArr = shopUrl.split('&') //分割成数组 
+                var shopUrlId = {};// 初始化对象 找到的goodId放到里面
+                for(var i = 0; i < shopArr.length; i++) {//循环shopArr数组
+                    shopCan = shopArr[i].indexOf("=");  //找到=号的下标
+                    if(shopCan > 0){ //判断有没有=
+                        value = shopArr[i].substring(shopCan + 1); //找到=后面的值并截取     =>value
+                        shopCan = shopArr[i].substring(0, shopCan);//找到=前面的值  =》key
+                        shopUrlId[shopCan] = value;  // key value放到shopUrlId对象里
+                    }
+                }
+                if(shopUrlId.player_id && shopUrlId.goods_id){
+                    this.BuserIdH=shopUrlId.user_id
+                    this.BshopId=shopUrlId.goods_id
+                }
+            }else{
+                    this.BuserIdH=this.userIdH
+                    this.BshopId=this.shopgoodId
+        }
       if(this.addressIdIsSel=='true'){
-            this.AssistTicketTwo()
-      }
-      var obj=qs.stringify({
-          goods_id:this.shopgoodId
-      })
-      this.$http.post('/api/goods/goods_info',obj,{
-           headers: {
-                'authorization': this.tokenH
+                this.AssistTicketTwo()
+        }
+        var obj=qs.stringify({
+            goods_id:this.BshopId
+        })
+        this.$http.post('/api/goods/goods_info',obj,{
+            headers: {
+                    'authorization': this.tokenH
+                }
+        }).then((res)=>{
+            if(res.data.code==200){
+                this.shopData=res.data.data
+                this.galleryImg=res.data.data.image_url
+            }else{
             }
-      }).then((res)=>{
-         if(res.data.code==200){
-             this.shopData=res.data.data
-             this.galleryImg=res.data.data.image_url
-         }else{
-         }
       })
+      //   微信分享
+      var Wobj=qs.stringify({
+            player_id:this.userIdH,
+            type:1,
+        })
+        this.$http.post('/api/wechat/get_sign',Wobj,{
+            headers: {
+                    'authorization': this.tokenH
+                }
+            }).then((res)=>{
+            if(res.data.code==200){
+                var data=res.data.data
+                this.test=data.test
+                    wx.config({
+                        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                        appId: data.appId, // 必填，公众号的唯一标识
+                        timestamp:data.timestamp, // 必填，生成签名的时间戳
+                        nonceStr: data.nonceStr, // 必填，生成签名的随机串
+                        signature: data.signature,// 必填，签名
+                        jsApiList: ['onMenuShareAppMessage','onMenuShareTimeline'] // 必填，需要使用的JS接口列表
+                    });
+                    this.toFriend()
+                    this.toFriendQuan()
+            }else{
+                    var self=this
+                    clearInterval(self.timer2);
+                    this.promptContent=res.data.msg
+                    this.showPrompt=true
+                    self.timer2=setTimeout(function(){
+                        self.showPrompt=false
+                        clearInterval(self.timer2);
+                    },1000)
+                    return false;
+            }
+        })
   },
 
   methods: {
+         //   分享给朋友
+      toFriend(){
+                var vm=this
+                var realLocation=vm.apiH+'/#/shopDetail?user_id='+vm.BuserIdH+'&goods_id='+vm.BshopId+'&goods_id='+
+                wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+                    wx.onMenuShareAppMessage({ 
+                        title:vm.shopData.goods_name, // 分享标题
+                        desc:'未定', // 分享描述
+                        link:vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                        imgUrl: vm.shopData.original_img, // 分享图标
+                        success: function (res) {
+                        }
+                    })
+                });
+      },
+    //   分享到朋友圈
+      toFriendQuan(){
+            var vm=this
+            var realLocation=vm.apiH+'/#/shopDetail?player_id='+vm.BuserIdH+'&goods_id='+vm.BshopId 
+            wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+                wx.onMenuShareTimeline({
+                        title:vm.shopData.goods_name, // 分享标题
+                        link: vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation),  // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                        imgUrl:vm.shopData.original_img, // 分享图标
+                        success: function (res) {
+                        },
+                })
+          });
+      },
+    //   返回
       toReturn(){
           if(this.shopDetailReturn=="/PlayerDetails"){
                 this.playerIds(this.playerId)//保存选手id
@@ -308,5 +416,32 @@ export default {
             width:100%;
         }
     }
+}
+
+// 提示盒子
+.promptFather{
+    width:100%;
+    position :absolute;
+    bottom:50%;
+    left:0;
+    z-index:10;
+    display :flex;
+    justify-content :center;
+    align-items :center;
+    >.prompt{
+        padding:0.15rem 0.3rem;;
+        background :rgba(0,0,0,0.7);
+        color:#fff;
+        border-radius:0.5rem;
+        font-size:0.32rem;
+    }
+}
+.fade-enter-active, .fade-leave-active {
+//   transition: opacity .5s;
+    transition: all .3s ease;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+   transform: translateY(0.32rem);
+  opacity: 0;
 }
 </style>
