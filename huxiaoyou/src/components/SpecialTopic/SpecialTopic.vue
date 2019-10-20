@@ -47,6 +47,7 @@ export default {
                     'authorization': this.tokenH
                 }
     }).then((res)=>{
+        console.log(res)
       if(res.data.code==200){
           this.specialList=res.data.data.result
       }
