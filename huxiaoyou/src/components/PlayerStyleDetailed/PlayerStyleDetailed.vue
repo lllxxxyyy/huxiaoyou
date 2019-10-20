@@ -1,93 +1,194 @@
 <!--  -->
 <template>
   <div class="PlayerStyle">
-      <div class="PlayerRanking_header">
-          <img @click="toReturn" :src="staticImgH+'zuojiantoub.png'" alt="">
+    <div class="PlayerRanking_header">
+      <img @click="toReturn" :src="staticImgH+'zuojiantoub.png'" alt="">
+    </div>
+    <div class="player_top">
+      <div class="player_name">
+        <img v-if="currentPlayerData" :src="currentPlayerData.avatar" alt="">
+        <span>{{currentPlayerData.username}}</span>
+
+        <span class="guanzhu" v-if="!followFlag" @click="follow()">关注</span>
+        <span class="guanzhu" v-if="followFlag" @click="follow()">取消关注</span>
       </div>
-	  <div class="player_top" v-for="(item,index) in PlayerStyleData" :key="index">
-               <div class="player_name">
-                 <img v-if="item.avatar" :src="item.avatar" alt="">
-               <span>{{item.username}}</span>
-			   <span class="guanzhu">关注</span>
-            </div>
-       </div>
-	   <div class="player_paiming">华北赛区排名：23名</div>
-	  <div class="video">
-	  	 <video controls="controls" autoplay="autoplay" src="https://www.w3school.com.cn/i/movie.ogg"></video>
-	  </div>
-	  <div class="video_caozuo">
-	  	<img @click="toReturn" :src="staticImgH+'xihuan.png'" alt="">
-		<span class="video_fenxiang"><img @click="toReturn" :src="staticImgH+'fenxiang.png'" alt=""></span>
-		<span class="video_fenxiang"><img @click="toReturn" :src="staticImgH+'shouchang.png'" alt=""></span>
-		<span class="video_toupiao">投票</span>
-	  </div>
-      <!-- 提示盒子 -->
-         <transition name="fade">
-            <div class="promptFather" v-if="showPrompt">
-                <div class="prompt" >
-                    {{promptContent}}
-                </div>
-            </div>
-        </transition>
+    </div>
+    <div class="player_paiming">{{currentPlayerData.names}}排名：{{currentPlayerData.division_ranking}}名</div>
+    <div class="video">
+      <!--<video controls="controls" autoplay="autoplay" src="https://www.w3school.com.cn/i/movie.ogg"></video>-->
+      <video controls="controls" autoplay="autoplay" :src="currentPlayerData.video_introduction"></video>
+    </div>
+    <div class="video_caozuo">
+
+      <span class="video_fenxiang"><img @click="toReturn" :src="staticImgH+'fenxiang.png'" alt=""></span>
+      <span class="video_fenxiang">
+        <img v-if="!zanFlag" @click="zan()" :src="staticImgH+'shouchang.png'" alt="">
+        <img v-if="zanFlag" @click="zan()" :src="staticImgH+'xihuan.png'" alt="">
+      </span>
+      <span v-if="!voteFlag" class="video_toupiao" @click="vote()">投票</span>
+    </div>
+    <!-- 提示盒子 -->
+    <transition name="fade">
+      <div class="promptFather" v-if="showPrompt">
+        <div class="prompt">
+          {{promptContent}}
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
-import {mapState} from 'vuex'
-import {mapMutations} from 'vuex'
-import qs from 'qs'
-export default {
-    name:"PlayerStyleDetailed",
-  data () {
-    return {
-        PlayerStyleData:'',
-        token:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJpc3MiOiJodHRwczpcL1wvbG92eW91LnRvcCIsImF1ZCI6Imh0dHBzOlwvXC9sb3Z5b3UudG9wIiwiaWF0IjoxNTY5NDA4NzE2LCJuYmYiOjE1Njk0MDg3MTYsImV4cCI6MTYwMDk0NDcxNn0.FPH-pgQp-2Vt1kbnZc_Z9JnJYvGYMeLOUHtkC4Tyj_w',
-         // 提示盒子
-      promptContent:'', //提示盒子的内容
-        showPrompt:false,//提示盒子的吸收和显示
-    };
-  },
+  import {mapState} from 'vuex'
+  import {mapMutations} from 'vuex'
+  import qs from 'qs'
+
+  export default {
+    name: "PlayerStyleDetailed",
+    data() {
+      return {
+        followFlag: false,
+        zanFlag: false,
+        voteFlag: false,
+
+
+        PlayerStyleData: '',
+        currentPlayerData: this.$route.query.player,
+        token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJpc3MiOiJodHRwczpcL1wvbG92eW91LnRvcCIsImF1ZCI6Imh0dHBzOlwvXC9sb3Z5b3UudG9wIiwiaWF0IjoxNTY5NDA4NzE2LCJuYmYiOjE1Njk0MDg3MTYsImV4cCI6MTYwMDk0NDcxNn0.FPH-pgQp-2Vt1kbnZc_Z9JnJYvGYMeLOUHtkC4Tyj_w',
+        // 提示盒子
+        promptContent: '', //提示盒子的内容
+        showPrompt: false,//提示盒子的吸收和显示,
+        video_info: {}
+      };
+    },
 
 //   components: {},
 
-  computed:{
-        ...mapState(['staticImgH'])
+    computed: {
+      ...mapState(['staticImgH'])
     },
 
-  mounted(){
-      var obj=qs.stringify({
-          page:1
-      })
-      this.$http.post('api/player/player_style',obj,{
-          headers: {
-              'authorization':this.token
-          }
-    }).then((res)=>{
-        console.log(res)
-        if(res.data.code==200){
-            this.PlayerStyleData=res.data.data.data
-        }else{
-            var self=this
-            clearInterval(self.timer2);
-                    this.promptContent=res.data.msg
-                    this.showPrompt=true
-                    self.timer2=setTimeout(function(){
-                        self.showPrompt=false
-                        clearInterval(self.timer2);
-                    },2000)
-                return false;
-        }
-        
-    })
-  },
+    mounted() {
+      console.log(this.currentPlayerData);
+      //个人信息
+      // let obj = qs.stringify({
+      //   player_id: this.currentPlayerData.id
+      // })
+      // this.$http.post('api/player/info', obj, {
+      //   headers: {
+      //     'authorization': this.token
+      //   }
+      // }).then((res) => {
+      //   if (res.data.code === 200) {
+      //     console.log(res.data.data)
+      //     this.currentPlayerData = res.data.data
+      //   }
+      // })
 
-  methods: {
-    //   返回
-      toReturn(){
-          this.$router.push('/PlayerStyle')
+      //视频详情
+      let obj = qs.stringify({
+        v_id: this.currentPlayerData.id,
+        player_id: this.currentPlayerData.id
+      })
+      this.$http.post('api/player/info', obj, {
+        headers: {
+          'authorization': this.token
+        }
+      }).then((res) => {
+        if (res.data.code === 200) {
+          console.log(res.data.data)
+          this.video_info = res.data.data
+        }
+      })
+    },
+
+    methods: {
+      //   返回
+      toReturn() {
+        // this.$router.push('/PlayerStyle');
+        this.$router.go(-1);
+      },
+      // 赞
+      zan(){
+        let obj = qs.stringify({
+          type: '4',
+          player_id: this.currentPlayerData.player_id,
+          v_id: this.currentPlayerData.v_id
+        })
+        this.$http.post('api/player/info', obj, {
+          headers: {
+            'authorization': this.token
+          }
+        }).then((res) => {
+          if (res.data.code === 200) {
+            //OK'是取消点赞; 'result'=>'2'，数字表示店点赞成功
+            let result = res.data.result
+            if (result === 'OK') {
+              this.followFlag = false;
+              this.toastMsg("取消点赞成功");
+            } else if (result === '2') {
+              this.followFlag = true;
+              this.toastMsg("点赞成功");
+            }
+          }
+        })
+      },
+      // 关注
+      follow(){
+        let obj = qs.stringify({
+          type: '4',
+          player_id: this.currentPlayerData.player_id,
+          v_id: this.currentPlayerData.v_id
+        })
+        this.$http.post('api/player/info', obj, {
+          headers: {
+            'authorization': this.token
+          }
+        }).then((res) => {
+          if (res.data.code === 200) {
+            //OK'是取消点赞; 'result'=>'2'，数字表示店点赞成功
+            let result = res.data.result
+            if (result === 'OK') {
+              this.followFlag = false;
+              this.toastMsg("取消关注成功");
+            } else if (result === '2') {
+              this.followFlag = true;
+              this.toastMsg("关注成功");
+            }
+          }
+        })
+      },// 关注
+      vote(){
+        let obj = qs.stringify({
+          player_id: this.video_info.player_id,
+        })
+        this.$http.post('api/user/spend_vote', obj, {
+          headers: {
+            'authorization': this.token
+          }
+        }).then((res) => {
+          if (res.data.code === 200) {
+            this.toastMsg("投票成功")
+            this.voteFlag  = true;
+          } else {
+            this.voteFlag  = false;
+            this.toastMsg(res.data.msg)
+          }
+        })
+      },
+      toastMsg(msg) {
+        var self = this
+        clearInterval(self.timer2);
+        this.promptContent = msg
+        this.showPrompt = true
+        self.timer2 = setTimeout(function () {
+          self.showPrompt = false
+          clearInterval(self.timer2);
+        }, 2000)
       }
+
+    }
   }
-}
 
 </script>
 <style scoped lang="stylus">

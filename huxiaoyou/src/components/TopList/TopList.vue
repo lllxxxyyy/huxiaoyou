@@ -23,10 +23,11 @@
         <span class="jiapiao">为Ta加票</span>
       </div>
       <ul class="TopList">
-          <li @click="toPlayerDetail(item.id)"  v-for="(item,index) in RankingData" :key="index">
+        <template v-for="(item,index) in RankingData" v-if="true">
+          <li @click="toPlayerDetail(item.id)"  :key="index">
             <div class="top_list_img">
-              <span v-if="index > 2">{{index+1}}</span>
-              <img v-if="index < 3" :src="staticImgH+'paiming'+(index+1)+'.png'" alt="">
+              <img v-if="(index+1) <= 3" :src="staticImgH+'paiming'+(index+1)+'.png'" alt="">
+              <span v-if="(index+1) >= 4">{{index+1}}</span>
             </div>
             <span class="touxiang">
             <img v-if="item.photo_introduction[0]" :src="item.photo_introduction[0].src" alt="">
@@ -35,11 +36,13 @@
             <span class="angelPriceid">{{item.id}}</span>
             <span class="angelPriceTwo">{{item.votes}}</span>
             <div class="top_list_ta_vote" :class="{
-              top_list_ta_vote1: index > 2 && index < 100,
-              top_list_ta_vote2: index > 100}">投票</div>
-            <!--v-if="index==99"最终前100-->
-            <div class="tishi" v-if="index==3">最终前100名进入赛区决赛（音乐节），加油冲刺！</div>
+              top_list_ta_vote1: (index+1) > step1 && (index+1) <= step2,
+              top_list_ta_vote2: (index+1) > step2}">投票</div>
           </li>
+          <li v-if="(index+1)===step2" class="list_tishi">
+            <div class="tishi">最终前100名进入赛区决赛（音乐节），加油冲刺！</div>
+          </li>
+        </template>
       </ul>
     </div>
     <!-- 提示盒子 -->
@@ -61,6 +64,8 @@ export default {
     name:'PlayerRanking',
     data () {
         return {
+            step1:3,
+            step2:100,
             SpecialTopicBodyBar:'',
             SpecialBarindex:0,
             RankingData:'',

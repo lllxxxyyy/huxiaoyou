@@ -7,18 +7,18 @@
       <div class="top_list" @click="toPlayerRankingList()">top榜</div>
     </div>
     <div class="SpecialTopicBody_content">
-      <div class="SpecialTopicBody_center" v-for="(item, index) in topThree">
+      <div class="SpecialTopicBody_center" v-for="(item, index) in topThree" :key="index">
         <div class="SpecialTopicBody_li">
           <span>{{item.names}}（排位前三名）</span>
           <span class="more" @click="toMore(item)">查看更多&gt;&gt;</span>
         </div>
         <div class="SpecialTopicBody_list">
           <ul class="HomeAngel_listTwo">
-            <li v-for="player in item.players" @click="toPlayerDetail(player.id)">
+            <li v-for="(player, seqNum) in item.players" @click="toPlayerDetail(player.id)">
               <img class="Two_img"
                    :src="player.avatar"
                    alt="">
-              <div class="top_img"><img :src="staticImgH+'paiming1.png'" alt=""></div>
+              <div class="top_img"><img :src="staticImgH+'paiming'+(seqNum+1)+'.png'" alt=""></div>
               <div class="ta_vote ta_vote1">给Ta投票</div>
               <span class="angelNameTwo">选手：{{player.username}}</span>
               <span class="angelPriceTwo">编号：{{player.id}}</span>

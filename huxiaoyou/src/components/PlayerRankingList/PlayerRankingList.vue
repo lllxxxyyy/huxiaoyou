@@ -1,56 +1,49 @@
 <!-- 选手暂时 -->
 <template>
   <div class="PlayerRankingHome">
-      <div class="PlayerRanking_header">
-          <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
-		  <el-select placeholder="请选择">
-        	<el-option label="是" value="Y"> </el-option>
-        	<el-option label="否" value="N"></el-option>
- 		 </el-select>
-          <span>选手排行</span>
+    <div class="PlayerRanking_header">
+      <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
+      <select  v-model="search.type" placeholder="请选择">
+        <option label="姓名" value="1"></option>
+        <option label="编号" value="2"></option>
+      </select>
+      <input v-model="search.value"></input>
+      <span @click="toSearchResult()">搜索</span>
+    </div>
+    <div class="SpecialTopicBody_bar">
+      <ul>
+        <li @click="SpecialBarBtn(index,item.id)" :class="SpecialBarindex==index?'Special_barColor':''"
+            v-for="(item,index) in SpecialTopicBodyBar" :key="index">
+          {{item.names}}
+        </li>
+      </ul>
+    </div>
+    <ul class="HomeAngel_listTwo">
+      <template v-for="(item,index) in RankingData" v-if="true">
+        <li @click="toPlayerDetail(item.id)" :key="index">
+          <!-- {{item.RankingImgData[index]}} -->
+          <img v-if="item.photo_introduction[0]" :src="item.photo_introduction[0].src" alt="">
+          <div class="top_img"><img :src="staticImgH+'paiming'+(index+1)+'.png'" alt=""></div>
+          <!--<div class="ta_vote to_vote1">给Ta投票</div>-->
+          <div class="ta_vote" :class="{
+              ta_vote1: (index+1) > 3 && (index+1) <= 4,
+              ta_vote2: (index+1) > 4}">给Ta投票</div>
+          <span class="angelNameTwo">{{item.username}}</span>
+          <span class="angelPriceTwo">{{item.votes}}+</span>
+        </li>
+        <li v-if="(index+1)===4" class="list_tishi">
+          <div class="tishi">最终前100名进入赛区决赛（音乐节），加油冲刺！</div>
+        </li>
+      </template>
+    </ul>
+    <!-- 提示盒子 -->
+    <transition name="fade">
+      <div class="promptFather" v-if="showPrompt">
+        <div class="prompt">
+          {{promptContent}}
+        </div>
       </div>
-      <div class="SpecialTopicBody_bar">
-          <ul>
-              <li @click="SpecialBarBtn(index,item.id)" :class="SpecialBarindex==index?'Special_barColor':''" v-for="(item,index) in SpecialTopicBodyBar" :key="index">
-                  {{item.names}}
-              </li>
-          </ul>
-      </div>
-      <ul class="HomeAngel_listTwo">
-              <li @click="toPlayerDetail(item.id)"   v-for="(item,index) in RankingData" :key="index">
-                  <!-- {{item.RankingImgData[index]}} -->
-                 <img v-if="item.photo_introduction[0]" :src="item.photo_introduction[0].src" alt=""> 
-				 <div class="top_img"><img :src="staticImgH+'paiming1.png'" alt=""></div>
-		  		 <div class="ta_vote">给Ta投票</div>
-                 <span class="angelNameTwo">{{item.username}}</span>
-                 <span class="angelPriceTwo">{{item.votes}}+</span>
-              </li>
-			  <li @click="toPlayerDetail(item.id)"   v-for="(item,index) in RankingData" :key="index">
-                  <!-- {{item.RankingImgData[index]}} -->
-                 <img v-if="item.photo_introduction[0]" :src="item.photo_introduction[0].src" alt=""> 
-				 <div class="top_img"><img :src="staticImgH+'paiming1.png'" alt=""></div>
-		  		 <div class="ta_vote ta_vote1">给Ta投票</div>
-                 <span class="angelNameTwo">{{item.username}}</span>
-                 <span class="angelPriceTwo">{{item.votes}}+</span>
-              </li>
-			  <li class="list_tishi"><div class="tishi">最终前100名进入赛区决赛（音乐节），加油冲刺！</div></li>
-			  <li @click="toPlayerDetail(item.id)"   v-for="(item,index) in RankingData" :key="index">
-                  <!-- {{item.RankingImgData[index]}} -->
-                 <img v-if="item.photo_introduction[0]" :src="item.photo_introduction[0].src" alt=""> 
-				 <div class="top_img"><img :src="staticImgH+'paiming1.png'" alt=""></div>
-		  		 <div class="ta_vote ta_vote2">给Ta投票</div>
-                 <span class="angelNameTwo">{{item.username}}</span>
-                 <span class="angelPriceTwo">{{item.votes}}+</span>
-              </li>
-        </ul>
-        <!-- 提示盒子 -->
-         <transition name="fade">
-            <div class="promptFather" v-if="showPrompt">
-                <div class="prompt" >
-                    {{promptContent}}
-                </div>
-            </div>
-        </transition>
+    </transition>
   </div>
 </template>
 
@@ -62,6 +55,11 @@ export default {
     name:'PlayerRanking',
     data () {
         return {
+            search: {
+              type: '1',
+              value: ''
+            },
+
             SpecialTopicBodyBar:'',
             SpecialBarindex:0,
             RankingData:'',
@@ -81,8 +79,7 @@ export default {
 
   mounted(){
 
-      var barobj=qs.stringify({
-      })
+      var barobj=qs.stringify(this.search)
       this.$http.post('api/division/list',barobj,{
           headers: {
               'authorization': this.tokenH
@@ -97,6 +94,11 @@ export default {
   },
 
   methods: {
+
+      //to 跳转搜索结果页面
+    toSearchResult(){
+      this.$router.push({path: 'SearchResult', query: this.search});
+    },
     //   跳选手详情
     toPlayerDetail(id){
         this.playerIds(id)//保存选手id

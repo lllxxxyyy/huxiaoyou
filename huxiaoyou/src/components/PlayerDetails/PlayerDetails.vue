@@ -505,7 +505,8 @@ export default {
       },
     //   返回
       toReturn(){
-          this.$router.push(this.PlayerDetailPage)  //PlayerDetailPage（vuex中全局定义，动态设置返回页面）
+        this.$router.go(-1);
+          // this.$router.push(this.PlayerDetailPage)  //PlayerDetailPage（vuex中全局定义，动态设置返回页面）
       },
     //   点击投票
       vote(){

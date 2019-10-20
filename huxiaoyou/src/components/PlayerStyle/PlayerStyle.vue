@@ -10,7 +10,7 @@
           <li v-for="(item,index) in PlayerStyleData" :key="index">
               <div class="player_center">
                   <img v-if="item.video_introduction" @click="goGoodsPage()" :src="item.video_introduction[1].src" />
-				  <div class="bofang"><img @click="goGoodsPage()" :src="staticImgH+'bofang.png'" alt=""></div>
+				  <div class="bofang"><img @click="goGoodsPage(item)" :src="staticImgH+'bofang.png'" alt=""></div>
               </div>
 			  <span class="player_btn">投票</span>
 			  <div class="player_top">
@@ -108,8 +108,8 @@ props: ["goodsImage", "goodsName", "goodsPrice", "PlayerStyleDetailedId"],
       toReturn(){
           this.$router.push('/')
       },
-	  goGoodsPage(){
-          this.$router.push('/PlayerStyleDetailed')
+	  goGoodsPage(player){
+          this.$router.push({path: '/PlayerStyleDetailed', query: {player: player}})
         }
   }
 }

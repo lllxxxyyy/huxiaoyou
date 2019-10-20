@@ -1,24 +1,33 @@
 <!-- 选手暂时 -->
 <template>
   <div class="PlayerRankingHome">
-      <div class="PlayerRanking_header">
-          <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
-		  <el-select placeholder="请选择">
-        <el-option label="是" value="Y"> </el-option>
-        <el-option label="否" value="N"></el-option>
- 		 </el-select>
-          <span>选手排行</span>
-      </div>
-      <ul class="HomeAngel_listTwo">
-              <li @click="toPlayerDetail(item.id)"   v-for="(item,index) in RankingData" :key="index">
+    <div class="PlayerRanking_header">
+      <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
+      <select  v-model="search.type" placeholder="请选择">
+        <option label="姓名" value="1"></option>
+        <option label="编号" value="2"></option>
+      </select>
+      <input v-model="search.value"></input>
+      <span @click="searchPlayer(search.type, search.value)">搜索</span>
+    </div>
+      <ul class="HomeAngel_listTwo" v-if="!(!searchResult || searchResult.length < 1)">
+              <li @click="toPlayerDetail(item.id)"   v-for="(item,index) in searchResult" :key="index">
                   <!-- {{item.RankingImgData[index]}} -->
                  <img v-if="item.photo_introduction[0]" :src="item.photo_introduction[0].src" alt=""> 
-				 <div class="top_img"><img :src="staticImgH+'paiming1.png'" alt=""></div>
-		  		 <div class="ta_vote ta_vote1">给Ta投票</div>
+				 <div class="top_img">
+           <img v-if="item.ranking<=3" :src="staticImgH+'paiming'+item.ranking+'.png'" alt="">
+         </div>
+		  		 <div class="ta_vote" :class="{
+		  		 ta_vote1: item.ranking<=100 && item.ranking>3,
+		  		 ta_vote2: item.ranking > 100,
+		  		 }">给Ta投票</div>
                  <span class="angelNameTwo">{{item.username}}</span>
                  <span class="angelPriceTwo">{{item.votes}}+</span>
               </li>
         </ul>
+    <div v-if="!searchResult || searchResult.length < 1">
+      空
+    </div>
         <!-- 提示盒子 -->
          <transition name="fade">
             <div class="promptFather" v-if="showPrompt">
@@ -38,6 +47,12 @@ export default {
     name:'PlayerRanking',
     data () {
         return {
+          search: {
+            type: '1',
+            value: ''
+          },
+          searchResult:[],
+
             SpecialTopicBodyBar:'',
             SpecialBarindex:0,
             RankingData:'',
@@ -56,6 +71,8 @@ export default {
         },
 
   mounted(){
+
+      this.searchPlayer(this.$route.query.type, this.$route.query.value);
       
       var barobj=qs.stringify({
       })
@@ -87,8 +104,24 @@ export default {
           this.getlistData()
       },
       toReturn(){
-          this.$router.push('/')
+          this.$router.go(-1);
       },
+    //选手搜索
+    searchPlayer(type, value){
+      let obj=qs.stringify({
+        type: type,
+        value: value
+      })
+      this.$http.post('api/player/search',obj,{
+        headers: {
+          'authorization': this.tokenH
+        }
+      }).then((res)=>{
+        if(res.data.code===200){
+          this.searchResult=res.data.data
+        }
+      })
+    },
     //   获取数据
       getlistData(){
             var obj=qs.stringify({
@@ -112,7 +145,7 @@ export default {
                             },2000)
                         return false;
                 }
-               
+
             })
       },
       ...mapMutations(['playerIds','PlayerDetailPages','addressIdIsSels','playDetailVoteDivs']),
