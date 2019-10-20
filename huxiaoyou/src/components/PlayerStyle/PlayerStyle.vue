@@ -5,21 +5,42 @@
           <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
           <span>选手风采</span>
       </div>
+	  <div class="player_style_tuijian"><span>每日精彩推送</span></div>
       <ul class="player_list">
           <li v-for="(item,index) in PlayerStyleData" :key="index">
-              <div class="player_top">
+              <div class="player_center">
+                  <img v-if="item.video_introduction" @click="goGoodsPage()" :src="item.video_introduction[1].src" />
+				  <div class="bofang"><img @click="goGoodsPage()" :src="staticImgH+'bofang.png'" alt=""></div>
+              </div>
+			  <span class="player_btn">投票</span>
+			  <div class="player_top">
                   <div class="player_name">
                       <img v-if="item.avatar" :src="item.avatar" alt="">
-                      <span>{{item.username}}+{{item.id}}</span>
+                      <span>{{item.username}}</span>
                   </div>
-                  <span class="player_btn">投票</span>
               </div>
-              <div class="player_center">
-                  <video controls="controls" :src="item.video_introduction[0].src"></video>
-              </div>
-              <div class="player_bottom">
+              <!--<div class="player_bottom">
                   <span class="player_Number">总票数：{{item.votes}}</span><span>{{item.names}}+{{item.id}}</span>
-                </div>
+                </div>-->
+          </li>
+      </ul>
+	  <div class="player_style_tuijian"><span>实时风采</span></div>
+      <ul class="player_list_fencai">
+          <li v-for="(item,index) in PlayerStyleData" :key="index">
+              <div class="player_center">
+                  <img v-if="item.video_introduction" @click="goGoodsPage()" :src="item.video_introduction[1].src" />
+				  <div class="bofang"><img @click="goGoodsPage()" :src="staticImgH+'bofang.png'" alt=""></div>
+              </div>
+			  <span class="player_btn">投票</span>
+			  <div class="player_top">
+                  <div class="player_name">
+                      <img v-if="item.avatar" :src="item.avatar" alt="">
+                      <span>{{item.username}}</span>
+                  </div>
+              </div>
+              <!--<div class="player_bottom">
+                  <span class="player_Number">总票数：{{item.votes}}</span><span>{{item.names}}+{{item.id}}</span>
+                </div>-->
           </li>
       </ul>
       <!-- 提示盒子 -->
@@ -64,6 +85,7 @@ export default {
               'authorization':this.token
           }
     }).then((res)=>{
+        console.log(res)
         if(res.data.code==200){
             this.PlayerStyleData=res.data.data.data
         }else{
@@ -80,12 +102,15 @@ export default {
         
     })
   },
-
+props: ["goodsImage", "goodsName", "goodsPrice", "PlayerStyleDetailedId"],
   methods: {
     //   返回
       toReturn(){
           this.$router.push('/')
-      }
+      },
+	  goGoodsPage(){
+          this.$router.push('/PlayerStyleDetailed')
+        }
   }
 }
 
@@ -116,19 +141,39 @@ export default {
     }
 }
 .player_list{
-    padding:0 0.4rem;
+    padding:0 0.36rem;
     padding-top:0.27rem;
+	display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
     >li{
-        width:9.01rem;
+        width:4.44rem;
         margin-bottom:0.3rem;
-        border-radius:0.133rem;
-        box-shadow :0 0rem 0.3rem rgba(253, 229, 231, 0.6);
-        padding:0.3rem;
+        box-shadow:0px 3px 12px 0px rgba(255,204,212,0.5); border-radius:0.2rem;
+		>.player_btn{
+   width:4.44rem;
+   height:0.84rem;
+   color:#fff;
+   font-size:0.4rem;
+   text-align :center;
+   line-height :0.84rem;
+   font-weight:550;
+   display:block;
+   margin-top:-1.187rem;
+   background:rgba(255,157,172,0.8);
+   margin-bottom:0.31rem;
+}
         >.player_top{
             display :flex;
             align-items :center;
             justify-content :space-between;
-            margin-bottom:0.453rem;
+            margin-bottom:0.313rem;
+			margin-left:0.14rem;
             .player_name{
                 display :flex;
                 align-items :center;
@@ -137,33 +182,104 @@ export default {
                     height:0.853rem;
                     background :pink;
                     margin-right:0.187rem;
+					border-radius:0.22rem;
                 }
                 >span{
-                    font-size:0.373rem;
+                    font-size:0.34rem;
                     color:rgba(0, 0, 0, 0.8);
                     font-weight:550;
                 }
             }
-            .player_btn{
-                width:1.627rem;
-                height:0.64rem;
-                border:0.03rem solid rgba(255, 193, 203, 1);
-                color:rgba(255, 193, 203, 1);
-                font-size:0.32rem;
-                border-radius:0.08rem;
-                text-align :center;
-                line-height :0.58rem;
-            }
         }
         >.player_center{
-            width:8.533rem;
-            height:5.6rem;
-            background :pink;
+            width:4.44rem;
+            height:4.44rem;
             margin-bottom:0.347rem;
             >video{
                 width:100%;
                 height:100%;
             }
+			>.bofang{ width:100%; height:2rem; text-align:center; margin-top:-3.4rem;
+			>img{ width:1.6rem; height:1.6rem;}
+			}
+			>img{ width:4.44rem; height:4.44rem;border-radius:0.2rem 0.2rem 0rem 0rem;}
+        }
+        >.player_bottom{
+            display :flex;
+            align-items :center;
+            justify-content :space-between;
+            font-size:0.32rem;
+            color:rgba(0, 0, 0, 1);
+            >.player_Number{
+                font-size:0.32rem;
+                color:rgba(0, 0, 0, 0.8);
+            }
+        }
+    }
+}
+.player_list_fencai{
+    padding:0 0.36rem;
+    padding-top:0.27rem;
+	display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    >li{
+        width:2.9rem;
+        margin-bottom:0.3rem;
+        box-shadow:0px 3px 12px 0px rgba(255,204,212,0.5); border-radius:0.2rem;
+		>.player_btn{
+   width:2.9rem;
+   height:0.84rem;
+   color:#fff;
+   font-size:0.4rem;
+   text-align :center;
+   line-height :0.84rem;
+   font-weight:550;
+   display:block;
+   margin-top:-1.187rem;
+   background:rgba(74,171,249,0.8);
+   margin-bottom:0.31rem;
+}
+        >.player_top{
+            display :flex;
+            align-items :center;
+            justify-content :space-between;
+            margin-bottom:0.313rem;
+			margin-left:0.14rem;
+            .player_name{
+                display :flex;
+                align-items :center;
+                >img{
+                    width:0.853rem;
+                    height:0.853rem;
+                    background :pink;
+                    margin-right:0.187rem;
+					border-radius:0.22rem;
+                }
+                >span{
+                    font-size:0.3rem;
+                    color:rgba(0, 0, 0, 0.8);
+                    font-weight:550;
+                }
+            }
+        }
+        >.player_center{
+            width:2.9rem;
+            height:2.9rem;
+            margin-bottom:0.347rem;
+            >video{
+                width:100%;
+                height:100%;
+            }
+			>img{ width:2.9rem; height:2.9rem;border-radius:0.2rem 0.2rem 0rem 0rem;}
+			>.bofang{ width:100%; height:2rem; text-align:center; margin-top:-2.3rem;
+			>img{ width:1rem; height:1rem;}
+			}
         }
         >.player_bottom{
             display :flex;
@@ -206,5 +322,12 @@ export default {
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
    transform: translateY(0.32rem);
   opacity: 0;
+}
+.player_style_tuijian{padding:0 0.36rem; font-size:0.44rem; font-weight:550; margin-top:0.14rem; margin-bottom:0.44rem;
+>span{
+    padding-bottom: 0.2rem;
+    border-bottom: 0.053rem solid #ffccd4;
+    color: #000;
+    font-weight: 600;}
 }
 </style>

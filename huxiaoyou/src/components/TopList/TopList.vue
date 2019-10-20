@@ -37,8 +37,8 @@
             <div class="top_list_ta_vote" :class="{
               top_list_ta_vote1: index > 2 && index < 100,
               top_list_ta_vote2: index > 100}">投票</div>
-            <!--雷劲你把样式调一下, 应该是  v-if="index==99"，   -->
-            <div class="tishi" v-if="index==1">最终前100名进入赛区决赛（音乐节），加油冲刺！</div>
+            <!--v-if="index==99"最终前100-->
+            <div class="tishi" v-if="index==3">最终前100名进入赛区决赛（音乐节），加油冲刺！</div>
           </li>
       </ul>
     </div>
@@ -110,7 +110,7 @@ export default {
           this.getlistData()
       },
       toReturn(){
-          this.$router.push('/')
+          this.$router.push('/PlayerRanking')
       },
     //   获取数据
       getlistData(){
@@ -328,5 +328,5 @@ export default {
 .bianhao{ width:17%;}
 .piaoshu{ width:10%;}
 .jiapiao{ width:17%;}
-.tishi{ font-size: 0.34rem; color:#EC0A42; text-align:center; width:100%; margin-bottom:0.06rem;}
+.tishi{ font-size: 0.34rem; color:#EC0A42; text-align:center; width:100%; margin-bottom:0.06rem; margin-top:0.44rem;}
 </style>

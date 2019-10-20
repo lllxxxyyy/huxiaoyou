@@ -4,8 +4,8 @@
       <div class="PlayerRanking_header">
           <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
 		  <el-select placeholder="请选择">
-        <el-option label="是" value="Y"> </el-option>
-        <el-option label="否" value="N"></el-option>
+        	<el-option label="是" value="Y"> </el-option>
+        	<el-option label="否" value="N"></el-option>
  		 </el-select>
           <span>选手排行</span>
       </div>
@@ -111,7 +111,7 @@ export default {
           this.getlistData()
       },
       toReturn(){
-          this.$router.push('/')
+          this.$router.push('/PlayerRanking')
       },
     //   获取数据
       getlistData(){
