@@ -561,8 +561,11 @@ export default {
                     }
                 })
             },
-        ...mapMutations(['playDetailVoteDivs','ReceiptAddressPages','ReceiptAddressAddPages','orderTypes','orderNums','playDetailShopDESs','addressIdIsSels','myOrderListPages','playerIds','shopgoodIds','barcolorIndexShops','shopDetatilshows','shopDetailReturns','userIdHs','userIdHInterests']),
-  }
+        ...mapMutations(['playDetailVoteDivs','ReceiptAddressPages','ReceiptAddressAddPages','orderTypes','orderNums','playDetailShopDESs','addressIdIsSels','myOrderListPages','playerIds','shopgoodIds','barcolorIndexShops','shopDetatilshows','shopDetailReturns','userIdHs','userIdHInterests']),   
+      },
+   
+   
+
 }
 
 </script>
@@ -967,6 +970,7 @@ export default {
         }
        
     }
+<<<<<<< HEAD
 //分享成功提示
 
 .share_success_wrap{
@@ -1000,3 +1004,7 @@ export default {
     
 }
 </style>
+=======
+// 
+</style>
+>>>>>>> 810d9bd20ae0b00513af7f57727e5b7db0f51acf

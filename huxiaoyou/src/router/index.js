@@ -12,6 +12,9 @@ import shopList from '@/components/shopList/shopList' //商品列表
 import ShopDetails from '@/components/ShopDetails/ShopDetails' //商品详情
 import orderList from '@/components/orderList/orderList' //订单列表
 import PlayerRanking from '@/components/PlayerRanking/PlayerRanking' //选手排行
+import PlayerRankingList from '@/components/PlayerRankingList/PlayerRankingList' //选手排行
+import TopList from '@/components/TopList/TopList' //选手排行
+import PlayerStyleDetailed from '@/components/PlayerStyleDetailed/PlayerStyleDetailed' //选手风采详情
 import PlayerShow from '@/components/PlayerShow/PlayerShow' //选手展示
 import AngelUnion from '@/components/AngelUnion/AngelUnion' //天使工会
 import PresentVideo from '@/components/PresentVideo/PresentVideo' //视频介绍
@@ -19,6 +22,7 @@ import PresentPhoto from '@/components/PresentPhoto/PresentPhoto' //添加照片
 import LivePlatform from '@/components/LivePlatform/LivePlatform' //直播平台
 
 import PlayerStyle from '@/components/PlayerStyle/PlayerStyle' //选手风采
+import SearchResult from '@/components/SearchResult/SearchResult' //选手风采
 import ReceiptAddress from '@/components/ReceiptAddress/Address' //收货地址
 import ReceiptAddressAdd from '@/components/ReceiptAddressAdd/AddressAdd' //收货地址添加
 import AddressEdit from '@/components/AddressEdit/AddressEdit' //编辑收货地址
@@ -98,6 +102,16 @@ export default new Router({
             name: 'PlayerRanking',
             component: PlayerRanking
         },
+      { //选手
+        path: '/PlayerRankingList',
+        name: 'PlayerRankingList',
+        component: PlayerRankingList
+      },
+      { //top榜
+        path: '/TopList',
+        name: 'TopList',
+        component: TopList
+      },
         { //选手排行
             path: '/PlayerShow',
             name: 'PlayerShow',
@@ -208,5 +222,15 @@ export default new Router({
             name: 'ConfirmOrder',
             component: ConfirmOrder
         },
+        { //选手风采详情
+        path: '/PlayerStyleDetailed',
+        name: 'PlayerStyleDetailed',
+        component: PlayerStyleDetailed
+        },,
+      { //搜索结果
+        path: '/SearchResult',
+        name: 'SearchResult',
+        component: SearchResult
+      },
     ]
 })
