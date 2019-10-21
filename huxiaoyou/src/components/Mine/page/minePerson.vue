@@ -10,7 +10,7 @@
                   <img :src="personData.head_pic" alt="" class="minePerson_Avatar">
                   <div class="minePerson_InfoRight">
                       <div class="minePerson_InfoRiTop">
-                        <span class="minePerson_InfoName">丹丹的小{{personData.username}}</span>
+                        <span class="minePerson_InfoName">{{personData.username}}</span>
                         <div class="minePerson_InfoVip"><img :src="staticImgH+'Mine_vip.png'" alt=""><span>一级狐小仙</span></div>
                       </div>
                       <span class="minePerson_InfoRiBott" >{{personData.names}}</span>
@@ -71,7 +71,7 @@
                   <img :src="personData.head_pic" alt="" class="minePerson_Avatar">
                   <div class="minePerson_InfoRight">
                       <div class="minePerson_InfoRiTop">
-                        <span class="minePerson_InfoName">丹丹的小{{personData.username}}</span>
+                        <span class="minePerson_InfoName">{{personData.username}}</span>
                         <div class="minePerson_InfoVip"><img :src="staticImgH+'Mine_vip.png'" alt=""><span>一级狐小仙</span></div>
                       </div>
                       <span class="minePerson_InfoRiBott" >{{personData.names}}</span>

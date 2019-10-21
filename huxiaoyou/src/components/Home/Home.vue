@@ -111,8 +111,7 @@ export default {
         })
         this.$http.post('api/user/logins',LoginObj).then((res)=>{
           if(res.data.code==200){
-              console.log(res)
-            this.tokenHs(res.data.data.result.token)  //token
+                this.tokenHs(res.data.data.result.token)  //token
             if(res.data.data.result.is_tan==1){
                 this.ShowFirstEnter=true
             }else{

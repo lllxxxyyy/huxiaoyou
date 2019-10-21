@@ -69,14 +69,14 @@ export default {
             }).then((res)=>{
                 if(res.data.code==200){
                     if(res.data.data.result==-1){
+                        this.$router.push('/SignUp')
+                    }else{
                         this.playerIds(res.data.result.id)//保存选手id
                         this.addressIdIsSels('false') //投票盒子不显示 
                         this.PlayerDetailPages('/')  //选手详情返回页面
                         this.playDetailVoteDivs('false') //选手详情的投票盒子的消失
                         this.$router.push('/PlayerDetails')
                         this.$router.push('/PlayerDetails')
-                    }else{
-                        this.$router.push('/SignUp')
                     }
                 }else if(res.data.data.result==1){
                     var self=this
