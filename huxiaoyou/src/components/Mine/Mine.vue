@@ -2,7 +2,7 @@
 <template>
   <div class="mine">
       <minePerson/>
-      <mineOrderlist/>
+      <!-- <mineOrderlist/> -->
       <mineBtns/>
       <div class="Mine_SingingChina">歌游中国</div>
       <div class="footer">
@@ -45,7 +45,6 @@ export default {
 <style scoped lang="stylus">
 .mine{
   width:100%;
-  height:100%;
   background :#fff;
 }
 .PublicFoot{

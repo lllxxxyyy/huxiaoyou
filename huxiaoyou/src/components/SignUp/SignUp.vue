@@ -78,17 +78,6 @@
               <span class="remind_btn" @click="addUnion">立即加入公会</span>
             </div>
       </div>
-      <div class="submitAlert_wrap"  v-if="submitAfterShow">
-          <div class="submitAlert">
-              <div class="submitAlert_cha" ><img @click="submitAlertCha" :src="staticImgH+'bao_cha.png'" alt=""></div>
-              <div class="submitAlert_img"><img  :src="staticImgH+'bao_img.png'" alt=""></div>
-              <div class="grasp" @click.stop="goliaojie"> 去了解</div>
-              <div class="erweima">
-                <img :src="erweimaImg" alt="">
-                <span>华北客服微信二维码</span>
-              </div>
-          </div>
-      </div>
       <!-- 提示盒子 -->
          <transition name="fade">
             <div class="promptFather" v-if="showPrompt">
@@ -97,6 +86,27 @@
                 </div>
             </div>
         </transition>
+      <!-- 恭喜您报名成功  -->
+      <div class="sign_success_wrap"  v-if="showSignSuccess">
+         <div class="sign_success" >
+              <div class="sign_Cha"><img @click.stop="signSuccessSha"  :src="staticImgH+'cha.png'" alt=""></div>
+              <img class="sign_succeddImg" :src="staticImgH+'sign_success.png'">
+              <span class="sign_succeddtext">您获得了一个多赚10%的机会！</span>
+              <div class="sign_succeddBtn" @click.stop="addUnion">去了解</div>
+              <img class="erweima_img" :src="staticImgH+'erweima_img.png'" alt="">
+              <span class="erweima_des">华北客服微信二维码</span>
+              <img class="erweima_down" :src="erweimaImg" alt="">
+         </div>
+      </div>
+       <!-- 恭喜您报名成功  -->
+      <div class="sign_fail_wrap" v-if="showSignFail">
+         <div class="sign_fail">
+              <div class="sign_fail_Cha"><img @click.stop="signFailSha"  :src="staticImgH+'cha.png'" alt=""></div>
+              <img class="sign_failImg" :src="staticImgH+'sign_fail.png'">
+              <span class="sign_failtext">您可以加入公共参加分享赚钱活动</span>
+              <div class="sign_failBtn" @click.stop="addUnion">去了解</div>
+         </div>
+      </div>
   </div>
 </template>
 <script>
@@ -133,7 +143,8 @@ export default {
           name:'赛区介绍'
         },
       ],
-      submitAfterShow:false,
+      showSignSuccess:false,//报名成功提示默认消失
+      showSignFail:false,//报名失败提示默认消失
       divisionData:'',  //赛区数据
       selectValue:'',//赛区id
       username:'',//用户名
@@ -146,6 +157,7 @@ export default {
 
       citySHow:false,  //城市列表显示
       uploadimgsOpacity:false,  //  个人形象的显示与消失
+
 
       // 提示盒子
       promptContent:'', //提示盒子的内容
@@ -213,6 +225,14 @@ export default {
     })
   },
   methods: {
+    // 点报名成功提示上的X
+    signSuccessSha(){
+      this.$router.push('/')
+    },
+     // 点报名失败提示上的X
+    signFailSha(){
+      this.showSignFail=false
+    },
      //   选择性别
       sexSelectC(id){
           this.sexImgIndex=id
@@ -221,10 +241,6 @@ export default {
       },
     submitAlertCha(){
       this.$router.push('/')
-    },
-    // 去了解
-    goliaojie(){
-       this.$router.push('/AddUnion')
     },
      addUnion(){
         this.$router.push('/AddUnion')
@@ -391,8 +407,10 @@ export default {
                   }
                 }).then((res) => {
                         if(res.data.code==200){
-                            this.submitAfterShow=true
+                            this.showSignSuccess=true
                             this.erweimaImg=res.data.data.img
+                        }else if(res.data.code==0){
+                            this.showSignSuccess=showSignFail
                         }else{
                              var self=this
                               clearInterval(self.timer2);
@@ -859,6 +877,112 @@ export default {
       }
     }
   }
-
+}
+// 报名成功提示
+.sign_success_wrap{
+    width:100%;
+    height:100%;
+    position:fixed;
+    top:0;
+    left:0;
+    background:rgba(0,0,0,0.9);
+    z-index:999;
+    .sign_success{
+        margin-top:0.5rem;
+        display:flex;
+        flex-direction :column;
+        align-items:center;
+        >.sign_Cha{
+          width:7.91rem;
+          text-align:right;
+          >img{
+            width:0.493rem;
+            height:0.493rem;
+            margin-right:0.187rem;
+          }
+        }
+        >.sign_succeddImg{
+          width:7.91rem;
+          height:8.99rem;
+        }
+        >.sign_succeddtext{
+          font-size:0.43rem;
+          color:rgba(236, 10, 66, 1);
+          line-height:0.5rem;
+          margin-top:0.27rem;
+          margin-bottom:0.4rem;
+        }
+        >.sign_succeddBtn{
+          width:3.95rem;
+          height:0.8rem;
+          border-radius:0.67rem;
+          background:rgba(255, 157, 172, 1);
+          font-size:0.347rem;
+          color:rgba(255, 255, 255, 1);
+          text-align :center;
+          line-height:0.8rem;
+        }
+        >.erweima_img{
+          width:2.63rem;
+          height:2.63rem;
+          margin-top:1rem;
+          margin-bottom:0.32rem;
+        }
+        >.erweima_des{
+          font-size:0.347rem;
+          color:rgba(255, 255, 255, 1);
+        }
+        >.erweima_down{
+          width:0.3rem;
+          height:0.32rem;
+          margin-top:0.2rem;
+        }
+    }
+}
+// 报名失败提示
+.sign_fail_wrap{
+    width:100%;
+    height:100%;
+    position:fixed;
+    top:0;
+    left:0;
+    background:rgba(0,0,0,0.9);
+    z-index:999;
+    .sign_fail{
+        margin-top:1.6rem;
+        display:flex;
+        flex-direction :column;
+        align-items:center;
+        >.sign_fail_Cha{
+          width:7.91rem;
+          text-align:right;
+          >img{
+            width:0.493rem;
+            height:0.493rem;
+            margin-right:0.187rem;
+          }
+        }
+        >.sign_failImg{
+          width:7.88rem;
+          height:8.9rem;
+        }
+        >.sign_failtext{
+          font-size:0.43rem;
+          color:rgba(236, 10, 66, 1);
+          line-height:0.5rem;
+          margin-top:0.27rem;
+          margin-bottom:0.4rem;
+        }
+        >.sign_failBtn{
+          width:3.95rem;
+          height:0.8rem;
+          border-radius:0.67rem;
+          background:rgba(255, 157, 172, 1);
+          font-size:0.347rem;
+          color:rgba(255, 255, 255, 1);
+          text-align :center;
+          line-height:0.8rem;
+        }
+    }
 }
 </style>

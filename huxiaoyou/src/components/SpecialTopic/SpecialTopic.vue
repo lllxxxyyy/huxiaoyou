@@ -2,7 +2,7 @@
 <template>
   <div class="SpecialTopic">
       <div class="SpecialTopicHeader">
-          <img :src="staticImgH+'zuojiantou.png'" alt="">
+          <img @click="specialReturn"  :src="staticImgH+'zuojiantou.png'" alt="">
           <span>往届大赛风采</span>   
       </div>
 <div class="shopHide"></div>
@@ -47,7 +47,6 @@ export default {
                     'authorization': this.tokenH
                 }
     }).then((res)=>{
-        console.log(res)
       if(res.data.code==200){
           this.specialList=res.data.data.result
       }
@@ -55,6 +54,9 @@ export default {
   },
 
   methods: {
+      specialReturn(){
+          this.$router.push('/')
+      },
     SpecialBarBtn(index){
           this.SpecialBarindex=index
       },

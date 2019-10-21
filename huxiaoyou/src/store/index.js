@@ -3,12 +3,13 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 const state = {
     WpersonInfoH: JSON.parse(localStorage.getItem('WpersonInfoH')) || {},
-    tokenH: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJpc3MiOiJodHRwczpcL1wvbG92eW91LnRvcCIsImF1ZCI6Imh0dHBzOlwvXC9sb3Z5b3UudG9wIiwiaWF0IjoxNTcxNDYzNDE5LCJuYmYiOjE1NzE0NjM0MTksImV4cCI6MTYwMjk5OTQxOX0.0KiK6W3gjuAKNuVz4B3QrjaFLueccnMXG7beG9Pqnl4',
+    tokenH: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJpc3MiOiJodHRwczpcL1wvbG92eW91LnRvcCIsImF1ZCI6Imh0dHBzOlwvXC9sb3Z5b3UudG9wIiwiaWF0IjoxNTcxNTY0NDk4LCJuYmYiOjE1NzE1NjQ0OTgsImV4cCI6MTYwMzEwMDQ5OH0.rdIvz6Op71fQoygCztRay32bA-eI2qrN1Y-J-FFJ6Hc',
+    userIdH: localStorage.getItem('userIdH'), //用户Id
+    userIdHInterest: localStorage.getItem('userIdHInterest'), //分享出去的商品详情页需要得到利益的用户Id
     idxNowH: localStorage.getItem('idxNowH'),
     staticImgH: '../../static/mock/img/',
     apiH: 'http://app.aibebi.net',
     playerId: sessionStorage.getItem('playerId'), //选手编号
-    userIdH: sessionStorage.getItem('userIdH'), //给卡包详情页面传userId
     addressId: sessionStorage.getItem('addressId'), //收货地址id
     addressIdIsSel: sessionStorage.getItem('addressIdIsSel'), //投助力票时判断是否选中了地址
     editAddressDes: sessionStorage.getItem('editAddressDes'), //编辑地址页面信息
@@ -96,8 +97,12 @@ const mutations = {
         state.playerId = playerId
     },
     userIdHs(state, userIdH) {
-        sessionStorage.setItem('userIdH', userIdH);
+        localStorage.setItem('userIdH', userIdH);
         state.userIdH = userIdH
+    },
+    userIdHInterests(state, userIdHInterest) {
+        localStorage.setItem('userIdHInterest', userIdHInterest);
+        state.userIdHInterest = userIdHInterest
     },
     addressIds(state, addressId) {
         sessionStorage.setItem('addressId', addressId);

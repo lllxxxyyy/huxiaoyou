@@ -26,16 +26,16 @@ export default {
             },
             {
                 id:1,
-                name:'赛事',
-                img1:'/static/mock/img/fenleiBtn.png',
-                img2:'/static/mock/img/fenleiBtn.png',
+                name:'赛事商务',
+                img1:'/static/mock/img/Event.png',
+                img2:'/static/mock/img/EventRed.png',
                 url:'/Sort'
             },
             {
                 id:2,
-                name:'榜单',
-                img1:'/static/mock/img/shopBtn.png',
-                img2:'/static/mock/img/shopBtnRed.png',
+                name:'公会',
+                img1:'/static/mock/img/UnionBtn.png',
+                img2:'/static/mock/img/UnionBtnRed.png',
                 url:'/Shop'
             },
             {

@@ -7,14 +7,14 @@
           <span>专题详情</span>
       </div>
       <div class="shopHide"></div>
-      <div class="SpecialDetails_title">
+      <div class="SpecialDetails_title" v-if="specialDetailData">
           {{specialDetailData.title}}
       </div>
       <!-- <div class="SpecialDetails_des">
             <span>2019-10-13</span>
             <span>10万+人浏览</span>
       </div> -->
-      <div class="SpecialDetails_Con" v-html="specialDetailData.content"></div>
+      <div class="SpecialDetails_Con" v-if="specialDetailData" v-html="specialDetailData.content"></div>
       <!-- <ul class="SpecialDetails_foot">
           <li class="SpecialDetails_collect">
               <img src="" alt="">
@@ -54,15 +54,15 @@ export default {
                 }
     }).then((res)=>{
       if(res.data.code==200){
+          console.log(res)
           this.specialDetailData=res.data.data.result[0]
-          console.log(this.specialDetailData)
       }
     })
   },
 
   methods: {
     toReturn(){
-
+        this.$router.push('/SpecialTopic')
     }
   }
 }

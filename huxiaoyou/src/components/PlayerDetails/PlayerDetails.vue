@@ -59,56 +59,65 @@
                     <span class="EnterBtn">我也参赛</span>
                 </div>
             </div>
-      <div v-if="detailData.user_introduction">
-
-        <video id="video1" width="399" height="300" poster="video_bg.jpg">
-            <source :src="detailData.user_introduction" type="video/mp4" />
-        </video>
-      </div>
-      <!-- 小图 -->
-      <ul class="playerImg_list">
-          <li @click="changeBigImg(index)" v-for="(item,index) in detailData.photo_introduction" :key="index">
-              <img :src="item.src" alt="">
-          </li>
-      </ul>
+        <!-- 视频 -->
+            <div v-if="detailData.user_introduction">
+                <video id="video1" width="399" height="300" poster="video_bg.jpg">
+                    <source :src="detailData.user_introduction" type="video/mp4" />
+                </video>
+            </div>
+        <!-- 小图 -->
+            <ul class="playerImg_list">
+                <li @click="changeBigImg(index)" v-for="(item,index) in detailData.photo_introduction" :key="index">
+                    <img :src="item.src" alt="">
+                </li>
+            </ul>
       <!-- 大图 -->
-      <ul class="BigplayerImg_list" v-if="showBigPlayImg" @click="hideBigPlayImg">
-          <li  v-for="(item,index) in detailData.photo_introduction" :key="index" v-if="index==bigPlayImgIndex">
-              <img :src="item.src" alt="">
-          </li>
-      </ul>
+            <ul class="BigplayerImg_list" v-if="showBigPlayImg" @click="hideBigPlayImg">
+                <li  v-for="(item,index) in detailData.photo_introduction" :key="index" v-if="index==bigPlayImgIndex">
+                    <img :src="item.src" alt="">
+                </li>
+            </ul>
       <!-- 投票盒子 -->
-      <div class="vote_wrap" v-if="voteShow" @click.stop="hideVote">
-      <div class="vote"  @click.stop>
-          
-          <div class="FreeTicket">
-              <span class="FreeTicket_title">免费票(剩余{{personData.user_votes}}票)</span>
-              <span class="FreeTicket_btn" @click.stop="freeticket">立即投票</span>
-          </div>
-          <div class="AssistTicket">
-                <div class="AssistTicket_title">助力票</div>  
-                <span class="AssistTicket_text">助力票为实物，投票后请输入正确的收获地址，我司正常发货。</span>
-                <div class="SpecialTopicBody_bar">
-                    <!-- 商品列表 -->
-                    <ul>
-                        <li :class="barcolorIndex==index?'SpecialTopicBody_barColor':''" @click.stop="getShopDes(item.goods_id,index)" v-for="(item,index) in shopList" :key="index">
-                            <img :src="item.original_img" alt="">
-                             <span @click.stop="toshopdetail(item.goods_id)">查看详情>></span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="AssistTicket_btn" @click.stop="AssistTicket">立即投票</div>
-          </div>
-      </div>
-      </div>
-      <!-- 提示盒子 -->
-        <transition name="fade">
-            <div class="promptFather" v-if="showPrompt">
-                <div class="prompt" >
-                    {{promptContent}}
+            <div class="vote_wrap" v-if="voteShow" @click.stop="hideVote">
+                <div class="vote"  @click.stop>
+                    <!-- 免费票 -->
+                    <div class="FreeTicket">
+                        <span class="FreeTicket_title">免费票(剩余{{personData.user_votes}}票)</span>
+                        <span class="FreeTicket_btn" @click.stop="freeticket">立即投票</span>
+                    </div>
+                    <!-- 助力票 -->
+                    <div class="AssistTicket">
+                            <div class="AssistTicket_title">助力票</div>  
+                            <span class="AssistTicket_text">助力票为实物，投票后请输入正确的收获地址，我司正常发货。</span>
+                            <div class="SpecialTopicBody_bar">
+                                <!-- 商品列表 -->
+                                <ul>
+                                    <li :class="barcolorIndex==index?'SpecialTopicBody_barColor':''" @click.stop="getShopDes(item.goods_id,index)" v-for="(item,index) in shopList" :key="index">
+                                        <img :src="item.original_img" alt="">
+                                        <span @click.stop="toshopdetail(item.goods_id)">查看详情>></span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="AssistTicket_btn" @click.stop="AssistTicket">立即投票</div>
+                    </div>
                 </div>
             </div>
-        </transition>
+        <!-- 提示盒子 -->
+            <transition name="fade">
+                <div class="promptFather" v-if="showPrompt">
+                    <div class="prompt" >
+                        {{promptContent}}
+                    </div>
+                </div>
+            </transition>
+        <!-- 分享成功提示 -->
+            <div class="share_success_wrap" v-if="ShowShareSuccess">
+                <div class="share_success">
+                     <img  class="firstEnter_chaimg" @click="shareSuccessCha" :src="staticImgH+'cha.png'" alt="">
+                    <img class="add_successImg" :src="staticImgH+'share_success.png'">
+                </div>
+            </div>
+            
   </div>
 </template>
 
@@ -127,18 +136,19 @@ export default {
             observer:true,
             observeParents:true,
             loop:true,
-            
             autoplay: {
-        　　    disableOnInteraction: false,
-        　　},
+            　　    disableOnInteraction: false,
+            　　},
             speed:300,
         },
 
+        ShowShareSuccess:false,
         voteShow:false,   //投票盒子默认消失
         detailData:'',   //选手信息数据
         shopList:'',  // 商品列表数据
         personData:'',  //个人用户信息（这里主要用到免费票数）
         smallSwiper:'',//顶部小轮播数据
+        playerInterest:'',//获得利益的选手Id
         
         test:'',  //微信分享的认证数据
         dataResult:'',  //微信支付认证信息数据
@@ -162,6 +172,7 @@ export default {
             ...mapState(['staticImgH','playerId','addressIdIsSel','addressId','PlayerDetailPage','playDetailVoteDiv','tokenH','playDetailShopDES','apiH','shopDetatilshow','barcolorIndexShop','shopgoodId'])
         },
   mounted(){
+    
     //  判断是否是分享出去的
         var shopUrl = window.location.href
             //var shopUrl = 'http://mobile.aibebi.cn/aibei/shopList.html?goods_id=1482'
@@ -182,22 +193,9 @@ export default {
                         shopUrlId[shopCan] = value;  // key value放到shopUrlId对象里
                     }
                 }
-                this.playerIds(shopUrlId.player_id)
-        }
-    //   判断是否显示助力盒子
-        if(this.playDetailVoteDiv=='true'){   //  playDetailVoteDiv 是判断投票盒子是否显示
-                this.voteShow=true    //显示助力盒子
-                if(this.addressIdIsSel=='true'){   //addressIdIsSel   是判断地址是否选中 或者 没有地址是否添加上地址了 ture为有地址可以走支付
-                    this.goodId=this.playDetailShopDES.goodsId   
-                    this.playerIds(this.playDetailShopDES.playerId) 
-                    this.barcolorIndex=this.playDetailShopDES.barcolorIndex   //被选中商品下标
-                    this.AssistTicketTwo()
-                }else if(this.shopDetatilshow=='true'){
-                    this.goodId=this.shopgoodId
-                    this.barcolorIndex=this.barcolorIndexShop
+                if(shopUrlId.player_id){
+                    this.playerIds(shopUrlId.player_id)
                 }
-            }else if(this.playDetailVoteDiv=='false'){
-                this.voteShow=false  //隐藏助力盒子
         }
     //   选手信息
         var obj=qs.stringify({
@@ -209,8 +207,23 @@ export default {
                 }
             }).then((res)=>{
                 if(res.data.code==200){
-                    console.log(res)
                     this.detailData=res.data.data
+                    this.playerInterest=this.detailData.user_id
+                    //判断是否显示助力盒子
+                        if(this.playDetailVoteDiv=='true'){   //  playDetailVoteDiv 是判断投票盒子是否显示
+                            this.voteShow=true    //显示助力盒子
+                            if(this.addressIdIsSel=='true'){   //addressIdIsSel   是判断地址是否选中 或者 没有地址是否添加上地址了 ture为有地址可以走支付
+                                this.goodId=this.playDetailShopDES.goodsId   
+                                this.playerInterest=this.playDetailShopDES.playerId
+                                this.barcolorIndex=this.playDetailShopDES.barcolorIndex   //被选中商品下标
+                                this.AssistTicketTwo()
+                            }else if(this.shopDetatilshow=='true'){ //单纯的选中商品
+                                this.goodId=this.shopgoodId
+                                this.barcolorIndex=this.barcolorIndexShop
+                            }
+                        }else if(this.playDetailVoteDiv=='false'){
+                            this.voteShow=false  //隐藏助力盒子
+                        }
                 }else{
                     var self=this
                     clearInterval(self.timer2);
@@ -247,220 +260,294 @@ export default {
         this.getpaioNUm()
     //   微信分享
         var Wobj=qs.stringify({
-            player_id:this.playerId,
-            type:2,
-        })
-        this.$http.post('/api/wechat/get_sign',Wobj,{
-            headers: {
-                    'authorization': this.tokenH
+                player_id:this.playerId,
+                type:2,
+            })
+            this.$http.post('/api/wechat/get_sign',Wobj,{
+                headers: {
+                        'authorization': this.tokenH
+                    }
+                }).then((res)=>{
+                if(res.data.code==200){
+                    var data=res.data.data
+                    this.test=data.test
+                        wx.config({
+                            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                            appId: data.appId, // 必填，公众号的唯一标识
+                            timestamp:data.timestamp, // 必填，生成签名的时间戳
+                            nonceStr: data.nonceStr, // 必填，生成签名的随机串
+                            signature: data.signature,// 必填，签名
+                            jsApiList: ['onMenuShareAppMessage','onMenuShareTimeline'] // 必填，需要使用的JS接口列表
+                        });
+                        this.toFriend()
+                        this.toFriendQuan()
+                }else{
+                        var self=this
+                        clearInterval(self.timer2);
+                        this.promptContent=res.data.msg
+                        this.showPrompt=true
+                        self.timer2=setTimeout(function(){
+                            self.showPrompt=false
+                            clearInterval(self.timer2);
+                        },1000)
+                        return false;
                 }
+        })
+    //  获取小轮播数据
+        this.$http.post('/api/first/vote_list',obj,{
+                headers: {
+                        'authorization': this.tokenH
+                    }
             }).then((res)=>{
-            if(res.data.code==200){
-                var data=res.data.data
-                this.test=data.test
-                    wx.config({
-                        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-                        appId: data.appId, // 必填，公众号的唯一标识
-                        timestamp:data.timestamp, // 必填，生成签名的时间戳
-                        nonceStr: data.nonceStr, // 必填，生成签名的随机串
-                        signature: data.signature,// 必填，签名
-                        jsApiList: ['onMenuShareAppMessage','onMenuShareTimeline'] // 必填，需要使用的JS接口列表
-                    });
-                    this.toFriend()
-                    this.toFriendQuan()
-            }else{
+                this.smallSwiper=res.data.data
+        })
+  },
+  methods: {
+        //分享成功提示上的X
+            shareSuccessCha(){
+                this.ShowShareSuccess=false
+            },
+        //   点击投票
+            vote(){
+                this.addressIdIsSels('false')   // 每点击投票 重置为未选中地址状态
+                this.shopDetatilshows('false')  //
+                this.goodId=''  //每点击投票 商品id重置为空
+                this.voteShow=true   //投票盒子显示
+            },              
+        // 助力票 （立即投票按钮）
+            AssistTicket(){
+                // 先判断有没有goodId
+                if(this.goodId==''){
                     var self=this
                     clearInterval(self.timer2);
-                    this.promptContent=res.data.msg
+                    this.promptContent='请先选择商品'
                     this.showPrompt=true
                     self.timer2=setTimeout(function(){
                         self.showPrompt=false
                         clearInterval(self.timer2);
                     },1000)
                     return false;
-            }
-        })
-    //  获取小轮播数据
-        this.$http.post('/api/first/vote_list',obj,{
-            headers: {
-                    'authorization': this.tokenH
-                }
-        }).then((res)=>{
-            this.smallSwiper=res.data.data
-        })
-  },
-
-  methods: {
-    //   到商品id
-    toshopdetail(goodid){
-        this.addressIdIsSels('false') //商品页默认地址不选中
-        this.shopDetailReturns('/PlayerDetails')//商品页返回哪
-        this.playDetailVoteDivs('true')  //设置为true是为了返回到当前页面的时候 助力盒子显示
-        this.barcolorIndexShops(this.barcolorIndex) //为了返回到当前页面的时候 显示哪个商品被选中状态
-        this.shopDetatilshows('true')  // 判断是不是商品详情页返回到此页面
-        this.shopgoodIds(goodid)  //给商品页传gooid
-        this.userIdHs(this.detailData.user_id) //给商品页传选手id
-        this.playerIds(this.playerId)
-        this.$router.push('/shopDetail')  
-    },
-    //   隐藏放大的图片
-    hideBigPlayImg(){
-        this.showBigPlayImg=false
-    },
-    //   显示大图
-    changeBigImg(index){
-        this.showBigPlayImg=true
-        this.bigPlayImgIndex=index
-    },
-       //   分享给朋友
-      toFriend(){
-                var vm=this
-                var realLocation=vm.apiH+'/#/PlayerDetails?player_id='+vm.playerId 
-                wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
-                    wx.onMenuShareAppMessage({ 
-                        title:vm.test, // 分享标题
-                        desc:'快来给我投票吧', // 分享描述
-                        link:vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                        imgUrl: vm.detailData.head_pic, // 分享图标
-                        success: function (res) {
+                }else{ //否则判断有没有地址
+                        if(this.addressIdIsSel=='false'){   //如果 addressIdIsSel为false 选择获取添加地址
+                            var obj=qs.stringify({
+                            })
+                            this.$http.post("api/user/address_list",obj,{
+                                headers: {
+                                        'authorization': this.tokenH
+                                    }
+                            }).then((res)=>{
+                                this.playDetailVoteDivs('true')  //设置为true是为了返回到当前页面的时候 助力盒子显示
+                                this.playDetailShopDESs({goodsId:this.goodId,playerId:this.detailData.user_id,barcolorIndex:this.barcolorIndex})  //保存信息，为返回到当前页面的时候可以进行支付
+                                if(res.data.data.length){  //跳选择地址列表页面
+                                    this.ReceiptAddressPages('/PlayerDetails')
+                                    this.$router.push('/ReceiptAddress')
+                                }else{  //跳添加地址列表页面
+                                    this.ReceiptAddressAddPages('/PlayerDetails')
+                                    this.$router.push('/ReceiptAddressAdd')
+                                }
+                            })
+                        }else if(this.addressIdIsSel=='true'){  //否则进行支付
+                                this.AssistTicketTwo()
                         }
-                    })
-                });
-      },
-    //   分享到朋友圈
-      toFriendQuan(){
-          var vm=this
-          var realLocation=vm.apiH+'/#/PlayerDetails?player_id='+vm.playerId 
-           wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
-                wx.onMenuShareTimeline({
-                        title:vm.test, // 分享标题
-                        link: vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation),  // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                        imgUrl:vm.detailData.head_pic, // 分享图标
-                        success: function (res) {
-                        },
-                })
-          });
-      },
-    // 获取免费票数  
-      getpaioNUm(){
-          var obj=qs.stringify({
-            })
-            this.$http.post('api/user/info',obj,{
-                headers: {
-                    'authorization': this.tokenH
                 }
-            }).then((res)=>{
-                if(res.data.code==200){
-                    this.personData=res.data.data
-                }else{
-                    var self=this
-                    clearInterval(self.timer2);
+            },
+        // 助力
+            AssistTicketTwo(){
+                var obj=qs.stringify({
+                    goods_id:this.goodId,
+                    player_id:this.playerInterest,
+                    address_id:this.addressId
+                })
+                this.$http.post('api/goods/goods_buyer',obj,{
+                        headers: {
+                                'authorization': this.tokenH
+                            }
+                    }).then((res)=>{
+                    if(res.data.code==200){
+                        this.orderSn=res.data.data.result  //订单编号
+                        this.getPayPermit()
+                    }else{
+                        var self=this
+                            clearInterval(self.timer2);
                             this.promptContent=res.data.msg
                             this.showPrompt=true
                             self.timer2=setTimeout(function(){
                                 self.showPrompt=false
                                 clearInterval(self.timer2);
                             },2000)
-                        return false;
-                }
-            
-            })
-      },
-        //   隐藏投票盒子
-        hideVote(){
-            this.voteShow=false
-            this.barcolorIndex=-1
-        },
-       
-    //   先判断是否有地址
-    AssistTicket(){
-        // 先判断有没有goodId
-        if(this.goodId==''){
-            var self=this
-            clearInterval(self.timer2);
-            this.promptContent='请先选择商品'
-            this.showPrompt=true
-            self.timer2=setTimeout(function(){
-                self.showPrompt=false
-                clearInterval(self.timer2);
-            },1000)
-            return false;
-        }else{ //否则判断有没有地址
-                if(this.addressIdIsSel=='false'){   //如果 addressIdIsSel为false 选择获取添加地址
-                    var obj=qs.stringify({
-                    })
-                    this.$http.post("api/user/address_list",obj,{
+                            return false;
+                    }
+                })
+            },
+        // 支付 wx.config
+            getPayPermit(){
+                var PayPermitObj=qs.stringify({
+                    order_sn:this.orderSn,
+                    trade_type:'JSAPI',
+                })
+                this.$http.post('api/wechat/dopay',PayPermitObj,{
                         headers: {
                                 'authorization': this.tokenH
                             }
                     }).then((res)=>{
-                        this.playDetailVoteDivs('true')  //设置为true是为了返回到当前页面的时候 助力盒子显示
-                        this.playDetailShopDESs({goodsId:this.goodId,playerId:this.playerId,barcolorIndex:this.barcolorIndex})  //保存信息，为返回到当前页面的时候可以进行支付
-                        if(res.data.data.length){  //跳选择地址列表页面
-                            this.ReceiptAddressPages('/PlayerDetails')
-                            this.$router.push('/ReceiptAddress')
-                        }else{  //跳添加地址列表页面
-                            this.ReceiptAddressAddPages('/PlayerDetails')
-                            this.$router.push('/ReceiptAddressAdd')
+                        if(res.data.code==200){
+                            var data=res.data.data
+                            this.dataResult=data //微信支付认证信息
+                            var vm=this
+                            wx.config({
+                                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                                appId: data.appId, // 必填，公众号的唯一标识
+                                timestamp:data.timeStamp, // 必填，生成签名的时间戳
+                                nonceStr: data.nonceStr, // 必填，生成签名的随机串
+                                signature: data.sign,// 必填，签名
+                                jsApiList: ['chooseWXPay'] // 必填，需要使用的JS接口列表
+                            });
+                            this.payLe()
+                        }else{
+                            var self=this
+                            clearInterval(self.timer2);
+                                    this.promptContent=res.data.msg
+                                    this.showPrompt=true
+                                    self.timer2=setTimeout(function(){
+                                        self.showPrompt=false
+                                        clearInterval(self.timer2);
+                                    },2000)
+                                return false;
                         }
+                })
+            },
+        //支付  wx.chooseWXPay
+            payLe(){
+                    this.addressIdIsSels('false') //商品页默认地址不选中
+                    var vm=this
+                    wx.ready(function(){
+                        wx.chooseWXPay({
+                            timestamp: vm.dataResult.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+                            nonceStr: vm.dataResult.nonceStr, // 支付签名随机串，不长于 32 位
+                            package: vm.dataResult.packag, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
+                            signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+                            paySign:  vm.dataResult.sign, // 支付签名
+                            success: function (res) {
+                                this.myOrderListPages('/PlayerDetails')  //订单列表页返回
+                                vm.orderTypes('WAITSEND')  //订单页面orderType
+                                vm.orderNums(2)   //订单页面导航下标
+                                vm.$router.push('/orderList')  //支付成功后跳订单列表
+                            },
+                            fail(){
+                                alert('支付失败')
+                            }
+                        });
+                    }) 
+            },
+        //   到商品id
+            toshopdetail(goodid){
+                this.addressIdIsSels('false') //商品页默认地址不选中
+                this.shopDetatilshows('true')  // 判断是不是商品详情页返回到此页面
+                this.playDetailVoteDivs('true')  //设置为true是为了返回到当前页面的时候 助力盒子显示
+                this.barcolorIndexShops(this.barcolorIndex) //为了返回到当前页面的时候 显示哪个商品被选中状态
+                this.shopDetailReturns('/PlayerDetails')//商品页返回哪
+                this.shopgoodIds(goodid)  //给商品页传gooid
+                this.playerIds(this.playerId)  //保存当前选手的playerID
+                this.userIdHInterests(this.detailData.user_id)  //给商品页传获得利益的选手编号
+                this.$router.push('/shopDetail')  
+            },
+        //   隐藏放大的图片
+            hideBigPlayImg(){
+                this.showBigPlayImg=false
+            },
+        //   显示大图
+            changeBigImg(index){
+                this.showBigPlayImg=true
+                this.bigPlayImgIndex=index
+            },
+        //   分享给朋友
+            toFriend(){
+                        var vm=this
+                        var realLocation=vm.apiH+'/#/PlayerDetails?player_id='+vm.playerId 
+                        wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+                            wx.onMenuShareAppMessage({ 
+                                title:vm.test, // 分享标题
+                                desc:'快来给我投票吧', // 分享描述
+                                link:vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                                imgUrl: vm.detailData.head_pic, // 分享图标
+                                success: function (res) {
+                                }
+                            })
+                        });
+            },
+        //   分享到朋友圈
+            toFriendQuan(){
+                var vm=this
+                var realLocation=vm.apiH+'/#/PlayerDetails?player_id='+vm.playerId 
+                wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+                        wx.onMenuShareTimeline({
+                                title:vm.test, // 分享标题
+                                link: vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation),  // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                                imgUrl:vm.detailData.head_pic, // 分享图标
+                                success: function (res) {
+                                },
+                        })
+                });
+            },
+        //   隐藏投票盒子
+            hideVote(){
+                this.voteShow=false
+                this.barcolorIndex=-1
+            },
+        // 获取goodid
+            getShopDes(goodId,index){
+                this.barcolorIndex=index  //被选中下标
+                this.goodId=goodId   
+            },
+        //  返回
+            toReturn(){
+                this.$router.push(this.PlayerDetailPage)  //PlayerDetailPage（vuex中全局定义，动态设置返回页面）
+            },
+        // 获取免费票数  
+            getpaioNUm(){
+                var obj=qs.stringify({
                     })
-                }else if(this.addressIdIsSel=='true'){  //否则进行支付
-                        this.AssistTicketTwo()
-                }
-        }
-    },
-    // 助力
-    AssistTicketTwo(){
-          var obj=qs.stringify({
-              goods_id:this.goodId,
-              player_id:this.playerId,
-              address_id:this.addressId
-          })
-          this.$http.post('api/goods/goods_buyer',obj,{
-                headers: {
-                        'authorization': this.tokenH
-                    }
-            }).then((res)=>{
-              if(res.data.code==200){
-                  this.orderSn=res.data.data.result  //订单编号
-                  this.getPayPermit()
-              }else{
-                   var self=this
-                    clearInterval(self.timer2);
-                    this.promptContent=res.data.msg
-                    this.showPrompt=true
-                    self.timer2=setTimeout(function(){
-                        self.showPrompt=false
-                        clearInterval(self.timer2);
-                    },2000)
-                    return false;
-              }
-          })
-    },
-     //   支付 wx.config
-        getPayPermit(){
-            var PayPermitObj=qs.stringify({
-                order_sn:this.orderSn,
-                trade_type:'JSAPI',
-            })
-            this.$http.post('api/wechat/dopay',PayPermitObj,{
-                    headers: {
+                    this.$http.post('api/user/info',obj,{
+                        headers: {
                             'authorization': this.tokenH
+                        }
+                    }).then((res)=>{
+                        if(res.data.code==200){
+                            this.personData=res.data.data
+                        }else{
+                            var self=this
+                            clearInterval(self.timer2);
+                                    this.promptContent=res.data.msg
+                                    this.showPrompt=true
+                                    self.timer2=setTimeout(function(){
+                                        self.showPrompt=false
+                                        clearInterval(self.timer2);
+                                    },2000)
+                                return false;
+                        }
+                    
+                    })
+            },
+        //   免费票（点击投票）
+            freeticket(){
+                var obj=qs.stringify({
+                    player_id:this.playerId
+                })
+                this.$http.post('api/user/spend_vote',obj,{
+                    headers: {
+                            'authorization':this.tokenH
                         }
                 }).then((res)=>{
                     if(res.data.code==200){
-                        var data=res.data.data
-                        this.dataResult=data //微信支付认证信息
-                        var vm=this
-                        wx.config({
-                            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-                            appId: data.appId, // 必填，公众号的唯一标识
-                            timestamp:data.timeStamp, // 必填，生成签名的时间戳
-                            nonceStr: data.nonceStr, // 必填，生成签名的随机串
-                            signature: data.sign,// 必填，签名
-                            jsApiList: ['chooseWXPay'] // 必填，需要使用的JS接口列表
-                        });
-                        this.payLe()
+                        var self=this
+                        clearInterval(self.timer2);
+                                this.promptContent='投票成功'
+                                this.showPrompt=true
+                                self.timer2=setTimeout(function(){
+                                    self.showPrompt=false
+                                    clearInterval(self.timer2);
+                                },2000)
+                            return false;
                     }else{
                         var self=this
                         clearInterval(self.timer2);
@@ -472,81 +559,9 @@ export default {
                                 },2000)
                             return false;
                     }
-            })
-        },
-        //支付  wx.chooseWXPay
-        payLe(){
-                this.addressIdIsSels('false') //商品页默认地址不选中
-                var vm=this
-                wx.ready(function(){
-                    wx.chooseWXPay({
-                        timestamp: vm.dataResult.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
-                        nonceStr: vm.dataResult.nonceStr, // 支付签名随机串，不长于 32 位
-                        package: vm.dataResult.packag, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
-                        signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
-                        paySign:  vm.dataResult.sign, // 支付签名
-                        success: function (res) {
-                            this.myOrderListPages('/PlayerDetails')  //订单列表页返回
-                            vm.orderTypes('WAITSEND')  //订单页面orderType
-                            vm.orderNums(2)   //订单页面导航下标
-                            vm.$router.push('/orderList')  //支付成功后跳订单列表
-                        },
-                        fail(){
-                            
-                            alert('支付失败')
-                        }
-                    });
-                }) 
-        },
-    // 获取goodid
-      getShopDes(goodId,index){
-          this.barcolorIndex=index  //被选中下标
-            this.goodId=goodId   
-      },
-    //   返回
-      toReturn(){
-          this.$router.push(this.PlayerDetailPage)  //PlayerDetailPage（vuex中全局定义，动态设置返回页面）
-      },
-    //   点击投票
-      vote(){
-          this.addressIdIsSels('false')   // 没点击投票 （都要设置false,来进行重新选择地址）
-          this.voteShow=true   //投票盒子显示
-      },
-    //   免费票
-    freeticket(){
-        var obj=qs.stringify({
-            player_id:this.playerId
-        })
-        this.$http.post('api/user/spend_vote',obj,{
-           headers: {
-                'authorization':this.tokenH
-            }
-      }).then((res)=>{
-          if(res.data.code==200){
-               var self=this
-            clearInterval(self.timer2);
-                    this.promptContent='投票成功'
-                    this.showPrompt=true
-                    self.timer2=setTimeout(function(){
-                        self.showPrompt=false
-                        clearInterval(self.timer2);
-                    },2000)
-                return false;
-          }else{
-                    var self=this
-                    clearInterval(self.timer2);
-                            this.promptContent=res.data.msg
-                            this.showPrompt=true
-                            self.timer2=setTimeout(function(){
-                                self.showPrompt=false
-                                clearInterval(self.timer2);
-                            },2000)
-                        return false;
-          }
-      })
-    },
-    
-    ...mapMutations(['playDetailVoteDivs','ReceiptAddressPages','ReceiptAddressAddPages','orderTypes','orderNums','playDetailShopDESs','addressIdIsSels','myOrderListPages','playerIds','shopgoodIds','barcolorIndexShops','shopDetatilshows','shopDetailReturns','userIdHs']),
+                })
+            },
+        ...mapMutations(['playDetailVoteDivs','ReceiptAddressPages','ReceiptAddressAddPages','orderTypes','orderNums','playDetailShopDESs','addressIdIsSels','myOrderListPages','playerIds','shopgoodIds','barcolorIndexShops','shopDetatilshows','shopDetailReturns','userIdHs','userIdHInterests']),
   }
 }
 
@@ -952,5 +967,36 @@ export default {
         }
        
     }
-// 
+//分享成功提示
+
+.share_success_wrap{
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.9);
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:999;
+    .share_success{
+        width:8.25rem;
+        height:9.6rem;
+        position:absolute;
+        top:50%;
+        left:50%;
+        margin-top:-4.8rem;
+        margin-left:-4.13rem;
+        >.firstEnter_chaimg{
+            width:0.493rem;
+            height:0.493rem;
+            position :absolute;
+            top:0.27rem;
+            right:0.27rem;
+        }
+        >img{
+            width:8.25rem;
+            height:9.6rem;
+        }
+    }
+    
+}
 </style>

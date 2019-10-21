@@ -45,65 +45,72 @@ export default {
     return {
         smallBtnsUser:[
             {
-                img:'lastTicket.png',
-                name:'剩余免费票数',
+                img:'MineUnion.png',
+                name:'我的公会',
             },
             {
-                img:'MIneAddVideo.png',
+                img:'MineZhuan.png',
+                name:'赚钱秘籍',
+            },
+            {
+                img:'MineOrder.png',
+                name:'我的订单',
+            },
+            {
+                img:'MineAddress.png',
                 name:'收货地址',
             },
             {
-                img:'MineContentWe.png',
-                name:'联系我们',
-            },
-            {
-                img:'MineAboutWe.png',
+                img:'Mineabout.png',
                 name:'关于我们',
             },
         ],
         smallBtns:[
             {
-                img:'mineBind.png',
-                name:'绑定直播平台及id号',
+                img:'MineYao.png',
+                name:'邀请好友为我投票',
             },
              
             {
-                img:'MIneAddVideo.png',
-                name:'添加视频介绍',
-            },
-            {
-                img:'MIneAddVideo.png',
-                name:'添加照片',
-            },
-            {
-                img:'MIneAddVideo.png',
+                img:'MineInfo.png',
                 name:'个人资料',
             },
             {
                 img:'MIneAddVideo.png',
-                name:'我的工会',
+                name:'添加视频介绍（选手风采）',
             },
             {
-                img:'MIneAddVideo.png',
+                img:'MineZhi.png',
+                name:'直播平台及id号',
+            },
+            {
+                img:'MineShort.png',
+                name:'短视频平台及id号',
+            },
+            {
+                img:'MineUnion.png',
+                name:'我的公会',
+            },
+            {
+                img:'MineZhuan.png',
+                name:'赚钱秘籍',
+            },
+            {
+                img:'MineOrder.png',
+                name:'我的订单',
+            },
+            {
+                img:'MineAddress.png',
                 name:'收货地址',
             },
             {
-                img:'MineContentWe.png',
-                name:'联系我们',
+                img:'MineKe.png',
+                name:'专属客服',
             },
             {
-                img:'MineAboutWe.png',
+                img:'Mineabout.png',
                 name:'关于我们',
             },
-            {
-                img:'mineBind.png',
-                name:'绑定短视频平台及id号',
-            },
-            // {
-            //     img:'MIneCansaiHistory.png',
-            //     name:'参赛历史',
-            // },
-
         ],
         personData:'',//用户信息（这里需要用到is_player）
 

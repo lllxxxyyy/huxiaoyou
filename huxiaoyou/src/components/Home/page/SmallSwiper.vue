@@ -4,7 +4,7 @@
       <swiper class="smallbanner_list swiper-no-swiping" v-if="slidersData.length>=1"  :options="swiperOption">
             <!-- slides -->
             <swiper-slide     class="banner_li" v-for="(item,index) in slidersData" :key="index">
-                  {{item.nickname}}
+                  感谢「<img :src="item.head_pic" alt=""> {{item.nickname}}」为选手「 {{item.username}}」助力投票{{item.amount}}票
             </swiper-slide>
       </swiper>
   </div>
@@ -45,6 +45,7 @@ computed:{
                     'authorization':this.tokenH
                 }
         }).then((res)=>{
+          console.log(res)
          this.slidersData=res.data.data
         })
   },
@@ -87,7 +88,14 @@ computed:{
     >.swiper-wrapper{
         >.banner_li{
             width:100%;
+            display :flex;
+            >img{
+              width:0.373rem;
+              height:0.373rem;
+              border-radius:50%;
+            }
         }
+
     }  
 }
 </style>

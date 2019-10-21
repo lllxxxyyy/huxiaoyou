@@ -69,18 +69,16 @@ export default {
          this.barId=res.data.data[0].id
          this.getlistData()
     })
-    
-
   },
 
   methods: {
     //   跳选手详情
     toPlayerDetail(id){
-        this.playerIds(id)//保存选手id
+        this.playerIds(id)//保存选手编号
         this.addressIdIsSels('false') //给选手详情页默认地址没选中状态 
         this.PlayerDetailPages('/PlayerRanking')  //选手详情返回页面
         this.playDetailVoteDivs('false') //选手详情的投票盒子默认消失
-        this.shopDetatilshows('false')//默认让卡包详情返回到商品详情的状态是false
+        this.shopDetatilshows('false')//默认让卡包详情返回到选手详情的状态是false
         this.$router.push('/PlayerDetails')
     },
       SpecialBarBtn(index,id){

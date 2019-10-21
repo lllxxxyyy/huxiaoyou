@@ -150,6 +150,14 @@
                 </div>
             </div>
         </transition>
+        <!-- 加入公会成功 -->
+        <div class="add_success_wrap" v-if="showAddSuccess">
+            <div class="add_success">
+                <div class="add_success_Cha"><img @click.stop="addSuccessCha"  :src="staticImgH+'cha.png'" alt=""></div>
+                <img class="add_successImg" :src="staticImgH+'add_succedd.png'">
+                <div class="add_successBtn">去赚钱</div>
+            </div>
+        </div>
   </div>
 </template>
 <script>
@@ -159,6 +167,7 @@ import qs from 'qs'
 export default {
   data () {
     return {
+        showAddSuccess:false,//默认不显示加入成功提示
         submitAfter:true,  
         WisDefault:0,  //直播软件默认不选择中
         DisDefault:0,  // 短视频默认选中
@@ -281,6 +290,9 @@ export default {
 //   mounted: {},
 
   methods: {
+      addSuccessCha(){
+          this.$router.push('/')
+      },
        // 上传身份证前图片 1
         addImg(event){
               if(event.target.files[0]){
@@ -936,4 +948,46 @@ export default {
 .upload-imgs .img img{width:100%;vertical-align: middle;}
 .upload-imgs .img .close{display: none;}
 .upload-imgs li:hover .img .close{display: block;position: absolute;right: -0.16rem;top: -0.27rem;line-height: 1rem;font-size: 0.6rem;}
+// 加入公会成功
+.add_success_wrap{
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.9);
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:999;
+    >.add_success{
+        display:flex;
+        align-items :center;
+        flex-direction :column;
+        margin-top:2rem;
+        >.add_success_Cha{
+            width:7.91rem;
+            text-align:right;
+
+            >img{
+                width:0.493rem;
+                height:0.493rem;
+                margin-right:0.187rem;
+            }
+        }
+        >.add_successImg{
+            width:5.91rem;
+            height:5.65rem;
+            margin-top:0.6rem;
+             margin-bottom:0.6rem;
+        }
+        >.add_successBtn{
+          width:3.95rem;
+          height:0.8rem;
+          border-radius:0.67rem;
+          background:rgba(255, 157, 172, 1);
+          font-size:0.347rem;
+          color:rgba(255, 255, 255, 1);
+          text-align :center;
+          line-height:0.8rem;
+        }
+    }
+}
 </style>

@@ -10,6 +10,17 @@
       <Foot class="PublicFoot" />  <!-- 公共底部 -->
       <div class="footer">
       </div>
+      <!-- 判断是否第一次进入app    是（弹）提示去报名-->
+      <div class="firstEnter_wrap" v-if="ShowFirstEnter">
+          <div class="firstEnter">
+            <div class="firstEnter_img">
+                <img @click="hideFirstEnter"  class="firstEnter_chaimg" :src="staticImgH+'cha.png'" alt="">
+                <img class="firstEnter_desimg" :src="staticImgH+'firstEnter.png'" alt="">
+            </div>
+              
+              <div class="firstEnter_btn" @click="toSignUp"> 去报名</div>
+          </div>
+      </div>
       <!-- 提示盒子 -->
          <transition name="fade">
             <div class="promptFather" v-if="showPrompt">
@@ -45,6 +56,8 @@ export default {
       head_pic:'',
       sex:'',
 
+      ShowFirstEnter:false,//默认让判断'是否第一次进入去报名的提示'消失
+
       // 提示盒子
         promptContent:'', //提示盒子的内容
         showPrompt:false,//提示盒子的吸收和显示
@@ -79,6 +92,14 @@ export default {
     
   },
   methods: {
+    // 隐藏‘第一次进入提示’弹框
+    hideFirstEnter(){
+        this.ShowFirstEnter=false
+    },
+    // 去报名
+      toSignUp(){
+        this.$router.push('/SignUp')
+      },
     // 登录接口
       Islogin(){
         var LoginObj=qs.stringify({
@@ -90,7 +111,12 @@ export default {
         })
         this.$http.post('api/user/logins',LoginObj).then((res)=>{
           if(res.data.code==200){
-            this.tokenHs(res.data.data.token)  //token
+            this.tokenHs(res.data.data.result.token)  //token
+            if(res.data.data.result.is_tan==1){
+                this.ShowFirstEnter=true
+            }else{
+                 this.ShowFirstEnter=false
+            }
           }else{
             var self=this
             clearInterval(self.timer2);
@@ -194,5 +220,54 @@ export default {
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
    transform: translateY(0.32rem);
   opacity: 0;
+}
+
+//
+.firstEnter_wrap{
+  width:100%;
+  height:100%;
+  position :fixed;
+  top:0;
+  left:0;
+  background :rgba(0,0,0,0.9);
+  z-index:999;
+  >.firstEnter{
+    width:8.27rem;
+    height:13rem;
+    position :absolute;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    margin:auto;
+    >.firstEnter_img{
+        width:8.27rem;
+        height:11.59rem;
+        position :relative;
+        >.firstEnter_chaimg{
+            width:0.493rem;
+            height:0.493rem;
+            position :absolute;
+            top:0.27rem;
+            right:0.27rem;
+        }
+        >.firstEnter_desimg{
+            width:8.27rem;
+            height:11.59rem;
+        }
+    }
+    
+    >.firstEnter_btn{
+      width:8.27rem;
+      height:0.8rem;
+      border-radius:0.667rem;
+      margin-top:0.48rem;
+      background :rgba(255, 157, 172, 1);
+      color:#fff;
+      font-size:0.347rem;
+      text-align :center;
+      line-height :0.8rem;
+    }
+  }
 }
 </style>

@@ -10,14 +10,33 @@
                   <img :src="personData.head_pic" alt="" class="minePerson_Avatar">
                   <div class="minePerson_InfoRight">
                       <div class="minePerson_InfoRiTop">
-                        <span class="minePerson_InfoName">{{personData.username}}</span>
-                        <span class="minePerson_InfoSai">{{personData.names}}</span>
-                        <span class="minePerson_InfoBtn">编辑资料</span>
+                        <span class="minePerson_InfoName">丹丹的小{{personData.username}}</span>
+                        <div class="minePerson_InfoVip"><img :src="staticImgH+'Mine_vip.png'" alt=""><span>一级狐小仙</span></div>
                       </div>
-                      <span class="minePerson_InfoRiBott" >+{{personData.user_id}}</span>
+                      <span class="minePerson_InfoRiBott" >{{personData.names}}</span>
                   </div>
               </div>
-              <div class="LiveBroadcast">{{personData.live_platform}}  {{personData.live_id}}</div>
+              <ul class="minePerson_EventInfo">
+                <li>
+                  参赛编号：00001
+                </li>
+                <li>赛区排名：34</li>
+                <img :src="staticImgH+'playBian.png'" alt="">
+              </ul>
+              <ul class="minePerson_artick " v-if="personData.is_player==1">
+                 <li>
+                  <span class="minePerson_artickNum">{{personData.m_amount}}</span><span>总票数</span>
+                </li>
+                <li>
+                  <span class="minePerson_artickNum">{{personData.help_amount}}</span><span>助力票</span>
+                </li>
+                <li>
+                  <span class="minePerson_artickNum">{{personData.m_amount}}</span><span>剩余免费票</span>
+                </li>
+                <li>
+                  <span class="minePerson_artickNum">{{personData.help_amount}}</span><span>账户余额</span>
+                </li>
+              </ul>
               <div class="minePerson_InfoLike">{{personData.signature}}</div>
               <div class="minePerson_InfoDes">
                   <div>
@@ -32,24 +51,9 @@
                   <span v-if="personData.height">{{personData.height}}cm</span>
                   <span v-if="personData.weight">{{personData.weight}}kg</span>
               </div>
-              <ul class="minePerson_artick " v-if="personData.is_player==1">
-                <li>
-                  <span class="minePerson_artickNum">{{personData.m_amount}}</span><span>友情票</span>
-                </li>
-                <li>
-                  <span class="minePerson_artickNum">{{personData.help_amount}}</span><span>助力票</span>
-                </li>
-                <!-- <li>
-                  <span class="minePerson_artickNum">33</span><span>分享卡包总金额</span>
-                </li>
-                <li>
-                  <span class="minePerson_artickNum">44</span><span>账户余额</span>
-                </li> -->
-                
-              </ul>
-              
           </div>
-          <!-- 提示盒子 -->
+      </div>
+      <!-- 提示盒子 -->
             <transition name="fade">
                 <div class="promptFather" v-if="showPrompt">
                     <div class="prompt" >
@@ -57,19 +61,32 @@
                     </div>
                 </div>
             </transition>
-      </div>
       <!-- 普通用户 -->
-      <div class="minePerson_user" v-if="personData.is_player==0">
-             <img :src="staticImgH+'mineBg.png'" alt="">
-             <div class="minePerson_userDes">
-                  <img :src="personData.head_pic" alt="">
-                  <div class="minePerson_userCenter">
-                     <span class="minePerson_userName" >{{personData.username}}</span>
-                     <span class="minePerson_userId">{{personData.user_id}}</span>
+      <div class="minePerson_Player" v-if="personData.is_player==0">
+          <div class="minePerson_img">
+              <img :src="staticImgH+'mineBg.png'" alt="">
+          </div>
+          <div class="minePerson_des">
+              <div class="minePerson_Info">
+                  <img :src="personData.head_pic" alt="" class="minePerson_Avatar">
+                  <div class="minePerson_InfoRight">
+                      <div class="minePerson_InfoRiTop">
+                        <span class="minePerson_InfoName">丹丹的小{{personData.username}}</span>
+                        <div class="minePerson_InfoVip"><img :src="staticImgH+'Mine_vip.png'" alt=""><span>一级狐小仙</span></div>
+                      </div>
+                      <span class="minePerson_InfoRiBott" >{{personData.names}}</span>
+                      <img class="minePerson_playBian" :src="staticImgH+'playBian.png'" alt="">
                   </div>
-                  <div class="minePerson_userBtn">点击参赛</div>
-             </div>
-             
+              </div>
+              <ul class="minePerson_artick " v-if="personData.is_player==1">
+                <li>
+                  <span class="minePerson_artickNum">44</span><span>账户余额</span>
+                </li>
+                <li>
+                  <span class="minePerson_artickNum">{{personData.m_amount}}</span><span>免费票数</span>
+                </li>
+              </ul>
+          </div>
       </div>
     </div>
 </template>
@@ -129,25 +146,26 @@ export default {
 }
 </script>
 <style scoped lang='stylus'>
+.Mineperson_wrap{
+  margin-bottom:0.32rem;
+}
 .minePerson{
     width:100%;
 }
 .minePerson_img{
     width:100%;
-    height:4.56rem;
+    height:5.573rem;
     z-index:1;
     >img{
         width:100%;
-        height:4.56rem;
-        
+        height:5.573rem;
     }
 }
 .minePerson_des{
-    width:9.173rem;
+    width:9.2rem;
     position :relative;
     margin:0 auto;
-    margin-top:-2.83rem;
-    padding-bottom:0.53rem;
+    margin-top:-3.33rem;
     z-index:2;
     background :rgba(255, 255, 255, 1);
     border-radius:0.133rem;
@@ -156,70 +174,104 @@ export default {
       display :flex;
       >img{
         border:0.03rem solid #fff;
-        width:2.133rem;
-        height:2.133rem;
+        width:1.87rem;
+        height:1.87rem;
         margin-right:0.32rem;
         margin-left:0.4rem;
-        margin-top:-0.32rem;
-        background :yellow;
+        margin-top:-0.53rem;
         border-radius:50%;
+        border:0.09rem solid #fff;
       }
       >.minePerson_InfoRight{
+          display :flex;
+          flex-direction :column;
+          >.minePerson_playBian{
+              width:0.293rem;
+              height:0.293rem;
+              margin-top:0.16rem;
+          }
           >.minePerson_InfoRiTop{
-            display :flex;
-            flex-wrap:wrap;
+              display :flex;
+              align-items :center;  
+              margin-top:0.133rem;
               >.minePerson_InfoName{
-                    font-size:0.48rem;
+                    width:2.66rem;
+                    font-size:0.53rem;
                     line-height :0.747rem;
-                    margin-right:0.32rem;
-                    margin-top:0.27rem;
+                    margin-right:0.53rem;
                     color:rgba(0, 0, 0, 1);
+                    line-height :0.747rem;
               }
-              >.minePerson_InfoSai{
-                  font-size:0.32rem;
-                  color:rgba(0, 0, 0, 0.36);
-                  margin-top:0.587rem;
-                  margin-right:1.07rem;
-              }
-              >.minePerson_InfoBtn{
-                  width:2.213rem;
-                  height:0.747rem;
-                  background :#fff;
-                  font-size:0.373rem;
-                  color:rgba(255, 193, 203, 1);
-                  line-height :0.747rem;
-                  text-align :center;
-                  border-radius:0.08rem;
-                  margin-top:0.4rem;
-                  border:0.03rem solid rgba(255, 193, 203, 1);
+              >.minePerson_InfoVip{
+                display:flex;
+                align-items :center;
+                font-size:0.32rem;
+                color:rgba(255, 162, 0, 1);
+                  >img{
+                    width:0.4rem;
+                    height:0.43rem;
+                    margin-right:0.11rem;
+                  }
               }
           }
           >.minePerson_InfoRiBott{
             font-size:0.32rem;
-            color:rgba(0, 0, 0, 1);
+            color:rgba(0, 0, 0, 0.36);
             margin-top:0.16rem;
             
           }
       }
       
     }
-    >.LiveBroadcast{
-      width:100%;
-      padding:0 0.4rem;
-      font-size:0.427rem;
-      color:rgba(0, 0, 0, 0.8);
-      margin-top:0.347rem;
-      line-height :1.143rem;
-
+    >.minePerson_EventInfo{
+        display:flex;
+        align-items :center;
+        font-size:0.347rem;
+        color:rgba(0, 0, 0, 1);
+        padding:0 0.4rem;
+        margin-top:0.173rem;
+        margin-bottom:0.32rem;
+        >li{
+          margin-right:0.53rem;
+        }
+        >img{
+          width:0.293rem;
+          height:0.293rem;
+        }
+    }
+    >.minePerson_artick{
+      display :flex;
+      margin:0 0.4rem;
+      >li{
+        display:flex;
+        flex-direction :column;
+        align-items :center;
+        font-size:0.32rem;
+        color:rgba(0, 0, 0, 0.36);
+        margin-right:1.2rem;
+        &:last-child{
+          margin-right:0;
+        }
+        >span{
+          line-height :.44rem;
+          margin-bottom:0.4rem;
+        }
+        >.minePerson_artickNum{
+          font-size:0.48rem;
+          color:rgba(0, 0, 0, 1);
+          margin-bottom:0.08rem;
+          line-height:0.79rem;
+        }
+      }
     }
     >.minePerson_InfoLike{
       width:100%;
       padding-left:0.4rem;
       padding-right:0.8rem;
-      margin-bottom:0.373rem;
-      font-size:0.347rem;
-      color:rgba(0, 0, 0, 0.8);
-      line-height:0.507rem;
+      margin-bottom:0.32rem;
+      font-size:0.373rem;
+      color:rgba(0, 0, 0, 1);
+      line-height:0.53rem;
       
     }
     >.minePerson_InfoDes{
@@ -227,7 +279,7 @@ export default {
       color:rgba(0, 0, 0, 0.36);
       display :flex;
       margin:0 0.4rem;
-      
+      padding-bottom:0.453rem;
       >div{
         line-height :0.453rem;
         margin-right:0.32rem;
@@ -243,39 +295,6 @@ export default {
             margin-right:0rem;
         }
       }
-    }
-    >.minePerson_artick{
-      display :flex;
-      margin:0 0.4rem;
-      margin-top:0.347rem;
-      justify-content :space-between;
-      >li{
-        display:flex;
-        flex-direction :column;
-        align-items :center;
-        font-size:0.32rem;
-        color:rgba(0, 0, 0, 0.36);
-        >.minePerson_artickNum{
-          font-size:0.48rem;
-          color:rgba(0, 0, 0, 1);
-          margin-bottom:0.27rem;
-        }
-      }
-    }
-    >.minePerson_address{
-      width:2.4rem;
-      height:0.8rem;
-      background :rgba(75, 170, 249, 1);
-      display :flex;
-      align-items :center;
-      justify-content :center;
-      font-size:0.32rem;
-      color:rgba(255, 255, 255, 1);
-      position :absolute;
-      right:0;
-      top:50%;
-      margin-top:-0.4rem;
-      border-radius:0.3rem 0 0 0.3rem;
     }
 }
 // 普通用户
