@@ -61,11 +61,12 @@ export default {
           this.SpecialBarindex=index
       },
       toSpecialDetails(id){
+          this.SpecialDetailsPages('/SpecialTopic')//设置专题详情页返回哪
         var specialDetailInfo={projectId:id,type:3}
           this.specialDetailInfos(specialDetailInfo)
           this.$router.push('/SpecialDetails')
       },
-      ...mapMutations(['specialDetailInfos']),
+      ...mapMutations(['specialDetailInfos','SpecialDetailsPages']),
   }
 }
 

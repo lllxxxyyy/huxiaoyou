@@ -66,10 +66,11 @@ computed:{
       }else if(type==3){
         var specialDetailInfo={projectId:projectId,type:type}
           this.specialDetailInfos(specialDetailInfo)
+          this.SpecialDetailsPages('/')
         this.$router.push('/SpecialDetails')
       }
     },
-    ...mapMutations(['specialInfos','specialDetailInfos']),
+    ...mapMutations(['specialInfos','specialDetailInfos','SpecialDetailsPages']),
   }
 }
 

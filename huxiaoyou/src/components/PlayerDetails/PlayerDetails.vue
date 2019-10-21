@@ -172,7 +172,6 @@ export default {
             ...mapState(['staticImgH','playerId','addressIdIsSel','addressId','PlayerDetailPage','playDetailVoteDiv','tokenH','playDetailShopDES','apiH','shopDetatilshow','barcolorIndexShop','shopgoodId'])
         },
   mounted(){
-    
     //  判断是否是分享出去的
         var shopUrl = window.location.href
             //var shopUrl = 'http://mobile.aibebi.cn/aibei/shopList.html?goods_id=1482'
@@ -197,6 +196,7 @@ export default {
                     this.playerIds(shopUrlId.player_id)
                 }
         }
+        console.log(this.playerId)
     //   选手信息
         var obj=qs.stringify({
                 player_id:this.playerId  

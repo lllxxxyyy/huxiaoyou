@@ -56,7 +56,6 @@ export default {
                 'authorization': this.tokenH
             }
         }).then((res)=>{
-            console.log(res)
             this.divisionBar=res.data.data.data
         })
   },
@@ -73,7 +72,7 @@ export default {
         this.playDetailVoteDivs('false') //选手详情的投票盒子的消失
         this.$router.push('/PlayerDetails')
     },
-      ...mapMutations(['playerIds','addressIdIsSels','playerIds','PlayerDetailPages','playDetailVoteDivs']),
+      ...mapMutations(['playerIds','addressIdIsSels','PlayerDetailPages','playDetailVoteDivs']),
   }
 }
 

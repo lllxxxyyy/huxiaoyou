@@ -90,7 +90,7 @@
       <div class="sign_success_wrap"  v-if="showSignSuccess">
          <div class="sign_success" >
               <div class="sign_Cha"><img @click.stop="signSuccessSha"  :src="staticImgH+'cha.png'" alt=""></div>
-              <img class="sign_succeddImg" :src="staticImgH+'sign_success.png'">
+              <div class="sign_succeddImg"><span>恭喜您报名成功</span><img  :src="staticImgH+'sign_success.png'"></div> 
               <span class="sign_succeddtext">您获得了一个多赚10%的机会！</span>
               <div class="sign_succeddBtn" @click.stop="addUnion">去了解</div>
               <img class="erweima_img" :src="staticImgH+'erweima_img.png'" alt="">
@@ -98,11 +98,11 @@
               <img class="erweima_down" :src="erweimaImg" alt="">
          </div>
       </div>
-       <!-- 恭喜您报名成功  -->
+       <!-- 提示只能女性参与报名  -->
       <div class="sign_fail_wrap" v-if="showSignFail">
          <div class="sign_fail">
               <div class="sign_fail_Cha"><img @click.stop="signFailSha"  :src="staticImgH+'cha.png'" alt=""></div>
-              <img class="sign_failImg" :src="staticImgH+'sign_fail.png'">
+              <div class="sign_failImg"><img  :src="staticImgH+'sign_fail.png'"></div> 
               <span class="sign_failtext">您可以加入公共参加分享赚钱活动</span>
               <div class="sign_failBtn" @click.stop="addUnion">去了解</div>
          </div>
@@ -168,7 +168,7 @@ export default {
       img:'',
 
       sexImgIndex:2,//性别默认选中下标
-      sex:'2',//性别
+      sex:1,//性别
     };
   },
   // components: {},
@@ -235,8 +235,10 @@ export default {
     },
      //   选择性别
       sexSelectC(id){
-          this.sexImgIndex=id
-          this.sex=id
+          if(id==1){
+            this.showSignFail=true
+          }
+          this.sexImgIndex=2
           
       },
     submitAlertCha(){
@@ -410,8 +412,6 @@ export default {
                         if(res.data.code==200){
                             this.showSignSuccess=true
                             this.erweimaImg=res.data.data.img
-                        }else if(res.data.code==0){
-                            this.showSignSuccess=showSignFail
                         }else{
                              var self=this
                               clearInterval(self.timer2);
@@ -903,8 +903,21 @@ export default {
           }
         }
         >.sign_succeddImg{
-          width:7.91rem;
-          height:8.99rem;
+            width:7.91rem;
+            height:8.99rem;
+            position:relative;
+          >img{
+            width:7.91rem;
+            height:8.99rem;
+          }
+          >span{
+              position:absolute;
+              top:0.32rem;
+              left:2.4rem;
+              font-size:0.373rem;
+              color:rgba(255, 157, 172, 1);
+          }
+          
         }
         >.sign_succeddtext{
           font-size:0.43rem;
@@ -966,6 +979,18 @@ export default {
         >.sign_failImg{
           width:7.88rem;
           height:8.9rem;
+          position:relative;
+          >img{
+            width:7.88rem;
+            height:8.9rem;
+          }
+          >span{
+              position:absolute;
+              top:0.33rem;
+              left:2rem;
+              font-size:0.373rem;
+              color:rgba(255, 157, 172, 1);
+          }
         }
         >.sign_failtext{
           font-size:0.43rem;

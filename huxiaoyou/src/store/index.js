@@ -28,12 +28,17 @@ const state = {
     barcolorIndexShop: sessionStorage.getItem('barcolorIndexShop'), //卡包详情返回选手详情里被选中商品的下标
     shopDetatilshow: sessionStorage.getItem('shopDetatilshow'), //判断是不是从卡包返回到选手详情
     shopDetailReturn: sessionStorage.getItem('shopDetailReturn'), //卡包详情返回哪
+    SpecialDetailsPage: sessionStorage.getItem('shopDetailReturn'), //专题详情页返回页面设置
 
     nickNamePerX: sessionStorage.getItem('ReceiptAddressAddPage'), //个人资料名字
     SignaturePerX: sessionStorage.getItem('ReceiptAddressAddPage'), //个人资料个性签名
     cityNamePerX: sessionStorage.getItem('cityNamePerX'), //个人资料城市
 }
 const mutations = {
+    SpecialDetailsPages(state, SpecialDetailsPage) {
+        sessionStorage.setItem('SpecialDetailsPage', SpecialDetailsPage);
+        state.SpecialDetailsPage = SpecialDetailsPage
+    },
     // 卡包详情返回哪
     shopDetailReturns(state, shopDetailReturn) {
         sessionStorage.setItem('shopDetailReturn', shopDetailReturn);
