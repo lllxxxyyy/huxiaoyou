@@ -22,10 +22,11 @@ export default {
            swiperOption: {//swiper3
                 direction: 'vertical',
                 observeParents:true,
+                loop:true,
                 autoplay: {
-       				 delay: 1500,
-       				 disableOnInteraction: false,
-      			},
+                  delay: 1500,
+                  disableOnInteraction: false,
+                },
                 speed:300,
             },
     };

@@ -309,6 +309,7 @@ export default {
           },
      // 提交
       SignUpBtn(){
+        this.formData=new FormData()
         if(!this.username){
                   var self=this
                   clearInterval(self.timer2);
@@ -395,7 +396,7 @@ export default {
                       },2000)
                   return;
             } 
-                this.formData.append('photo_introduction[]',this.$refs.inputer.files[0]);
+                this.formData.append('photo_introduction',this.$refs.inputer.files[0]);
                 this.formData.append('division_id',this.selectValue);
                 this.formData.append('username',this.username);
                 this.formData.append('tel',this.tel);
