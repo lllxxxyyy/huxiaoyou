@@ -2,11 +2,7 @@
 <template>
   <div class="SpecialTopic">
       <div class="SpecialTopicHeader">
-<<<<<<< HEAD
           <img @click="specialReturn"  :src="staticImgH+'zuojiantou.png'" alt="">
-=======
-          <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
->>>>>>> 810d9bd20ae0b00513af7f57727e5b7db0f51acf
           <span>往届大赛风采</span>   
       </div>
 <div class="shopHide"></div>
@@ -63,9 +59,6 @@ export default {
       },
     SpecialBarBtn(index){
           this.SpecialBarindex=index
-      },
-	  toReturn(){
-          this.$router.push('/')
       },
       toSpecialDetails(id){
         var specialDetailInfo={projectId:id,type:3}
