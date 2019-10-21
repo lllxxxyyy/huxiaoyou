@@ -4,14 +4,15 @@
        <div class="PlayerRanking_header">
           <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
           <span>添加照片</span>
-          <div class="right">
-              <span>添加</span>
-              <input type="file" class="upload" @change="uploadFile" ref="inputer" accept="image/*"/>
-          </div>
+		  <div class="PresentPhoto_admin">管理</div>
       </div>
       <ul class="videoList">
-          <li v-for="(item,index) in photoDataList" :key="index"><img :src="item.src" alt=""></li>
+          <li v-for="(item,index) in photoDataList" :key="index"><img :src="item.src" alt=""><div class="gxuan">删除</div></li>
       </ul>
+	  <div class="right">
+         <span><img :src="staticImgH+'tianjia.png'" alt=""></span>
+         <input type="file" class="upload" @change="uploadFile" ref="inputer" accept="image/*"/>
+      </div>
   </div>
 </template>
 
@@ -77,7 +78,7 @@ export default {
           }
           this.imgLen++;
           console.log(this.fil[i])
-           this.formData.append('photo_introduction[]',this.fil[i])
+           this.formData.append('photo_introduction',this.fil[i])
         }
         
         this.$http.post('api/player/photo_introduction', this.formData,{
@@ -110,14 +111,22 @@ export default {
         font-size:0.48rem;
         color:rgba(0, 0, 0, 1);
     }
-    .right{
+	>.PresentPhoto_admin{ font-size:0.42rem;}
+}
+.right{
         position :relative;
+		width:0.8rem;
+		margin-top:0.3rem;
+		margin-bottom:0.3rem;
+		left:4.6rem;
         >span{
             font-size:0.4rem;
             color:rgba(0, 0, 0, 1);
+			>img{ width:0.8rem;}
         }
         >input{
             width:0.8rem;
+			height:0.8rem;
             opacity :0;
             position :absolute;
             top:0;
@@ -125,23 +134,24 @@ export default {
             z-index:999;
         }
     }
-}
 .videoList{
     width:100%;
-    padding:0 0.4rem;
+	min-height:14.6rem;
+    padding-left:0.4rem;
     margin-top:0.27rem;
-    display :flex;
-    justify-content :space-between;
-    flex-wrap:wrap;
     >li{
-        width:4.32rem;
-        height:4.59rem;
-        background :pink;
+        width:4.44rem;
+        height:4.44rem;
         margin-bottom:0.27rem;
+		display:inline-block;
+		margin-right:0.31rem;
         >img{
-            width:4.32rem;
-            height:4.59rem;
+            width:4.44rem;
+            height:4.44rem;
+			border-radius:0.2rem;
+			display:block;
         }
     }
 }
+.gxuan{ margin-top:-0.9rem; height:0.9rem; background:rgba(0,0,0,0.5); position:relative; width:4.44rem; color:#fff; text-align:center; line-height:0.9rem; font-size:0.48rem; border-radius:0 0 0.2rem 0.2rem;}
 </style>

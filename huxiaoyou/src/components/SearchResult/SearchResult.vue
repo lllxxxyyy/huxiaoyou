@@ -3,39 +3,42 @@
   <div class="PlayerRankingHome">
     <div class="PlayerRanking_header">
       <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
-      <select  v-model="search.type" placeholder="请选择">
-        <option label="姓名" value="1"></option>
-        <option label="编号" value="2"></option>
-      </select>
-      <input v-model="search.value"></input>
+      <div class="search">
+        <select v-model="search.type" placeholder="请选择">
+          <option label="姓名" value="1"></option>
+          <option label="编号" value="2"></option>
+        </select>
+        <input v-model="search.value"></input>
+      </div>
       <span @click="searchPlayer(search.type, search.value)">搜索</span>
     </div>
-      <ul class="HomeAngel_listTwo" v-if="!(!searchResult || searchResult.length < 1)">
-              <li @click="toPlayerDetail(item.id)"   v-for="(item,index) in searchResult" :key="index">
-                  <!-- {{item.RankingImgData[index]}} -->
-                 <img v-if="item.photo_introduction[0]" :src="item.photo_introduction[0].src" alt=""> 
-				 <div class="top_img">
-           <img v-if="item.ranking<=3" :src="staticImgH+'paiming'+item.ranking+'.png'" alt="">
-         </div>
-		  		 <div class="ta_vote" :class="{
-		  		 ta_vote1: item.ranking<=100 && item.ranking>3,
-		  		 ta_vote2: item.ranking > 100,
-		  		 }">给Ta投票</div>
-                 <span class="angelNameTwo">{{item.username}}</span>
-                 <span class="angelPriceTwo">{{item.votes}}+</span>
-              </li>
-        </ul>
-    <div v-if="!searchResult || searchResult.length < 1">
-      空
+    <ul class="HomeAngel_listTwo" v-if="searchResult && searchResult.length > 0">
+      <li @click="toPlayerDetail(item.id)" v-for="(item,index) in searchResult" :key="index">
+        <!-- {{item.RankingImgData[index]}} -->
+        <img v-if="item.head_pic" :src="item.head_pic" alt="">
+        <div class="top_img">
+          <img v-if="item.rank<=3" :src="staticImgH+'paiming'+item.rank+'.png'" alt="">
+        </div>
+        <div class="ta_vote" :class="{
+		  		 ta_vote1: item.rank<=100 && item.rank>3,
+		  		 ta_vote2: item.rank > 100,
+		  		 }">给Ta投票
+        </div>
+        <span class="angelNameTwo">{{item.username}}</span>
+        <span class="angelPriceTwo">{{item.votes}}+</span>
+      </li>
+    </ul>
+    <div class="search_k" v-if="!searchResult || (searchResult && searchResult.length < 1)">
+      很抱歉,您搜索的选手不存在！
     </div>
-        <!-- 提示盒子 -->
-         <transition name="fade">
-            <div class="promptFather" v-if="showPrompt">
-                <div class="prompt" >
-                    {{promptContent}}
-                </div>
-            </div>
-        </transition>
+    <!-- 提示盒子 -->
+    <transition name="fade">
+      <div class="promptFather" v-if="showPrompt">
+        <div class="prompt">
+          {{promptContent}}
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -67,11 +70,16 @@ export default {
 //   components: {},
 
     computed:{
-            ...mapState(['staticImgH','tokenH'])
+            ...mapState(['staticImgH','tokenH', 'searchConditions'])
         },
 
   mounted(){
 
+    if (this.$route.query) {
+      this.search = this.$route.query
+    } else {
+      this.search = this.searchConditions
+    }
       this.searchPlayer(this.$route.query.type, this.$route.query.value);
       
       var barobj=qs.stringify({
@@ -94,8 +102,8 @@ export default {
     toPlayerDetail(id){
         this.playerIds(id)//保存选手id
         this.addressIdIsSels('false') //投票盒子不显示 
-        this.PlayerDetailPages('/PlayerRanking')  //选手详情返回页面
-        this.playDetailVoteDivs('false') //选手详情的投票盒子的消失
+        this.PlayerDetailPages('/SearchResult')  //选手详情返回页面
+        this.playDetailVoteDivs('true') //选手详情的投票盒子的消失
         this.$router.push('/PlayerDetails')
     },
       SpecialBarBtn(index,id){
@@ -104,10 +112,14 @@ export default {
           this.getlistData()
       },
       toReturn(){
-          this.$router.go(-1);
+          this.$router.push('/PlayerRankingList');
       },
     //选手搜索
     searchPlayer(type, value){
+      this.SearchConditions({
+        type: type,
+        value: value
+      });
       let obj=qs.stringify({
         type: type,
         value: value
@@ -118,7 +130,8 @@ export default {
         }
       }).then((res)=>{
         if(res.data.code===200){
-          this.searchResult=res.data.data
+          this.searchResult=res.data.data.data
+          console.log(this.searchResult)
         }
       })
     },
@@ -148,7 +161,7 @@ export default {
 
             })
       },
-      ...mapMutations(['playerIds','PlayerDetailPages','addressIdIsSels','playDetailVoteDivs']),
+      ...mapMutations(['playerIds','PlayerDetailPages','addressIdIsSels','playDetailVoteDivs', 'SearchConditions']),
   }
 }
 
@@ -174,8 +187,10 @@ export default {
         left:0.27rem;
     }
     >span{
-        font-size:0.48rem;
+        font-size:0.40rem;
         color:rgba(0, 0, 0, 1);
+		text-align:center;
+		width:1.4rem;
     }
 }
 
@@ -303,4 +318,23 @@ export default {
 .top_img img{ width:0.4rem; height:0.4rem; display:block;}
 .ta_vote{ position:absolute; font-size:0.37rem; margin-top:1.72rem; margin-left:0.46rem; right:0; bottom:1.50rem; width:2rem; height:0.8rem; line-height:0.9rem; color:#fff; font-size:0.4rem; text-align:center; background:url(../../../static/mock/img/toupiao.png) right center no-repeat; background-size:cover;}
 .ta_vote1{ background:url(../../../static/mock/img/toupiao1.png) right center no-repeat; background-size:cover;}
+.search{ background:#f5f5f5; height:0.9rem; padding:0 0.2rem; border-radius:1rem; margin-left:0.74rem; width:7.84rem;}
+.search select{ border:0; background:none; padding-right:0.5rem; font-size:0.37rem; height:0.9rem; background: url(/../../static/mock/img/nojian.png) no-repeat right center; background-size: 0.4rem 0.25rem;}
+.search input{ border:0; background:none; width:6rem; font-size:0.37rem; height:0.9rem;}
+select{
+ 		appearance:none;
+        -moz-appearance:none;
+        -webkit-appearance:none;
+        border: none;
+        font-size: 1rem;
+        color: #666;
+        text-align-last: center;
+        background: url(/../../static/mock/img/nojian.png) no-repeat right center;
+        background-size: 0.25rem 0.4rem;
+    }
+    select:focus {
+        background: url(/../../static/mock/img/nojian.png) no-repeat right center;
+        background-size: 0.4rem 0.25rem;
+    }
+.search_k{ font-size:0.46rem; text-align:center; margin-top:1rem; color:#666;}
 </style>

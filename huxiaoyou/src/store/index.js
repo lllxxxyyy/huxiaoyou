@@ -33,8 +33,20 @@ const state = {
     nickNamePerX: sessionStorage.getItem('ReceiptAddressAddPage'), //个人资料名字
     SignaturePerX: sessionStorage.getItem('ReceiptAddressAddPage'), //个人资料个性签名
     cityNamePerX: sessionStorage.getItem('cityNamePerX'), //个人资料城市
+
+    searchConditions: sessionStorage.getItem('searchConditions'), //输入框搜索条件 type value
+  playerStyleDetailedInfo: sessionStorage.getItem('PlayerStyleDetailedInfo'), //PlayerStyleDetailed页面信息
 }
 const mutations = {
+  SearchConditions(state, searchConditions) {
+      sessionStorage.setItem('searchConditions', searchConditions);
+      state.searchConditions = searchConditions
+    },
+  PlayerStyleDetailedInfo(state, PlayerStyleDetailedInfo) {
+    sessionStorage.setItem('PlayerStyleDetailedInfo', PlayerStyleDetailedInfo);
+    state.playerStyleDetailedInfo = PlayerStyleDetailedInfo
+  },
+
     SpecialDetailsPages(state, SpecialDetailsPage) {
         sessionStorage.setItem('SpecialDetailsPage', SpecialDetailsPage);
         state.SpecialDetailsPage = SpecialDetailsPage
@@ -153,6 +165,8 @@ const mutations = {
         sessionStorage.setItem('ReceiptAddressAddPage', ReceiptAddressAddPage);
         state.ReceiptAddressAddPage = ReceiptAddressAddPage
     }
+
+
 }
 export default new Vuex.Store({
     state,

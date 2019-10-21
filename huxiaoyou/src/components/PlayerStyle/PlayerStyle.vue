@@ -9,7 +9,7 @@
       <ul class="player_list">
           <li v-for="(item,index) in PlayerStyleData" :key="index">
               <div class="player_center">
-                  <img v-if="item.video_introduction" @click="goGoodsPage()" :src="item.video_introduction[1].src" />
+                  <img v-if="item.video_introduction" @click="goGoodsPage(item)" :src="item.video_introduction[1].src" />
 				  <div class="bofang"><img @click="goGoodsPage(item)" :src="staticImgH+'bofang.png'" alt=""></div>
               </div>
 			  <span class="player_btn">投票</span>
@@ -28,8 +28,8 @@
       <ul class="player_list_fencai">
           <li v-for="(item,index) in PlayerStyleData" :key="index">
               <div class="player_center">
-                  <img v-if="item.video_introduction" @click="goGoodsPage()" :src="item.video_introduction[1].src" />
-				  <div class="bofang"><img @click="goGoodsPage()" :src="staticImgH+'bofang.png'" alt=""></div>
+                  <img v-if="item.video_introduction" @click="goGoodsPage(item)" :src="item.video_introduction[1].src" />
+				  <div class="bofang"><img @click="goGoodsPage(item)" :src="staticImgH+'bofang.png'" alt=""></div>
               </div>
 			  <span class="player_btn">投票</span>
 			  <div class="player_top">

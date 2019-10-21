@@ -19,7 +19,7 @@
                    :src="player.avatar"
                    alt="">
               <div class="top_img"><img :src="staticImgH+'paiming'+(seqNum+1)+'.png'" alt=""></div>
-              <div class="ta_vote ta_vote1">给Ta投票</div>
+              <div class="ta_vote">给Ta投票</div>
               <span class="angelNameTwo">选手：{{player.username}}</span>
               <span class="angelPriceTwo">编号：{{player.id}}</span>
             </li>
@@ -80,6 +80,8 @@ export default {
          this.barId=res.data.data[0].id
          this.getlistData()
     })
+
+
   },
 
   methods: {
@@ -88,11 +90,10 @@ export default {
     },
     //   跳选手详情
     toPlayerDetail(id){
-        this.playerIds(id)//保存选手编号
-        this.addressIdIsSels('false') //给选手详情页默认地址没选中状态 
+        this.playerIds(id)//保存选手id
+        this.addressIdIsSels('false') //投票盒子不显示 
         this.PlayerDetailPages('/PlayerRanking')  //选手详情返回页面
-        this.playDetailVoteDivs('false') //选手详情的投票盒子默认消失
-        this.shopDetatilshows('false')//默认让卡包详情返回到选手详情的状态是false
+        this.playDetailVoteDivs('true') //选手详情的投票盒子的消失
         this.$router.push('/PlayerDetails')
     },
       SpecialBarBtn(index,id){

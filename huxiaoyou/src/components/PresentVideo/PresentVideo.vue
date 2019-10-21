@@ -4,10 +4,7 @@
        <div class="PlayerRanking_header">
           <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
           <span>介绍视频</span>
-          <div class="right">
-              <span @click="addVideo">添加</span>
-              <input type="file" class="upload" @change="uploadFile" ref="inputer" accept="video/*"/>
-          </div>
+		  <div class="PresentPhoto_admin">管理</div>
       </div>
       <ul class="videoList">
           <li v-for="(item,index) in reply" :key="index">
@@ -16,9 +13,13 @@
                 ref="videoPlayer"
                 :options="playerOptions[index]"
                 :playsinline="true">
-            </video-player>
+            </video-player><div class="gxuan">删除</div>
           </li>
       </ul>
+	  <div class="right">
+         <span @click="addVideo"><img :src="staticImgH+'tianjia.png'" alt=""></span>
+         <input type="file" class="upload" @change="uploadFile" ref="inputer" accept="video/*"/>
+      </div>
       <!-- 提示盒子 -->
          <transition name="fade">
             <div class="promptFather" v-if="showPrompt">
@@ -138,7 +139,7 @@ export default {
             return false
           }
           this.imgLen++;
-           this.formData.append('video_introduction[]',this.fil[i])
+           this.formData.append('video_introduction',this.fil[i])
         }
         
         this.$http.post('api/player/video_introduction', this.formData,{
@@ -202,14 +203,22 @@ export default {
         font-size:0.48rem;
         color:rgba(0, 0, 0, 1);
     }
-    .right{
+	>.PresentPhoto_admin{ font-size:0.42rem;}
+}
+.right{
         position :relative;
+		width:0.8rem;
+		margin-top:0.3rem;
+		margin-bottom:0.3rem;
+		left:4.6rem;
         >span{
             font-size:0.4rem;
             color:rgba(0, 0, 0, 1);
+			>img{ width:0.8rem;}
         }
         >input{
             width:0.8rem;
+			height:0.8rem;
             opacity :0;
             position :absolute;
             top:0;
@@ -217,9 +226,9 @@ export default {
             z-index:999;
         }
     }
-}
 .videoList{
     width:100%;
+	min-height:14.6rem;
     padding:0 0.4rem;
     margin-top:0.27rem;
     >li{
@@ -236,6 +245,7 @@ export default {
     width:100%;
     >.video-js{
         width:100%;
+		border-radius:0.2rem;
     }
 }
 // video-js vjs-paused vjs-controls-enabled vjs-v6 vjs-user-active vjs_video_1267-dimensions
@@ -274,4 +284,5 @@ export default {
    transform: translateY(0.32rem);
   opacity: 0;
 }
+.gxuan{ margin-top:-0.9rem; height:0.9rem; background:rgba(0,0,0,0.5); position:relative; width:100%; color:#fff; text-align:center; line-height:0.9rem; font-size:0.48rem; border-radius:0 0 0.2rem 0.2rem;}
 </style>
