@@ -3,12 +3,23 @@
   <div class="changeName">
         <div class="change_title">
         <img @click="changeRetuurn" :src="staticImgH+'zuojiantou.png'" alt="">
-        <span>修改昵称</span>
+        <span v-if="changeIndexB==1">修改昵称</span> <span v-if="changeIndexB==2">修改年龄</span> 
+        <span v-if="changeIndexB==3">修改身高</span> <span v-if="changeIndexB==4">修改体重</span> 
+        <span v-if="changeIndexB==5">修改星座</span> 
+
         <span class="submit" @click="submit">保存</span>
       </div>
       <div class="change_des">
-          <span class="change_destitle">我的名字（或昵称）</span>
-          <input class="change_input" type="text" v-model="userName">
+          <span class="change_destitle" v-if="changeIndexB==1">我的名字（或昵称）</span>
+          <span class="change_destitle" v-if="changeIndexB==2">我的年龄</span>
+          <span class="change_destitle" v-if="changeIndexB==3">我的身高</span>
+          <span class="change_destitle" v-if="changeIndexB==4">我的体重</span>
+          <span class="change_destitle" v-if="changeIndexB==5">我的星座</span>
+          <input class="change_input" v-if="changeIndexB==1" type="text"  v-model="userName">
+          <input class="change_input" v-if="changeIndexB==2" type="text" oninput = "value=value.replace(/[^\d]/g,'')"  v-model="age">
+          <input class="change_input" v-if="changeIndexB==3" type="text" oninput = "value=value.replace(/[^\d]/g,'')" v-model="height">
+          <input class="change_input" v-if="changeIndexB==4" type="text" oninput = "value=value.replace(/[^\d]/g,'')" v-model="weight">
+          <input class="change_input" v-if="changeIndexB==5" type="text"  v-model="constellation">
           <div class="change_num"><span>{{userName.length}}</span>/<span>20</span></div>
       </div>
   </div>
@@ -23,17 +34,33 @@ export default {
   data () {
     return {
         userName:'花椒花椒',
+        age:'',//年龄
+        height:'',//身高
+        weight:'',//体重
+        constellation:'', //星座
+        changeIndexB:'',  //上页面返回对应信息的下标
     };
   },
 
 //   components: {},
 
     computed:{
-        ...mapState(['staticImgH','nickNamePerX'])
+        ...mapState(['staticImgH','nickNamePerX','agePerX','heightPerX','weightPerX','constellationPerX'])
     },
 
   mounted(){
-      this.userName=this.nickNamePerX
+      this.changeIndexB=this.$route.query.changeIndex
+      if(this.changeIndexB==1){
+          this.userName=this.nickNamePerX
+      }else if(this.changeIndexB==2){
+          this.age=this.agePerX
+      }else if(this.changeIndexB==3){
+          this.height=this.heightPerX
+      }else if(this.changeIndexB==4){
+          this.weight=this.weightPerX
+      }else if(this.changeIndexB==5){
+          this.changeIndexB=this.constellationPerX
+      }
   },
 
   methods: {
@@ -43,10 +70,21 @@ export default {
       },
     //   保存
     submit(){
-        this.nickNamePerXs(this.userName)
+         if(this.changeIndexB==1){
+          this.nickNamePerXs(this.userName)
+      }else if(this.changeIndexB==2){
+          this.agePerXs(this.age)
+      }else if(this.changeIndexB==3){
+          this.heightPerXs(this.height)
+      }else if(this.changeIndexB==4){
+          this.weightPerXs(this.weight)
+      }else if(this.changeIndexB==5){
+          this.constellationPerXs(this.changeIndexB)
+      }
+        
         this.$router.push('/MineInformation')
     },
-    ...mapMutations(['specialInfos','nickNamePerXs']),
+    ...mapMutations(['specialInfos','nickNamePerXs','agePerXs','heightPerXs','weightPerXs','constellationPerXs']),
   }
 }
 

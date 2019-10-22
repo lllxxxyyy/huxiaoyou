@@ -154,7 +154,14 @@ export default {
   methods: {
       triggerBtn(index){
           if(index==1){
-              this.$router.push('/PresentVideo')
+              this.cityNamePerXs('')   //城市
+              this.SignaturePerXs('')  //个签
+              this.nickNamePerXs('')   //昵称
+              this.agePerXs('')        //年龄
+              this.heightPerXs('')     //身高
+              this.weightPerXs('')     //体重
+              this.constellationPerXs('')  //星座
+              this.$router.push('/MineInformation')
           }else if(index==2){
               this.$router.push('/PresentPhoto')
           }else if(index==0){
@@ -165,11 +172,8 @@ export default {
           }else if(index==5){
                this.ReceiptAddressPages('/Mine')
               this.$router.push('/ReceiptAddress')
-          }else if(index==3){
-              this.cityNamePerXs('')
-              this.SignaturePerXs('')
-              this.nickNamePerXs('')
-              this.$router.push('/MineInformation')
+          }else if(index==1){
+             this.$router.push('/PresentVideo')
           }else if(index==8){
               this.$router.push('/ShortVideo')
           }else if(index==4){
@@ -190,7 +194,7 @@ export default {
             this.$router.push('/AboutWe')
         }
     },
-    ...mapMutations(['ReceiptAddressPages','cityNamePerXs','SignaturePerXs','nickNamePerXs']),
+    ...mapMutations(['ReceiptAddressPages','cityNamePerXs','SignaturePerXs','nickNamePerXs','agePerXs','heightPerXs','weightPerXs','constellationPerXs']),
   }
 }
 

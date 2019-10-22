@@ -4,7 +4,7 @@
       <div class="MineInfo_title">
         <img @click="InfoReturn" :src="staticImgH+'zuojiantou.png'" alt="">
         <span>个人资料</span>
-        <span class="submit" @click="submit">提交</span>
+        <span class="submit" >我的主业</span>
       </div>
       <ul class="MineInfo_List">
         <li>
@@ -17,7 +17,7 @@
         </li>
         <li>
           <span>姓名（或昵称）</span>
-          <div class="MineInfo_ListRight" @click="changeName">
+          <div class="MineInfo_ListRight" @click="changeInfo(1)">
             <span>{{nickNameM}}</span><img :src="staticImgH+'MineRight.png'" alt="">
           </div>
         </li>
@@ -35,35 +35,42 @@
         </li>
         <li>
           <span>年龄</span>
-          <div  class="MineInfo_ListRight">
+          <div  class="MineInfo_ListRight" @click="changeInfo(2)">
             <span>{{ageM}}岁</span><img :src="staticImgH+'MineRight.png'" alt="">
           </div>
         </li>
         <li>
           <span>身高</span>
-          <div  class="MineInfo_ListRight">
+          <div  class="MineInfo_ListRight" @click="changeInfo(3)">
             <span>{{heightM}}cm</span><img :src="staticImgH+'MineRight.png'" alt="">
           </div>
         </li>
         <li>
           <span>体重</span>
-          <div  class="MineInfo_ListRight">
+          <div  class="MineInfo_ListRight" @click="changeInfo(4)">
             <span>{{weightM}}kg</span><img :src="staticImgH+'MineRight.png'" alt="">
           </div>
         </li>
         <li>
-          <span>常驻城市</span>
+          <span>常驻城市</span >
           <div @click="tocity"  class="MineInfo_ListRight">
             <span>{{cityM}}</span><img :src="staticImgH+'MineRight.png'" alt="">
           </div>
         </li>
         <li>
-          <span>星座</span>
-          <div class="MineInfo_ListRight">
+          <span>星座</span >
+          <div class="MineInfo_ListRight" @click="changeInfo(5)">
             <span>{{constellationM}}</span><img :src="staticImgH+'MineRight.png'" alt="">
           </div>
         </li>
+        <li>
+          <span>照片</span>
+          <div class="MineInfo_ListRight">
+            <img :src="staticImgH+'MineRight.png'" alt="">
+          </div>
+        </li>
       </ul>
+      <div class="sign" @click="submit">提交</div>
       <!-- 性别选择 -->
       <div class="sex_wrap" @click="showSexC"  v-if="sexShow">
              <div class="sex">
@@ -130,7 +137,7 @@ export default {
   },
   // components: {},
    computed:{
-        ...mapState(['staticImgH','tokenH','nickNamePerX','SignaturePerX','cityNamePerX','tokenH'])
+        ...mapState(['staticImgH','tokenH','nickNamePerX','agePerX','heightPerX','weightPerX','constellationPerX','SignaturePerX','cityNamePerX','tokenH'])
     },
   mounted(){
         this.getInformation()
@@ -149,27 +156,49 @@ export default {
           if(res.data.code==200){
               var personData=res.data.data
               this.headPicM=personData.head_pic
-              if(this.nickNamePerX){
-                  this.nickNameM=this.nickNamePerX;
-              }else{
-                this.nickNameM=personData.username
-              }
+              //个签
               if(this.SignaturePerX){
-                this.signatureM=this.SignaturePerX
-              }else{
-                this.signatureM=personData.signature
+                  this.signatureM=this.SignaturePerX
+                }else{
+                  this.signatureM=personData.signature
+              }
+              //城市
+              if(this.cityNamePerX){
+                  this.cityM=this.cityNamePerX
+                }else{
+                    this.cityM=personData.city
+              }
+              //名字
+              if(this.nickNamePerX){ 
+                    this.nickNameM=this.nickNamePerX;
+                }else{
+                  this.nickNameM=personData.username
+              }
+              //年龄
+              if(this.agePerX){
+                  this.ageM=this.agePerX
+                }else {
+                  this.ageM=personData.age
+              }
+              //身高
+              if(this.heightPerX){
+                  this.heightM=this.heightPerX
+                }else {
+                  this.heightM=personData.height
+              }
+              //体重
+              if(this.weightPerX){
+                 this.weightM=this.weightPerX
+                }else {
+                  this.weightM=personData.weight
+              }
+              //星座
+              if(this.constellationPerX){
+                  this.constellationM=this.constellationPerX
+                }else {
+                  this.constellationM=personData.constellation
               }
               this.sexM=personData.sex
-              this.ageM=personData.age
-              this.heightM=personData.height
-              this.weightM=personData.weight
-              if(this.cityNamePerX){
-                this.cityM=this.cityNamePerX
-              }else{
-                  this.cityM=personData.city
-              }
-              
-              this.constellationM=personData.constellation
           }else{
             var self=this
               clearInterval(self.timer2);
@@ -210,9 +239,13 @@ export default {
         });
       },
     // 修改昵称
-    changeName(){
-        this.nickNamePerXs(this.nickNameM)
-        this.$router.push('/changeName')
+    changeInfo(index){
+          this.nickNamePerXs(this.nickNameM)//名字
+          this.agePerXs(this.ageM) //年龄
+          this.heightPerXs(this.heightM) //身高
+          this.weightPerXs(this.weightM) //体重 
+          this.constellationPerXs(this.constellationM)  //星座
+          this.$router.push({path:'/changeName',query:{changeIndex:index}})
     },
     // 我的信息返回
     InfoReturn(){
@@ -284,7 +317,7 @@ export default {
             }
           })
     },
-     ...mapMutations(['specialInfos','nickNamePerXs','cityNamePerXs','SignaturePerXs']),
+     ...mapMutations(['specialInfos','nickNamePerXs','cityNamePerXs','SignaturePerXs','agePerXs','heightPerXs','weightPerXs','constellationPerXs']),
     
   }
 }
@@ -296,19 +329,30 @@ export default {
   height:1.23rem;
   display :flex;
   align-items :center;
-  justify-content :space-between;
-  padding:0.4rem;
+  justify-content :center;
+  padding:0 0.4rem;
+  position:relative;
   >img{
     width:0.32rem;
     height:0.56rem;
+    position:absolute;
+    top:50%;
+    margin-top:-0.28rem;
+    left:0.4rem;
   }
   >span{
+    line-height:0.667rem;
       font-size:0.48rem;
       color:rgba(0, 0, 0, 1);
   }
   >.submit{
     font-size:0.427rem;
     color:rgba(0, 0, 0, 1);
+    position:absolute;
+    top:50%;
+    margin-top:-0.28rem;
+    right:0.4rem;
+    line-height:0.6rem;
   }
 }
 .MineInfo_List{
@@ -428,5 +472,16 @@ export default {
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
    transform: translateY(0.32rem);
   opacity: 0;
+}
+
+// 提交
+.sign{
+  width:9.2rem;
+  height:0.8rem;
+  line-height 0.8rem; 
+  text-align:center;
+  border-radius:0.667rem;
+  font-size:0.347rem;
+  background :rgba(255, 255, 255, 1);
 }
 </style>

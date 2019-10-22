@@ -11,17 +11,17 @@
                   <div class="minePerson_InfoRight">
                       <div class="minePerson_InfoRiTop">
                         <span class="minePerson_InfoName">{{personData.username}}</span>
-                        <div class="minePerson_InfoVip"><img :src="staticImgH+'Mine_vip.png'" alt=""><span>一级狐小仙</span></div>
+                        <div class="minePerson_InfoVip"><img :src="staticImgH+'Mine_vip.png'" alt=""><span>{{personData.level_name}}</span></div>
                       </div>
                       <span class="minePerson_InfoRiBott" >{{personData.names}}</span>
                   </div>
               </div>
               <ul class="minePerson_EventInfo">
                 <li>
-                  参赛编号：00001
+                  参赛编号：{{personData.user_id}}
                 </li>
-                <li>赛区排名：34</li>
-                <img :src="staticImgH+'playBian.png'" alt="">
+                <li>赛区排名：{{personData.division_ranking}}</li>
+                <img @click="toMineInfo" :src="staticImgH+'playBian.png'" alt="">
               </ul>
               <ul class="minePerson_artick " v-if="personData.is_player==1">
                  <li>
@@ -37,19 +37,18 @@
                   <span class="minePerson_artickNum">{{personData.help_amount}}</span><span>账户余额</span>
                 </li>
               </ul>
-              <div class="minePerson_InfoLike">{{personData.signature}}</div>
+              <div class="minePerson_InfoLike" v-if="personData.signature">{{personData.signature}}</div>
               <div class="minePerson_InfoDes">
                   <div>
-                    <img v-if="personData.sex==2" :src="staticImgH+'gril.png'" alt="">
-                    <img v-if="personData.sex==1" :src="staticImgH+'boy.png'" alt="">
                     <span v-if="personData.sex==1">男</span>
                     <span v-if="personData.sex==2">女</span>
                   </div>
-                  <div><span>{{personData.age}}</span></div>
+                  <span v-if="personData.age">{{personData.age}}</span>
                   <span v-if="personData.city">{{personData.city}}</span>
                   <span v-if="personData.constellation">{{personData.constellation}}</span>
                   <span v-if="personData.height">{{personData.height}}cm</span>
                   <span v-if="personData.weight">{{personData.weight}}kg</span>
+                  <span v-if="personData.weight">公会成员</span>
               </div>
           </div>
       </div>
@@ -140,6 +139,10 @@ export default {
     ToReceiptAddress(){
       this.ReceiptAddressPages('/Mine')
       this.$router.push('/ReceiptAddress')
+    },
+    // 个人资料
+    toMineInfo(){
+      this.$router.push('/MineInformation')
     },
     ...mapMutations(['ReceiptAddressPages']),
   }

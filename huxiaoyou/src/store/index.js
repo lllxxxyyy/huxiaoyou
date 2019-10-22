@@ -30,11 +30,17 @@ const state = {
     shopDetailReturn: sessionStorage.getItem('shopDetailReturn'), //卡包详情返回哪
     SpecialDetailsPage: sessionStorage.getItem('shopDetailReturn'), //专题详情页返回页面设置
 
-    nickNamePerX: sessionStorage.getItem('ReceiptAddressAddPage'), //个人资料名字
-    SignaturePerX: sessionStorage.getItem('ReceiptAddressAddPage'), //个人资料个性签名
+    nickNamePerX: sessionStorage.getItem('nickNamePerX'), //个人资料名字
+    SignaturePerX: sessionStorage.getItem('SignaturePerX'), //个人资料个性签名
     cityNamePerX: sessionStorage.getItem('cityNamePerX'), //个人资料城市
+    agePerX: sessionStorage.getItem('agePerX'), //个人资料年龄
+    heightPerX: sessionStorage.getItem('heightPerX'), //个人资料身高
+    weightPerX: sessionStorage.getItem('weightPerX'), //个人资料体重
+    constellationPerX: sessionStorage.getItem('constellationPerX'), //个人资料星座
+
 }
 const mutations = {
+
     SpecialDetailsPages(state, SpecialDetailsPage) {
         sessionStorage.setItem('SpecialDetailsPage', SpecialDetailsPage);
         state.SpecialDetailsPage = SpecialDetailsPage
@@ -72,6 +78,26 @@ const mutations = {
     nickNamePerXs(state, nickNamePerX) {
         sessionStorage.setItem('nickNamePerX', nickNamePerX);
         state.nickNamePerX = nickNamePerX
+    },
+    // 个人资料年龄
+    agePerXs(state, agePerX) {
+        sessionStorage.setItem('agePerX', agePerX);
+        state.agePerX = agePerX
+    },
+    //个人资料身高
+    heightPerXs(state, heightPerX) {
+        sessionStorage.setItem('heightPerX', heightPerX);
+        state.heightPerX = heightPerX
+    },
+    // 个人资料体重
+    weightPerXs(state, weightPerX) {
+        sessionStorage.setItem('weightPerX', weightPerX);
+        state.weightPerX = weightPerX
+    },
+    // 个人资料星座
+    constellationPerXs(state, constellationPerX) {
+        sessionStorage.setItem('constellationPerX', constellationPerX);
+        state.constellationPerX = constellationPerX
     },
     specialInfos(state, specialInfo) {
         sessionStorage.setItem('specialInfo', JSON.stringify(specialInfo));
