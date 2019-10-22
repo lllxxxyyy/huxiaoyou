@@ -9,23 +9,31 @@
         <img v-if="currentPlayerData" :src="currentPlayerData.avatar" alt="">
         <span>{{currentPlayerData.username}}</span>
 
-        <span class="guanzhu" v-if="!followFlag" @click="follow()">关注</span>
-        <span class="guanzhu" v-if="followFlag" @click="follow()">取消关注</span>
+        <span class="guanzhu" v-if="!video_info.rank" @click="follow()">关注</span>
+        <span class="guanzhu" v-if="video_info.rank" @click="follow()">已关注</span>
       </div>
     </div>
-    <div class="player_paiming">{{currentPlayerData.names}}排名：{{currentPlayerData.division_ranking}}名</div>
+    <div class="player_paiming">{{currentPlayerData.names}}排名：{{video_info.rank}}名</div>
     <div class="video">
       <!--<video controls="controls" autoplay="autoplay" src="https://www.w3school.com.cn/i/movie.ogg"></video>-->
-      <video controls="controls" autoplay="autoplay" :src="currentPlayerData.video_introduction"></video>
+      <!--<video controls="controls" autoplay="autoplay" :src="currentPlayerData.video_introduction"></video>-->
+      <video-player
+        class="video-player-box ovideo"
+        ref="videoPlayer"
+        :options="playerOptions"
+        :playsinline="true">
+      </video-player>
+
     </div>
     <div class="video_caozuo">
 
-      <span class="video_fenxiang"><img @click="toReturn" :src="staticImgH+'fenxiang.png'" alt=""></span>
+      <span class="video_fenxiang"><img @click="wxShare" :src="staticImgH+'fenxiang.png'" alt=""></span>
       <span class="video_fenxiang">
-        <img v-if="!zanFlag" @click="zan()" :src="staticImgH+'shouchang.png'" alt="">
-        <img v-if="zanFlag" @click="zan()" :src="staticImgH+'xihuan.png'" alt="">
+        <img v-if="!video_info.is_videos" @click="zan()" :src="staticImgH+'shouchang.png'" alt="">
+        <img v-if="video_info.is_videos" @click="zan()" :src="staticImgH+'xihuan.png'" alt="">
       </span>
-      <span v-if="!voteFlag" class="video_toupiao" @click="vote()">投票</span>
+      <span v-if="video_info.concern" class="video_toupiao" @click="toPlayerDetail(currentPlayerData.id)">投票</span>
+      <!--<span v-if="video_info.concern" class="video_toupiao" @click="vote()">投票</span>-->
     </div>
     <!-- 提示盒子 -->
     <transition name="fade">
@@ -41,7 +49,10 @@
 <script>
   import {mapState} from 'vuex'
   import {mapMutations} from 'vuex'
+  import wx from 'weixin-jsapi'
   import qs from 'qs'
+  import {videoPlayer} from 'vue-video-player'
+  import 'video.js/dist/video-js.css'
 
   export default {
     name: "PlayerStyleDetailed",
@@ -51,52 +62,82 @@
         zanFlag: false,
         voteFlag: false,
 
+        playerOptions:{},
+
 
         PlayerStyleData: '',
-        currentPlayerData: this.$route.query.player,
+        currentPlayerData: {},
         token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJpc3MiOiJodHRwczpcL1wvbG92eW91LnRvcCIsImF1ZCI6Imh0dHBzOlwvXC9sb3Z5b3UudG9wIiwiaWF0IjoxNTY5NDA4NzE2LCJuYmYiOjE1Njk0MDg3MTYsImV4cCI6MTYwMDk0NDcxNn0.FPH-pgQp-2Vt1kbnZc_Z9JnJYvGYMeLOUHtkC4Tyj_w',
         // 提示盒子
         promptContent: '', //提示盒子的内容
         showPrompt: false,//提示盒子的吸收和显示,
-        video_info: {}
+        video_info: {
+          username:	null,
+          player_id:	0,
+          head_pic:	null,
+          video_introduction:	null,
+          names: '',
+          division_id: null,
+          concern: 0,
+          is_videos: 0,
+          rank: 0
+        }
       };
     },
 
-//   components: {},
+  components: {
+    videoPlayer
+  },
 
     computed: {
-      ...mapState(['staticImgH'])
+      ...mapState(['staticImgH', 'tokenH', 'playerStyleDetailedInfo'])
     },
 
     mounted() {
-      console.log(this.currentPlayerData);
-      //个人信息
-      // let obj = qs.stringify({
-      //   player_id: this.currentPlayerData.id
-      // })
-      // this.$http.post('api/player/info', obj, {
-      //   headers: {
-      //     'authorization': this.token
-      //   }
-      // }).then((res) => {
-      //   if (res.data.code === 200) {
-      //     console.log(res.data.data)
-      //     this.currentPlayerData = res.data.data
-      //   }
-      // })
+      if(this.$route.query.player) {
+        this.currentPlayerData = this.$route.query.player
+      } else {
+        this.currentPlayerData = this.playerStyleDetailedInfo.currentPlayerData
+      }
+
+      this.playerOptions = {
+        playbackRates: [0.7, 1.0, 1.5, 2.0], //播放速度
+          autoplay: false, //如果true,浏览器准备好时开始回放。
+        muted: false, // 默认情况下将会消除任何音频。
+        loop: false, // 导致视频一结束就重新开始。
+        preload: 'auto', // 建议浏览器在<video>加载元素后是否应该开始下载视频数据。auto浏览器选择最佳行为,立即开始加载视频（如果浏览器支持）
+        language: 'zh-CN',
+        aspectRatio: '16:9', // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
+        fluid: true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
+        sources: [{
+        src: this.currentPlayerData.video_introduction,  // 路径
+        type: 'video/mp4'  // 类型
+      }, {
+        src: '//path/to/video.webm',
+        type: 'video/webm'
+      }],
+        poster: "../../static/images/test.jpg", //你的封面地址
+        // width: document.documentElement.clientWidth,
+        notSupportedMessage: '此视频暂无法播放，请稍后再试', //允许覆盖Video.js无法播放媒体源时显示的默认信息。
+        controlBar: {
+        timeDivider: true,
+          durationDisplay: true,
+          remainingTimeDisplay: false,
+          fullscreenToggle: true  //全屏按钮
+      }
+      };
 
       //视频详情
       let obj = qs.stringify({
-        v_id: this.currentPlayerData.id,
+        v_id: this.currentPlayerData.v_id,
         player_id: this.currentPlayerData.id
       })
-      this.$http.post('api/player/info', obj, {
+      this.$http.post('api/user/vide_info', obj, {
         headers: {
           'authorization': this.token
         }
       }).then((res) => {
         if (res.data.code === 200) {
-          console.log(res.data.data)
           this.video_info = res.data.data
         }
       })
@@ -105,29 +146,37 @@
     methods: {
       //   返回
       toReturn() {
-        // this.$router.push('/PlayerStyle');
-        this.$router.go(-1);
+        this.$router.push('/PlayerStyle');
+      },
+      //   跳选手详情
+      toPlayerDetail(id){
+        this.playerIds(id)//保存选手id
+        this.PlayerStyleDetailedInfo({currentPlayerData: this.currentPlayerData})
+        this.addressIdIsSels('false') //投票盒子不显示
+        this.PlayerDetailPages('/PlayerStyleDetailed')  //选手详情返回页面
+        this.playDetailVoteDivs('true') //选手详情的投票盒子的消失
+        this.$router.push('/PlayerDetails')
       },
       // 赞
       zan(){
         let obj = qs.stringify({
-          type: '4',
-          player_id: this.currentPlayerData.player_id,
+          type: '2',
+          player_id: this.currentPlayerData.id,
           v_id: this.currentPlayerData.v_id
         })
-        this.$http.post('api/player/info', obj, {
+        this.$http.post('api/user/user_like', obj, {
           headers: {
-            'authorization': this.token
+            'authorization': this.tokenH
           }
         }).then((res) => {
           if (res.data.code === 200) {
             //OK'是取消点赞; 'result'=>'2'，数字表示店点赞成功
-            let result = res.data.result
+            let result = res.data.data.result
             if (result === 'OK') {
-              this.followFlag = false;
+              this.video_info.is_videos = 0;
               this.toastMsg("取消点赞成功");
-            } else if (result === '2') {
-              this.followFlag = true;
+            } else if (result !== 'OK') {
+              this.video_info.is_videos = 1;
               this.toastMsg("点赞成功");
             }
           }
@@ -137,10 +186,10 @@
       follow(){
         let obj = qs.stringify({
           type: '4',
-          player_id: this.currentPlayerData.player_id,
+          player_id: this.currentPlayerData.id,
           v_id: this.currentPlayerData.v_id
         })
-        this.$http.post('api/player/info', obj, {
+        this.$http.post('api/user/user_like', obj, {
           headers: {
             'authorization': this.token
           }
@@ -149,10 +198,10 @@
             //OK'是取消点赞; 'result'=>'2'，数字表示店点赞成功
             let result = res.data.result
             if (result === 'OK') {
-              this.followFlag = false;
+              this.video_info.concern = 0;
               this.toastMsg("取消关注成功");
             } else if (result === '2') {
-              this.followFlag = true;
+              this.video_info.concern = 1;
               this.toastMsg("关注成功");
             }
           }
@@ -185,7 +234,75 @@
           self.showPrompt = false
           clearInterval(self.timer2);
         }, 2000)
-      }
+      },
+      wxShare(){
+        //   微信分享
+        var Wobj=qs.stringify({
+          player_id:this.currentPlayerData.id,
+          type:2,
+        })
+        this.$http.post('/api/wechat/get_sign',Wobj,{
+          headers: {
+            'authorization': this.tokenH
+          }
+        }).then((res)=>{
+          if(res.data.code===200){
+            debugger
+            var data=res.data.data
+            this.test=data.test
+            wx.config({
+              debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+              appId: data.appId, // 必填，公众号的唯一标识
+              timestamp:data.timestamp, // 必填，生成签名的时间戳
+              nonceStr: data.nonceStr, // 必填，生成签名的随机串
+              signature: data.signature,// 必填，签名
+              jsApiList: ['onMenuShareAppMessage','onMenuShareTimeline'] // 必填，需要使用的JS接口列表
+            });
+            this.toFriend()
+            this.toFriendQuan()
+          }else{
+            var self=this
+            clearInterval(self.timer2);
+            this.promptContent=res.data.msg
+            this.showPrompt=true
+            self.timer2=setTimeout(function(){
+              self.showPrompt=false
+              clearInterval(self.timer2);
+            },1000)
+            return false;
+          }
+        })
+      },
+      //   分享给朋友
+      toFriend(){
+        var vm=this
+        var realLocation=vm.apiH+'/#/PlayerDetails?player_id='+vm.playerId
+        wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+          wx.onMenuShareAppMessage({
+            title:vm.test, // 分享标题
+            desc:'快来给我投票吧', // 分享描述
+            link:vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            imgUrl: vm.detailData.head_pic, // 分享图标
+            success: function (res) {
+            }
+          })
+        });
+      },
+      //   分享到朋友圈
+      toFriendQuan(){
+        var vm=this
+        var realLocation=vm.apiH+'/#/PlayerDetails?player_id='+vm.playerId
+        wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+          wx.onMenuShareTimeline({
+            title:vm.test, // 分享标题
+            link: vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation),  // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            imgUrl:vm.detailData.head_pic, // 分享图标
+            success: function (res) {
+            },
+          })
+        });
+      },
+      ...mapMutations(['playerIds','PlayerDetailPages','addressIdIsSels','playDetailVoteDivs', 'PlayerStyleDetailedInfo']),
 
     }
   }
@@ -270,7 +387,7 @@
                 color:rgba(0, 0, 0, 0.8);
             }
         }
-.video{ width:100%; height:100%; background:#444; position: fixed; top:0;
+.video{ width:100%; height:100%; background:#444; position: fixed; top:100;
 >video{ width:100%; height:100%;}
 }
 .player_paiming{ position: fixed; z-index:999; top:2.6rem; text-align:center; font-size:0.37rem; background:rgba(255,255,255,0.8); margin-left:0.3rem; border-radius:0.4rem; padding:0.1rem 0.2rem;}
@@ -315,5 +432,9 @@
 >.video_fenxiang{ background:rgba(255,255,255,0.8); border-radius:0.92rem; width:1rem; height:1rem; text-align:center; margin-right:0.4rem;
 >img{ height:0.6rem; margin-top:0.2rem;}
 }
+}
+
+.video-js .vjs-big-play-button{
+  background-color: red;
 }
 </style>

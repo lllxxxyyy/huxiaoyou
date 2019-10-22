@@ -179,6 +179,8 @@ const mutations = {
         sessionStorage.setItem('ReceiptAddressAddPage', ReceiptAddressAddPage);
         state.ReceiptAddressAddPage = ReceiptAddressAddPage
     }
+
+
 }
 export default new Vuex.Store({
     state,

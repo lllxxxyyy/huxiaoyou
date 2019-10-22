@@ -3,11 +3,13 @@
   <div class="PlayerRankingHome">
     <div class="PlayerRanking_header">
       <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
-      <select  v-model="search.type" placeholder="请选择">
+      <div class="search">
+	  <select  v-model="search.type" placeholder="请选择">
         <option label="姓名" value="1"></option>
         <option label="编号" value="2"></option>
       </select>
-      <input v-model="search.value"></input>
+      <input v-model="search.value" placeholder="请输入您要搜索的选手的名字或编号"></input>
+	  </div>
       <span @click="toSearchResult()">搜索</span>
     </div>
     <div class="SpecialTopicBody_bar">
@@ -26,12 +28,12 @@
           <div class="top_img"><img :src="staticImgH+'paiming'+(index+1)+'.png'" alt=""></div>
           <!--<div class="ta_vote to_vote1">给Ta投票</div>-->
           <div class="ta_vote" :class="{
-              ta_vote1: (index+1) > 3 && (index+1) <= 4,
-              ta_vote2: (index+1) > 4}">给Ta投票</div>
+              ta_vote1: (index+1) > 3 && (index+1) <= 100,
+              ta_vote2: (index+1) > 100}">给Ta投票</div>
           <span class="angelNameTwo">{{item.username}}</span>
           <span class="angelPriceTwo">{{item.votes}}+</span>
         </li>
-        <li v-if="(index+1)===4" class="list_tishi">
+        <li v-if="(index+1)===100" class="list_tishi">
           <div class="tishi">最终前100名进入赛区决赛（音乐节），加油冲刺！</div>
         </li>
       </template>
@@ -74,11 +76,13 @@ export default {
 //   components: {},
 
     computed:{
-            ...mapState(['staticImgH','tokenH'])
+            ...mapState(['staticImgH','tokenH', 'searchConditions'])
         },
 
   mounted(){
-
+if (this.searchConditions) {
+  this.search=this.searchConditions
+}
       var barobj=qs.stringify(this.search)
       this.$http.post('api/division/list',barobj,{
           headers: {
@@ -97,14 +101,15 @@ export default {
 
       //to 跳转搜索结果页面
     toSearchResult(){
+      this.SearchConditions(this.search);
       this.$router.push({path: 'SearchResult', query: this.search});
     },
     //   跳选手详情
     toPlayerDetail(id){
         this.playerIds(id)//保存选手id
         this.addressIdIsSels('false') //投票盒子不显示 
-        this.PlayerDetailPages('/PlayerRanking')  //选手详情返回页面
-        this.playDetailVoteDivs('false') //选手详情的投票盒子的消失
+        this.PlayerDetailPages('/PlayerRankingList')  //选手详情返回页面
+        this.playDetailVoteDivs('true') //选手详情的投票盒子的消失
         this.$router.push('/PlayerDetails')
     },
       SpecialBarBtn(index,id){
@@ -141,7 +146,7 @@ export default {
                
             })
       },
-      ...mapMutations(['playerIds','PlayerDetailPages','addressIdIsSels','playDetailVoteDivs']),
+      ...mapMutations(['playerIds','PlayerDetailPages','addressIdIsSels','playDetailVoteDivs', 'SearchConditions']),
   }
 }
 
@@ -167,8 +172,10 @@ export default {
         left:0.27rem;
     }
     >span{
-        font-size:0.48rem;
+        font-size:0.40rem;
         color:rgba(0, 0, 0, 1);
+		text-align:center;
+		width:1.4rem;
     }
 }
 
@@ -299,4 +306,22 @@ export default {
 .ta_vote2{ background:url(/../../static/mock/img/toupiao2.png) right center no-repeat; background-size:cover;}
 .HomeAngel_listTwo .list_tishi{ width:100%; height:auto; margin-bottom:0.5rem; box-shadow:0px 0px 0px 0px rgba(255,204,212,0.5);}
 .tishi{ font-size: 0.34rem; color:#EC0A42; text-align:center; width:100%; margin-bottom:0.06rem;}
+.search{ background:#f5f5f5; height:0.9rem; padding:0 0.2rem; border-radius:1rem; margin-left:0.74rem; width:7.84rem;}
+.search select{ border:0; background:none; margin-top:0.2rem; padding-right:0.5rem; font-size:0.37rem; background: url(/../../static/mock/img/nojian.png) no-repeat right center; background-size: 0.4rem 0.25rem;}
+.search input{ border:0; background:none; width:6rem; font-size:0.37rem;}
+select{
+ 		appearance:none;
+        -moz-appearance:none;
+        -webkit-appearance:none;
+        border: none;
+        font-size: 1rem;
+        color: #666;
+        text-align-last: center;
+        background: url(/../../static/mock/img/nojian.png) no-repeat right center;
+        background-size: 0.25rem 0.4rem;
+    }
+    select:focus {
+        background: url(/../../static/mock/img/nojian.png) no-repeat right center;
+        background-size: 0.4rem 0.25rem;
+    }
 </style>
