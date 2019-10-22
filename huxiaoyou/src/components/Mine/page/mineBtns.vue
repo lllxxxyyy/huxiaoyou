@@ -153,7 +153,9 @@ export default {
 
   methods: {
       triggerBtn(index){
-          if(index==1){
+          if(index==0){
+            this.$router.push('/PowerPack')
+          }else if(index==1){
               this.cityNamePerXs('')   //城市
               this.SignaturePerXs('')  //个签
               this.nickNamePerXs('')   //昵称
@@ -173,6 +175,8 @@ export default {
           }else if(index==8){
                this.ReceiptAddressPages('/Mine')
               this.$router.push('/ReceiptAddress')
+          }else if(index==9){
+            this.$router.push('/CustomerService')
           }else if(index==10){
               this.$router.push('/AboutWe')
           }

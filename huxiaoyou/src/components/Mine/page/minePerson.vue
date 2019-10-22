@@ -33,7 +33,7 @@
                 <li>
                   <span class="minePerson_artickNum">{{personData.app_vote}}</span><span>剩余免费票</span>
                 </li>
-                <li>
+                <li @click="toAccountBalance">
                   <span class="minePerson_artickNum">{{personData.user_moneys}}</span><span>账户余额</span>
                 </li>
               </ul>
@@ -136,6 +136,9 @@ export default {
   },
 
   methods: {
+    toAccountBalance() {
+      this.$router.push('/AccountBalance')
+    },
     ToReceiptAddress(){
       this.ReceiptAddressPages('/Mine')
       this.$router.push('/ReceiptAddress')

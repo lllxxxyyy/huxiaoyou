@@ -44,13 +44,31 @@ import ShortVideo from '@/components/ShortVideo/ShortVideo' //绑定短视频id
 
 import shopDetail from '@/components/shopDetail/shopDetail' //卡包详情
 import ConfirmOrder from '@/components/ConfirmOrder/ConfirmOrder' //确认订单
+import AccountBalance from '@/components/AccountBalance/AccountBalance' //账户明细
+import CustomerService from '@/components/CustomerService/CustomerService' //客服的
+import LabourUnion from '@/components/LabourUnion/LabourUnion' //工会
+import PowerPack from '@/components/PowerPack/PowerPack' //助力卡包
 Vue.use(Router)
 
 export default new Router({
-    routes: [{ //首页
+    routes: [
+        { //首页
             path: '/',
             name: 'Home',
             component: Home
+        },
+        { //客服
+          path: '/CustomerService',
+          name: 'CustomerService',
+          component: CustomerService
+        },{ //助力卡包
+          path: '/PowerPack',
+          name: 'PowerPack',
+          component: PowerPack
+        },{ //工会
+          path: '/LabourUnion',
+          name: 'LabourUnion',
+          component: LabourUnion
         },
         { //公共底部
             path: '/Foot',
@@ -226,11 +244,16 @@ export default new Router({
         path: '/PlayerStyleDetailed',
         name: 'PlayerStyleDetailed',
         component: PlayerStyleDetailed
-        },,
+        },
       { //搜索结果
         path: '/SearchResult',
         name: 'SearchResult',
         component: SearchResult
+      },,
+      { //账户明细
+        path: '/AccountBalance',
+        name: 'AccountBalance',
+        component: AccountBalance
       },
     ]
 })

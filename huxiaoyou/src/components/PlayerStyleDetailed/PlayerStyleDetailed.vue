@@ -17,11 +17,7 @@
     <div class="video">
       <!--<video controls="controls" autoplay="autoplay" src="https://www.w3school.com.cn/i/movie.ogg"></video>-->
       <!--<video controls="controls" autoplay="autoplay" :src="currentPlayerData.video_introduction"></video>-->
-      <video-player
-        class="video-player-box ovideo"
-        ref="videoPlayer"
-        :options="playerOptions"
-        :playsinline="true">
+      <video-player class="video-player-box ovideo" controls="controls" autoplay="autoplay" ref="videoPlayer" :options="playerOptions" :playsinline="true">
       </video-player>
 
     </div>
@@ -102,7 +98,7 @@
 
       this.playerOptions = {
         playbackRates: [0.7, 1.0, 1.5, 2.0], //播放速度
-          autoplay: false, //如果true,浏览器准备好时开始回放。
+        autoplay: true, //如果true,浏览器准备好时开始回放。
         muted: false, // 默认情况下将会消除任何音频。
         loop: false, // 导致视频一结束就重新开始。
         preload: 'auto', // 建议浏览器在<video>加载元素后是否应该开始下载视频数据。auto浏览器选择最佳行为,立即开始加载视频（如果浏览器支持）
@@ -437,4 +433,6 @@
 .video-js .vjs-big-play-button{
   background-color: red;
 }
+.ovideo{width:100%; height:100%; background:#444; position: fixed;}
+.video-js.vjs-fluid, .video-js.vjs-16-9, .video-js.vjs-4-3{width:100%!important; height:100%!important; background:#444!important; position: fixed!important;}
 </style>

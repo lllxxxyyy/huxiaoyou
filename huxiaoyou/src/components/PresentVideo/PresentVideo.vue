@@ -4,16 +4,15 @@
        <div class="PlayerRanking_header">
           <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
           <span>介绍视频</span>
-		  <div class="PresentPhoto_admin">管理</div>
+		  <div @click="delStatus()" class="PresentPhoto_admin">管理</div>
       </div>
       <ul class="videoList">
-          <li v-for="(item,index) in reply" :key="index">
-              <video-player
-                class="video-player-box ovideo"
-                ref="videoPlayer"
-                :options="playerOptions[index]"
-                :playsinline="true">
-            </video-player><div class="gxuan">删除</div>
+          <li v-for="(item,index) in reply" :key="index" >
+            <video id="video1" >
+              <source :src="item.video_introduction" type="video/mp4"  @click="goGoodsPage"/>
+            </video>
+			<div class="zz"></div>
+            <div v-if="!!delFlag" @click="delVideo(item.video_introduction)" class="gxuan">删除</div>
           </li>
       </ul>
 	  <div class="right">
@@ -31,8 +30,6 @@
   </div>
 </template>
 <script>
-import { videoPlayer } from 'vue-video-player'
-import 'video.js/dist/video-js.css'
 import {mapState} from 'vuex'
 import {mapMutations} from 'vuex'
 import qs from 'qs'
@@ -40,6 +37,8 @@ export default {
     name:'PresentVideo',
   data () {
     return {
+        delFlag: false,
+
         formData:new FormData(),
         imgs: {},
         imgLen:0,
@@ -47,6 +46,7 @@ export default {
         videoDataList:'',
         playerOptions:[],
         reply: '',
+      currentPlayerData: {},
 
         // 提示盒子
         promptContent:'', //提示盒子的内容
@@ -54,17 +54,60 @@ export default {
     };
   },
   components: {
-      videoPlayer
+
   },
   computed:{
-        ...mapState(['staticImgH','tokenH'])
+        ...mapState(['staticImgH','tokenH']),
     },
   mounted(){
        this.videoData()
+    // this.get()
   },
   methods: {
-      addVideo(){
+      delStatus(){
+        this.delFlag=!this.delFlag
       },
+    goGoodsPage(player){
+      this.$router.push({path: '/PlayerStyleDetailed', query: {player: player}})
+    },
+      addVideo(){
+        this.uploadFile();
+      },
+    delVideo(src){
+      // @TODO 个人视频删除，感觉接口调用的不对
+      this.$http.delete('api/player/video_del', {
+        headers: {
+          'authorization': this.tokenH
+        },
+        params: {
+          src: src,
+          type: 2
+        }
+      }).then((res) => {
+        if (res.data.code === 200) {
+          this.reply = this.reply.filter(value => value.video_introduction!==src)
+          this.alertText("视频删除成功")
+        }
+      })
+    },
+    // get(){
+    //     debugger
+    //   for (let i = 0; i<this.reply.length; i++) {
+    //     let video = document.getElementById('video'+i);
+    //     let videoImg = document.getElementById('videoImg'+i);
+    //     this.captureImage(video, videoImg)
+    //   }
+    // },
+    // captureImage(video, videoImg) {
+    //   let canvas = document.createElement("canvas");//创建一个canvas
+    //   canvas.width = 100 * scale;//设置canvas的宽度为视频的宽度
+    //   canvas.height = 100 * scale;//设置canvas的高度为视频的高度
+    //   canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);//绘制图像
+    //
+    //   let img = document.createElement("img");//创建img
+    //   img.src = canvas.toDataURL("image/png");//将绘制的图像用img显示出来
+    //   videoImg.appendChild(img);//将img添加到imgbox里
+    // },
       videoData(){
            var obj=qs.stringify({
 
@@ -75,6 +118,7 @@ export default {
                 }
             }).then((res)=>{
                 if(res.data.code==200){
+                  this.currentPlayerData=res.data.data
                     this.reply=res.data.data.video_introduction
                     if(this.reply){
                         for(let i of this.reply){
@@ -83,12 +127,13 @@ export default {
                                     muted: false, // 默认情况下将会消除任何音频。
                                     language: 'zh-CN',
                                     sources: [{
-                                            src: i.src,  // 路径
+                                            src: i.video_introduction,  // 路径
                                             type: 'video/mp4'  // 类型
                                             }, {
-                                            src: i.src,
+                                            src: i.video_introduction,
                                             type: 'video/mp4'
                                         }],
+                                  height: 150
                                 }
                                 this.playerOptions.push(arrStr)
                         }
@@ -128,7 +173,7 @@ export default {
         let oldLen=this.imgLen;
         let len=this.fil.length+oldLen;
         if(len>4){
-          alert('最多可上传4张，您还可以上传'+(4-oldLen)+'张');
+          alert('最多可上传4个，您还可以上传'+(4-oldLen)+'个');
           return false;
         }
         
@@ -141,13 +186,15 @@ export default {
           this.imgLen++;
            this.formData.append('video_introduction',this.fil[i])
         }
-        
+
         this.$http.post('api/player/video_introduction', this.formData,{
             headers: {
                     'authorization': this.tokenH
                 }
             }).then(res => {
+              debugger
                 if(res.data.code==200){
+                  debugger
                      var self=this
                     clearInterval(self.timer2);
                             this.promptContent='成功添加视频'
@@ -233,11 +280,10 @@ export default {
     margin-top:0.27rem;
     >li{
         width:9.2rem;
-        background :pink;
         margin-bottom:0.32rem;
         >video{
             width:100%;
-            // height:100%;
+            height:4rem;
         }
     }
 }
@@ -269,7 +315,7 @@ export default {
     justify-content :center;
     align-items :center;
     >.prompt{
-        padding:0.15rem 0.3rem;;
+        padding:0.15rem 0.3rem;
         background :rgba(0,0,0,0.7);
         color:#fff;
         border-radius:0.5rem;
@@ -284,5 +330,6 @@ export default {
    transform: translateY(0.32rem);
   opacity: 0;
 }
-.gxuan{ margin-top:-0.9rem; height:0.9rem; background:rgba(0,0,0,0.5); position:relative; width:100%; color:#fff; text-align:center; line-height:0.9rem; font-size:0.48rem; border-radius:0 0 0.2rem 0.2rem;}
+.gxuan{ margin-top:-0.99rem; width:9.2rem; height:0.9rem; background:rgba(0,0,0,0.5); position:absolute; z-index:999; color:#fff; text-align:center; line-height:0.9rem; font-size:0.48rem; border-radius:0 0 0.2rem 0.2rem;}
+.zz{ width:9.2rem; height:4rem; position:absolute; margin-top:-4rem; z-index:998; background: url(/../../static/mock/img/bofangBtn.png) no-repeat center center; background-size:1rem;}
 </style>
