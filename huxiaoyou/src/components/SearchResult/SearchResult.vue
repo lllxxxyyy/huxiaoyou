@@ -8,7 +8,7 @@
           <option label="姓名" value="1"></option>
           <option label="编号" value="2"></option>
         </select>
-        <input v-model="search.value"></input>
+        <input v-model="search.value"/>
       </div>
       <span @click="searchPlayer(search.type, search.value)">搜索</span>
     </div>

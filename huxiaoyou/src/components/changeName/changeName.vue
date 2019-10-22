@@ -5,7 +5,7 @@
         <img @click="changeRetuurn" :src="staticImgH+'zuojiantou.png'" alt="">
         <span v-if="changeIndexB==1">修改昵称</span> <span v-if="changeIndexB==2">修改年龄</span> 
         <span v-if="changeIndexB==3">修改身高</span> <span v-if="changeIndexB==4">修改体重</span> 
-        <span v-if="changeIndexB==5">修改星座</span> 
+        <span v-if="changeIndexB==6">修改星座</span> 
 
         <span class="submit" @click="submit">保存</span>
       </div>
@@ -14,12 +14,12 @@
           <span class="change_destitle" v-if="changeIndexB==2">我的年龄</span>
           <span class="change_destitle" v-if="changeIndexB==3">我的身高</span>
           <span class="change_destitle" v-if="changeIndexB==4">我的体重</span>
-          <span class="change_destitle" v-if="changeIndexB==5">我的星座</span>
+          <span class="change_destitle" v-if="changeIndexB==6">我的星座</span>
           <input class="change_input" v-if="changeIndexB==1" type="text"  v-model="userName">
           <input class="change_input" v-if="changeIndexB==2" type="text" oninput = "value=value.replace(/[^\d]/g,'')"  v-model="age">
           <input class="change_input" v-if="changeIndexB==3" type="text" oninput = "value=value.replace(/[^\d]/g,'')" v-model="height">
           <input class="change_input" v-if="changeIndexB==4" type="text" oninput = "value=value.replace(/[^\d]/g,'')" v-model="weight">
-          <input class="change_input" v-if="changeIndexB==5" type="text"  v-model="constellation">
+          <input class="change_input" v-if="changeIndexB==6" type="text"  v-model="constellation">
           <div class="change_num"><span>{{userName.length}}</span>/<span>20</span></div>
       </div>
   </div>
@@ -78,8 +78,8 @@ export default {
           this.heightPerXs(this.height)
       }else if(this.changeIndexB==4){
           this.weightPerXs(this.weight)
-      }else if(this.changeIndexB==5){
-          this.constellationPerXs(this.changeIndexB)
+      }else if(this.changeIndexB==6){
+          this.constellationPerXs(this.constellation)
       }
         
         this.$router.push('/MineInformation')

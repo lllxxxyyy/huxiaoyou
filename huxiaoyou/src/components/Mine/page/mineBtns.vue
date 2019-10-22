@@ -163,34 +163,29 @@ export default {
               this.constellationPerXs('')  //星座
               this.$router.push('/MineInformation')
           }else if(index==2){
-              this.$router.push('/PresentPhoto')
-          }else if(index==0){
-              
+              this.$router.push('/PresentVideo')
+          }else if(index==3){
               this.$router.push('/LivePlatform')
-          }else if(index==7){
-              this.$router.push('/AboutWe')
+          }else if(index==4){
+              this.$router.push('/ShortVideo')
           }else if(index==5){
+              this.$router.push('/MineGuild')
+          }else if(index==8){
                this.ReceiptAddressPages('/Mine')
               this.$router.push('/ReceiptAddress')
-          }else if(index==1){
-             this.$router.push('/PresentVideo')
-          }else if(index==8){
-              this.$router.push('/ShortVideo')
-          }else if(index==4){
-              this.$router.push('/MineGuild')
+          }else if(index==10){
+              this.$router.push('/AboutWe')
           }
           
       },
     //   普通用户跳转
     UsertriggerBtn(){
         if(index==1){
+            this.$router.push('/MineGuild')
+        }else if(index==3){
             this.ReceiptAddressPages('/Mine')
-              this.$router.push('/ReceiptAddress')
-        }
-        // else if(index==2){
-
-        // }
-        else if(index==3){
+            this.$router.push('/ReceiptAddress')
+        }else if(index==4){
             this.$router.push('/AboutWe')
         }
     },

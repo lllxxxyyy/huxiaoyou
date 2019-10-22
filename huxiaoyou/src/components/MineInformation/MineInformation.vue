@@ -59,7 +59,7 @@
         </li>
         <li>
           <span>星座</span >
-          <div class="MineInfo_ListRight" @click="changeInfo(5)">
+          <div class="MineInfo_ListRight" @click="changeInfo(6)">
             <span>{{constellationM}}</span><img :src="staticImgH+'MineRight.png'" alt="">
           </div>
         </li>
@@ -194,6 +194,7 @@ export default {
               }
               //星座
               if(this.constellationPerX){
+                alert(constellationM)
                   this.constellationM=this.constellationPerX
                 }else {
                   this.constellationM=personData.constellation
@@ -482,6 +483,9 @@ export default {
   text-align:center;
   border-radius:0.667rem;
   font-size:0.347rem;
-  background :rgba(255, 255, 255, 1);
+  color:rgba(255, 255, 255, 1);
+  background :rgba(255, 157, 172, 1);
+  margin: 0 auto;
+  margin-top:0.4rem;
 }
 </style>

@@ -7,8 +7,8 @@
           <span @click="tobind">绑定</span>
       </div>
       <ul class="LiveDes">
-          <li> <span>直播平台</span>  <input v-model="LiveName" type="text"></li>
-          <li> <span>直播id</span>  <input v-model="liveId"  type="text"></li>
+          <li> <span>直播平台</span>  <input placeholder="请填写您常用的直播平台" v-model="LiveName" type="text"></li>
+          <li> <span>直播id</span>  <input placeholder="请填写您所对应的直播平台的id号" v-model="liveId"  type="text"></li>
       </ul>
       <div class="delBind" @click="delbind">删除绑定</div>
       <!-- 提示盒子 -->
@@ -86,12 +86,11 @@ export default {
       },
     //   删除绑定
     delbind(){
-         var obj={
-               live_platform:this.LiveName,
-               live_id:this.liveId
-            }
-        this.$http.delete('/api/player/bind_live',{
-            body:obj,
+        var obj=qs.stringify({
+            live_platform:this.LiveName,
+            live_id:this.liveId
+        })
+        this.$http.delete('/api/player/bind_live',obj,{
             headers: {
                 'authorization': this.tokenH
             }
@@ -140,39 +139,59 @@ export default {
         margin-top:0.27rem;
         border-radius:0.133rem;
         box-shadow :0 0rem 0.2rem rgba(253, 229, 231, 1);
+        padding:0.32rem;
         >li{
-            height:1.253rem;
-            border-bottom:0.02rem solid rgba(204, 204, 204, 0.8);
-            margin-left:0.27rem;
-            font-size:0.32rem;
+            font-size:0.373rem;
             color:rgba(0, 0, 0, 1);
             display :flex;
-            align-items :center;
-            // justify-content :space-between;
+            flex-direction :column;
+            margin-bottom:0.32rem;
             >span{
-                width:18%;
+                line-height :0.53rem;
+                margin-bottom:0.16rem;
             }   
             &:last-child{
                 border-bottom:0;
             }
             >input{
-                border:0.03rem solid #ccc;
+                height:0.64rem;
+                border:0.03rem solid rgba(0, 0, 0, 0.2);
                 outline :none;
-                margin-left:0.27rem;
+                background :#fff;
+                border-radius:0.16rem;
+                font-size:0.32rem;
+                padding-left:0.2rem;
+               
+            }
+             >input::-webkit-input-placeholder { /* Chrome/Opera/Safari */ 
+			        color: rgba(0, 0, 0, 0.38);
+                    font-size:0.32rem;
+            }
+            >input::-moz-placeholder { /* Firefox 19+ */  
+                    color: rgba(0, 0, 0, 0.38);
+                    font-size:0.32rem;
+            }
+            >input:-ms-input-placeholder { /* IE 10+ */ 
+                    color: rgba(0, 0, 0, 0.38);
+                    font-size:0.32rem;
+            }
+            >input:-moz-placeholder { /* Firefox 18- */ 
+                     color: rgba(0, 0, 0, 0.38);
+                    font-size:0.32rem;
             }
         }
     }
     .delBind{
-         width:9.2rem;
-        height:1.253rem;
-        font-size:0.32rem;
-            color:rgba(0, 0, 0, 1);
-            margin:0 auto;
-            margin-top:0.32rem;
-            text-align :center;
-            line-height :1.253rem;
-            border-radius:0.133rem;
+        width:9.2rem;
+        height:1rem;
+        font-size:0.347rem;
+        color:rgba(0, 0, 0, 1);
+        margin:0 auto;
+        margin-top:0.32rem;
+        line-height :1rem;
+        border-radius:0.133rem;
         box-shadow :0 0rem 0.2rem rgba(253, 229, 231, 0.8);
+        padding-left:0.32rem;
     }
 
     // 提示盒子
