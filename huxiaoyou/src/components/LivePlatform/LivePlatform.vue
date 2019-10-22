@@ -29,12 +29,12 @@ export default {
     name:"LivePlatform",
   data () {
     return {
-        LiveName:'',
-        liveId:'',
+        LiveName:'', //直播平台
+        liveId:'',  //直播id
         // 提示盒子
         promptContent:'', //提示盒子的内容
         showPrompt:false,//提示盒子的吸收和显示
-  
+        timer2:'',
     };
   },
 
@@ -45,67 +45,58 @@ export default {
     },
 
 //   mounted: {},
-
   methods: {
-      toReturn(){
-          this.$router.push('/Mine')
-      },
-      tobind(){
-           var obj=qs.stringify({
-               live_platform:this.LiveName,
-               live_id:this.liveId
-            })
-          this.$http.post('/api/player/bind_live',obj,{
-            headers: {
-                'authorization': this.tokenH
-            }
-         }).then((res)=>{
-             if(res.data.code==200){
-                  var self=this
+        // 返回
+            toReturn(){
+                this.$router.push('/Mine')
+            },
+        // 绑定
+            tobind(){
+                var obj=qs.stringify({
+                    live_platform:this.LiveName,
+                    live_id:this.liveId
+                    })
+                this.$http.post('/api/player/bind_live',obj,{
+                    headers: {
+                        'authorization': this.tokenH
+                    }
+                }).then((res)=>{
+                    if(res.data.code==200){
+                        this.alertText('绑定成功')
+                    }else{
+                        this.alertText(res.data.msg)
+                    }
+                })
+            },
+        // 弹框提示
+            alertText(text){
+                    var self=this
                     clearInterval(self.timer2);
-                        this.promptContent='绑定成功'
+                        this.promptContent=text
                         this.showPrompt=true
                         self.timer2=setTimeout(function(){
                             self.showPrompt=false
                             clearInterval(self.timer2);
                         },2000)
                     return false;
-             }else{
-                 var self=this
-                    clearInterval(self.timer2);
-                        this.promptContent=res.data.msg
-                        this.showPrompt=true
-                        self.timer2=setTimeout(function(){
-                            self.showPrompt=false
-                            clearInterval(self.timer2);
-                        },2000)
-                    return false;
-             }  
-
-         })
-      },
-    //   删除绑定
-    delbind(){
-        var obj=qs.stringify({
-            live_platform:this.LiveName,
-            live_id:this.liveId
-        })
-        this.$http.delete('/api/player/bind_live',obj,{
-            headers: {
-                'authorization': this.tokenH
+            },
+        //   删除绑定
+            delbind(){
+                this.$http.delete('api/player/bind_del',{
+                    headers: {
+                        'authorization': this.tokenH,
+                    },
+                    params: {
+                        type: 1
+                    }
+                }).then((res)=>{
+                        if(res.data.code==200){
+                        this.alertText('删除绑定成功')
+                        }else {
+                            this.alertText(res.data.msg)
+                        }
+                })
             }
-         }).then((res)=>{
-                 var self=this
-                clearInterval(self.timer2);
-                        this.promptContent=res.data.msg
-                        this.showPrompt=true
-                        self.timer2=setTimeout(function(){
-                            self.showPrompt=false
-                            clearInterval(self.timer2);
-                        },2000)
-                    return false;
-         })
-    }
   }
 }
 

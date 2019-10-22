@@ -65,7 +65,7 @@
         </li>
         <li>
           <span>照片</span>
-          <div class="MineInfo_ListRight">
+          <div class="MineInfo_ListRight" @click="toPhoto">
             <img :src="staticImgH+'MineRight.png'" alt="">
           </div>
         </li>
@@ -143,6 +143,10 @@ export default {
         this.getInformation()
    },
   methods: {
+    // 到选择照片
+    toPhoto(){
+        this.$router.push('/PresentPhoto')
+    },
     // 获取用户信息接口
     getInformation(){
        var obj=qs.stringify({

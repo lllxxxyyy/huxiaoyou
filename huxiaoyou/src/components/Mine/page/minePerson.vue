@@ -25,16 +25,16 @@
               </ul>
               <ul class="minePerson_artick " v-if="personData.is_player==1">
                  <li>
-                  <span class="minePerson_artickNum">{{personData.m_amount}}</span><span>总票数</span>
+                  <span class="minePerson_artickNum">{{personData.votes}}</span><span>总票数</span>
                 </li>
                 <li>
                   <span class="minePerson_artickNum">{{personData.help_amount}}</span><span>助力票</span>
                 </li>
                 <li>
-                  <span class="minePerson_artickNum">{{personData.m_amount}}</span><span>剩余免费票</span>
+                  <span class="minePerson_artickNum">{{personData.app_vote}}</span><span>剩余免费票</span>
                 </li>
                 <li>
-                  <span class="minePerson_artickNum">{{personData.help_amount}}</span><span>账户余额</span>
+                  <span class="minePerson_artickNum">{{personData.user_moneys}}</span><span>账户余额</span>
                 </li>
               </ul>
               <div class="minePerson_InfoLike" v-if="personData.signature">{{personData.signature}}</div>

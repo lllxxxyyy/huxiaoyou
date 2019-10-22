@@ -1,7 +1,7 @@
 <!-- 加入工会 -->
 <template>
   <div class="AddUnion_father"  @click="hideDiv">
-      <div class="submit_c" v-if="submitAfter">
+      <div class="submit_c">
             <div class="PlayerRanking_header">
                 <img @click.stop="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
                 <span>加入公会</span>
@@ -12,6 +12,7 @@
                             <div class="Info_name"><span>真实姓名</span>*</div>
                             <input type="text" v-model="nickname" placeholder="请填写您真实的名称">
                         </li>
+                        
                         <li>
                             <div class="Info_name"><span>手机号码</span>*</div>
                             <input type="text" maxlength="11" oninput = "value=value.replace(/[^\d]/g,'')" v-model="phone" placeholder="请填写您的正确的手机号">
@@ -136,12 +137,6 @@
             </div>
             <div class="ImmAdd" @click.stop="ImmAddC">立即加入</div>
         </div>
-        <div class="submitAfterDiv" v-else>
-                <img :src="submitAfterImg" alt="">
-                <div class="sao">扫描二维码添加客服微信</div>
-                <div class="successDes">加入工会成功!</div>
-                <div class="submit_return" @click.stop="submitReturn">返回</div>
-        </div>
       <!-- 提示盒子 -->
          <transition name="fade">
             <div class="promptFather" v-if="showPrompt">
@@ -168,7 +163,6 @@ export default {
   data () {
     return {
         showAddSuccess:false,//默认不显示加入成功提示
-        submitAfter:true,  
         WisDefault:0,  //直播软件默认不选择中
         DisDefault:0,  // 短视频默认选中
         WangisDefault:0, //网店默认不选中
@@ -398,7 +392,6 @@ export default {
                 }
             }).then((res)=>{
                     if(res.data.code==200){
-                        this.submitAfter=false
                         this.submitAfterImg=res.data.data.img
                     }else{
                         var self=this
@@ -830,39 +823,6 @@ export default {
     text-align :center;
     margin:0.4rem auto;
 }
-.submitAfterDiv{
-    display:flex;
-    flex-direction :column;
-    align-items :center;
-    >img{
-        width:3.5rem;
-        height:3.5rem;
-        margin-top:0.8rem;
-        background :pink;
-    }
-    >.sao{
-        font-size:0.37rem;
-        margin-top:0.27rem;
-        
-    }
-    >.successDes{
-        font-size:0.53rem;
-        margin-top:0.8rem;
-        color:rgba(255, 0, 0, 1);
-    }
-    >.submit_return{
-        width:70%;
-        height:1rem;
-        text-align:center;
-        line-height:1rem;
-        color:#fff;
-        font-size:0.37rem;
-        background:rgba(255, 193, 203, 1);
-        margin-top:0.8rem;
-    }
-
-}
-
 // 提示盒子
 .promptFather{
     width:100%;

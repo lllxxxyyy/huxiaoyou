@@ -56,7 +56,7 @@ export default {
             })
       },
       toReturn(){
-          this.$router.push('/Mine')
+          this.$router.push('/MineInformation')
       },
        uploadFile(){
         let inputDOM = this.$refs.inputer;
