@@ -6,8 +6,10 @@
           <span>专属客服</span>
       </div>
 	  <div class="CustomerService">
-		  <span><img :src="staticImgH+'Bitmap.png'" alt=""><br />华北客服微信二维码</span>
-		  <div class="Customer_xiazai" @click="down(staticImgH+'Bitmap.png')"><img :src="staticImgH+'xiazai.png'" alt=""></div>
+		  <span><img v-if="imgInfo.img" :src="imgInfo.img" alt=""><br />{{imgInfo.names}}</span>
+		  <div class="Customer_xiazai" @click="down(staticImgH+'Bitmap.png')">
+        <img v-if="imgInfo.img" :src="imgInfo.img" alt="">
+      </div>
 	  </div>
       <!-- 提示盒子 -->
          <transition name="fade">
@@ -32,6 +34,8 @@ export default {
         // 提示盒子
         promptContent:'', //提示盒子的内容
         showPrompt:false,//提示盒子的吸收和显示
+
+      imgInfo: {}
   
     };
   },
@@ -42,9 +46,27 @@ export default {
         ...mapState(['staticImgH','tokenH'])
     },
 
-//   mounted: {},
+  mounted() {
+      let player_id = this.$route.query.player_id
+      this.getQRCode(player_id);
+  },
 
   methods: {
+      // 获取二维码
+      getQRCode(player_id){
+        let obj = qs.stringify({
+          player_id: player_id
+        })
+        this.$http.post('api/user/er_img', obj, {
+          headers: {
+            'authorization': this.tokenH
+          }
+        }).then((res) => {
+          if (res.data.code===200) {
+            this.imgInfo = res.data.data.result
+          }
+        })
+      },
       toReturn(){
           this.$router.push('/Mine')
       },

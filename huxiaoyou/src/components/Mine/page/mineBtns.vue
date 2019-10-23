@@ -176,7 +176,8 @@ export default {
                this.ReceiptAddressPages('/Mine')
               this.$router.push('/ReceiptAddress')
           }else if(index==9){
-            this.$router.push('/CustomerService')
+            console.log(this.personData.player_id)
+            this.$router.push({path: '/CustomerService', query: {player_id: this.personData.player_id}})
           }else if(index==10){
               this.$router.push('/AboutWe')
           }
@@ -193,7 +194,7 @@ export default {
             this.$router.push('/AboutWe')
         }
     },
-    ...mapMutations(['ReceiptAddressPages','cityNamePerXs','SignaturePerXs','nickNamePerXs','agePerXs','heightPerXs','weightPerXs','constellationPerXs']),
+    ...mapMutations(['ReceiptAddressPages','userIdHs','cityNamePerXs','SignaturePerXs','nickNamePerXs','agePerXs','heightPerXs','weightPerXs','constellationPerXs']),
   }
 }
 

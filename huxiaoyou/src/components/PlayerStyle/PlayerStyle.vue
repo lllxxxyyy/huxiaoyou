@@ -1,118 +1,129 @@
 <!--  -->
 <template>
   <div class="PlayerStyle">
-      <div class="PlayerRanking_header">
-          <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
-          <span>选手风采</span>
+    <div class="PlayerRanking_header">
+      <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
+      <span>选手风采</span>
+    </div>
+    <div class="player_style_tuijian"><span>每日精彩推送</span></div>
+    <ul class="player_list">
+      <li v-for="(item,index) in PlayerStyleData" :key="index">
+        <div class="player_center">
+          <img v-if="item.video_introduction" @click="goGoodsPage(item)" :src="item.video_introduction[1].src"/>
+          <div class="bofang"><img @click="goGoodsPage(item)" :src="staticImgH+'bofang.png'" alt=""></div>
+        </div>
+        <span class="player_btn" @click="toPlayerDetail(item.id)">投票</span>
+        <div class="player_top">
+          <div class="player_name">
+            <img v-if="item.avatar" :src="item.avatar" alt="">
+            <span>{{item.username}}</span>
+          </div>
+        </div>
+        <!--<div class="player_bottom">
+            <span class="player_Number">总票数：{{item.votes}}</span><span>{{item.names}}+{{item.id}}</span>
+          </div>-->
+      </li>
+    </ul>
+    <div class="player_style_tuijian"><span>实时风采</span></div>
+    <ul class="player_list_fencai">
+      <li v-for="(item,index) in PlayerStyleData" :key="index">
+        <div class="player_center">
+          <img v-if="item.video_introduction" @click="goGoodsPage(item)" :src="item.video_introduction[1].src"/>
+          <div class="bofang"><img @click="goGoodsPage(item)" :src="staticImgH+'bofang.png'" alt=""></div>
+        </div>
+        <span class="player_btn" @click="toPlayerDetail(item.id)">投票</span>
+        <div class="player_top">
+          <div class="player_name">
+            <img v-if="item.avatar" :src="item.avatar" alt="">
+            <span>{{item.username}}</span>
+          </div>
+        </div>
+        <!--<div class="player_bottom">
+            <span class="player_Number">总票数：{{item.votes}}</span><span>{{item.names}}+{{item.id}}</span>
+          </div>-->
+      </li>
+    </ul>
+    <!-- 提示盒子 -->
+    <transition name="fade">
+      <div class="promptFather" v-if="showPrompt">
+        <div class="prompt">
+          {{promptContent}}
+        </div>
       </div>
-	  <div class="player_style_tuijian"><span>每日精彩推送</span></div>
-      <ul class="player_list">
-          <li v-for="(item,index) in PlayerStyleData" :key="index">
-              <div class="player_center">
-                  <img v-if="item.video_introduction" @click="goGoodsPage(item)" :src="item.video_introduction[1].src" />
-				  <div class="bofang"><img @click="goGoodsPage(item)" :src="staticImgH+'bofang.png'" alt=""></div>
-              </div>
-			  <span class="player_btn">投票</span>
-			  <div class="player_top">
-                  <div class="player_name">
-                      <img v-if="item.avatar" :src="item.avatar" alt="">
-                      <span>{{item.username}}</span>
-                  </div>
-              </div>
-              <!--<div class="player_bottom">
-                  <span class="player_Number">总票数：{{item.votes}}</span><span>{{item.names}}+{{item.id}}</span>
-                </div>-->
-          </li>
-      </ul>
-	  <div class="player_style_tuijian"><span>实时风采</span></div>
-      <ul class="player_list_fencai">
-          <li v-for="(item,index) in PlayerStyleData" :key="index">
-              <div class="player_center">
-                  <img v-if="item.video_introduction" @click="goGoodsPage(item)" :src="item.video_introduction[1].src" />
-				  <div class="bofang"><img @click="goGoodsPage(item)" :src="staticImgH+'bofang.png'" alt=""></div>
-              </div>
-			  <span class="player_btn">投票</span>
-			  <div class="player_top">
-                  <div class="player_name">
-                      <img v-if="item.avatar" :src="item.avatar" alt="">
-                      <span>{{item.username}}</span>
-                  </div>
-              </div>
-              <!--<div class="player_bottom">
-                  <span class="player_Number">总票数：{{item.votes}}</span><span>{{item.names}}+{{item.id}}</span>
-                </div>-->
-          </li>
-      </ul>
-      <!-- 提示盒子 -->
-         <transition name="fade">
-            <div class="promptFather" v-if="showPrompt">
-                <div class="prompt" >
-                    {{promptContent}}
-                </div>
-            </div>
-        </transition>
+    </transition>
   </div>
 </template>
 
 <script>
-import {mapState} from 'vuex'
-import {mapMutations} from 'vuex'
-import qs from 'qs'
-export default {
-    name:"PlayerStyle",
-  data () {
-    return {
-        PlayerStyleData:'',
-        token:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJpc3MiOiJodHRwczpcL1wvbG92eW91LnRvcCIsImF1ZCI6Imh0dHBzOlwvXC9sb3Z5b3UudG9wIiwiaWF0IjoxNTY5NDA4NzE2LCJuYmYiOjE1Njk0MDg3MTYsImV4cCI6MTYwMDk0NDcxNn0.FPH-pgQp-2Vt1kbnZc_Z9JnJYvGYMeLOUHtkC4Tyj_w',
-         // 提示盒子
-      promptContent:'', //提示盒子的内容
-        showPrompt:false,//提示盒子的吸收和显示
-    };
-  },
+  import {mapState} from 'vuex'
+  import {mapMutations} from 'vuex'
+  import qs from 'qs'
+
+  export default {
+    name: "PlayerStyle",
+    data() {
+      return {
+        PlayerStyleData: [],
+        token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJpc3MiOiJodHRwczpcL1wvbG92eW91LnRvcCIsImF1ZCI6Imh0dHBzOlwvXC9sb3Z5b3UudG9wIiwiaWF0IjoxNTY5NDA4NzE2LCJuYmYiOjE1Njk0MDg3MTYsImV4cCI6MTYwMDk0NDcxNn0.FPH-pgQp-2Vt1kbnZc_Z9JnJYvGYMeLOUHtkC4Tyj_w',
+        // 提示盒子
+        promptContent: '', //提示盒子的内容
+        showPrompt: false,//提示盒子的吸收和显示
+      };
+    },
 
 //   components: {},
 
-  computed:{
-        ...mapState(['staticImgH'])
+    computed: {
+      ...mapState(['staticImgH'])
     },
 
-  mounted(){
-      var obj=qs.stringify({
-          page:1
+    mounted() {
+      var obj = qs.stringify({
+        page: 1
       })
-      this.$http.post('api/player/player_style',obj,{
-          headers: {
-              'authorization':this.token
-          }
-    }).then((res)=>{
+      this.$http.post('api/player/player_style', obj, {
+        headers: {
+          'authorization': this.token
+        }
+      }).then((res) => {
         console.log(res)
-        if(res.data.code==200){
-            this.PlayerStyleData=res.data.data.data
-        }else{
-            var self=this
+        if (res.data.code === 200) {
+          this.PlayerStyleData = res.data.data.data
+        } else {
+          var self = this
+          clearInterval(self.timer2);
+          this.promptContent = res.data.msg
+          this.showPrompt = true
+          self.timer2 = setTimeout(function () {
+            self.showPrompt = false
             clearInterval(self.timer2);
-                    this.promptContent=res.data.msg
-                    this.showPrompt=true
-                    self.timer2=setTimeout(function(){
-                        self.showPrompt=false
-                        clearInterval(self.timer2);
-                    },2000)
-                return false;
+          }, 2000)
+          return false;
         }
-        
-    })
-  },
-props: ["goodsImage", "goodsName", "goodsPrice", "PlayerStyleDetailedId"],
-  methods: {
-    //   返回
-      toReturn(){
-          this.$router.push('/')
+
+      })
+    },
+    props: ["goodsImage", "goodsName", "goodsPrice", "PlayerStyleDetailedId"],
+    methods: {
+      //   跳选手详情
+      toPlayerDetail(id) {
+        this.playerIds(id)//保存选手id
+        this.addressIdIsSels('false') //投票盒子不显示
+        this.PlayerDetailPages('/PlayerStyle')  //选手详情返回页面
+        this.playDetailVoteDivs('true') //选手详情的投票盒子的消失
+        this.$router.push('/PlayerDetails')
       },
-	  goGoodsPage(player){
-          this.$router.push({path: '/PlayerStyleDetailed', query: {player: player}})
-        }
+      //   返回
+      toReturn() {
+        this.$router.push('/')
+      },
+      goGoodsPage(player) {
+        this.PlayerStyleDetailedPlayer(player);
+        this.$router.push('/PlayerStyleDetailed')
+      },
+      ...mapMutations(['playerIds', 'addressIdIsSels', 'PlayerDetailPages', 'playDetailVoteDivs', 'PlayerStyleDetailedPlayer']),
+    }
   }
-}
 
 </script>
 <style scoped lang="stylus">
@@ -164,6 +175,7 @@ props: ["goodsImage", "goodsName", "goodsPrice", "PlayerStyleDetailedId"],
    line-height :0.84rem;
    font-weight:550;
    display:block;
+   position: absolute;
    margin-top:-1.187rem;
    background:rgba(255,157,172,0.8);
    margin-bottom:0.31rem;
@@ -308,7 +320,7 @@ props: ["goodsImage", "goodsName", "goodsPrice", "PlayerStyleDetailedId"],
     align-items :center;
     z-index:999;
     >.prompt{
-        padding:0.2rem 0.35rem;;
+        padding:0.2rem 0.35rem;
         background :rgba(0,0,0,0.7);
         color:#fff;
         border-radius:0.5rem;

@@ -6,27 +6,18 @@
     </div>
     <div class="CoOperative">
       <span>合作商</span>
-      <ul>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
+      <ul class="brandList">
+        <li class="brand" v-for="(item,index) in brandList" :key="index">
+          <img :src="item.logo" alt="">
+        </li>
       </ul>
     </div>
     <div class="kabao">
       <span>卡包</span>
       <ul>
-        <li><img :src="staticImgH+'zhuli.png'" alt="">分享助力投票</li>
-        <li><img :src="staticImgH+'zhuli.png'" alt="">99卡包</li>
-        <li><img :src="staticImgH+'zhuli.png'" alt="">199卡包</li>
-        <li><img :src="staticImgH+'zhuli.png'" alt="">299卡包</li>
-        <li><img :src="staticImgH+'zhuli.png'" alt="">399卡包</li>
-        <li><img :src="staticImgH+'zhuli.png'" alt="">999卡包</li>
+        <li v-for="(item, index) in cardList" :key="index">
+          <img :src="item.original_img" alt="">{{item.goods_name}}
+        </li>
       </ul>
     </div>
     <!-- 提示盒子 -->
@@ -58,6 +49,9 @@
         // 提示盒子
         promptContent: '', //提示盒子的内容
         showPrompt: false,//提示盒子的吸收和显示
+
+        brandList: [],
+        cardList: [],
       };
     },
     components: {
@@ -69,37 +63,32 @@
     },
 
     mounted() {
-
-      var barobj = qs.stringify({})
-      this.$http.post('api/division/list', barobj, {
-        headers: {
-          'authorization': this.token
-        }
-      }).then((res) => {
-      })
-
+      this.getListData();
 
     },
 
     methods: {
       //   获取数据
-      getlistData() {
-        // 获取合作商，卡包，暂时没有接口
-        var obj = qs.stringify({
-          page: 1
-        })
-        this.$http.post('api/player/division_ranking/' + this.barId, obj, {
+      getListData() {
+        // 合作商
+        this.$http.post('api/goods/brand_list', {}, {
           headers: {
-            'authorization': this.token
+            'authorization': this.tokenH
           }
         }).then((res) => {
-          if (res.data.code === 200) {
-            this.RankingData = res.data.data.data
-          } else {
-            this.alertText(res.data.msg)
-            return false;
+          if (res.data.code===200) {
+            this.brandList = res.data.data.result
           }
-
+        })
+        // 卡包
+        this.$http.post('api/goods/goods_list', {}, {
+          headers: {
+            'authorization': this.tokenH
+          }
+        }).then((res) => {
+          if (res.data.code===200) {
+            this.cardList = res.data.data.result
+          }
         })
 
       },// 弹框提示
@@ -148,7 +137,7 @@
 		padding:0 0.4rem;
 		>span{ padding-bottom:0.1rem; border-bottom:0.053rem solid #ffccd4; color:#000; font-size:0.48rem;}
 		>ul{display:-webkit-box; display:-ms-flexbox; display:flex; -webkit-box-pack:justify; -ms-flex-pack:justify; justify-content:space-between; -ms-flex-wrap:wrap; flex-wrap:wrap; margin-top:0.7rem;
-		>li{ width:2.6rem; height:1.4rem; background:rgba(0,0,0,0.1); margin-bottom:0.4rem;}
+		>li{ width:2.6rem; height:5.4rem; background:rgba(0,0,0,0.1); width:100%;}
 		}
 }
 .kabao{
@@ -200,7 +189,7 @@
     align-items :center;
     z-index:999;
     >.prompt{
-        padding:0.2rem 0.35rem;;
+        padding:0.2rem 0.35rem;
         background :rgba(0,0,0,0.7);
         color:#fff;
         border-radius:0.5rem;
@@ -232,4 +221,13 @@
   display: block;
   background-color red;
 }
+  .brandList{
+    width: 100%;
+    height: 200px;
+    overflow:hidden;
+    >img{
+      width: 100%;
+      height: 100%;
+    }
+  }
 </style>

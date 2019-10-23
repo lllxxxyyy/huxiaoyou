@@ -316,6 +316,6 @@ export default {
 .Two_img{width:100%; height:100%; border-radius:0.16rem;}
 .top_img{ position:absolute; color:#fff; margin-top:0.1rem; margin-left:0.1rem; width:0.4rem; height:0.4rem;}
 .top_img img{ width:0.4rem; height:0.4rem; display:block;}
-.ta_vote{ position:absolute; font-size:0.37rem; margin-top:1.72rem; margin-left:0.46rem; right:0; bottom:1.21rem; width:2rem; height:0.8rem; line-height:0.9rem; color:#fff; font-size:0.4rem; text-align:center; background:url(../../../static/mock/img/toupiao.png) right center no-repeat; background-size:cover;}
+.ta_vote{ position:absolute; font-size:0.37rem; margin-left:0.46rem; right:0; bottom:1.21rem; width:2rem; height:0.8rem; line-height:0.9rem; color:#fff; font-size:0.4rem; text-align:center; background:url(../../../static/mock/img/toupiao.png) right center no-repeat; background-size:cover;}
 .ta_vote1{ background:url(../../../static/mock/img/toupiao1.png) right center no-repeat; background-size:cover;}
 </style>
