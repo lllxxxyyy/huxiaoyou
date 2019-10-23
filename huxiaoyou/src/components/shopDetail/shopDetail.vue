@@ -27,8 +27,14 @@
         <!-- 商品内容图 -->
             <div class="shopContent" v-html="shopData.goods_content"></div>
         <!-- 立即购买  -->
-            <div class="shopDetail_btn" @click="AssistTicketOne">
+            <div class="shopDetail_btnWrap">
+                <div  class="shopDetail_btn" @click="AssistTicketOne">
                     立即购买 
+                </div>
+                    
+            </div>
+        <!-- 底部隐藏的盒子  -->
+            <div class="shopDetail_hide"> 
             </div>
         <!-- 提示盒子 -->
             <transition name="fade">
@@ -175,7 +181,7 @@ export default {
                     if(res.data.code==200){
                         var data=res.data.data
                             wx.config({
-                                debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
                                 appId: data.appId, // 必填，公众号的唯一标识
                                 timestamp:data.timestamp, // 必填，生成签名的时间戳
                                 nonceStr: data.nonceStr, // 必填，生成签名的随机串
@@ -505,6 +511,16 @@ export default {
         line-height:0.667rem;
     }
 }
+.shopDetail_btnWrap{
+    width:100%;
+    height:1.55rem;
+    position:fixed;
+    bottom:0;
+    left:0;
+    display:flex;
+    align-items:center;
+    justify-content :center;
+}
 .shopDetail_btn{
     width:9.2rem;
     height:0.8rem;
@@ -514,14 +530,11 @@ export default {
     text-align:center;
     line-height:0.8rem;
     border-radius:0.667rem;
-    margin:0 auto;
-    margin-top:0.4rem;
-    position:fixed;
-    bottom:0.27rem;
-    left:50%;
-    margin-left:-4.6rem;
 }
-
+.shopDetail_hide{
+     width:9.2rem;
+    height:0.8rem;
+}
 .shopContent{
     width:100%;
 

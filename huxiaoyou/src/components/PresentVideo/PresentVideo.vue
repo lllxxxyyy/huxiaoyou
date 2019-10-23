@@ -3,16 +3,19 @@
   <div class="PresentVideo">
        <div class="PlayerRanking_header">
           <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
-          <span>介绍视频</span>
+          <span>添加视频</span>
 		  <div class="PresentPhoto_admin">管理</div>
       </div>
       <ul class="videoList">
           <li v-for="(item,index) in reply" :key="index">
               <video-player
-                class="video-player-box ovideo"
+                class="video-player vjs-custom-skin"
                 ref="videoPlayer"
                 :options="playerOptions[index]"
-                :playsinline="true">
+                :playsinline="true"
+                @play="onPlayerPlay($event)"
+                @pause="onPlayerPause($event)"
+                >
             </video-player><div class="gxuan">删除</div>
           </li>
       </ul>
@@ -57,7 +60,10 @@ export default {
       videoPlayer
   },
   computed:{
-        ...mapState(['staticImgH','tokenH'])
+        ...mapState(['staticImgH','tokenH']),
+        player() {
+            return this.$refs.videoPlayer.player
+        }
     },
   mounted(){
        this.videoData()
@@ -74,23 +80,38 @@ export default {
                     'authorization':this.tokenH
                 }
             }).then((res)=>{
+                 var self=this
                 if(res.data.code==200){
-                    this.reply=res.data.data.video_introduction
-                    if(this.reply){
-                        for(let i of this.reply){
+                    self.reply=res.data.data.video_introduction
+                    if(self.reply){
+                        
+                        for(let i of self.reply){
                                 let arrStr={
                                     playbackRates: [0.7, 1.0, 1.5, 2.0], //播放速度
+                                    // autoplay: false, //如果true,浏览器准备好时开始回放。
                                     muted: false, // 默认情况下将会消除任何音频。
+                                    // loop: false, // 导致视频一结束就重新开始。
+                                    // preload: 'auto', // 建议浏览器在<video>加载元素后是否应该开始下载视频数据。auto浏览器选择最佳行为,立即开始加载视频（如果浏览器支持）
                                     language: 'zh-CN',
+                                    aspectRatio: '16:9', // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
+                                    fluid: true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
                                     sources: [{
-                                            src: i.src,  // 路径
-                                            type: 'video/mp4'  // 类型
-                                            }, {
-                                            src: i.src,
-                                            type: 'video/mp4'
-                                        }],
+                                        type: "video/ogg",
+                                        type:"video/webm",
+                                        type: "video/mp4",
+                                        src: i.video_introduction,
+                                    }],
+                                    poster: "你的封面地址",
+                                    width: document.documentElement.clientWidth,
+                                    notSupportedMessage: '此视频暂无法播放，请稍后再试', //允许覆盖Video.js无法播放媒体源时显示的默认信息。
+                                    controlBar: {
+                                        // timeDivider: true,
+                                        // durationDisplay: true,
+                                        // remainingTimeDisplay: false,
+                                        fullscreenToggle: true  //全屏按钮
+                                    }
                                 }
-                                this.playerOptions.push(arrStr)
+                                self.playerOptions.push(arrStr)
                         }
                     }else{
                         var self=this
@@ -117,6 +138,19 @@ export default {
                 }
                 
             })
+      },
+      fullScreen() {
+        const player = this.$refs.videoPlayer.player
+        player.requestFullscreen()//调用全屏api方法
+        player.isFullscreen(true)
+        player.play()
+      },
+      onPlayerPlay(player) {
+        player.play()
+      },
+      onPlayerPause(player) {
+        // alert("pause");
+        player.pause()
       },
       toReturn(){
           this.$router.push('/Mine')
@@ -233,28 +267,38 @@ export default {
     margin-top:0.27rem;
     >li{
         width:9.2rem;
+        height:4.533rem;
         background :pink;
         margin-bottom:0.32rem;
-        >video{
-            width:100%;
-            // height:100%;
+        >.video-player {
+                width:9.2rem;
+                height:4.533rem;
+                >>>.video-js{
+                    width:9.2rem;
+                    height:4.533rem;
+                    border-radius:0.2rem;
+                    position :relative;
+                    video{
+                        width:100%;
+                        height:100%;
+                    }
+                    .vjs-big-play-button {
+                        width: 0.893rem;
+                        height: 0.893rem;
+                        border-radius: 50%;
+                        z-index: 100;
+                        border: solid 0.03rem #979797;
+                        text-align :center;
+                        line-height:0.893rem;
+                        position :absolute;
+                        top:50%;
+                        left:50%;
+                        margin-top:-0.45rem;
+                        margin-left:-0.45rem;
+
+                    }
+                }
         }
-    }
-}
-.videoList>>>.video-player {
-    width:100%;
-    >.video-js{
-        width:100%;
-		border-radius:0.2rem;
-    }
-}
-// video-js vjs-paused vjs-controls-enabled vjs-v6 vjs-user-active vjs_video_1267-dimensions
-.video-js {
-    >>>.vjs-big-play-button{
-        width:0.85rem!important;
-        height:0.85rem!important;
-        border-radius:50%!important;
-        color:red;
     }
 }
 

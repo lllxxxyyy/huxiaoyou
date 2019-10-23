@@ -22,7 +22,7 @@
                     <div class="player_des_top">
                         <img class="player_desImg" :src="detailData.head_pic" alt="">
                         <ul>
-                            <li ><img :src="staticImgH+'playBian.png'" alt=""><span class="username">{{detailData.username}}</span> </li>
+                            <li ><img v-if="personData.player_id==playerId" :src="staticImgH+'playBian.png'" alt=""><span class="username">{{detailData.username}}</span> </li>
                             <li> <span class="playerId">参赛编号：{{detailData.player_id}}</span></li>
                         </ul>
                     </div>
@@ -35,16 +35,14 @@
                         </li>
                         <span>华北赛区</span>
                 </ul>
-                <div class="palylike">{{detailData.signature}}喜欢打高尔夫球，职业摄影师，旅游达人，美食爱 好者。</div>
+                <div class="palylike" v-if="detailData.signature">{{detailData.signature}}</div>
                 <!-- <div class="player_desName"> {{}} <span>{{detailData.names}}</span>  </div> -->
-                <div class="playNum" v-if="detailData.user_id">+{{detailData.user_id}}</div>
+                <!-- <div class="playNum" v-if="detailData.user_id">+{{detailData.user_id}}</div> -->
                 <ul class="player_listdes">
-                        <li>
-                        <img v-if="personData.sex==2" :src="staticImgH+'gril.png'" alt="">
-                            <img v-if="personData.sex==1" :src="staticImgH+'boy.png'" alt="">
+                    <li>
                         <span v-if="detailData.sex==2">女</span>
                         <span v-if="detailData.sex==1">男</span>
-                        </li>
+                    </li>
                     <li> <span v-if="detailData.age!==0">{{detailData.age}}</span></li>
                     <li v-if="detailData.city">{{detailData.city}}</li>
                     <li v-if="detailData.constellation">{{detailData.constellation}}</li>
@@ -54,9 +52,9 @@
                 </ul>
                 <div class="player_btnList">
                     <span class="voteBtn" @click.stop="vote">投票</span>
-                    <span class="attentionBtn">+关注</span>
-                    <span class="shareBtn">为Ta分享</span>
-                    <span class="EnterBtn">我也参赛</span>
+                    <span class="attentionBtn" v-if="personData.is_player==0">+关注</span>
+                    <span class="shareBtn" >为Ta分享</span>
+                    <span class="EnterBtn" v-if="personData.is_player==0">我也参赛</span>
                 </div>
             </div>
         <!-- 视频 -->
@@ -719,13 +717,16 @@ export default {
     }
     .player_btnList{
         display:flex;
-        justify-content :space-between;
         margin-bottom:0.53rem;
         letter-spacing:0.04rem;
         >span{
             padding:0.2rem 0.25rem;
             font-size:0.427rem;
             border-radius:0.5rem;
+            margin-right:0.1rem;
+            &:last-child{
+                margin-right:0;
+            }
         }
         >.voteBtn{
             background:rgba(255, 157, 172, 0.2);
@@ -791,6 +792,7 @@ export default {
     position :fixed;
     top:0;
     left:0;
+    z-index:888;
 }
 .vote{
     width:100%;
@@ -915,7 +917,7 @@ export default {
     position :absolute;
     bottom:50%;
     left:0;
-    z-index:10;
+    z-index:999;
     display :flex;
     justify-content :center;
     align-items :center;

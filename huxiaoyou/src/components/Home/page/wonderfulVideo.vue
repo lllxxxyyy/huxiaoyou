@@ -5,7 +5,7 @@
       <ul class="voideo_list">
         <li v-for="(item,index) in videoImg" :key="index">
           <img class="bofangBtn" :src="staticImgH+'bofangBtn.png'" alt="">
-          <img class="videoImg"  alt="">
+          <img class="videoImg"  alt="" :src="item.img">
         </li>
       </ul>
   </div>
@@ -72,7 +72,6 @@ export default {
     >.videoImg{
        width:100%;
        height:100%;
-       background :pink;
     }
     >.bofangBtn{
       width:0.97rem;
