@@ -25,17 +25,11 @@ export default {
   components: {},
 
   computed:{
-        ...mapState(['staticImgH','tokenH'])
+        ...mapState(['staticImgH'])
     },
 
   mounted(){
-    var obj=qs.stringify({
-          })
-    this.$http.post('/api/first/first_index',obj,{
-            headers: {
-                    'authorization':this.tokenH
-                }
-        }).then((res)=>{
+    this.$http.post('/api/first/first_index').then((res)=>{
           this.videoImg=res.data.data.data
         })
   },

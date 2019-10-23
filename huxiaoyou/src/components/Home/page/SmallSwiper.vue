@@ -34,19 +34,8 @@ export default {
 
 //   components: {},
 
-computed:{
-        ...mapState(['tokenH'])
-    },
-
   mounted(){
-    var obj=qs.stringify({
-          })
-    this.$http.post('/api/first/vote_list',obj,{
-            headers: {
-                    'authorization':this.tokenH
-                }
-        }).then((res)=>{
-          console.log(res)
+    this.$http.post('/api/first/vote_list').then((res)=>{
          this.slidersData=res.data.data
         })
   },

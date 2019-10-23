@@ -42,7 +42,7 @@ export default {
 //   components: {},
 
     computed:{
-        ...mapState(['staticImgH','tokenH'])
+        ...mapState(['staticImgH'])
     },
 
   mounted(){
@@ -51,11 +51,7 @@ export default {
             limit:2,
             // page:1
         })
-        this.$http.post('/api/division/players',barobj,{
-            headers: {
-                'authorization': this.tokenH
-            }
-        }).then((res)=>{
+        this.$http.post('/api/division/players',barobj).then((res)=>{
             this.divisionBar=res.data.data.data
         })
   },

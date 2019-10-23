@@ -51,7 +51,7 @@ export default {
 //   components: {},
 
     computed:{
-        ...mapState(['staticImgH','tokenH'])
+        ...mapState(['staticImgH'])
     },
 
 //   mounted: {},
@@ -59,14 +59,7 @@ export default {
   methods: {
     //   报名通道
       toSignUp(){
-          var obj=qs.stringify({
-
-          })
-          this.$http.post('/api/player/is_sign',obj,{
-            headers: {
-                'authorization': this.tokenH
-            }
-            }).then((res)=>{
+          this.$http.post('/api/player/is_sign').then((res)=>{
                 if(res.data.code==200){
                     if(res.data.data.result==-1){
                         this.$router.push('/SignUp')

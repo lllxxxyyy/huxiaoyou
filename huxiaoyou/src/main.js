@@ -4,12 +4,10 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import vuex from 'vuex'
+import axios from './http'
 Vue.use(vuex);
 
-import axios from 'axios'
-import VueAxios from 'vue-axios'
-Vue.use(VueAxios, axios)
-Vue.prototype.$ajax = axios
+
 
 // 引入Element
 import ElementUI from 'element-ui'
@@ -30,7 +28,6 @@ Vue.config.productionTip = false
 // 页面自适应
 import './assets/js/font.min.js'
 
-
 // 引入swiper
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 // require styles
@@ -42,6 +39,7 @@ new Vue({
     el: '#app',
     router,
     store,
+    axios,
     components: { App },
     template: '<App/>'
 })

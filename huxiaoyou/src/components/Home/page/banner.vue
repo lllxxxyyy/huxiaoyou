@@ -40,18 +40,8 @@ export default {
 
 //   components: {},
 
-computed:{
-        ...mapState(['tokenH'])
-    },
-
   mounted(){
-    var obj=qs.stringify({
-          })
-    this.$http.post('/api/ad/list',obj,{
-            headers: {
-                    'authorization':this.tokenH
-                }
-        }).then((res)=>{
+    this.$http.post('/api/ad/list').then((res)=>{
           this.slidersData=res.data.data
         })
   },

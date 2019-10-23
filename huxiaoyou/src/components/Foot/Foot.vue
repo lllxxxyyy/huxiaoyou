@@ -36,7 +36,7 @@ export default {
                 name:'公会',
                 img1:'/static/mock/img/UnionBtn.png',
                 img2:'/static/mock/img/UnionBtnRed.png',
-                url:'/Shop'
+                url:'/LabourUnion'
             },
             {
                 id:3,

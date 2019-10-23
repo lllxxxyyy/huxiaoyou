@@ -37,13 +37,18 @@ const state = {
     heightPerX: sessionStorage.getItem('heightPerX'), //个人资料身高
     weightPerX: sessionStorage.getItem('weightPerX'), //个人资料体重
     constellationPerX: sessionStorage.getItem('constellationPerX'), //个人资料星座
+    // mineInfo: sessionStorage.getItem('mineInfo'), //mine页面，个人完整资料
 
 }
 const mutations = {
-
+    //mine页面，个人完整资料
+    // MineInfo(state, mineInfo) {
+    //     sessionStorage.setItem('mineInfo', mineInfo);
+    //     state.mineInfo = mineInfo
+    // },
     SpecialDetailsPages(state, SpecialDetailsPage) {
-        sessionStorage.setItem('SpecialDetailsPage', SpecialDetailsPage);
-        state.SpecialDetailsPage = SpecialDetailsPage
+      sessionStorage.setItem('SpecialDetailsPage', SpecialDetailsPage);
+      state.SpecialDetailsPage = SpecialDetailsPage
     },
     // 卡包详情返回哪
     shopDetailReturns(state, shopDetailReturn) {

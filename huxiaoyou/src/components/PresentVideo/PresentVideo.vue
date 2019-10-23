@@ -3,20 +3,16 @@
   <div class="PresentVideo">
        <div class="PlayerRanking_header">
           <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
-          <span>添加视频</span>
-		  <div class="PresentPhoto_admin">管理</div>
+          <span>介绍视频</span>
+		  <div @click="delStatus()" class="PresentPhoto_admin">管理</div>
       </div>
       <ul class="videoList">
-          <li v-for="(item,index) in reply" :key="index">
-              <video-player
-                class="video-player vjs-custom-skin"
-                ref="videoPlayer"
-                :options="playerOptions[index]"
-                :playsinline="true"
-                @play="onPlayerPlay($event)"
-                @pause="onPlayerPause($event)"
-                >
-            </video-player><div class="gxuan">删除</div>
+          <li v-for="(item,index) in reply" :key="index" >
+            <video id="video1" >
+              <source :src="item.video_introduction" type="video/mp4"  @click="goGoodsPage"/>
+            </video>
+			<div class="zz"></div>
+            <div v-if="!!delFlag" @click="delVideo(item.video_introduction)" class="gxuan">删除</div>
           </li>
       </ul>
 	  <div class="right">
@@ -34,8 +30,6 @@
   </div>
 </template>
 <script>
-import { videoPlayer } from 'vue-video-player'
-import 'video.js/dist/video-js.css'
 import {mapState} from 'vuex'
 import {mapMutations} from 'vuex'
 import qs from 'qs'
@@ -43,6 +37,8 @@ export default {
     name:'PresentVideo',
   data () {
     return {
+        delFlag: false,
+
         formData:new FormData(),
         imgs: {},
         imgLen:0,
@@ -50,6 +46,7 @@ export default {
         videoDataList:'',
         playerOptions:[],
         reply: '',
+      currentPlayerData: {},
 
         // 提示盒子
         promptContent:'', //提示盒子的内容
@@ -57,20 +54,60 @@ export default {
     };
   },
   components: {
-      videoPlayer
+
   },
   computed:{
         ...mapState(['staticImgH','tokenH']),
-        player() {
-            return this.$refs.videoPlayer.player
-        }
     },
   mounted(){
        this.videoData()
+    // this.get()
   },
   methods: {
-      addVideo(){
+      delStatus(){
+        this.delFlag=!this.delFlag
       },
+    goGoodsPage(player){
+      this.$router.push({path: '/PlayerStyleDetailed', query: {player: player}})
+    },
+      addVideo(){
+        this.uploadFile();
+      },
+    delVideo(src){
+      // @TODO 个人视频删除，感觉接口调用的不对
+      this.$http.delete('api/player/video_del', {
+        headers: {
+          'authorization': this.tokenH
+        },
+        params: {
+          src: src,
+          type: 2
+        }
+      }).then((res) => {
+        if (res.data.code === 200) {
+          this.reply = this.reply.filter(value => value.video_introduction!==src)
+          this.alertText("视频删除成功")
+        }
+      })
+    },
+    // get(){
+    //     debugger
+    //   for (let i = 0; i<this.reply.length; i++) {
+    //     let video = document.getElementById('video'+i);
+    //     let videoImg = document.getElementById('videoImg'+i);
+    //     this.captureImage(video, videoImg)
+    //   }
+    // },
+    // captureImage(video, videoImg) {
+    //   let canvas = document.createElement("canvas");//创建一个canvas
+    //   canvas.width = 100 * scale;//设置canvas的宽度为视频的宽度
+    //   canvas.height = 100 * scale;//设置canvas的高度为视频的高度
+    //   canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);//绘制图像
+    //
+    //   let img = document.createElement("img");//创建img
+    //   img.src = canvas.toDataURL("image/png");//将绘制的图像用img显示出来
+    //   videoImg.appendChild(img);//将img添加到imgbox里
+    // },
       videoData(){
            var obj=qs.stringify({
 
@@ -82,10 +119,10 @@ export default {
             }).then((res)=>{
                  var self=this
                 if(res.data.code==200){
-                    self.reply=res.data.data.video_introduction
-                    if(self.reply){
-                        
-                        for(let i of self.reply){
+                  this.currentPlayerData=res.data.data
+                    this.reply=res.data.data.video_introduction
+                    if(this.reply){
+                        for(let i of this.reply){
                                 let arrStr={
                                     playbackRates: [0.7, 1.0, 1.5, 2.0], //播放速度
                                     // autoplay: false, //如果true,浏览器准备好时开始回放。
@@ -96,20 +133,13 @@ export default {
                                     aspectRatio: '16:9', // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
                                     fluid: true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
                                     sources: [{
-                                        type: "video/ogg",
-                                        type:"video/webm",
-                                        type: "video/mp4",
-                                        src: i.video_introduction,
-                                    }],
-                                    poster: "你的封面地址",
-                                    width: document.documentElement.clientWidth,
-                                    notSupportedMessage: '此视频暂无法播放，请稍后再试', //允许覆盖Video.js无法播放媒体源时显示的默认信息。
-                                    controlBar: {
-                                        // timeDivider: true,
-                                        // durationDisplay: true,
-                                        // remainingTimeDisplay: false,
-                                        fullscreenToggle: true  //全屏按钮
-                                    }
+                                            src: i.video_introduction,  // 路径
+                                            type: 'video/mp4'  // 类型
+                                            }, {
+                                            src: i.video_introduction,
+                                            type: 'video/mp4'
+                                        }],
+                                  height: 150
                                 }
                                 self.playerOptions.push(arrStr)
                         }
@@ -162,7 +192,7 @@ export default {
         let oldLen=this.imgLen;
         let len=this.fil.length+oldLen;
         if(len>4){
-          alert('最多可上传4张，您还可以上传'+(4-oldLen)+'张');
+          alert('最多可上传4个，您还可以上传'+(4-oldLen)+'个');
           return false;
         }
         
@@ -175,13 +205,15 @@ export default {
           this.imgLen++;
            this.formData.append('video_introduction',this.fil[i])
         }
-        
+
         this.$http.post('api/player/video_introduction', this.formData,{
             headers: {
                     'authorization': this.tokenH
                 }
             }).then(res => {
+              debugger
                 if(res.data.code==200){
+                  debugger
                      var self=this
                     clearInterval(self.timer2);
                             this.promptContent='成功添加视频'
@@ -267,37 +299,10 @@ export default {
     margin-top:0.27rem;
     >li{
         width:9.2rem;
-        height:4.533rem;
-        background :pink;
         margin-bottom:0.32rem;
-        >.video-player {
-                width:9.2rem;
-                height:4.533rem;
-                >>>.video-js{
-                    width:9.2rem;
-                    height:4.533rem;
-                    border-radius:0.2rem;
-                    position :relative;
-                    video{
-                        width:100%;
-                        height:100%;
-                    }
-                    .vjs-big-play-button {
-                        width: 0.893rem;
-                        height: 0.893rem;
-                        border-radius: 50%;
-                        z-index: 100;
-                        border: solid 0.03rem #979797;
-                        text-align :center;
-                        line-height:0.893rem;
-                        position :absolute;
-                        top:50%;
-                        left:50%;
-                        margin-top:-0.45rem;
-                        margin-left:-0.45rem;
-
-                    }
-                }
+        >video{
+            width:100%;
+            height:4rem;
         }
     }
 }
@@ -313,7 +318,7 @@ export default {
     justify-content :center;
     align-items :center;
     >.prompt{
-        padding:0.15rem 0.3rem;;
+        padding:0.15rem 0.3rem;
         background :rgba(0,0,0,0.7);
         color:#fff;
         border-radius:0.5rem;
@@ -328,5 +333,6 @@ export default {
    transform: translateY(0.32rem);
   opacity: 0;
 }
-.gxuan{ margin-top:-0.9rem; height:0.9rem; background:rgba(0,0,0,0.5); position:relative; width:100%; color:#fff; text-align:center; line-height:0.9rem; font-size:0.48rem; border-radius:0 0 0.2rem 0.2rem;}
+.gxuan{ margin-top:-0.99rem; width:9.2rem; height:0.9rem; background:rgba(0,0,0,0.5); position:absolute; z-index:999; color:#fff; text-align:center; line-height:0.9rem; font-size:0.48rem; border-radius:0 0 0.2rem 0.2rem;}
+.zz{ width:9.2rem; height:4rem; position:absolute; margin-top:-4rem; z-index:998; background: url(/../../static/mock/img/bofangBtn.png) no-repeat center center; background-size:1rem;}
 </style>

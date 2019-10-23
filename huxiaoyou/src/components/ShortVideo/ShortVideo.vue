@@ -35,7 +35,7 @@ export default {
         promptContent:'', //提示盒子的内容
         showPrompt:false,//提示盒子的吸收和显示
         timer2:'',
-  
+
     };
   },
 
@@ -54,9 +54,13 @@ export default {
             },
         // 绑定
             tobind(){
+              if (!this.LiveName || !this.liveId) {
+                this.alertText('请输入完整信息')
+              }
                 var obj=qs.stringify({
                     live_platform:this.LiveName,
-                    live_id:this.liveId
+                    live_id:this.liveId,
+                  type: 2
                 })
                 this.$http.post('/api/player/bind_live',obj,{
                     headers: {
@@ -67,7 +71,7 @@ export default {
                          this.alertText('绑定成功')
                     }else{
                         this.alertText(res.data.msg)
-                    }  
+                    }
                 })
             },
         //   弹框提示
@@ -126,65 +130,54 @@ export default {
             color:rgba(0, 0, 0, 1);
         }
     }
-    .LiveDes{
+    .ShortVideo{
         width:9.2rem;
         margin:0 0.4rem;
         margin-top:0.27rem;
+		margin-bottom:0.4rem;
         border-radius:0.133rem;
+		padding-top:0.4rem;
+		padding-bottom:0.08rem;
         box-shadow :0 0rem 0.2rem rgba(253, 229, 231, 1);
-        padding:0.32rem;
         >li{
-            font-size:0.373rem;
+            margin-left:0.27rem;
+            font-size:0.32rem;
             color:rgba(0, 0, 0, 1);
-            display :flex;
-            flex-direction :column;
-            margin-bottom:0.32rem;
+			margin-bottom:0.36rem;
+            display:block;
+            // justify-content :space-between;
             >span{
-                line-height :0.53rem;
-                margin-bottom:0.16rem;
+                width:8.7rem;
+				float:left;
+				font-size:0.42rem;
             }   
             &:last-child{
                 border-bottom:0;
             }
             >input{
-                height:0.64rem;
-                border:0.03rem solid rgba(0, 0, 0, 0.2);
+                border:0.03rem solid #ccc;
                 outline :none;
-                background :#fff;
-                border-radius:0.16rem;
-                font-size:0.32rem;
-                padding-left:0.2rem;
-               
-            }
-             >input::-webkit-input-placeholder { /* Chrome/Opera/Safari */ 
-			        color: rgba(0, 0, 0, 0.38);
-                    font-size:0.32rem;
-            }
-            >input::-moz-placeholder { /* Firefox 19+ */  
-                    color: rgba(0, 0, 0, 0.38);
-                    font-size:0.32rem;
-            }
-            >input:-ms-input-placeholder { /* IE 10+ */ 
-                    color: rgba(0, 0, 0, 0.38);
-                    font-size:0.32rem;
-            }
-            >input:-moz-placeholder { /* Firefox 18- */ 
-                     color: rgba(0, 0, 0, 0.38);
-                    font-size:0.32rem;
+				width:8.7rem;
+				margin-top:0.3rem;
+				height:0.76rem;
+				padding-left:0.2rem;
+				border-radius:0.16rem;
+				font-size:0.37rem;
             }
         }
     }
     .delBind{
-        width:9.2rem;
-        height:1rem;
-        font-size:0.347rem;
-        color:rgba(0, 0, 0, 1);
-        margin:0 auto;
-        margin-top:0.32rem;
-        line-height :1rem;
-        border-radius:0.133rem;
+         width:9.2rem;
+        height:1.253rem;
+        font-size:0.32rem;
+            color:rgba(0, 0, 0, 1);
+            margin:0 auto;
+            margin-top:0.32rem;
+			padding-left:0.34rem;
+            line-height :1.253rem;
+            border-radius:0.133rem;
         box-shadow :0 0rem 0.2rem rgba(253, 229, 231, 0.8);
-        padding-left:0.32rem;
+		font-size:0.42rem;
     }
 
     // 提示盒子

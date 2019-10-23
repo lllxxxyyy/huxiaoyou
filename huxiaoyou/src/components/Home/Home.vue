@@ -112,11 +112,17 @@ export default {
         this.$http.post('api/user/logins',LoginObj).then((res)=>{
           if(res.data.code==200){
             this.tokenHs(res.data.data.result.token)  //token
-            if(res.data.data.result.is_tan==1){
-                this.ShowFirstEnter=true
+            if(!!this.$route.query.redirect){
+                this.$router.push(this.$route.query.redirect)//这里是拦截前想跳转的页面
             }else{
-                 this.ShowFirstEnter=false
+                // this.$router.push('/')//这里填你默认跳转的地址
+                if(res.data.data.result.is_tan==1){
+                    this.ShowFirstEnter=true
+                }else{
+                    this.ShowFirstEnter=false
+                }
             }
+            
           }else{
             var self=this
             clearInterval(self.timer2);
