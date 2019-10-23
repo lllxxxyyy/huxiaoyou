@@ -386,7 +386,7 @@ const routes = [{ //首页
 
 // 页面刷新时，重新赋值token
 if (window.localStorage.getItem('tokenH')) {
-    store.commit(tokenHs, window.localStorage.getItem('tokenH'))
+    store.commit('tokenHs', window.localStorage.getItem('tokenH'))
 }
 
 const router = new Router({
