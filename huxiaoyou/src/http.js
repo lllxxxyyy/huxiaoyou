@@ -46,9 +46,9 @@ axios.interceptors.response.use(
                     // 401 清除token信息并跳转到登录页面
                     localStorage.removeItem('tokenH');
                     // 只有在当前路由不是登录页面才跳转
-                    router.currentRoute.path !== '/' &&
+                    router.currentRoute.path !== '/login' &&
                         router.replace({
-                            path: '/',
+                            path: '/login',
                             query: { redirect: router.currentRoute.path },
                         })
             }

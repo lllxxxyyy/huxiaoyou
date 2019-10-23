@@ -51,333 +51,337 @@ import CustomerService from '@/components/CustomerService/CustomerService' //客
 import LabourUnion from '@/components/LabourUnion/LabourUnion' //工会
 import PowerPack from '@/components/PowerPack/PowerPack' //助力卡包
 
-const routes = [{ //首页
-            path: '/',
-            name: 'Home',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: Home
-        },
-        { //客服
-            path: '/CustomerService',
-            name: 'CustomerService',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: CustomerService
-        }, { //助力卡包
-            path: '/PowerPack',
-            name: 'PowerPack',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: PowerPack
-        }, { //工会
-            path: '/LabourUnion',
-            name: 'LabourUnion',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: LabourUnion
-        },
-        { //公共底部
-            path: '/Foot',
-            name: 'Foot',
-            component: Foot
-        },
-        { //分类
-            path: '/Sort',
-            name: 'Sort',
-            component: Sort,
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-        },
-        { //我
-            path: '/Mine',
-            name: 'Mine',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: Mine
-        },
-        { //购物车
-            path: '/Shop',
-            name: 'Shop',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: Shop
-        },
-        { //从首页点搜索进去的搜索页面
-            path: '/HomeSearch',
-            name: 'HomeSearch',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: HomeSearch
-        },
-        { //专题
-            path: '/SpecialTopic',
-            name: 'SpecialTopic',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: SpecialTopic
-        },
-        { //专题详情
-            path: '/SpecialDetails',
-            name: 'SpecialDetails',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: SpecialDetails
-        },
-        { //商品列表
-            path: '/shopList',
-            name: 'shopList',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: shopList
-        },
-        { //商品详情
-            path: '/ShopDetails',
-            name: 'ShopDetails',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: ShopDetails
-        },
-        { //选手展示
-            path: '/PlayerRanking',
-            name: 'PlayerRanking',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: PlayerRanking
-        },
-        { //选手
-            path: '/PlayerRankingList',
-            name: 'PlayerRankingList',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: PlayerRankingList
-        },
-        { //top榜
-            path: '/TopList',
-            name: 'TopList',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: TopList
-        },
-        { //选手排行
-            path: '/PlayerShow',
-            name: 'PlayerShow',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: PlayerShow
-        },
-        { //天使工会
-            path: '/AngelUnion',
-            name: 'AngelUnion',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: AngelUnion
-        },
-        { //添加视频
-            path: '/PresentVideo',
-            name: 'PresentVideo',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: PresentVideo
-        },
-        { //添加照片
-            path: '/PresentPhoto',
-            name: 'PresentPhoto',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: PresentPhoto
-        },
-        { //添加照片
-            path: '/LivePlatform',
-            name: 'LivePlatform',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: LivePlatform
-        },
-        { //添加照片
-            path: '/PlayerStyle',
-            name: 'PlayerStyle',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: PlayerStyle
-        },
-        { //收货地址
-            path: '/ReceiptAddress',
-            name: 'ReceiptAddress',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: ReceiptAddress
-        },
-        { //收货地址添加
-            path: '/ReceiptAddressAdd',
-            name: 'ReceiptAddressAdd',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: ReceiptAddressAdd
-        },
-        { //收货地址添加
-            path: '/PlayerDetails',
-            name: 'PlayerDetails',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: PlayerDetails
-        },
-        { //赛事报名
-            path: '/SignUp',
-            name: 'SignUp',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: SignUp
-        },
-        { //订单列表
-            path: '/orderList',
-            name: 'orderList',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: orderList
-        },
-        { //订单列表
-            path: '/AddressEdit',
-            name: 'AddressEdit',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: AddressEdit
-        },
-        { // 关于我们
-            path: '/AboutWe',
-            name: 'AboutWe',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: AboutWe
-        },
-        { //加入公会
-            path: '/AddUnion',
-            name: 'AddUnion',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: AddUnion
-        },
-        { //个人资料
-            path: '/MineInformation',
-            name: 'MineInformation',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: MineInformation
-        },
-        { //修改昵称
-            path: '/changeName',
-            name: 'changeName',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: changeName
-        },
-        { //个性签名
-            path: '/Signature',
-            name: 'Signature',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: Signature
-        },
-        { //我的公会
-            path: '/MineGuild',
-            name: 'MineGuild',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: MineGuild
-        },
-        { //常驻城市
-            path: '/City',
-            name: 'City',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: City
-        },
-        { //绑定短视频
-            path: '/ShortVideo',
-            name: 'ShortVideo',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: ShortVideo
-        },
-        { //卡包详情
-            path: '/shopDetail',
-            name: 'shopDetail',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: shopDetail
-        },
-        { //确认订单
-            path: '/ConfirmOrder',
-            name: 'ConfirmOrder',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: ConfirmOrder
-        },
-        { //选手风采详情
-            path: '/PlayerStyleDetailed',
-            name: 'PlayerStyleDetailed',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: PlayerStyleDetailed
-        },
-        { //搜索结果
-            path: '/SearchResult',
-            name: 'SearchResult',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: SearchResult
-        }, ,
-        { //账户明细
-            path: '/AccountBalance',
-            name: 'AccountBalance',
-            meta: {
-                requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
-            component: AccountBalance
-        },
-    ]
-    // export default new Router({
+import login from '@/components/login/login' //登录
 
-// })
+const routes = [{ //首页
+        path: '/',
+        name: 'Home',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: Home
+    },
+    { //客服
+        path: '/CustomerService',
+        name: 'CustomerService',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: CustomerService
+    }, { //助力卡包
+        path: '/PowerPack',
+        name: 'PowerPack',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: PowerPack
+    }, { //工会
+        path: '/LabourUnion',
+        name: 'LabourUnion',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: LabourUnion
+    },
+    { //公共底部
+        path: '/Foot',
+        name: 'Foot',
+        component: Foot
+    },
+    { //分类
+        path: '/Sort',
+        name: 'Sort',
+        component: Sort,
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+    },
+    { //我
+        path: '/Mine',
+        name: 'Mine',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: Mine
+    },
+    { //购物车
+        path: '/Shop',
+        name: 'Shop',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: Shop
+    },
+    { //从首页点搜索进去的搜索页面
+        path: '/HomeSearch',
+        name: 'HomeSearch',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: HomeSearch
+    },
+    { //专题
+        path: '/SpecialTopic',
+        name: 'SpecialTopic',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: SpecialTopic
+    },
+    { //专题详情
+        path: '/SpecialDetails',
+        name: 'SpecialDetails',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: SpecialDetails
+    },
+    { //商品列表
+        path: '/shopList',
+        name: 'shopList',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: shopList
+    },
+    { //商品详情
+        path: '/ShopDetails',
+        name: 'ShopDetails',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: ShopDetails
+    },
+    { //选手展示
+        path: '/PlayerRanking',
+        name: 'PlayerRanking',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: PlayerRanking
+    },
+    { //选手
+        path: '/PlayerRankingList',
+        name: 'PlayerRankingList',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: PlayerRankingList
+    },
+    { //top榜
+        path: '/TopList',
+        name: 'TopList',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: TopList
+    },
+    { //选手排行
+        path: '/PlayerShow',
+        name: 'PlayerShow',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: PlayerShow
+    },
+    { //天使工会
+        path: '/AngelUnion',
+        name: 'AngelUnion',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: AngelUnion
+    },
+    { //添加视频
+        path: '/PresentVideo',
+        name: 'PresentVideo',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: PresentVideo
+    },
+    { //添加照片
+        path: '/PresentPhoto',
+        name: 'PresentPhoto',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: PresentPhoto
+    },
+    { //添加照片
+        path: '/LivePlatform',
+        name: 'LivePlatform',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: LivePlatform
+    },
+    { //添加照片
+        path: '/PlayerStyle',
+        name: 'PlayerStyle',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: PlayerStyle
+    },
+    { //收货地址
+        path: '/ReceiptAddress',
+        name: 'ReceiptAddress',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: ReceiptAddress
+    },
+    { //收货地址添加
+        path: '/ReceiptAddressAdd',
+        name: 'ReceiptAddressAdd',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: ReceiptAddressAdd
+    },
+    { //收货地址添加
+        path: '/PlayerDetails',
+        name: 'PlayerDetails',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: PlayerDetails
+    },
+    { //赛事报名
+        path: '/SignUp',
+        name: 'SignUp',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: SignUp
+    },
+    { //订单列表
+        path: '/orderList',
+        name: 'orderList',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: orderList
+    },
+    { //订单列表
+        path: '/AddressEdit',
+        name: 'AddressEdit',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: AddressEdit
+    },
+    { // 关于我们
+        path: '/AboutWe',
+        name: 'AboutWe',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: AboutWe
+    },
+    { //加入公会
+        path: '/AddUnion',
+        name: 'AddUnion',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: AddUnion
+    },
+    { //个人资料
+        path: '/MineInformation',
+        name: 'MineInformation',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: MineInformation
+    },
+    { //修改昵称
+        path: '/changeName',
+        name: 'changeName',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: changeName
+    },
+    { //个性签名
+        path: '/Signature',
+        name: 'Signature',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: Signature
+    },
+    { //我的公会
+        path: '/MineGuild',
+        name: 'MineGuild',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: MineGuild
+    },
+    { //常驻城市
+        path: '/City',
+        name: 'City',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: City
+    },
+    { //绑定短视频
+        path: '/ShortVideo',
+        name: 'ShortVideo',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: ShortVideo
+    },
+    { //卡包详情
+        path: '/shopDetail',
+        name: 'shopDetail',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: shopDetail
+    },
+    { //确认订单
+        path: '/ConfirmOrder',
+        name: 'ConfirmOrder',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: ConfirmOrder
+    },
+    { //选手风采详情
+        path: '/PlayerStyleDetailed',
+        name: 'PlayerStyleDetailed',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: PlayerStyleDetailed
+    },
+    { //搜索结果
+        path: '/SearchResult',
+        name: 'SearchResult',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: SearchResult
+    },
+    { //账户明细
+        path: '/AccountBalance',
+        name: 'AccountBalance',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: AccountBalance
+    },
+    { //登录
+        path: '/login',
+        name: 'login',
+        component: login
+    },
+]
 
 
 // 页面刷新时，重新赋值token
@@ -395,7 +399,7 @@ router.beforeEach((to, from, next) => {
             next();
         } else {
             next({
-                path: '/',
+                path: '/login',
                 query: { redirect: to.fullPath }
             })
         }

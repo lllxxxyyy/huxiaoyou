@@ -3,7 +3,7 @@
   <div class="homeBanner">
       <swiper class="banner_list" v-if="slidersData.length>=1"  :options="swiperOption">
             <!-- slides -->
-            <swiper-slide     class="banner_li" v-for="(item,index) in slidersData" :key="index">
+            <swiper-slide class="banner_li" v-for="(item,index) in slidersData" :key="index">
                   <img @click="toJump(item.type,item.project_id,item.url)" :src="item.img" alt="">
             </swiper-slide>
             <!-- Optional controls -->
