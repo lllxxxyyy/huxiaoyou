@@ -70,8 +70,6 @@
   import {mapMutations} from 'vuex'
   import wx from 'weixin-jsapi'
   import qs from 'qs'
-  import {videoPlayer} from 'vue-video-player'
-  import 'video.js/dist/video-js.css'
 
   export default {
     name: "PlayerStyleDetailed",
@@ -106,10 +104,6 @@
         }
       };
     },
-
-  components: {
-    videoPlayer
-  },
 
     computed: {
       ...mapState(['staticImgH', 'tokenH', 'playerStyleDetailedPlayer'])
