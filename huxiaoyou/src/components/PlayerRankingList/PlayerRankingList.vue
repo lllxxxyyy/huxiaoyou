@@ -22,14 +22,14 @@
     </div>
     <ul class="HomeAngel_listTwo">
       <template v-for="(item,index) in RankingData" v-if="true">
-        <li @click="toPlayerDetail(item.id)" :key="index">
+        <li :key="index" @click="toPlayerDetail(item.id, 'false')">
           <!-- {{item.RankingImgData[index]}} -->
           <img v-if="item.photo_introduction[0]" :src="item.photo_introduction[0].src" alt="">
           <div class="top_img"><img :src="staticImgH+'paiming'+(index+1)+'.png'" alt=""></div>
           <!--<div class="ta_vote to_vote1">给Ta投票</div>-->
           <div class="ta_vote" :class="{
               ta_vote1: (index+1) > 3 && (index+1) <= 100,
-              ta_vote2: (index+1) > 100}">给Ta投票</div>
+              ta_vote2: (index+1) > 100}" @click.stop="toPlayerDetail(item.id, 'true')">给Ta投票</div>
           <span class="angelNameTwo">{{item.username}}</span>
           <span class="angelPriceTwo">{{item.votes}}+</span>
         </li>
@@ -105,11 +105,11 @@ if (this.searchConditions) {
       this.$router.push({path: 'SearchResult', query: this.search});
     },
     //   跳选手详情
-    toPlayerDetail(id){
+    toPlayerDetail(id, voteFlag){
         this.playerIds(id)//保存选手id
         this.addressIdIsSels('false') //投票盒子不显示 
         this.PlayerDetailPages('/PlayerRankingList')  //选手详情返回页面
-        this.playDetailVoteDivs('true') //选手详情的投票盒子的消失
+        this.playDetailVoteDivs(voteFlag) //选手详情的投票盒子的消失
         this.$router.push('/PlayerDetails')
     },
       SpecialBarBtn(index,id){

@@ -9,7 +9,10 @@
     <ul class="player_list">
       <li v-for="(item,index) in PlayerStyleData" :key="index">
         <div class="player_center">
-          <img v-if="item.video_introduction" @click="goGoodsPage(item)" :src="item.video_introduction[1].src"/>
+          <video v-if="item.video_introduction" @click.stop="goGoodsPage(item)">
+            <source :src="item.video_introduction" type="video/mp4"/>
+          </video>
+          <!--<img v-if="item.video_introduction" @click="goGoodsPage(item)" :src="item.video_introduction[1].src"/>-->
           <div class="bofang"><img @click="goGoodsPage(item)" :src="staticImgH+'bofang.png'" alt=""></div>
         </div>
         <span class="player_btn" @click="toPlayerDetail(item.id)">投票</span>
@@ -28,7 +31,10 @@
     <ul class="player_list_fencai">
       <li v-for="(item,index) in PlayerStyleData" :key="index">
         <div class="player_center">
-          <img v-if="item.video_introduction" @click="goGoodsPage(item)" :src="item.video_introduction[1].src"/>
+          <video v-if="item.video_introduction" @click.stop="goGoodsPage(item)">
+            <source :src="item.video_introduction" type="video/mp4"/>
+          </video>
+          <!--<img v-if="item.video_introduction" @click="goGoodsPage(item)" :src="item.video_introduction[1].src"/>-->
           <div class="bofang"><img @click="goGoodsPage(item)" :src="staticImgH+'bofang.png'" alt=""></div>
         </div>
         <span class="player_btn" @click="toPlayerDetail(item.id)">投票</span>
@@ -43,6 +49,25 @@
           </div>-->
       </li>
     </ul>
+    <div class="newsList">
+      <div v-for="(items, index) in newsList">
+        <div class="date">{{showDay(index)}}</div>
+        <div class="list" >
+          <ul>
+            <li class="list-item" v-for="item in items">
+              <span class="text">{{item.title}}</span>
+              <img :src="attachImageUrl(item.images[0])" class="image"/>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="infinite-scroll" v-show="loading">
+        <svg class="loader-circular" viewBox="25 25 50 50">
+          <circle class="loader-path" cx="50" cy="50" r="20" fill="none" stroke="rgb(53, 157, 218)" stroke-width="5"></circle>
+        </svg>
+        <span class="infinite-scroll-text">{{tips}}</span>
+      </div>
+    </div>
     <!-- 提示盒子 -->
     <transition name="fade">
       <div class="promptFather" v-if="showPrompt">
@@ -67,6 +92,13 @@
         // 提示盒子
         promptContent: '', //提示盒子的内容
         showPrompt: false,//提示盒子的吸收和显示
+
+        newsList: [],
+        date: [],
+        todayDate: '',
+        REQUIRE: true,
+        loading: false,
+        tips: '努力加载中...'
       };
     },
 
@@ -77,7 +109,9 @@
     },
 
     mounted() {
-      var obj = qs.stringify({
+      // 添加滚动事件，检测滚动到页面底部
+      window.addEventListener('scroll', this.scrollBottom)
+      let obj = qs.stringify({
         page: 1
       })
       this.$http.post('api/player/player_style', obj, {
@@ -85,8 +119,8 @@
           'authorization': this.token
         }
       }).then((res) => {
-        console.log(res)
         if (res.data.code === 200) {
+          debugger
           this.PlayerStyleData = res.data.data.data
         } else {
           var self = this
@@ -120,6 +154,10 @@
           this.playerVideoPages('/PlayerStyle')   //设置选手视频返回页面
         this.PlayerStyleDetailedPlayer(player);  //给选手视频页面传player
         this.$router.push('/PlayerStyleDetailed') 
+      },
+      scrollBottom() {
+        // 滚动到页面底部时，
+       console.log("滚动到页面底部时时间")
       },
       ...mapMutations(['playerIds', 'addressIdIsSels', 'PlayerDetailPages', 'playDetailVoteDivs', 'PlayerStyleDetailedPlayer','playerVideoPages']),
     }

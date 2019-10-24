@@ -1,37 +1,29 @@
 <!--  -->
 <template>
   <div class="LivePlatform">
-      <div class="PlayerRanking_header">
-          <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
-          <span>账户余额明细</span>
-		  <div class="PresentPhoto_admin">赚钱秘籍</div>
+    <div class="PlayerRanking_header">
+      <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
+      <span>账户余额明细</span>
+      <div class="PresentPhoto_admin">赚钱秘籍</div>
+    </div>
+    <ul class="AccountBalance">
+      <li v-for="(item, index) in accountBalance" :key="index">
+        <div class="Account"><span>{{item.desc}}</span>
+          <span class="Account_time">{{formatDate(item.change_time)}}</span></div>
+        <div class="Balance">
+          <span>余额：{{item.money}}</span>
+          <span class="Balance_right">+{{item.user_money}}</span>
+        </div>
+      </li>
+    </ul>
+    <!-- 提示盒子 -->
+    <transition name="fade">
+      <div class="promptFather" v-if="showPrompt">
+        <div class="prompt">
+          {{promptContent}}
+        </div>
       </div>
-      <ul class="AccountBalance">
-          <li>
-		  	<div class="Account"><span>卡包分享</span><span class="Account_time">2019-10-19</span></div>
-			<div class="Balance"><span>余额：9871</span><span class="Balance_right">+560</span></div>
-		  </li>
-          <li>
-		  	<div class="Account"><span>提现</span><span class="Account_time">2019-10-19</span></div>
-			<div class="Balance"><span>余额：9871</span><span class="Balance_right">+560</span></div>
-		  </li>
-		  <li>
-		  	<div class="Account"><span>提现</span><span class="Account_time">2019-10-19</span></div>
-			<div class="Balance"><span>余额：9871</span><span class="Balance_right">+560</span></div>
-		  </li>
-		  <li>
-		  	<div class="Account"><span>卡包助力</span><span class="Account_time">2019-10-19</span></div>
-			<div class="Balance"><span>余额：9871</span><span class="Balance_right">+560</span></div>
-		  </li>
-      </ul>
-      <!-- 提示盒子 -->
-         <transition name="fade">
-            <div class="promptFather" v-if="showPrompt">
-                <div class="prompt" >
-                    {{promptContent}}
-                </div>
-            </div>
-        </transition>
+    </transition>
   </div>
 </template>
 <script>
@@ -59,7 +51,9 @@ export default {
         ...mapState(['staticImgH','tokenH'])
     },
 
-//   mounted: {},
+  mounted(){
+      this.getAccountBalance()
+  },
 
   methods: {
       toReturn(){
@@ -68,16 +62,31 @@ export default {
       getAccountBalance(){
         // 没有找到账户明细接口
         let obj=qs.stringify({})
-        this.$http.post('api/division/list',obj,{
+        this.$http.post('api/user/ba_money',obj,{
           headers: {
             'authorization': this.tokenH
           }
         }).then((res)=>{
           if(res.data.code===200){
-            this.accountBalance = res.data.data.data
+            this.accountBalance = res.data.data.result
           }
         })
-      }
+      },
+    formatDate(value) {
+      let date = new Date(value);
+      let y = date.getFullYear();
+      let MM = date.getMonth() + 1;
+      MM = MM < 10 ? ('0' + MM) : MM;
+      let d = date.getDate();
+      d = d < 10 ? ('0' + d) : d;
+      let h = date.getHours();
+      h = h < 10 ? ('0' + h) : h;
+      let m = date.getMinutes();
+      m = m < 10 ? ('0' + m) : m;
+      let s = date.getSeconds();
+      s = s < 10 ? ('0' + s) : s;
+      return y + '-' + MM + '-' + d + ' ' + h + ':' + m + ':' + s;
+    }
 
   }
 }

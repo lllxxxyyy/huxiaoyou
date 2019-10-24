@@ -13,7 +13,7 @@
       <span @click="searchPlayer(search.type, search.value)">搜索</span>
     </div>
     <ul class="HomeAngel_listTwo" v-if="searchResult && searchResult.length > 0">
-      <li @click="toPlayerDetail(item.id)" v-for="(item,index) in searchResult" :key="index">
+      <li v-for="(item,index) in searchResult" :key="index" @click="toPlayerDetail(item.user_id, 'false')">
         <!-- {{item.RankingImgData[index]}} -->
         <img v-if="item.head_pic" :src="item.head_pic" alt="">
         <div class="top_img">
@@ -22,7 +22,7 @@
         <div class="ta_vote" :class="{
 		  		 ta_vote1: item.rank<=100 && item.rank>3,
 		  		 ta_vote2: item.rank > 100,
-		  		 }">给Ta投票
+		  		 }" @click.stop="toPlayerDetail(item.user_id, 'true')">给Ta投票
         </div>
         <span class="angelNameTwo">{{item.username}}</span>
         <span class="angelPriceTwo">{{item.votes}}+</span>
@@ -82,28 +82,28 @@ export default {
     }
       this.searchPlayer(this.$route.query.type, this.$route.query.value);
       
-      var barobj=qs.stringify({
-      })
-      this.$http.post('api/division/list',barobj,{
-          headers: {
-              'authorization': this.tokenH
-          }
-    }).then((res)=>{
-         this.SpecialTopicBodyBar=res.data.data
-         this.barId=res.data.data[0].id
-         this.getlistData()
-    })
+    //   var barobj=qs.stringify({
+    //   })
+    //   this.$http.post('api/division/list',barobj,{
+    //       headers: {
+    //           'authorization': this.tokenH
+    //       }
+    // }).then((res)=>{
+    //      this.SpecialTopicBodyBar=res.data.data
+    //      this.barId=res.data.data[0].id
+    //      this.getlistData()
+    // })
     
 
   },
 
   methods: {
     //   跳选手详情
-    toPlayerDetail(id){
+    toPlayerDetail(id, voteFlag){
         this.playerIds(id)//保存选手id
         this.addressIdIsSels('false') //投票盒子不显示 
         this.PlayerDetailPages('/SearchResult')  //选手详情返回页面
-        this.playDetailVoteDivs('true') //选手详情的投票盒子的消失
+        this.playDetailVoteDivs(voteFlag) //选手详情的投票盒子的消失
         this.$router.push('/PlayerDetails')
     },
       SpecialBarBtn(index,id){
@@ -116,6 +116,10 @@ export default {
       },
     //选手搜索
     searchPlayer(type, value){
+      if (!value || (value && value.length < 1)) {
+        this.alertText("请输入名字或编号")
+        return false;
+      }
       this.SearchConditions({
         type: type,
         value: value
@@ -131,7 +135,6 @@ export default {
       }).then((res)=>{
         if(res.data.code===200){
           this.searchResult=res.data.data.data
-          console.log(this.searchResult)
         }
       })
     },
@@ -161,6 +164,18 @@ export default {
 
             })
       },
+    // 弹框提示
+    alertText(text){
+      var self=this
+      clearInterval(self.timer2);
+      this.promptContent=text
+      this.showPrompt=true
+      self.timer2=setTimeout(function(){
+        self.showPrompt=false
+        clearInterval(self.timer2);
+      },2000)
+      return false;
+    },
       ...mapMutations(['playerIds','PlayerDetailPages','addressIdIsSels','playDetailVoteDivs', 'SearchConditions']),
   }
 }

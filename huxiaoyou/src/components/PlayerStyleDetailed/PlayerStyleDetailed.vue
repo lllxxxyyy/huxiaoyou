@@ -6,8 +6,8 @@
     </div>
     <div class="player_top">
       <div class="player_name">
-        <img v-if="currentPlayerData" :src="currentPlayerData.avatar" alt="">
-        <span>{{currentPlayerData.username}}</span>
+        <img v-if="video_info" :src="video_info.head_pic" alt="">
+        <span>{{video_info.username}}</span>
 
         <span class="guanzhu" v-if="!video_info.concern" @click="follow()">关注</span>
         <span class="guanzhu" v-if="video_info.concern" @click="follow()">已关注</span>
@@ -323,7 +323,7 @@
     align-items :center;
     justify-content :center;
     position :fixed;
-	z-index:999;
+	z-index:99999;
     >img{
         width:0.32rem;
         height:0.56rem;

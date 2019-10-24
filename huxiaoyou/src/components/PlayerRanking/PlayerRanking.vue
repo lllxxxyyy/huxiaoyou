@@ -14,12 +14,12 @@
         </div>
         <div class="SpecialTopicBody_list">
           <ul class="HomeAngel_listTwo">
-            <li v-for="(player, seqNum) in item.players" :key='seqNum' @click="toPlayerDetail(player.id)">
+            <li v-for="(player, seqNum) in item.players" :key='seqNum' @click="toPlayerDetail(player.id, 'false')">
               <img class="Two_img"
                    :src="player.avatar"
                    alt="">
               <div class="top_img"><img :src="staticImgH+'paiming'+(seqNum+1)+'.png'" alt=""></div>
-              <div class="ta_vote">给Ta投票</div>
+              <div class="ta_vote" @click.stop="toPlayerDetail(player.id, 'true')">给Ta投票</div>
               <span class="angelNameTwo">选手：{{player.username}}</span>
               <span class="angelPriceTwo">编号：{{player.id}}</span>
             </li>
@@ -89,11 +89,11 @@ export default {
       this.$router.push('/TopList')
     },
     //   跳选手详情
-    toPlayerDetail(id){
+    toPlayerDetail(id, voteFlag){
         this.playerIds(id)//保存选手id
         this.addressIdIsSels('false') //进入选手详情默认不选择地址
         this.PlayerDetailPages('/PlayerRanking')  //选手详情返回页面
-        this.playDetailVoteDivs('true') //选手详情的投票盒子的消失
+        this.playDetailVoteDivs(voteFlag) //选手详情的投票盒子的消失
         this.$router.push('/PlayerDetails')
     },
       SpecialBarBtn(index,id){

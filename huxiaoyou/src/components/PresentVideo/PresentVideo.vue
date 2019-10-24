@@ -1,32 +1,32 @@
 <!--  -->
 <template>
   <div class="PresentVideo">
-       <div class="PlayerRanking_header">
-          <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
-          <span>介绍视频</span>
-		  <div @click="delStatus()" class="PresentPhoto_admin">管理</div>
+    <div class="PlayerRanking_header">
+      <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
+      <span>介绍视频</span>
+      <div @click="delStatus()" class="PresentPhoto_admin">管理</div>
+    </div>
+    <ul class="videoList">
+      <li v-for="(item,index) in reply" :key="index">
+        <video id="video1">
+          <source :src="item.video_introduction" type="video/mp4"/>
+        </video>
+        <div class="zz" @click.stop="goGoodsPage(item.v_id)"></div>
+        <div v-if="!!delFlag" @click="delVideo(item.video_introduction, item.v_id)" class="gxuan">删除</div>
+      </li>
+    </ul>
+    <div class="right">
+      <span @click="addVideo"><img :src="staticImgH+'tianjia.png'" alt=""></span>
+      <input type="file" class="upload" @change="uploadFile" ref="inputer" accept="video/*"/>
+    </div>
+    <!-- 提示盒子 -->
+    <transition name="fade">
+      <div class="promptFather" v-if="showPrompt">
+        <div class="prompt">
+          {{promptContent}}
+        </div>
       </div>
-      <ul class="videoList">
-          <li v-for="(item,index) in reply" :key="index" >
-            <video id="video1" >
-              <source :src="item.video_introduction" type="video/mp4"  @click="goGoodsPage"/>
-            </video>
-			<div class="zz" @click="toPlayerStyleDetailed"></div>
-            <div v-if="!!delFlag" @click="delVideo(item.video_introduction)" class="gxuan">删除</div>
-          </li>
-      </ul>
-	  <div class="right">
-         <span @click="addVideo"><img :src="staticImgH+'tianjia.png'" alt=""></span>
-         <input type="file" class="upload" @change="uploadFile" ref="inputer" accept="video/*"/>
-      </div>
-      <!-- 提示盒子 -->
-         <transition name="fade">
-            <div class="promptFather" v-if="showPrompt">
-                <div class="prompt" >
-                    {{promptContent}}
-                </div>
-            </div>
-        </transition>
+    </transition>
   </div>
 </template>
 <script>
@@ -47,7 +47,7 @@
         videoDataList: '',
         playerOptions: [],
         reply: [],
-        currentPlayerData: {},
+        currentPlayerData:{},
 
         // 提示盒子
         promptContent: '', //提示盒子的内容
@@ -60,22 +60,38 @@
     },
     mounted() {
       this.videoData()
-      // this.get()
+      //获取个人信息
+      let obj = qs.stringify({})
+      this.$http.post('/api/user/info', obj, {
+        headers: {
+          'authorization': this.tokenH
+        }
+      }).then((res) => {
+        if (res.data.code === 200) {
+          this.currentPlayerData = res.data.data
+        } else {
+          this.toastMsg(res.data.msg)
+        }
+      })
     },
     methods: {
-      toPlayerStyleDetailed() {
+      goGoodsPage(v_id) {
+        let player = {
+          id: this.currentPlayerData.player_id,
+          v_id: v_id
+        }
 
+        this.playerVideoPages('/PresentVideo')   //设置选手视频返回页面
+        this.PlayerStyleDetailedPlayer(player);  //给选手视频页面传player
+        this.$router.push('/PlayerStyleDetailed')
       },
       delStatus() {
         this.delFlag = !this.delFlag
       },
-      goGoodsPage(player) {
-        this.$router.push({path: '/PlayerStyleDetailed', query: {player: player}})
-      },
       addVideo() {
         this.uploadFile();
       },
-      delVideo(src) {
+      delVideo(src, id) {
         // @TODO 个人视频删除，感觉接口调用的不对
         this.$http.delete('api/player/video_del', {
           headers: {
@@ -83,7 +99,8 @@
           },
           params: {
             src: src,
-            type: 2
+            type: 1,
+            v_id: id
           }
         }).then((res) => {
           if (res.data.code === 200) {
@@ -94,42 +111,13 @@
       },
       videoData() {
         let obj = qs.stringify({})
-        this.$http.post('/api/user/info', obj, {
+        this.$http.post('/api/player/user_video', obj, {
           headers: {
             'authorization': this.tokenH
           }
         }).then((res) => {
-          let self = this
           if (res.data.code === 200) {
-            this.currentPlayerData = res.data.data
-            this.reply = res.data.data.video_introduction
-            if (this.reply) {
-              for (let i of this.reply) {
-                let arrStr = {
-                  playbackRates: [0.7, 1.0, 1.5, 2.0], //播放速度
-                  // autoplay: false, //如果true,浏览器准备好时开始回放。
-                  muted: false, // 默认情况下将会消除任何音频。
-                  // loop: false, // 导致视频一结束就重新开始。
-                  // preload: 'auto', // 建议浏览器在<video>加载元素后是否应该开始下载视频数据。auto浏览器选择最佳行为,立即开始加载视频（如果浏览器支持）
-                  language: 'zh-CN',
-                  aspectRatio: '16:9', // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
-                  fluid: true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
-                  sources: [{
-                    src: i.video_introduction,  // 路径
-                    type: 'video/mp4'  // 类型
-                  }, {
-                    src: i.video_introduction,
-                    type: 'video/mp4'
-                  }],
-                  height: 150
-                }
-                self.playerOptions.push(arrStr)
-              }
-            } else {
-              this.toastMsg('没有视频')
-              return false;
-            }
-
+            this.reply = res.data.data.result
           } else {
             this.toastMsg(res.data.msg)
             return false;
@@ -147,7 +135,6 @@
         player.play()
       },
       onPlayerPause(player) {
-        // alert("pause");
         player.pause()
       },
       toastMsg(msg) {
@@ -183,43 +170,20 @@
           }
           this.imgLen++;
           this.formData.append('video_introduction', this.fil[i])
-          this.formData.append('type', 2)
+          this.formData.append('type', 1)
         }
-        this.$http.post('api/player/video_introduction', this.formData,{
+        this.$http.post('api/player/video_introduction', this.formData, {
           headers: {
             'authorization': this.tokenH
           }
         }).then(res => {
+          debugger
           this.videoData()
         });
 
-        // this.$http.post('api/player/video_introduction', this.formData, {
-        //   headers: {
-        //     'authorization': this.tokenH
-        //   }
-        // }).then(res => {
-        //   if (res.data.code === 200) {
-        //     this.toastMsg('成功添加视频')
-        //     this.videoData()
-        //     return false;
-        //   } else {
-        //     this.toastMsg(res.data.msg)
-        //     return false;
-        //   }
-        // });
-
       },
-      //    getObjectURL(file) {
-      //     var url = null ;
-      //     if (window.createObjectURL!=undefined) { // basic
-      //       url = window.createObjectURL(file) ;
-      //     } else if (window.URL!=undefined) { // mozilla(firefox)
-      //       url = window.URL.createObjectURL(file) ;
-      //     } else if (window.webkitURL!=undefined) { // webkit or chrome
-      //       url = window.webkitURL.createObjectURL(file) ;
-      //     }
-      //     return url ;
-      //   },
+      ...mapMutations(['playerIds', 'addressIdIsSels', 'PlayerDetailPages', 'playDetailVoteDivs', 'PlayerStyleDetailedPlayer','playerVideoPages']),
+
     }
   }
 
