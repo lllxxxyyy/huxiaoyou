@@ -1,4 +1,4 @@
-<!--  -->
+<!-- 选手视频页 -->
 <template>
   <div class="PlayerStyle">
     <div class="PlayerRanking_header">
@@ -106,7 +106,7 @@
     },
 
     computed: {
-      ...mapState(['staticImgH', 'tokenH', 'playerStyleDetailedPlayer'])
+      ...mapState(['staticImgH', 'tokenH', 'playerStyleDetailedPlayer','playerVideoPage'])
     },
     created(){
       this.text=navigator.appVersion
@@ -137,7 +137,7 @@
     methods: {
       //   返回
       toReturn() {
-        this.$router.push('/PlayerStyle');
+        this.$router.push(this.playerVideoPage);
       },
       playOrPause(){
         console.log(this.video.paused)

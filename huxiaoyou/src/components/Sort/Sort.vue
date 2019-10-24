@@ -15,8 +15,8 @@
     <div class="kabao">
       <span>卡包</span>
       <ul>
-        <li v-for="(item, index) in cardList" :key="index">
-          <img :src="item.original_img" alt="">{{item.goods_name}}
+        <li v-for="(item, index) in cardList" @click.stop="toshopdetail(item.goods_id)" v-if=" Number(index+1)" :key="index">
+          <img :src="item.original_img" alt=""><span>{{item.goods_name}}</span>
         </li>
       </ul>
     </div>
@@ -68,6 +68,13 @@
     },
 
     methods: {
+       //   到商品id
+            toshopdetail(goodid){
+                this.addressIdIsSels('false') //商品页默认地址不选中
+                this.shopDetailReturns('/Sort')//商品页返回哪
+                this.shopgoodIds(goodid)  //给商品页传gooid
+                this.$router.push('/shopDetail')  
+            },
       //   获取数据
       getListData() {
         // 合作商
@@ -103,7 +110,7 @@
         }, 2000)
         return false;
       },
-      ...mapMutations(['playerIds', 'PlayerDetailPages', 'addressIdIsSels', 'playDetailVoteDivs']),
+      ...mapMutations(['playerIds', 'PlayerDetailPages', 'addressIdIsSels', 'playDetailVoteDivs','shopDetailReturns','shopgoodIds']),
     }
   }
 
@@ -171,7 +178,17 @@
 			text-align:center;
 			font-size:0.37rem;
 			>img{ width:2.9rem; margin-bottom:0.2rem;}
+      >span{
+                width:100%;
+                display:-webkit-box;
+                -webkit-box-orient:vertical;
+                word-break:break-all;
+                overflow:hidden;
+                -webkit-line-clamp:2;
+                padding:0 0.2rem;
+            }
         }
+         
 		}
     }
 

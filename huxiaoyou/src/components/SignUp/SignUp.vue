@@ -244,7 +244,9 @@ export default {
     submitAlertCha(){
       this.$router.push('/')
     },
+    // 跳加入公会页面
      addUnion(){
+       this.AddunionPages('/SignUp')
         this.$router.push('/AddUnion')
     },
     // 提交成功后返回
@@ -425,6 +427,7 @@ export default {
                         }
                 });
       },
+       ...mapMutations(['AddunionPages'])
   },
         
 }

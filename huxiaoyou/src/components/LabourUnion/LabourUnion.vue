@@ -3,7 +3,7 @@
   <div class="PlayerRankingHome">
       <div class="PlayerRanking_header">
           <span>公会</span>
-		  <div class="Labour">加入公会</div>
+		  <div class="Labour" @click="toaddUnion">加入公会</div>
       </div>
 	  <div class="LabourUnion_bar">
       <ul>
@@ -98,7 +98,13 @@ export default {
 
   },
 
+       
   methods: {
+    //   跳加入公会
+    toaddUnion(){
+        this.AddunionPages('/LabourUnion')
+        this.$router.push('/AddUnion')
+    },
     //   跳选手详情
     toPlayerDetail(id){
         this.playerIds(id)//保存选手id
@@ -141,7 +147,7 @@ export default {
                
             })
       },
-      ...mapMutations(['playerIds','PlayerDetailPages','addressIdIsSels','playDetailVoteDivs']),
+      ...mapMutations(['playerIds','PlayerDetailPages','addressIdIsSels','playDetailVoteDivs','AddunionPages']),
   }
 }
 

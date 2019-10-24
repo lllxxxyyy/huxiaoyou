@@ -12,7 +12,7 @@
                     <ul class="AddUnion_InfoList">
                         <li>
                             <div class="Info_name"><span>真实姓名</span>*</div>
-                            <input type="text" :disabled='disabledXiu' v-model="nickname" placeholder="请填写您真实的名称">
+                            <input type="text" :disabled='true' v-model="nickname" placeholder="请填写您真实的名称">
                         </li>
                         <li>
                             <div class="Info_name"><span>手机号码</span>*</div>
@@ -28,7 +28,7 @@
                                     <div class="form-group">
                                         <ul class="upload-imgs">
                                         <li :class="['uploadimgs_first',{'uploadimgs_opacity':uploadimgsOpacity}]">
-                                            <input :disabled='disabledXiu' type="file" class="upload" id="upload_img" @change="addImg" ref="inputer" multiple accept="image/*"/>
+                                            <input :disabled='true' type="file" class="upload" id="upload_img" @change="addImg" ref="inputer" multiple accept="image/*"/>
                                             <a class="add"><span>身份证件</span><span>正面照片</span></a>
                                         </li>
                                             <li>
@@ -41,7 +41,7 @@
                                     <div class="form-group">
                                         <ul class="upload-imgs">
                                         <li :class="['uploadimgs_first',{'uploadimgs_opacity':uploadimgsOpacityTwo}]">
-                                            <input :disabled='disabledXiu' type="file" class="upload" id="upload_img" @change="addImgTwo" ref="inputerTwo" multiple accept="image/*"/>
+                                            <input :disabled='true' type="file" class="upload" id="upload_img" @change="addImgTwo" ref="inputerTwo" multiple accept="image/*"/>
                                             <a class="add"><span>身份证件</span><span>反面照片</span></a>
                                         </li>
                                             <li>
@@ -55,9 +55,9 @@
                             <!-- <input type="text" maxlength="18" oninput="value=value.replace(/[\W]/g,'')" @change="cardNumber" v-model="isNumber" placeholder="请填写您身份证的证件号"> -->
                         </li>
                         <li>
-                            <div class="Info_name"><span>性别</span>*</div>
+                            <div class="Info_name"><span>性别</span></div>
                             <ul class="sex">
-                                <li @click.stop="sexSelectC(item.id)" v-for="(item,index) in sexData" :key="index"> <img :src="staticImgH+'noselYes.png'"> <span>{{item.name}}</span> </li>
+                                <li @click.stop="sexSelectC(item.id)" v-for="(item,index) in sexData" :key="index"> <img :src="item.id==sexImgIndex?staticImgH+'noselYes.png':staticImgH+'nosel.png'" alt=""> <span>{{item.name}}</span> </li>
                             </ul>
                         </li>
                         <li>
@@ -172,11 +172,11 @@ export default {
                 name:'女',
                 id:2,
             }
-            // ,
-            // {
-            //     name:'男',
-            //     id:1
-            // }
+            ,
+            {
+                name:'男',
+                id:1
+            }
         ],
         sexImgIndex:2,
         LivePlatformData:[
@@ -259,14 +259,19 @@ export default {
                             this.phone=data.phone
                             this.wechatId=data.wechat_id
                             this.isNumber=data.is_number
-                            // this.sex=data.sex
+                            this.sex=data.sex
                             this.age=data.age
+                            this.sexImgIndex=data.sex
                             this.heightVal=data.height1
                             this.weightVal=data.weight1
                             this.constellationVal=data.constellation1
                             this.SpecialtyVal=data.strong
                             this.CareerVal=data.datacareer
                             this.SignVal=data.signature1
+                            this.img=data.just_number
+                            this.imgTwo=data.over_number
+                            this.uploadimgsOpacity=true
+                            this.uploadimgsOpacityTwo=true
                             if(data.software){
                                 this.WisDefault=1 
                                 this.platformShow=true
@@ -442,12 +447,13 @@ export default {
                         this.software=this.inputSoftware
                     },
             //   选择性别
-                    // sexSelectC(id){
-                    //     if(!this.disabledXiu){
-                    //             this.sexImgIndex=id
-                    //             this.sex=id
-                    //     }
-                    // },
+                    sexSelectC(id){
+                        if(!this.disabledXiu){
+                                this.sexImgIndex=id
+                                this.sex=id
+                                console.log(id)
+                        }
+                    },
             // 点击直播默认按钮
                     whetherBtnDefa(){
                         if(!this.disabledXiu){

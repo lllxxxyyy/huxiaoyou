@@ -64,7 +64,6 @@
     data() {
       return {
         PlayerStyleData: [],
-        token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJpc3MiOiJodHRwczpcL1wvbG92eW91LnRvcCIsImF1ZCI6Imh0dHBzOlwvXC9sb3Z5b3UudG9wIiwiaWF0IjoxNTY5NDA4NzE2LCJuYmYiOjE1Njk0MDg3MTYsImV4cCI6MTYwMDk0NDcxNn0.FPH-pgQp-2Vt1kbnZc_Z9JnJYvGYMeLOUHtkC4Tyj_w',
         // 提示盒子
         promptContent: '', //提示盒子的内容
         showPrompt: false,//提示盒子的吸收和显示
@@ -118,10 +117,11 @@
         this.$router.push('/')
       },
       goGoodsPage(player) {
-        this.PlayerStyleDetailedPlayer(player);
-        this.$router.push('/PlayerStyleDetailed')
+          this.playerVideoPages('/PlayerStyle')   //设置选手视频返回页面
+        this.PlayerStyleDetailedPlayer(player);  //给选手视频页面传player
+        this.$router.push('/PlayerStyleDetailed') 
       },
-      ...mapMutations(['playerIds', 'addressIdIsSels', 'PlayerDetailPages', 'playDetailVoteDivs', 'PlayerStyleDetailedPlayer']),
+      ...mapMutations(['playerIds', 'addressIdIsSels', 'PlayerDetailPages', 'playDetailVoteDivs', 'PlayerStyleDetailedPlayer','playerVideoPages']),
     }
   }
 

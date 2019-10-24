@@ -112,7 +112,6 @@ export default {
                 name:'关于我们',
             },
         ],
-        personData:'',//用户信息（这里需要用到is_player）
 
         // 提示盒子
         promptContent:'', //提示盒子的内容
@@ -123,34 +122,12 @@ export default {
 //   components: {},
 
   computed:{
-        ...mapState(['staticImgH','personInfo','tokenH'])
+        ...mapState(['staticImgH'])
     },
 
   mounted() {
-       var obj=qs.stringify({
-      })
-    this.$http.post('api/user/info',obj,{
-          headers: {
-              'authorization': this.tokenH
-          }
-    }).then((res)=>{
-      if(res.data.code==200){
-          this.personData=res.data.data
-      }else{
-          var self=this
-          clearInterval(self.timer2);
-                  this.promptContent=res.data.msg
-                  this.showPrompt=true
-                  self.timer2=setTimeout(function(){
-                      self.showPrompt=false
-                      clearInterval(self.timer2);
-                  },2000)
-              return false;
-      }
-      
-    })
   },
-
+    props:["personData"],
   methods: {
       triggerBtn(index){
           if(index==0){
@@ -163,6 +140,7 @@ export default {
               this.heightPerXs('')     //身高
               this.weightPerXs('')     //体重
               this.constellationPerXs('')  //星座
+              this.playerIds(this.personData.player_id)
               this.$router.push('/MineInformation')
           }else if(index==2){
               this.$router.push('/PresentVideo')
@@ -172,11 +150,15 @@ export default {
               this.$router.push('/ShortVideo')
           }else if(index==5){
               this.$router.push('/MineGuild')
+          }else if(index==7){
+                this.myOrderListPages('/Mine')
+                this.orderTypes('')
+                this.orderNums(0)
+              this.$router.push('/orderList')
           }else if(index==8){
                this.ReceiptAddressPages('/Mine')
               this.$router.push('/ReceiptAddress')
           }else if(index==9){
-            console.log(this.personData.player_id)
             this.$router.push({path: '/CustomerService', query: {player_id: this.personData.player_id}})
           }else if(index==10){
               this.$router.push('/AboutWe')
@@ -194,7 +176,7 @@ export default {
             this.$router.push('/AboutWe')
         }
     },
-    ...mapMutations(['ReceiptAddressPages','userIdHs','cityNamePerXs','SignaturePerXs','nickNamePerXs','agePerXs','heightPerXs','weightPerXs','constellationPerXs']),
+    ...mapMutations(['ReceiptAddressPages','userIdHs','cityNamePerXs','SignaturePerXs','nickNamePerXs','agePerXs','heightPerXs','weightPerXs','constellationPerXs','myOrderListPages','orderTypes','orderNums','playerIds']),
   }
 }
 

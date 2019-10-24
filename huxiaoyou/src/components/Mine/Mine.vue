@@ -1,9 +1,9 @@
 <!-- 分类 -->
 <template>
   <div class="mine">
-      <minePerson/>
+      <minePerson v-bind:personData="personData"/>
       <!-- <mineOrderlist/> -->
-      <mineBtns/>
+      <mineBtns v-bind:personData="personData"/>
       <div class="Mine_SingingChina">歌游中国</div>
       <div class="footer">
          
@@ -22,6 +22,7 @@ export default {
   name:'Mine',
   data () {
     return {
+      personData:'',
     };
   },
 
@@ -34,9 +35,24 @@ export default {
 
   // computed: {},
 
-  // mounted(){
-     
-  // },
+  mounted(){
+      this.$http.post('api/user/info').then((res)=>{
+      if(res.data.code==200){
+          this.personData=res.data.data
+      }else{
+          var self=this
+          clearInterval(self.timer2);
+                  this.promptContent=res.data.msg
+                  this.showPrompt=true
+                  self.timer2=setTimeout(function(){
+                      self.showPrompt=false
+                      clearInterval(self.timer2);
+                  },2000)
+              return false;
+      }
+      
+    }) 
+  },
 
   // methods: {}
 }

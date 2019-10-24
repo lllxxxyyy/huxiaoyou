@@ -37,18 +37,35 @@ const state = {
     heightPerX: sessionStorage.getItem('heightPerX'), //个人资料身高
     weightPerX: sessionStorage.getItem('weightPerX'), //个人资料体重
     constellationPerX: sessionStorage.getItem('constellationPerX'), //个人资料星座
-  playerStyleDetailedPlayer: sessionStorage.getItem('playerStyleDetailedPlayer'), //PlayerStyleDetailed页面，player的信息
-
+    playerStyleDetailedPlayer: sessionStorage.getItem('playerStyleDetailedPlayer'), //PlayerStyleDetailed页面，player的信息
+    playerVideoPage: sessionStorage.getItem('playerVideoPage'), //选手视频返回页面
+    playerName: sessionStorage.getItem('playerName'), //选手详情=》选手风采=》选手视频的标题
+    AddunionPage: sessionStorage.getItem('AddunionPage'), //加入公会页面返回
 }
 const mutations = {
+    //加入公会页面返回
+    AddunionPages(state, AddunionPage) {
+        sessionStorage.setItem('AddunionPage', AddunionPage);
+        state.AddunionPage = AddunionPage
+    },
+    //选手详情=》选手风采=》选手视频的标题
+    playerNames(state, playerName) {
+        sessionStorage.setItem('playerName', playerName);
+        state.playerName = playerName
+    },
+    //选手视频返回页面
+    playerVideoPages(state, playerVideoPage) {
+        sessionStorage.setItem('playerVideoPage', playerVideoPage);
+        state.playerVideoPage = playerVideoPage
+    },
     //PlayerStyleDetailed页面，player的信息
-  PlayerStyleDetailedPlayer(state, playerStyleDetailedPlayer) {
+    PlayerStyleDetailedPlayer(state, playerStyleDetailedPlayer) {
         sessionStorage.setItem('playerStyleDetailedPlayer', playerStyleDetailedPlayer);
         state.playerStyleDetailedPlayer = playerStyleDetailedPlayer
     },
     SpecialDetailsPages(state, SpecialDetailsPage) {
-      sessionStorage.setItem('SpecialDetailsPage', SpecialDetailsPage);
-      state.SpecialDetailsPage = SpecialDetailsPage
+        sessionStorage.setItem('SpecialDetailsPage', SpecialDetailsPage);
+        state.SpecialDetailsPage = SpecialDetailsPage
     },
     // 卡包详情返回哪
     shopDetailReturns(state, shopDetailReturn) {

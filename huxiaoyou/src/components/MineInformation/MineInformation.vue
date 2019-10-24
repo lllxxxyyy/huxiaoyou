@@ -4,7 +4,7 @@
       <div class="MineInfo_title">
         <img @click="InfoReturn" :src="staticImgH+'zuojiantou.png'" alt="">
         <span>个人资料</span>
-        <span class="submit" >我的主页</span>
+        <span class="submit" @click="mineHomepage">我的主页</span>
       </div>
       <ul class="MineInfo_List">
         <li>
@@ -143,6 +143,13 @@ export default {
         this.getInformation()
    },
   methods: {
+    // 去我的主页
+    mineHomepage(){
+        this.addressIdIsSels('false') //进入选手详情默认不选择地址
+        this.PlayerDetailPages('/MineInformation')  //选手详情返回页面
+        this.playDetailVoteDivs('false') //选手详情的投票盒子的消失
+        this.$router.push('/PlayerDetails')
+    },
     // 到选择照片
     toPhoto(){
         this.$router.push('/PresentPhoto')
@@ -322,7 +329,7 @@ export default {
             }
           })
     },
-     ...mapMutations(['specialInfos','nickNamePerXs','cityNamePerXs','SignaturePerXs','agePerXs','heightPerXs','weightPerXs','constellationPerXs']),
+     ...mapMutations(['specialInfos','nickNamePerXs','cityNamePerXs','SignaturePerXs','agePerXs','heightPerXs','weightPerXs','constellationPerXs','addressIdIsSels','PlayerDetailPages','playDetailVoteDivs']),
     
   }
 }

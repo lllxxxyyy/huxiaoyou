@@ -57,6 +57,7 @@ import PowerPack from '@/components/PowerPack/PowerPack' //助力卡包
 
 import login from '@/components/login/login' //登录
 import videoDetail from '@/components/videoDetail/videoDetail' //登录
+import playDetailStyle from '@/components/playDetailStyle/playDetailStyle' //选手详情风采
 
 const routes = [{ //首页
         path: '/',
@@ -391,6 +392,11 @@ const routes = [{ //首页
         name: 'videoDetail',
         component: videoDetail
     },
+    { //选手详情风采
+        path: '/playDetailStyle',
+        name: 'playDetailStyle',
+        component: playDetailStyle
+    }
 ]
 
 

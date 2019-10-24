@@ -23,7 +23,7 @@
                 <li>赛区排名：{{personData.division_ranking}}</li>
                 <img @click="toMineInfo" :src="staticImgH+'playBian.png'" alt="">
               </ul>
-              <ul class="minePerson_artick " v-if="personData.is_player==1">
+              <ul class="minePerson_artick ">
                  <li>
                   <span class="minePerson_artickNum">{{personData.votes}}</span><span>总票数</span>
                 </li>
@@ -48,7 +48,7 @@
                   <span v-if="personData.constellation">{{personData.constellation}}</span>
                   <span v-if="personData.height">{{personData.height}}cm</span>
                   <span v-if="personData.weight">{{personData.weight}}kg</span>
-                  <span v-if="personData.weight">公会成员</span>
+                  <span v-if="personData.level==2">公会成员</span>
               </div>
           </div>
       </div>
@@ -71,18 +71,17 @@
                   <div class="minePerson_InfoRight">
                       <div class="minePerson_InfoRiTop">
                         <span class="minePerson_InfoName">{{personData.username}}</span>
-                        <div class="minePerson_InfoVip"><img :src="staticImgH+'Mine_vip.png'" alt=""><span>一级狐小仙</span></div>
+                        <div class="minePerson_InfoVip"><img :src="staticImgH+'Mine_vip.png'" alt=""><span>{{personData.level_name}}</span></div>
                       </div>
-                      <span class="minePerson_InfoRiBott" >{{personData.names}}</span>
-                      <img class="minePerson_playBian" :src="staticImgH+'playBian.png'" alt="">
+                      <span class="minePerson_InfoRiBotts" >{{personData.names}}</span>
                   </div>
               </div>
-              <ul class="minePerson_artick " v-if="personData.is_player==1">
+              <ul class="minePerson_artick ">
                 <li>
-                  <span class="minePerson_artickNum">44</span><span>账户余额</span>
+                  <span class="minePerson_artickNum">{{personData.user_moneys}}</span><span>账户余额</span>
                 </li>
                 <li>
-                  <span class="minePerson_artickNum">{{personData.m_amount}}</span><span>免费票数</span>
+                  <span class="minePerson_artickNum">{{personData.user_votes}}</span><span>免费票数</span>
                 </li>
               </ul>
           </div>
@@ -97,42 +96,22 @@ import qs from 'qs'
 export default {
   name:'minePerson',
   data () {
+      
     return {
-      personData:'',
+      
       // 提示盒子
         promptContent:'', //提示盒子的内容
         showPrompt:false,//提示盒子的吸收和显示
     };
   },
-
+  props:["personData"],
   // components: {},
 
    computed:{
-        ...mapState(['staticImgH','personInfo','tokenH'])
+        ...mapState(['staticImgH'])
     },
   mounted() {
-    var obj=qs.stringify({
-      })
-    this.$http.post('api/user/info',obj,{
-          headers: {
-              'authorization': this.tokenH
-          }
-    }).then((res)=>{
-      if(res.data.code==200){
-          this.personData=res.data.data
-      }else{
-          var self=this
-          clearInterval(self.timer2);
-                  this.promptContent=res.data.msg
-                  this.showPrompt=true
-                  self.timer2=setTimeout(function(){
-                      self.showPrompt=false
-                      clearInterval(self.timer2);
-                  },2000)
-              return false;
-      }
-      
-    })
+      console.log(this.personData)
   },
 
   methods: {
@@ -224,7 +203,12 @@ export default {
             font-size:0.32rem;
             color:rgba(0, 0, 0, 0.36);
             margin-top:0.16rem;
-            
+          }
+          >.minePerson_InfoRiBotts{
+            font-size:0.32rem;
+            color:rgba(0, 0, 0, 0.36);
+            margin-top:0.16rem;
+            margin-bottom:0.6rem;
           }
       }
       

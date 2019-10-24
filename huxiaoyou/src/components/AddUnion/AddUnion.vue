@@ -277,16 +277,11 @@ export default {
         
     };
   },
-
 //   components: {},
-
    computed:{
-        ...mapState(['staticImgH','tokenH'])
+        ...mapState(['staticImgH','tokenH','AddunionPage'])
     },
-
-
 //   mounted: {},
-
   methods: {
     //   去赚钱
     tozhuan(){
@@ -342,10 +337,6 @@ export default {
               var objurl = this.getObjectURL(event.target.files[0])
               this.imgTwo=objurl
           },
-    //  加入成功后的返回
-    submitReturn(){
-        this.$router.push('/')
-    },
     //  点击页面任意处隐藏 网店平台列表 
       hideDiv(){
           this.onlineShopListxShow=false
@@ -510,11 +501,13 @@ export default {
       videoChange(){
           this.isVideo=this.inputduanValue
       },
+    //   返回
       toReturn(){
-        this.$router.push('/SignUp')
+        this.$router.push(this.AddunionPage)
       },
       setAddressBtn(){
       },
+    //    ...mapMutations(['AddunionPages'])
   }
 }
 

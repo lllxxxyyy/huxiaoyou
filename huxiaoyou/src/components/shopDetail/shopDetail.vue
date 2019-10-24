@@ -89,7 +89,8 @@ export default {
   computed:{
         ...mapState(['apiH','staticImgH','tokenH','shopgoodId','shopDetailReturn','playerId','addressId','addressIdIsSel','userIdH','WpersonInfoH','userIdHInterest'])
     },
-//   mounted(){
+  mounted(){
+      this.firstPanduan()
 //        // 判断本地有没有用户信息
 //         if(this.WpersonInfoH.unionid && this.WpersonInfoH.miniapp && this.WpersonInfoH.nickname && this.WpersonInfoH.head_pic && this.WpersonInfoH.sex){
 //             this.unionid=this.WpersonInfoH.unionid
@@ -101,7 +102,8 @@ export default {
 //         }else{  //否则重新获取code值
 //             this.getCodes ()  
 //         }
-//   },
+  },
+
   methods: {
             firstPanduan(){
                 //判断是否是分享出去的
@@ -240,6 +242,8 @@ export default {
                         this.addressIdIsSels('false') //给选手详情页默认地址没选中状态 
                         this.shopDetatilshows('true')//告诉选手详情是卡包详情返回的
                         this.$router.push('/PlayerDetails')
+                }else {
+                    this.$router.push(this.shopDetailReturn)
                 }
             },
         //   点击立即购买

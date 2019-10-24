@@ -1,20 +1,20 @@
 <!-- 选手详情 -->
 <template>
-  <div >
+    <div>
         <!-- header -->
             <div class="PlayerRanking_header">
                 <img @click.stop="toReturn" :src="staticImgH+'zuojiantouWhite.png'" alt="">
-                <span>选手风采</span>
+                <span @click.stop="toPlayDetailstyle">选手风采</span>
             </div>
         <!-- 小轮播 -->
-            <div class="small_Carousel" v-if="smallSwiper.length>=1">
+            <div @click.stop class="small_Carousel" v-if="smallSwiper.length>=1">
                         <!-- swiper v-if="comment.length>=1" 为了解决swiper不循环轮播 -->
                 <swiper v-if="smallSwiper.length>=1" class="small_swiperWrap" :options="swiperOption">
                     <swiper-slide class="swiperSlide" v-for="(item,index) in smallSwiper" :key="index">感谢「 <img :src="item.head_pic"><span>{{item.nickname}}</span>」为我助力投票{{item.amount}}票</swiper-slide>
                 </swiper>
             </div>
         <!--顶部大头像  -->
-            <div class="playerBigImg">
+            <div @click.stop="changeBigImg(detailData.head_pic)" class="playerBigImg" >
                 <img :src="detailData.head_pic" alt="">
             </div>
         <!-- 选手信息 -->
@@ -22,7 +22,7 @@
                     <div class="player_des_top">
                         <img class="player_desImg" :src="detailData.head_pic" alt="">
                         <ul>
-                            <li ><img v-if="personData.player_id==playerId" :src="staticImgH+'playBian.png'" alt=""><span class="username">{{detailData.username}}</span> </li>
+                            <li ><img @click="toMineInfo" v-if="personData.player_id==playerId" :src="staticImgH+'playBian.png'" alt=""><span class="username">{{detailData.username}}</span> </li>
                             <li> <span class="playerId">参赛编号：{{detailData.player_id}}</span></li>
                         </ul>
                     </div>
@@ -33,11 +33,9 @@
                         <li>
                             <span class="piao_list_top">{{detailData.division_ranking}}</span><span class="piao_list_bottom">赛区排名</span>
                         </li>
-                        <span>华北赛区</span>
+                        <span>{{detailData.names}}</span>
                 </ul>
                 <div class="palylike" v-if="detailData.signature">{{detailData.signature}}</div>
-                <!-- <div class="player_desName"> {{}} <span>{{detailData.names}}</span>  </div> -->
-                <!-- <div class="playNum" v-if="detailData.user_id">+{{detailData.user_id}}</div> -->
                 <ul class="player_listdes">
                     <li>
                         <span v-if="detailData.sex==2">女</span>
@@ -65,15 +63,13 @@
             </div>
         <!-- 小图 -->
             <ul class="playerImg_list">
-                <li @click="changeBigImg(index)" v-for="(item,index) in detailData.photo_introduction" :key="index">
+                <li @click="changeBigImg(item.src)" v-for="(item,index) in detailData.photo_introduction" :key="index">
                     <img :src="item.src" alt="">
                 </li>
             </ul>
       <!-- 大图 -->
             <ul class="BigplayerImg_list" v-if="showBigPlayImg" @click="hideBigPlayImg">
-                <li  v-for="(item,index) in detailData.photo_introduction" :key="index" v-if="index==bigPlayImgIndex">
-                    <img :src="item.src" alt="">
-                </li>
+                    <img :src="itemSrc" alt="">
             </ul>
       <!-- 投票盒子 -->
             <div class="vote_wrap" v-if="voteShow" @click.stop="hideVote">
@@ -90,7 +86,7 @@
                             <div class="SpecialTopicBody_bar">
                                 <!-- 商品列表 -->
                                 <ul>
-                                    <li :class="barcolorIndex==index?'SpecialTopicBody_barColor':''" @click.stop="getShopDes(item.goods_id,index)" v-for="(item,index) in shopList" :key="index">
+                                    <li  :class="barcolorIndex==index?'SpecialTopicBody_barColor':''" @click.stop="getShopDes(item.goods_id,index)" v-for="(item,index) in shopList" v-if=" Number(index+1)" :key="index">
                                         <img :src="item.original_img" alt="">
                                         <span @click.stop="toshopdetail(item.goods_id)">查看详情>></span>
                                     </li>
@@ -147,6 +143,7 @@ export default {
         personData:'',  //个人用户信息（这里主要用到免费票数）
         smallSwiper:'',//顶部小轮播数据
         playerInterest:'',//获得利益的选手Id
+        itemSrc:'',//初始化大图地址
         
         test:'',  //微信分享的认证数据
         dataResult:'',  //微信支付认证信息数据
@@ -194,7 +191,6 @@ export default {
                     this.playerIds(shopUrlId.player_id)
                 }
         }
-        console.log(this.playerId)
     //   选手信息
         var obj=qs.stringify({
                 player_id:this.playerId  
@@ -301,6 +297,16 @@ export default {
         })
   },
   methods: {
+        // 到选手详情风采
+            toPlayDetailstyle(){
+                this.playerNames(this.detailData.username)  //设置选手详情风采页的标题名字
+                this.playerIds(this.playerId)   //给选手详情风采页传playerId
+                this.$router.push('/playDetailStyle')
+            },
+        //点击编辑
+            toMineInfo(){
+                this.$router.push('/MineInformation')
+            },
         //分享成功提示上的X
             shareSuccessCha(){
                 this.ShowShareSuccess=false
@@ -454,9 +460,9 @@ export default {
                 this.showBigPlayImg=false
             },
         //   显示大图
-            changeBigImg(index){
+            changeBigImg(item){
                 this.showBigPlayImg=true
-                this.bigPlayImgIndex=index
+                this.itemSrc=item
             },
         //   分享给朋友
             toFriend(){
@@ -559,7 +565,7 @@ export default {
                     }
                 })
             },
-        ...mapMutations(['playDetailVoteDivs','ReceiptAddressPages','ReceiptAddressAddPages','orderTypes','orderNums','playDetailShopDESs','addressIdIsSels','myOrderListPages','playerIds','shopgoodIds','barcolorIndexShops','shopDetatilshows','shopDetailReturns','userIdHs','userIdHInterests']),   
+        ...mapMutations(['playDetailVoteDivs','ReceiptAddressPages','ReceiptAddressAddPages','orderTypes','orderNums','playDetailShopDESs','addressIdIsSels','myOrderListPages','playerIds','shopgoodIds','barcolorIndexShops','shopDetatilshows','shopDetailReturns','userIdHs','userIdHInterests','playerNames']),   
       },
    
    
@@ -797,7 +803,7 @@ export default {
 .vote{
     width:100%;
     height:13.52rem;
-    background:rgba(0, 0, 0, 0.7);
+    background:rgba(0, 0, 0, 0.9);
     position :fixed;
     bottom:0;
     left:0;
@@ -806,7 +812,7 @@ export default {
         display:flex;
         flex-direction :column;
         align-items :center;
-        padding:0 0.53rem;
+        padding:0 0.4rem;
         >.AssistTicket_title{
             width:100%;
             color:rgba(255, 255, 255, 1);
@@ -822,7 +828,7 @@ export default {
         }
         >.SpecialTopicBody_bar{
             width:100%;
-            margin-top:0.48rem;
+            margin-top:0.27rem;
             >ul{
                 // height:4.533rem;
                 display :flex;
@@ -863,8 +869,8 @@ export default {
             border-radius:2.67rem;
             text-align :center;
             line-height :0.853rem;
-            margin-top:0.48rem;
-            margin-bottom:0.48rem;
+            margin-top:0.32rem;
+            margin-bottom:1rem;
         }
     }
     //免费票
@@ -898,17 +904,14 @@ export default {
     top:0;
     left:0;
     background:rgba(0,0,0,0.8)
-    >li{
-         width:100%;
-        height:100%;
-        display:flex;
-        align-items:center;
-        justify-content:center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:999;
         >img{
             width:100%;
             height:auto;
         }
-    }
 
 }
 // 提示盒子
@@ -941,7 +944,7 @@ export default {
     .small_Carousel{
         width:100%;
         height:1.2rem;
-        position :absolute;
+        position :fixed;
         top:1.4rem;
         left:0;
         background :rgba(0, 0, 0, 0.5)

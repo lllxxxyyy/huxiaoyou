@@ -38,8 +38,8 @@
                                     <div class="myOrderListShop_num"><span>共{{item.goods_num}}件商品</span><span>合计：¥{{item.goods_total}}</span> </div>
                                 </div>
                                 <div class="myOrderListShop_btn" @click.stop>
-                                    <span >取消订单</span>
-                                    <span class="spanColor" @click="toPay(item.order_sn,item.order_amount)" >去付款</span>
+                                    <!-- <span >取消订单</span> -->
+                                    <!-- <span class="spanColor" @click="toPay(item.order_sn,item.order_amount)" >去付款</span> -->
                                 </div>
                             </li>
                         </div>
@@ -166,8 +166,6 @@ export default {
         ...mapState(['staticImgH','myOrderListPage','orderType','orderNum','tokenH'])
     },
     mounted() {
-        console.log(this.orderType)
-        console.log(this.orderNum)
         this.num=this.orderNum//分类下标
         this.getList()
     },
@@ -178,11 +176,7 @@ export default {
                 p:1,
                 type:this.orderType
             })
-             this.$http.post('api/order/order_list',obj,{
-            headers: {
-                    'authorization': this.tokenH
-                }
-        }).then((res)=>{
+             this.$http.post('api/order/order_list',obj).then((res)=>{
                 if(res.data.code==200){
                     this.listdata=res.data.data.data
                 }else{
@@ -203,7 +197,7 @@ export default {
         toPay(){
 
         },
-        ...mapMutations([]),
+        ...mapMutations(['orderTypes']),
         //   到 我的页面
         toMime(){
             this.$router.push(this.myOrderListPage)
@@ -212,19 +206,16 @@ export default {
         dianNav(index){
             this.num=index
             if(index==0){
-                this.orderType('')
+                this.orderTypes('')
                this.getList()
             }else if(index==1){
-                 this.orderType('WAITPAY')
+                 this.orderTypes('WAITPAY')
                 this.getList()
             }else if(index==2){
-                this.orderType('WAITSEND')
+                this.orderTypes('WAITSEND')
                 this.getList()
             }else if(index==3){
-                this.orderType('WAITRECEIVE')
-                this.getList()
-            }else if(index==4){
-                this.orderType('WAITCCOMMENT')
+                this.orderTypes('WAITRECEIVE')
                 this.getList()
             }
         },

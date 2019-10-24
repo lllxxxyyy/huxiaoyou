@@ -8,9 +8,9 @@
 	  <div class="zlkabao">
 	   <span>助力投票</span>
       <ul>
-          <li v-for="(item, index) in cardList" :key="index">
+          <li v-for="(item, index) in cardList" @click.stop="toshopdetail(item.goods_id)" v-if=" Number(index+1)" :key="index">
             <img :src="item.original_img" :alt="item.goods_name">
-            {{item.goods_name}}
+                <span>{{item.goods_name}}</span>
           </li>
       </ul>
 	  </div>
@@ -49,7 +49,7 @@ export default {
     },
 
   mounted() {
-
+      
     // 卡包
     this.$http.post('api/goods/goods_list', {}, {
       headers: {
@@ -63,9 +63,17 @@ export default {
   },
 
   methods: {
+       //   到商品id
+        toshopdetail(goodid){
+                this.addressIdIsSels('false') //商品页默认地址不选中
+                this.shopDetailReturns('/PowerPack')//商品页返回哪
+                this.shopgoodIds(goodid)  //给商品页传gooid
+                this.$router.push('/shopDetail')  
+        },
       toReturn(){
           this.$router.push('/Mine')
       },
+      ...mapMutations([ 'addressIdIsSels', 'shopDetailReturns','shopgoodIds'])
   }
 }
 
@@ -133,7 +141,19 @@ export default {
 			width:2.9rem;
 			text-align:center;
 			font-size:0.37rem;
+            display:flex;
+            flex-direction :column;
+            align-items:center;
 			>img{ width:2.9rem; margin-bottom:0.2rem;}
+            >span{
+                width:100%;
+                display:-webkit-box;
+                -webkit-box-orient:vertical;
+                word-break:break-all;
+                overflow:hidden;
+                -webkit-line-clamp:2;
+                padding:0 0.2rem;
+            }
         }
 		}
     }
