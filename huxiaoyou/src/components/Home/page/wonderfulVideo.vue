@@ -3,7 +3,7 @@
   <div class="wonderfulVideo">
       <div class="wonderfulVideo_title"><span>精彩视频</span> </div>
       <ul class="voideo_list">
-        <li v-for="(item,index) in videoImg" :key="index">
+        <li v-for="(item,index) in videoImg" :key="index" @click="tovideoDetail">
           <img class="bofangBtn" :src="staticImgH+'bofangBtn.png'" alt="">
           <img class="videoImg"  alt="" :src="item.img">
         </li>
@@ -34,7 +34,11 @@ export default {
         })
   },
 
-  methods: {}
+  methods: {
+    tovideoDetail(){
+      this.$router.push('/videoDetail')
+    }
+  }
 }
 
 </script>

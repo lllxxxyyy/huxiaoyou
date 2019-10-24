@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '../store'
+const originalPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+    return originalPush.call(this, location).catch(err => err)
+}
 Vue.use(Router)
 import Home from '@/components/Home/Home' //首页
 import Foot from '@/components/Foot/Foot' //公共底部
@@ -52,6 +56,7 @@ import LabourUnion from '@/components/LabourUnion/LabourUnion' //工会
 import PowerPack from '@/components/PowerPack/PowerPack' //助力卡包
 
 import login from '@/components/login/login' //登录
+import videoDetail from '@/components/videoDetail/videoDetail' //登录
 
 const routes = [{ //首页
         path: '/',
@@ -380,6 +385,11 @@ const routes = [{ //首页
         path: '/login',
         name: 'login',
         component: login
+    },
+    { //登录
+        path: '/videoDetail',
+        name: 'videoDetail',
+        component: videoDetail
     },
 ]
 

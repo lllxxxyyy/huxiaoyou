@@ -8,6 +8,8 @@ import axios from './http'
 Vue.use(vuex);
 
 
+import VideoPlayer from 'vue-video-player'
+Vue.use(VideoPlayer)
 
 // 引入Element
 import ElementUI from 'element-ui'

@@ -87,15 +87,15 @@
             </div>
         </transition>
       <!-- 恭喜您报名成功  -->
-      <div class="sign_success_wrap"  v-if="showSignSuccess">
+      <div class="sign_success_wrap" >
          <div class="sign_success" >
               <div class="sign_Cha"><img @click.stop="signSuccessSha"  :src="staticImgH+'cha.png'" alt=""></div>
               <div class="sign_succeddImg"><span>恭喜您报名成功</span><img  :src="staticImgH+'sign_success.png'"></div> 
               <span class="sign_succeddtext">您获得了一个多赚10%的机会！</span>
               <div class="sign_succeddBtn" @click.stop="addUnion">去了解</div>
-              <img class="erweima_img" :src="staticImgH+'erweima_img.png'" alt="">
+              <img class="erweima_img" :src="erweimaImg" alt="">
               <span class="erweima_des">华北客服微信二维码</span>
-              <img class="erweima_down" :src="erweimaImg" alt="">
+              <img class="erweima_down" :src="staticImgH+'erweima_down.png'" alt="">
          </div>
       </div>
        <!-- 提示只能女性参与报名  -->
@@ -894,7 +894,7 @@ export default {
         flex-direction :column;
         align-items:center;
         >.sign_Cha{
-          width:7.91rem;
+          width:5.3rem;
           text-align:right;
           >img{
             width:0.493rem;
@@ -903,17 +903,17 @@ export default {
           }
         }
         >.sign_succeddImg{
-            width:7.91rem;
-            height:8.99rem;
+            width:5.3rem;
+            height:6rem;
             position:relative;
           >img{
-            width:7.91rem;
-            height:8.99rem;
+            width:5.3rem;
+            height:6rem;
           }
           >span{
               position:absolute;
-              top:0.32rem;
-              left:2.4rem;
+              top:0.18rem;
+              left:1.2rem;
               font-size:0.373rem;
               color:rgba(255, 157, 172, 1);
           }
@@ -937,26 +937,25 @@ export default {
           line-height:0.8rem;
         }
         >.erweima_img{
-          width:2.63rem;
-          height:2.63rem;
-          margin-top:1rem;
-          margin-bottom:0.32rem;
+          width:2rem;
+          height:2rem;
+          margin-top:0.8rem;
+          margin-bottom:0.27rem;
         }
         >.erweima_des{
-          font-size:0.347rem;
+          font-size:0.32rem;
           color:rgba(255, 255, 255, 1);
         }
         >.erweima_down{
           width:0.3rem;
           height:0.32rem;
-          margin-top:0.2rem;
+          margin-top:0.1rem;
         }
     }
 }
 // 报名失败提示
 .sign_fail_wrap{
     width:100%;
-    height:100%;
     position:fixed;
     top:0;
     left:0;

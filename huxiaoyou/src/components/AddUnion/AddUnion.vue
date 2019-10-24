@@ -136,6 +136,7 @@
                     </ul>
             </div>
             <div class="ImmAdd" @click.stop="ImmAddC">立即加入</div>
+            <div class="ImmAdds" ></div>
         </div>
       <!-- 提示盒子 -->
          <transition name="fade">
@@ -386,15 +387,13 @@ export default {
            this.formData.append('constellation1',this.constellationVal);
            this.formData.append('strong',this.SpecialtyVal);
            this.formData.append('career',this.CareerVal);
-          this.$http.post('api/player/union_players',this.formData,{
-                headers: {
-                    'authorization':this.tokenH
-                }
-            }).then((res)=>{
+          this.$http.post('api/player/union_players',this.formData).then((res)=>{
                     if(res.data.code==200){
-                        this.submitAfterImg=res.data.data.img
+                        this.showAddSuccess=true
+                        // this.submitAfterImg=res.data.data.img
                     }else{
                         var self=this
+                        // console.log*
                         clearInterval(self.timer2);
                             this.promptContent=res.data.msg
                             this.showPrompt=true
@@ -814,22 +813,27 @@ export default {
     }
 }
 .ImmAdd{
-    width:9.2rem;
+    width:100%;
     height:1.07rem;
     background :rgba(255, 193, 203, 1);
     font-size:0.347rem;
     color:rgba(255, 255, 255, 1);
     line-height :1.07rem;
     text-align :center;
-    margin:0.4rem auto;
+    position:fixed;
+    bottom:0;
+}
+.ImmAdds{
+    width:100%;
+    height:1.07rem;
 }
 // 提示盒子
 .promptFather{
     width:100%;
-    position :absolute;
+    position :fixed;
     bottom:50%;
     left:0;
-    z-index:10;
+    z-index:999;
     display :flex;
     justify-content :center;
     align-items :center;
