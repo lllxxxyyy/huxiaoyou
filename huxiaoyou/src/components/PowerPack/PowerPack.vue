@@ -8,12 +8,10 @@
 	  <div class="zlkabao">
 	   <span>助力投票</span>
       <ul>
-          <li><img :src="staticImgH+'zhuli.png'" alt="">分享助力投票</li>
-          <li><img :src="staticImgH+'zhuli.png'" alt="">99卡包</li>
-		  <li><img :src="staticImgH+'zhuli.png'" alt="">199卡包</li>
-		  <li><img :src="staticImgH+'zhuli.png'" alt="">299卡包</li>
-		  <li><img :src="staticImgH+'zhuli.png'" alt="">399卡包</li>
-		  <li><img :src="staticImgH+'zhuli.png'" alt="">999卡包</li>
+          <li v-for="(item, index) in cardList" :key="index">
+            <img :src="item.original_img" :alt="item.goods_name">
+            {{item.goods_name}}
+          </li>
       </ul>
 	  </div>
       <!-- 提示盒子 -->
@@ -34,6 +32,7 @@ export default {
     name:"PowerPack",
   data () {
     return {
+        cardList: [],
         LiveName:'',
         liveId:'',
         // 提示盒子
@@ -49,7 +48,19 @@ export default {
         ...mapState(['staticImgH','tokenH'])
     },
 
-//   mounted: {},
+  mounted() {
+
+    // 卡包
+    this.$http.post('api/goods/goods_list', {}, {
+      headers: {
+        'authorization': this.tokenH
+      }
+    }).then((res) => {
+      if (res.data.code===200) {
+        this.cardList = res.data.data.result
+      }
+    })
+  },
 
   methods: {
       toReturn(){

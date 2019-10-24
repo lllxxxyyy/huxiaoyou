@@ -37,15 +37,15 @@ const state = {
     heightPerX: sessionStorage.getItem('heightPerX'), //个人资料身高
     weightPerX: sessionStorage.getItem('weightPerX'), //个人资料体重
     constellationPerX: sessionStorage.getItem('constellationPerX'), //个人资料星座
-    // mineInfo: sessionStorage.getItem('mineInfo'), //mine页面，个人完整资料
+  playerStyleDetailedPlayer: sessionStorage.getItem('playerStyleDetailedPlayer'), //PlayerStyleDetailed页面，player的信息
 
 }
 const mutations = {
-    //mine页面，个人完整资料
-    // MineInfo(state, mineInfo) {
-    //     sessionStorage.setItem('mineInfo', mineInfo);
-    //     state.mineInfo = mineInfo
-    // },
+    //PlayerStyleDetailed页面，player的信息
+  PlayerStyleDetailedPlayer(state, playerStyleDetailedPlayer) {
+        sessionStorage.setItem('playerStyleDetailedPlayer', playerStyleDetailedPlayer);
+        state.playerStyleDetailedPlayer = playerStyleDetailedPlayer
+    },
     SpecialDetailsPages(state, SpecialDetailsPage) {
       sessionStorage.setItem('SpecialDetailsPage', SpecialDetailsPage);
       state.SpecialDetailsPage = SpecialDetailsPage

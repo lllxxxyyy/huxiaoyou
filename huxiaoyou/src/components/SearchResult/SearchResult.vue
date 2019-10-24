@@ -316,11 +316,11 @@ export default {
 .SpecialTopicBody_li .more{ color:#999; font-size: 0.37rem;}
 .top_img{ position:absolute; color:#fff; margin-top:0.1rem; margin-left:0.1rem; width:0.4rem; height:0.4rem;}
 .top_img img{ width:0.4rem; height:0.4rem; display:block;}
-.ta_vote{ position:absolute; font-size:0.37rem; margin-top:1.72rem; margin-left:0.46rem; right:0; bottom:1.50rem; width:2rem; height:0.8rem; line-height:0.9rem; color:#fff; font-size:0.4rem; text-align:center; background:url(../../../static/mock/img/toupiao.png) right center no-repeat; background-size:cover;}
+.ta_vote{ position:absolute; font-size:0.37rem; margin-left:0.46rem; right:0; bottom:1.50rem; width:2rem; height:0.8rem; line-height:0.9rem; color:#fff; font-size:0.4rem; text-align:center; background:url(../../../static/mock/img/toupiao.png) right center no-repeat; background-size:cover;}
 .ta_vote1{ background:url(../../../static/mock/img/toupiao1.png) right center no-repeat; background-size:cover;}
-.search{ background:#f5f5f5; height:0.9rem; padding:0 0.2rem; border-radius:1rem; margin-left:0.74rem; width:7.84rem;}
-.search select{ border:0; background:none; padding-right:0.5rem; font-size:0.37rem; height:0.9rem; background: url(/../../static/mock/img/nojian.png) no-repeat right center; background-size: 0.4rem 0.25rem;}
-.search input{ border:0; background:none; width:6rem; font-size:0.37rem; height:0.9rem;}
+.search{ background:#f5f5f5; height:0.9rem; padding:0 0.2rem; border-radius:1rem; margin-left:0.74rem; width:7.84rem; display:flex; justify-content:center; align-items:center;}
+.search select{ border:0; background:none; padding-right:0.5rem; font-size:0.37rem; margin-right:0.2rem; height:0.9rem; background: url(/../../static/mock/img/nojian.png) no-repeat right center; background-size: 0.4rem 0.25rem;}
+.search input{ border:0; background:none; width:5.8rem; font-size:0.37rem; height:0.9rem;}
 select{
  		appearance:none;
         -moz-appearance:none;

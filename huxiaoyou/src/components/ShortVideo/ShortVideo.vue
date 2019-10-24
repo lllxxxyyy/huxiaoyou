@@ -6,7 +6,7 @@
           <span>短视频平台</span>
           <span @click="tobind">绑定</span>
       </div>
-      <ul class="LiveDes">
+      <ul class="ShortVideo">
           <li> <span>短视频平台</span>  <input v-model="LiveName" type="text" placeholder="请填写您常用的短视频平台"></li>
           <li> <span>id</span>  <input v-model="liveId"  type="text" placeholder="请填写您所对应的短视频平台的id号"></li>
       </ul>

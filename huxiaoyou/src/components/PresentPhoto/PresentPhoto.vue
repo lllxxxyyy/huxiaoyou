@@ -4,10 +4,13 @@
        <div class="PlayerRanking_header">
           <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
           <span>添加照片</span>
-		  <div class="PresentPhoto_admin">管理</div>
+		  <div class="PresentPhoto_admin" @click="delFlag=!delFlag">管理</div>
       </div>
       <ul class="videoList">
-          <li v-for="(item,index) in photoDataList" :key="index"><img :src="item.src" alt=""><div class="gxuan">删除</div></li>
+          <li v-for="(item,index) in photoDataList" :key="index">
+            <img :src="item.src" alt="">
+            <div v-if="delFlag" class="gxuan" @click="delPhoto(item.src)">删除</div>
+          </li>
       </ul>
 	  <div class="right">
          <span><img :src="staticImgH+'tianjia.png'" alt=""></span>
@@ -17,81 +20,96 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
-import {mapMutations} from 'vuex'
-import qs from 'qs'
-export default {
-    name:'PresentPhoto',
-  data () {
-    return {
-        formData:new FormData(),
-        imgLen:0,
-        fil:'',
-        photoDataList:'',
-    };
-  },
+  import {mapState} from 'vuex'
+  import {mapMutations} from 'vuex'
+  import qs from 'qs'
+
+  export default {
+    name: 'PresentPhoto',
+    data() {
+      return {
+        delFlag: false,
+        formData: new FormData(),
+        imgLen: 0,
+        fil: '',
+        photoDataList: [],
+      };
+    },
 
 //   components: {},
 
-  computed:{
-        ...mapState(['staticImgH','tokenH'])
+    computed: {
+      ...mapState(['staticImgH', 'tokenH'])
     },
 
-  mounted(){
-      this.videoData()
-  },
+    mounted() {
+      this.photoData()
+    },
 
-  methods: {
-      videoData(){
-           var obj=qs.stringify({
-
-            })
-            this.$http.post('api/user/info',obj,{
-                headers: {
-                    'authorization': this.tokenH
-                }
-            }).then((res)=>{
-                this.photoDataList=res.data.data.photo_introduction
-                
-            })
+    methods: {
+      delPhoto(src) {
+        // @TODO 个人视频删除，感觉接口调用的不对
+        this.$http.delete('api/player/photo_introduction', {
+          headers: {
+            'authorization': this.tokenH
+          },
+          params: {
+            src: src
+          }
+        }).then((res) => {
+          if (res.data.code === 200) {
+            this.photoDataList = this.photoDataList.filter(value => value.src !== src)
+            this.alertText("图片删除成功")
+          }
+        })
       },
-      toReturn(){
-          this.$router.push('/MineInformation')
+      photoData() {
+        var obj = qs.stringify({})
+        this.$http.post('api/user/info', obj, {
+          headers: {
+            'authorization': this.tokenH
+          }
+        }).then((res) => {
+          this.photoDataList = res.data.data.photo_introduction
+        })
       },
-       uploadFile(){
+      toReturn() {
+        this.$router.push('/MineInformation')
+      },
+      uploadFile() {
         let inputDOM = this.$refs.inputer;
         // 通过DOM取文件数据
         this.fil = inputDOM.files;
         console.log(this.fil)
-        let oldLen=this.imgLen;
-        let len=this.fil.length+oldLen;
-        if(len>4){
-          alert('最多可上传4张，您还可以上传'+(4-oldLen)+'张');
+        let oldLen = this.imgLen;
+        let len = this.fil.length + oldLen;
+        if (len > 4) {
+          alert('最多可上传4张，您还可以上传' + (4 - oldLen) + '张');
           return false;
         }
-        
-        for (let i=0; i < this.fil.length; i++) {
+
+        for (let i = 0; i < this.fil.length; i++) {
           let size = Math.floor(this.fil[i].size / 1024);
-          if (size > 5*1024*1024) {
+          if (size > 5 * 1024 * 1024) {
             alert('请选择5M以内的图片！');
             return false
           }
           this.imgLen++;
           console.log(this.fil[i])
-           this.formData.append('photo_introduction',this.fil[i])
+          this.formData.append('photo_introduction', this.fil[i])
         }
-        
-        this.$http.post('api/player/photo_introduction', this.formData,{
-            headers: {
-                    'authorization': this.tokenH
-                }
-            }).then(res => {
-                 this.videoData()
-            });
-       
+
+        this.$http.post('api/player/photo_introduction', this.formData, {
+          headers: {
+            'authorization': this.tokenH
+          }
+        }).then(res => {
+          this.photoData()
+        });
+
       },
+    }
   }
-}
 
 </script>
 <style scoped lang="stylus">

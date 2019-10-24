@@ -9,16 +9,40 @@
         <img v-if="currentPlayerData" :src="currentPlayerData.avatar" alt="">
         <span>{{currentPlayerData.username}}</span>
 
-        <span class="guanzhu" v-if="!video_info.rank" @click="follow()">关注</span>
-        <span class="guanzhu" v-if="video_info.rank" @click="follow()">已关注</span>
+        <span class="guanzhu" v-if="!video_info.concern" @click="follow()">关注</span>
+        <span class="guanzhu" v-if="video_info.concern" @click="follow()">已关注</span>
       </div>
     </div>
     <div class="player_paiming">{{currentPlayerData.names}}排名：{{video_info.rank}}名</div>
     <div class="video">
       <!--<video controls="controls" autoplay="autoplay" src="https://www.w3school.com.cn/i/movie.ogg"></video>-->
       <!--<video controls="controls" autoplay="autoplay" :src="currentPlayerData.video_introduction"></video>-->
-      <video-player class="video-player-box ovideo" controls="controls" autoplay="autoplay" ref="videoPlayer" :options="playerOptions" :playsinline="true">
-      </video-player>
+      <!--<video-player class="video-player-box ovideo" controls="controls" autoplay="autoplay" ref="videoPlayer" :options="playerOptions" :playsinline="true">-->
+      <!--</video-player>-->
+      <div class="contenter flex_center">
+        <div class="videoBox" >
+		<div  @click="playOrPause()" class="play mask flex_center">
+            <img v-show="show" class="playBtn" :src="staticImgH+'bofang.png'"/>
+          </div>
+          <video v-if="mobile==='android'" id="video"
+                 width="100%"
+                 height="100%"
+                 x5-video-player-fullscreen="true"
+                 x5-playsinline
+                 playsinline
+                 webkit-playsinline
+                 preload="auto"
+                 poster="xx0.jpg"
+                 :src="video_info.video_introduction"  >
+          </video>
+          <video v-if="mobile==='iPhone'" id="video"
+                 width="100%"
+                 height="100%"
+                 poster="xx0.jpg"
+                 :src="video_info.video_introduction"  >
+          </video>
+        </div>
+      </div>
 
     </div>
     <div class="video_caozuo">
@@ -28,7 +52,7 @@
         <img v-if="!video_info.is_videos" @click="zan()" :src="staticImgH+'shouchang.png'" alt="">
         <img v-if="video_info.is_videos" @click="zan()" :src="staticImgH+'xihuan.png'" alt="">
       </span>
-      <span v-if="video_info.concern" class="video_toupiao" @click="toPlayerDetail(currentPlayerData.id)">投票</span>
+      <span class="video_toupiao" @click="toPlayerDetail(currentPlayerData.id)">投票</span>
       <!--<span v-if="video_info.concern" class="video_toupiao" @click="vote()">投票</span>-->
     </div>
     <!-- 提示盒子 -->
@@ -60,6 +84,10 @@
 
         playerOptions:{},
 
+        show:true,
+        mobile:"",
+        text:"",
+
 
         PlayerStyleData: '',
         currentPlayerData: {},
@@ -85,42 +113,17 @@
   },
 
     computed: {
-      ...mapState(['staticImgH', 'tokenH', 'playerStyleDetailedInfo'])
+      ...mapState(['staticImgH', 'tokenH', 'playerStyleDetailedPlayer'])
+    },
+    created(){
+      this.text=navigator.appVersion
+      this.mobile = navigator.appVersion.indexOf('iPhone') !== -1 ? 'iPhone' :  'android'
     },
 
     mounted() {
-      if(this.$route.query.player) {
-        this.currentPlayerData = this.$route.query.player
-      } else {
-        this.currentPlayerData = this.playerStyleDetailedInfo.currentPlayerData
-      }
-      
-      this.playerOptions = {
-          playbackRates: [0.7, 1.0, 1.5, 2.0], //播放速度
-          autoplay: true, //如果true,浏览器准备好时开始回放。
-          muted: false, // 默认情况下将会消除任何音频。
-          loop: false, // 导致视频一结束就重新开始。
-          preload: 'auto', // 建议浏览器在<video>加载元素后是否应该开始下载视频数据。auto浏览器选择最佳行为,立即开始加载视频（如果浏览器支持）
-          language: 'zh-CN',
-          aspectRatio: '16:9', // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
-          fluid: true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
-          sources: [{
-          src: this.currentPlayerData.video_introduction,  // 路径
-          type: 'video/mp4'  // 类型
-        }, {
-          src: '//path/to/video.webm',
-          type: 'video/webm'
-        }],
-          poster: "../../static/images/test.jpg", //你的封面地址
-          // width: document.documentElement.clientWidth,
-          notSupportedMessage: '此视频暂无法播放，请稍后再试', //允许覆盖Video.js无法播放媒体源时显示的默认信息。
-          controlBar: {
-          timeDivider: true,
-            durationDisplay: true,
-            remainingTimeDisplay: false,
-            fullscreenToggle: true  //全屏按钮
-        }
-      };
+      this.video = document.getElementById('video')
+      this.video.currentTime = 0.1;
+      this.currentPlayerData=this.playerStyleDetailedPlayer
 
       //视频详情
       let obj = qs.stringify({
@@ -142,6 +145,18 @@
       //   返回
       toReturn() {
         this.$router.push('/PlayerStyle');
+      },
+      playOrPause(){
+        console.log(this.video.paused)
+        // 正在播放
+        if(this.video.paused) {
+          this.video.play();
+          this.show = false
+        } else {
+          this.video.pause();
+          this.show = true
+        }
+
       },
       //   跳选手详情
       toPlayerDetail(id){
@@ -191,14 +206,15 @@
         }).then((res) => {
           if (res.data.code === 200) {
             //OK'是取消点赞; 'result'=>'2'，数字表示店点赞成功
-            let result = res.data.result
-            if (result === 'OK') {
+            if (res.data.data.result === 'OK') {
               this.video_info.concern = 0;
               this.toastMsg("取消关注成功");
-            } else if (result === '2') {
+            }else {
               this.video_info.concern = 1;
               this.toastMsg("关注成功");
             }
+          } else {
+            this.toastMsg(res.data.msg);
           }
         })
       },// 关注
@@ -433,5 +449,10 @@
   background-color: red;
 }
 .ovideo{width:100%; height:100%; background:#444; position: fixed;}
+.contenter{width:100%; height:100%; position: fixed;}
+.videoBox{width:100%; height:100%; position: fixed;}
+.mask{width:100%; height:100%; position: fixed; z-index:999; text-align:center;
+>img{ width:1.6rem; position:fixed; top:48%; left:42%; z-index:9999;}
+}
 .video-js.vjs-fluid, .video-js.vjs-16-9, .video-js.vjs-4-3{width:100%!important; height:100%!important; background:#444!important; position: fixed!important;}
 </style>
