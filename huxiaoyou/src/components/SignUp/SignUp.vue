@@ -87,7 +87,7 @@
             </div>
         </transition>
       <!-- 恭喜您报名成功  -->
-      <div class="sign_success_wrap" >
+      <div class="sign_success_wrap"  v-if="showSignSuccess">
          <div class="sign_success" >
               <div class="sign_Cha"><img @click.stop="signSuccessSha"  :src="staticImgH+'cha.png'" alt=""></div>
               <div class="sign_succeddImg"><span>恭喜您报名成功</span><img  :src="staticImgH+'sign_success.png'"></div> 

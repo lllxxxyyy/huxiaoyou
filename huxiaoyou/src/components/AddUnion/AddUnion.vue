@@ -65,26 +65,26 @@
                         </li>
                         <li>
                             <div class="Info_name"><span>身高</span></div>
-                            <input type="text" v-model="heightVal" oninput = "value=value.replace(/[^\d]/g,'')" placeholder="请填写您的真实年龄">
+                            <input type="text" v-model="heightVal" oninput = "value=value.replace(/[^\d]/g,'')" placeholder="请填写您的身高">
                         </li>
                         <li>
                             <div class="Info_name"><span>体重</span></div>
-                            <input type="text" v-model="weightVal" oninput = "value=value.replace(/[^\d]/g,'')" placeholder="请填写您的真实年龄">
+                            <input type="text" v-model="weightVal" oninput = "value=value.replace(/[^\d]/g,'')" placeholder="请填写您的体重">
                         </li>
                         <li>
                             <div class="Info_name"><span>星座</span></div>
-                            <input type="text" v-model="constellationVal" oninput="value=value.replace(/[^\u4e00-\u9fa5]/g,'')"  placeholder="请填写您的真实年龄">
+                            <input type="text" v-model="constellationVal" oninput="value=value.replace(/[^\u4e00-\u9fa5]/g,'')"  placeholder="请填写您的星座">
                         </li>
                         <li>
                             <div class="Info_name"><span>特长</span></div>
-                            <input type="text" v-model="SpecialtyVal"  placeholder="请填写您的真实年龄">
+                            <input type="text" v-model="SpecialtyVal"  placeholder="请填写您的特长">
                         </li>
                         <li>
                             <div class="Info_name"><span>职业</span></div>
-                            <input type="text" v-model="CareerVal"  placeholder="请填写您的真实年龄">
+                            <input type="text" v-model="CareerVal"  placeholder="请填写您的职业">
                         </li>
                         <li>
-                            <div class="Info_name"><span>个性签名</span></div>
+                            <div class="Info_name"><span>个性签名</span>*</div>
                             <textarea v-model="SignVal" placeholder="请编辑您的个人签名" name="" id="">
 
                             </textarea>
@@ -109,7 +109,7 @@
                         </li>
                         <li>
                             <div class="Info_whether">
-                                <div  class="Info_whethername"><span>是否有常用短视频 </span>*</div>
+                                <div  class="Info_whethername"><span>是否有常用短视频软件 </span>*</div>
                                 <div :class="[{'setAddressBtnOne':DisDefault==0},{'setAddressBtnTwo':DisDefault==1}]" @click.stop="DuanBtnDefa"><span></span></div>
                             </div>
                             <ul class="Info_platform" v-if="duanShow">
@@ -135,6 +135,7 @@
                         </li>
                     </ul>
             </div>
+            <div class="Agree" @click="toAgree"> <img :src="IsAgree?staticImgH+'noselYes.png':staticImgH+'nosel.png'" alt="">已阅读且同意《公会条列条款》</div>
             <div class="ImmAdd" @click.stop="ImmAddC">立即加入</div>
             <div class="ImmAdds" ></div>
         </div>
@@ -151,7 +152,8 @@
             <div class="add_success">
                 <div class="add_success_Cha"><img @click.stop="addSuccessCha"  :src="staticImgH+'cha.png'" alt=""></div>
                 <img class="add_successImg" :src="staticImgH+'add_succedd.png'">
-                <div class="add_successBtn">去赚钱</div>
+                <div class="add_successBtn" @click="tozhuan">去赚钱</div>
+                <span class="add_successText">已提交申请</span>
             </div>
         </div>
   </div>
@@ -169,6 +171,7 @@ export default {
         WangisDefault:0, //网店默认不选中
         sexSelImg:'nosel.png', //默认都显示不被选中图片
         submitAfterImg:'',//加入成功后的页面二维码
+        IsAgree:false,//  '已阅读且同意《公会条列条款》' 默认不选中
         sexData:[//性别
             {
                 name:'女',
@@ -285,6 +288,14 @@ export default {
 //   mounted: {},
 
   methods: {
+    //   去赚钱
+    tozhuan(){
+        this.$router.push('/PowerPack')
+    },
+    //  点击'已阅读且同意《公会条列条款》'   
+    toAgree(){
+        this.IsAgree=!this.IsAgree
+    },
       addSuccessCha(){
           this.$router.push('/')
       },
@@ -367,46 +378,52 @@ export default {
       },
     //   立即加入
       ImmAddC(){
-           this.formData.append('just_number',this.$refs.inputer.files[0]);
-           this.formData.append('over_number',this.$refs.inputerTwo.files[0]);
-           this.formData.append('nickname',this.nickname);
-           this.formData.append('phone',this.phone);
-           this.formData.append('is_number',-1);
-           this.formData.append('software',this.software);
-           this.formData.append('wechat_id',this.wechatId);
-           this.formData.append('sex',this.sex);
-           this.formData.append('age',this.age);
-           this.formData.append('soft_id',this.softId);
-           this.formData.append('is_video',this.isVideo);
-           this.formData.append('is_shop',this.isShop);
-           this.formData.append('video_id',this.videoId);
-           this.formData.append('shop_name',this.shopName);
-           this.formData.append('signature1',this.SignVal);
-           this.formData.append('weight1',this.weightVal);
-           this.formData.append('height1',this.heightVal);
-           this.formData.append('constellation1',this.constellationVal);
-           this.formData.append('strong',this.SpecialtyVal);
-           this.formData.append('career',this.CareerVal);
-          this.$http.post('api/player/union_players',this.formData).then((res)=>{
+            if(!this.IsAgree){
+                this.AlertText('加入即同意')
+                return 
+            }
+            this.formData.append('just_number',this.$refs.inputer.files[0]);
+            this.formData.append('over_number',this.$refs.inputerTwo.files[0]);
+            this.formData.append('nickname',this.nickname);
+            this.formData.append('phone',this.phone);
+            this.formData.append('is_number',-1);
+            this.formData.append('software',this.software);
+            this.formData.append('wechat_id',this.wechatId);
+            this.formData.append('sex',this.sex);
+            this.formData.append('age',this.age);
+            this.formData.append('soft_id',this.softId);
+            this.formData.append('is_video',this.isVideo);
+            this.formData.append('is_shop',this.isShop);
+            this.formData.append('video_id',this.videoId);
+            this.formData.append('shop_name',this.shopName);
+            this.formData.append('signature1',this.SignVal);
+            this.formData.append('weight1',this.weightVal);
+            this.formData.append('height1',this.heightVal);
+            this.formData.append('constellation1',this.constellationVal);
+            this.formData.append('strong',this.SpecialtyVal);
+            this.formData.append('career',this.CareerVal);
+            this.$http.post('api/player/union_players',this.formData).then((res)=>{
                     if(res.data.code==200){
                         this.showAddSuccess=true
                         // this.submitAfterImg=res.data.data.img
                     }else{
-                        var self=this
-                        // console.log*
-                        clearInterval(self.timer2);
-                            this.promptContent=res.data.msg
-                            this.showPrompt=true
-                            self.timer2=setTimeout(function(){
-                                    self.showPrompt=false
-                                    clearInterval(self.timer2);
-                            },2000)
-                        return false;
+                        this.AlertText(res.data.msg)
                     }
                 })
             },
       zhiboChange(){
           this.software=this.inputSoftware
+      },
+      AlertText(text){
+            var self=this
+            clearInterval(self.timer2);
+                this.promptContent=text
+                this.showPrompt=true
+                self.timer2=setTimeout(function(){
+                        self.showPrompt=false
+                        clearInterval(self.timer2);
+                },2000)
+            return false;
       },
     //   选择性别
       sexSelectC(index,name){
@@ -952,6 +969,26 @@ export default {
           text-align :center;
           line-height:0.8rem;
         }
+        >.add_successText{
+            font-size:0.32rem;
+            color:#fff;
+            position:absolute;
+            top:7rem;
+            left:4.16rem;
+        }
+    }
+}
+.Agree{
+    font-size:0.32rem;
+    display:flex;
+    align-items:center;
+    margin-left:0.4rem;
+    margin-bottom:0.4rem;
+    >img{
+        margin:0 0.27rem;
+        width:0.27rem;
+        height:0.27rem;
+        
     }
 }
 </style>

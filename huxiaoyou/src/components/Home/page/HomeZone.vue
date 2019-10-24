@@ -61,15 +61,15 @@ export default {
       toSignUp(){
           this.$http.post('/api/player/is_sign').then((res)=>{
                 if(res.data.code==200){
-                    if(res.data.data.result==-1){
+                    // if(res.data.data.result==-1){
                         this.$router.push('/SignUp')
-                    }else{
-                        this.playerIds(res.data.data.result)//保存选手id
-                        this.addressIdIsSels('false') //投票盒子不显示 
-                        this.PlayerDetailPages('/')  //选手详情返回页面
-                        this.playDetailVoteDivs('false') //选手详情的投票盒子的消失
-                        this.$router.push('/PlayerDetails')
-                    }
+                    // }else{
+                    //     this.playerIds(res.data.data.result)//保存选手id
+                    //     this.addressIdIsSels('false') //投票盒子不显示 
+                    //     this.PlayerDetailPages('/')  //选手详情返回页面
+                    //     this.playDetailVoteDivs('false') //选手详情的投票盒子的消失
+                    //     this.$router.push('/PlayerDetails')
+                    // }
                 }else if(res.data.data.result==1){
                     var self=this
                     clearInterval(self.timer2);

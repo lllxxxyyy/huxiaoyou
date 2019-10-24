@@ -4,7 +4,7 @@
       <div class="MineInfo_title">
         <img @click="InfoReturn" :src="staticImgH+'zuojiantou.png'" alt="">
         <span>个人资料</span>
-        <span class="submit" >我的主业</span>
+        <span class="submit" >我的主页</span>
       </div>
       <ul class="MineInfo_List">
         <li>
@@ -402,7 +402,8 @@ export default {
       display :flex;
       align-items :center;
       >span{
-        flex:1;
+        width:6rem;
+        text-align:right;
         overflow :hidden;
         text-overflow :ellipsis;
         white-space:nowrap;

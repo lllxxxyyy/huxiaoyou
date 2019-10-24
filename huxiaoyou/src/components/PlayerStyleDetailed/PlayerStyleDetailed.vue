@@ -46,7 +46,6 @@
 
     </div>
     <div class="video_caozuo">
-
       <span class="video_fenxiang"><img @click="wxShare" :src="staticImgH+'fenxiang.png'" alt=""></span>
       <span class="video_fenxiang">
         <img v-if="!video_info.is_videos" @click="zan()" :src="staticImgH+'shouchang.png'" alt="">
