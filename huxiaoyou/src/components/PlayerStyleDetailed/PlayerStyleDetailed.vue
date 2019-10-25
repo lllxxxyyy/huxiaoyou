@@ -250,7 +250,6 @@
           }
         }).then((res)=>{
           if(res.data.code===200){
-            debugger
             var data=res.data.data
             this.test=data.test
             wx.config({

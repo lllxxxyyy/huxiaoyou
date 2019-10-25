@@ -13,8 +13,9 @@
             <source :src="item.video_introduction" type="video/mp4"/>
           </video>
           <!--<img v-if="item.video_introduction" @click="goGoodsPage(item)" :src="item.video_introduction[1].src"/>-->
-          <div class="bofang"><img @click="goGoodsPage(item)" :src="staticImgH+'bofang.png'" alt=""></div>
         </div>
+        <div class="bofang" @click="goGoodsPage(item)"><img @click="goGoodsPage(item)" :src="staticImgH+'bofang.png'"
+                                                            alt=""></div>
         <span class="player_btn" @click="toPlayerDetail(item.id)">投票</span>
         <div class="player_top">
           <div class="player_name">
@@ -35,8 +36,9 @@
             <source :src="item.video_introduction" type="video/mp4"/>
           </video>
           <!--<img v-if="item.video_introduction" @click="goGoodsPage(item)" :src="item.video_introduction[1].src"/>-->
-          <div class="bofang"><img @click="goGoodsPage(item)" :src="staticImgH+'bofang.png'" alt=""></div>
         </div>
+        <div class="bofang" @click="goGoodsPage(item)"><img @click="goGoodsPage(item)" :src="staticImgH+'bofang.png'"
+                                                            alt=""></div>
         <span class="player_btn" @click="toPlayerDetail(item.id)">投票</span>
         <div class="player_top">
           <div class="player_name">
@@ -52,7 +54,7 @@
     <div class="newsList">
       <div v-for="(items, index) in newsList">
         <div class="date">{{showDay(index)}}</div>
-        <div class="list" >
+        <div class="list">
           <ul>
             <li class="list-item" v-for="item in items">
               <span class="text">{{item.title}}</span>
@@ -61,11 +63,20 @@
           </ul>
         </div>
       </div>
-      <div class="infinite-scroll" v-show="loading">
-        <svg class="loader-circular" viewBox="25 25 50 50">
-          <circle class="loader-path" cx="50" cy="50" r="20" fill="none" stroke="rgb(53, 157, 218)" stroke-width="5"></circle>
-        </svg>
-        <span class="infinite-scroll-text">{{tips}}</span>
+    </div>
+    <div class="gengduo">
+      <div class="gengduo_right" v-if="this.currentPage >= this.lastPage">
+        <span>没有更多了</span>
+      </div>
+      <!--加载的效果-->
+      <div v-if="loading" class="gengduo_left">
+        <div class="loading">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </div>
     </div>
     <!-- 提示盒子 -->
@@ -89,6 +100,7 @@
     data() {
       return {
         PlayerStyleData: [],
+        lastPage: 1,
         // 提示盒子
         promptContent: '', //提示盒子的内容
         showPrompt: false,//提示盒子的吸收和显示
@@ -98,7 +110,8 @@
         todayDate: '',
         REQUIRE: true,
         loading: false,
-        tips: '努力加载中...'
+        tips: '努力加载中...',
+        currentPage: 0,
       };
     },
 
@@ -111,36 +124,13 @@
     mounted() {
       // 添加滚动事件，检测滚动到页面底部
       window.addEventListener('scroll', this.scrollBottom)
-      let obj = qs.stringify({
-        page: 1
-      })
-      this.$http.post('api/player/player_style', obj, {
-        headers: {
-          'authorization': this.token
-        }
-      }).then((res) => {
-        if (res.data.code === 200) {
-          debugger
-          this.PlayerStyleData = res.data.data.data
-        } else {
-          var self = this
-          clearInterval(self.timer2);
-          this.promptContent = res.data.msg
-          this.showPrompt = true
-          self.timer2 = setTimeout(function () {
-            self.showPrompt = false
-            clearInterval(self.timer2);
-          }, 2000)
-          return false;
-        }
-
-      })
+      this.getPageVideo();
     },
     props: ["goodsImage", "goodsName", "goodsPrice", "PlayerStyleDetailedId"],
     methods: {
       //   跳选手详情
       toPlayerDetail(id) {
-        this.playerIds(id)//保存选手id
+        this.playerIds(id) //保存选手id
         this.addressIdIsSels('false') //投票盒子不显示
         this.PlayerDetailPages('/PlayerStyle')  //选手详情返回页面
         this.playDetailVoteDivs('true') //选手详情的投票盒子的消失
@@ -151,13 +141,52 @@
         this.$router.push('/')
       },
       goGoodsPage(player) {
-          this.playerVideoPages('/PlayerStyle')   //设置选手视频返回页面
+        this.playerVideoPages('/PlayerStyle')   //设置选手视频返回页面
         this.PlayerStyleDetailedPlayer(player);  //给选手视频页面传player
         this.$router.push('/PlayerStyleDetailed') 
       },
+      getPageVideo() {
+        if (this.currentPage >= this.lastPage) {
+          return false;
+        }
+        this.loading = true
+        this.currentPage += 1
+        let obj = qs.stringify({
+          page: this.currentPage,
+          limit: 10
+        })
+        this.$http.post('api/player/player_style', obj, {
+          headers: {
+            'authorization': this.token
+          }
+        }).then((res) => {
+          this.loading = false
+          if (res.data.code === 200) {
+            this.PlayerStyleData = this.PlayerStyleData.concat(res.data.data.data)
+            this.lastPage = res.data.data.last_page
+          } else {
+            this.toastMsg(res.data.msg)
+            return false;
+          }
+        })
+      },
+      // 弹框提示
+      toastMsg(msg) {
+        let self = this
+        clearInterval(self.timer2);
+        this.promptContent = msg
+        this.showPrompt = true
+        self.timer2 = setTimeout(function () {
+          self.showPrompt = false
+          clearInterval(self.timer2);
+        }, 2000)
+      },
+      // 滚动到页面底部时，
       scrollBottom() {
-        // 滚动到页面底部时，
-       console.log("滚动到页面底部时时间")
+        if (this.loading) {
+          return false;
+        }
+        this.getPageVideo();
       },
       ...mapMutations(['playerIds', 'addressIdIsSels', 'PlayerDetailPages', 'playDetailVoteDivs', 'PlayerStyleDetailedPlayer','playerVideoPages']),
     }
@@ -165,6 +194,8 @@
 
 </script>
 <style scoped lang="stylus">
+
+  @import "../../assets/css/load.css"
 .PlayerStyle{
     width:100%;
     background :#fff;
@@ -202,8 +233,11 @@
     flex-wrap: wrap;
     >li{
         width:4.44rem;
-        margin-bottom:0.3rem;
+        margin-bottom:0.4rem;
         box-shadow:0px 3px 12px 0px rgba(255,204,212,0.5); border-radius:0.2rem;
+		>.bofang{ width:100%; height:2rem; text-align:center; margin-top:-3.6rem; position: relative;
+			>img{ width:1.6rem; height:1.6rem;}
+			}
 		>.player_btn{
    width:4.44rem;
    height:0.84rem;
@@ -213,8 +247,8 @@
    line-height :0.84rem;
    font-weight:550;
    display:block;
-   position: absolute;
-   margin-top:-1.187rem;
+   position: relative;
+   margin-top: 0.41rem;
    background:rgba(255,157,172,0.8);
    margin-bottom:0.31rem;
 }
@@ -245,13 +279,14 @@
             width:4.44rem;
             height:4.44rem;
             margin-bottom:0.347rem;
+			overflow: hidden;
+			border-radius:0.2rem 0.2rem 0 0;
             >video{
-                width:100%;
-                height:100%;
+                width: 180%;
+    			height: 180%;
+    			margin-top: -30%;
+    			margin-left: -41%;
             }
-			>.bofang{ width:100%; height:2rem; text-align:center; margin-top:-3.4rem;
-			>img{ width:1.6rem; height:1.6rem;}
-			}
 			>img{ width:4.44rem; height:4.44rem;border-radius:0.2rem 0.2rem 0rem 0rem;}
         }
         >.player_bottom{
@@ -280,20 +315,24 @@
     flex-wrap: wrap;
     >li{
         width:2.9rem;
-        margin-bottom:0.3rem;
-        box-shadow:0px 3px 12px 0px rgba(255,204,212,0.5); border-radius:0.2rem;
+        margin-bottom:0.4rem;
+        box-shadow:0px 3px 12px 0px rgba(255,204,212,0.5); border-radius:0.16rem;
+		>.bofang{ width:100%; height:2rem; text-align:center; margin-top:-2.5rem; position: relative;
+			>img{ width:1rem; height:1rem;}
+			}
 		>.player_btn{
    width:2.9rem;
-   height:0.84rem;
+   height:0.7rem;
    color:#fff;
-   font-size:0.4rem;
+   font-size:0.37rem;
    text-align :center;
-   line-height :0.84rem;
+   line-height :0.7rem;
    font-weight:550;
    display:block;
-   margin-top:-1.187rem;
+   position: relative;
    background:rgba(74,171,249,0.8);
    margin-bottom:0.31rem;
+   margin-top:-0.55rem;
 }
         >.player_top{
             display :flex;
@@ -322,14 +361,15 @@
             width:2.9rem;
             height:2.9rem;
             margin-bottom:0.347rem;
+			overflow: hidden;
+			border-radius:0.16rem 0.16rem 0 0;
             >video{
-                width:100%;
-                height:100%;
+                width: 180%;
+    			height: 180%;
+    			margin-top: -30%;
+    			margin-left: -41%;
             }
 			>img{ width:2.9rem; height:2.9rem;border-radius:0.2rem 0.2rem 0rem 0rem;}
-			>.bofang{ width:100%; height:2rem; text-align:center; margin-top:-2.3rem;
-			>img{ width:1rem; height:1rem;}
-			}
         }
         >.player_bottom{
             display :flex;
@@ -379,5 +419,9 @@
     border-bottom: 0.053rem solid #ffccd4;
     color: #000;
     font-weight: 600;}
+}
+.gengduo{ width:100%; height:2rem; margin-top:0.4rem; font-size:0.4rem;
+>.gengduo_left{ margin-left:4.28rem; text-align:center; margin-top:1rem;}
+>.gengduo_right{ width:100%; text-align:center;}
 }
 </style>

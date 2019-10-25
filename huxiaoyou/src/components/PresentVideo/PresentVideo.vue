@@ -10,9 +10,11 @@
 
     <ul class="videoList">
       <li v-for="(item,index) in reply" :key="index">
-        <video id="video1">
+        <div class="present_video">
+		<video id="video1">
           <source :src="item.video_introduction" type="video/mp4">
         </video>
+		</div>
         <div class="zz" @click.stop="goGoodsPage(item.v_id)"></div>
         <div v-if="delFlag" @click="delVideo(item.video_introduction, item.v_id)" class="gxuan">删除</div>
       </li>
@@ -98,7 +100,7 @@
               }
             }).then((res) => {
               if (res.data.code === 200) {
-                this.reply = this.reply.filter(value => value.video_introduction !== src)
+                this.videoData();
                 this.toastMsg("视频删除成功")
               }
             })
@@ -122,15 +124,16 @@
                   return false
                 }
                 this.imgLen++;
+                this.formData.delete('video_introduction');
+                this.formData.delete('type');
                 this.formData.append('video_introduction', this.fil[i])
                 this.formData.append('type', 1)
               }
               this.$http.post('api/player/video_introduction', this.formData).then(res => {
-                // debugger
+                debugger
                 this.$refs.inputer.value=''
                   if(res.data.code==200){
                       this.videoData()
-                      
                   }else{
                       this.toastMsg(res.data.msg)
                   }
@@ -217,14 +220,16 @@
     margin-top:0.27rem;
     >li{
         width:9.2rem;
+		height:4rem;
         margin-bottom:0.32rem;
-        background :#4e4e4e;
-        border-radius:0.2rem;
+		>.present_video{width:9.2rem; height:4rem; overflow: hidden; border-radius:0.2rem; background :#4e4e4e;
         >video{
             width:100%;
-            height:4rem;
+            height:408%;
             border-radius:0.2rem;
+			margin-top:-66%;
         }
+		}
     }
 }
 
@@ -254,6 +259,6 @@
    transform: translateY(0.32rem);
   opacity: 0;
 }
-.gxuan{ margin-top:-0.99rem; width:9.2rem; height:0.9rem; background:rgba(0,0,0,0.5); position:absolute; z-index:999; color:#fff; text-align:center; line-height:0.9rem; font-size:0.48rem; border-radius:0 0 0.2rem 0.2rem;}
+.gxuan{ margin-top:-0.9rem; width:9.2rem; height:0.9rem; background:rgba(0,0,0,0.5); position:absolute; z-index:999; color:#fff; text-align:center; line-height:0.9rem; font-size:0.48rem; border-radius:0 0 0.2rem 0.2rem;}
 .zz{ width:9.2rem; height:4rem; position:absolute; margin-top:-4rem; z-index:998; background: url(/../../static/mock/img/bofangBtn.png) no-repeat center center; background-size:1rem;}
 </style>

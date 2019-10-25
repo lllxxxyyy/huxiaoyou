@@ -154,7 +154,6 @@ export default {
             //     }
             // }).then((res)=>{
             //     if(res.data.code===200){
-            //       debugger
             //          this.RankingData=res.data.data.data
             //     }else{
             //          var self=this

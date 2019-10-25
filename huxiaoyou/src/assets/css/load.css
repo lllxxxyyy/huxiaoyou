@@ -1,0 +1,77 @@
+.loading{
+  position:relative;
+}
+.loading span{
+  display:block;
+  bottom:0px;
+  width: 9px;
+  height: 5px;
+  background:#9b59b6;
+  position:absolute;
+  -webkit-animation: loading 1.5s	 infinite ease-in-out;
+  -moz-animation: loading 1.5s	 infinite ease-in-out;
+  -ms-animation: loading 1.5s	 infinite ease-in-out;
+  -o-animation: loading 1.5s	 infinite ease-in-out;
+  animation: loading 1.5s	 infinite ease-in-out;
+
+}
+.loading span:nth-child(2){
+  left:11px;
+  -webkit-animation-delay: .2s;
+  -moz-animation-delay: .2s;
+  -ms-animation-delay: .2s;
+  -o-animation-delay: .2s;
+  animation-delay: .2s;
+
+}
+.loading span:nth-child(3){
+  left:22px;
+  -webkit-animation-delay: .4s;
+  -moz-animation-delay: .4s;
+  -ms-animation-delay: .4s;
+  -o-animation-delay: .4s;
+  animation-delay: .4s;
+}
+.loading span:nth-child(4){
+  left:33px;
+  -webkit-animation-delay: .6s;
+  -moz-animation-delay: .6s;
+  -ms-animation-delay: .6s;
+  -o-animation-delay: .6s;
+  animation-delay: .6s;
+}
+.loading span:nth-child(5){
+  left:44px;
+  -webkit-animation-delay: .8s;
+  -moz-animation-delay: .8s;
+  -ms-animation-delay: .8s;
+  -o-animation-delay: .8s;
+  animation-delay: .8s;
+}
+@-webkit-keyframes loading {
+  0% {height:5px;-webkit-transform:translateY(0px);background:#9b59b6;}
+  25% {height:30px;-webkit-transform:translateY(15px);background:#3498db;}
+  50% {height:5px;-webkit-transform:translateY(0px);background:#9b59b6;}
+  100% {height:5px;-webkit-transform:translateY(0px);background:#9b59b6;}
+}
+
+@-moz-keyframes loading {
+  0% {height:5px;-moz-transform:translateY(0px);background:#9b59b6;}
+  25% {height:30px;-moz-transform:translateY(15px);background:#3498db;}
+  50% {height:5px;-moz-transform:translateY(0px);background:#9b59b6;}
+  100% {height:5px;-moz-transform:translateY(0px);background:#9b59b6;}
+}
+
+@-ms-keyframes loading {
+  0% {height:5px;-ms-transform:translateY(0px);background:#9b59b6;}
+  25% {height:30px;-ms-transform:translateY(15px);background:#3498db;}
+  50% {height:5px;-ms-transform:translateY(0px);background:#9b59b6;}
+  100% {height:5px;-ms-transform:translateY(0px);background:#9b59b6;}
+}
+
+@keyframes loading {
+  0% {height:5px;transform:translateY(0px);background:#9b59b6;}
+  25% {height:30px;transform:translateY(15px);background:#3498db;}
+  50% {height:5px;transform:translateY(0px);background:#9b59b6;}
+  100% {height:5px;transform:translateY(0px);background:#9b59b6;}
+}
