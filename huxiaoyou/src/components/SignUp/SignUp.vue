@@ -26,7 +26,7 @@
                     <li>
                             <div class="SignUp_infoName"><span>性别</span>*</div>
                             <ul class="sex">
-                                <li @click.stop="sexSelectC(item.id)" v-for="(item,index) in sexData" :key="index"> <img :src="item.id==sexImgIndex?staticImgH+'noselYes.png':staticImgH+'nosel.png'" alt=""> <span>{{item.name}}</span> </li>
+                                <li @click.stop="sexSelectC(item.id)" v-for="(item,index) in sexData" :key="index"> <img :src="item.id==2?staticImgH+'noselYes.png':staticImgH+'nosel.png'" alt=""> <span>{{item.name}}</span> </li>
                             </ul>
                         </li>
                     <li>
@@ -146,145 +146,116 @@ export default {
       showSignSuccess:false,//报名成功提示默认消失
       showSignFail:false,//报名失败提示默认消失
       divisionData:'',  //赛区数据
-      selectValue:'',//赛区id
-      username:'',//用户名
-      idNumber:'',//身份证号
-      tel:"",//手机号
-      cityValue:'城市',
-      cityData:'',  //城市数据
-      wechatId:'',//微信号
       erweimaImg:'',//提交成功后的二维码图片
-
-      citySHow:false,  //城市列表显示
       uploadimgsOpacity:false,  //  个人形象的显示与消失
-
-
-      // 提示盒子
-      promptContent:'', //提示盒子的内容
-      showPrompt:false,//提示盒子的吸收和显示
-
+      
+      
+      username:'',//用户名
+      tel:"",//手机号
+      wechatId:'',//微信号
+      sex:2,//性别
+      selectValue:'',//赛区id
+      invitationCode:'',//邀请码
        //传图片
       formData:new FormData(), 
       img:'',
+      
+      // 提示盒子
+      promptContent:'', //提示盒子的内容
+      showPrompt:false,//提示盒子的吸收和显示
+      timer2:'',
 
-      sexImgIndex:2,//性别默认选中下标
-      sex:1,//性别
+      idNumber:'',//身份证号
+      cityValue:'城市',
+      cityData:'',  //城市数据
+      citySHow:false,  //城市列表显示
     };
   },
-  // components: {},
   computed:{
-        ...mapState(['staticImgH','tokenH'])
+        ...mapState(['staticImgH'])
     },
   mounted() {
-    
-    // 赛区列表数据
-     var obj=qs.stringify({
-      })
-    this.$http.post('/api/division/list',obj,{
-          headers: {
-              'authorization': this.tokenH
-          }
-    }).then((res)=>{
-      if(res.data.code==200){
-          this.divisionData=res.data.data
-      }else{
-           var self=this
-          clearInterval(self.timer2);
-                this.promptContent=res.data.msg
-                this.showPrompt=true
-                self.timer2=setTimeout(function(){
-                      self.showPrompt=false
-                      clearInterval(self.timer2);
-                },2000)
-            return false;
-      }
-    })
-    //获取区域地址列表
-    var cityobj=qs.stringify({
-        parent_id:0,
-      })
-    this.$http.post('/api/user/get_region',cityobj,{
-          headers: {
-              'authorization':this.tokenH
-          }
-    }).then((res)=>{
-      if(res.data.code==200){
-        this.cityData=res.data.data
-      }else{
-           var self=this
-          clearInterval(self.timer2);
-          this.promptContent=res.data.msg
-          this.showPrompt=true
-          self.timer2=setTimeout(function(){
-                self.showPrompt=false
-                clearInterval(self.timer2);
-          },2000)
-            return false;
-      }
-      
-    })
+    // 赛区列表
+        this.divisionListData()
+    //判断是否是分享出去的 截取邀请码字段
+        this.getCode()
   },
   methods: {
-    // 点报名成功提示上的X
-    signSuccessSha(){
-      this.$router.push('/')
-    },
-     // 点报名失败提示上的X
-    signFailSha(){
-      this.showSignFail=false
-    },
-     //   选择性别
-      sexSelectC(id){
-          if(id==1){
-            this.showSignFail=true
-          }
-          this.sexImgIndex=2
-          
-      },
-    submitAlertCha(){
-      this.$router.push('/')
-    },
-    // 跳加入公会页面
-     addUnion(){
-       this.AddunionPages('/SignUp')
-        this.$router.push('/AddUnion')
-    },
-    // 提交成功后返回
-    AfterSubmitBtn(){
-      this.AfterSubmit=true
-    },
-    // 返回
-    toReturn(){
-        this.$router.push('/')
-    },
-    // 身份证验证
-    cardNumber(){
-         var idCardReg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
-         iFlag = idCardReg.test(this.idNumber);
-         if(!iFlag){
-             var self=this
-              clearInterval(self.timer2);
-                  this.promptContent='您输入的身份证格式有误！'
+    //判断是否是分享出去的 截取邀请码字段
+        getCode(){
+              var shopUrl = window.location.href
+              //var shopUrl = 'http://app.aibebi.net/#/SignUp?Invitation_code=1482'
+              //截取？后的邀请码
+              var shopCan, value;  //初始化 
+              shopCan = shopUrl.indexOf("#")  //找到#的下标
+              shopUrl=shopUrl.substr(shopCan+1)
+              shopCan=shopUrl.indexOf('?')
+              if(shopCan > 0){
+                  shopUrl = shopUrl.substr(shopCan + 1)  //截取？后面的内容
+                  var shopArr = shopUrl.split('&') //分割成数组 
+                  var shopUrlId = {};// 初始化对象 
+                  for(var i = 0; i < shopArr.length; i++) {//循环shopArr数组
+                      shopCan = shopArr[i].indexOf("=");  //找到=号的下标
+                      if(shopCan > 0){ //判断有没有=
+                          value = shopArr[i].substring(shopCan + 1); //找到=后面的值并截取     =>value
+                          shopCan = shopArr[i].substring(0, shopCan);//找到=前面的值  =》key
+                          shopUrlId[shopCan] = value;  // key value放到shopUrlId对象里
+                      }
+                  }
+                  if(shopUrlId.Invitation_code){
+                      this.invitationCode=shopUrlId.Invitation_code
+                  }else{
+                      this.invitationCode=''
+                  }
+            }
+        },
+    // 弹框提示
+        alertText(text){
+            var self=this
+            clearInterval(self.timer2);
+                  this.promptContent=text
                   this.showPrompt=true
                   self.timer2=setTimeout(function(){
                         self.showPrompt=false
                         clearInterval(self.timer2);
                   },2000)
               return false;
-         }
-    },
-    // 城市地址盒子显示
-    citydiv(){
-      this.citySHow=!this.citySHow
-    },
-    // 选择城市地址
-        citySel(name){
-           this.citySHow=false  //城市地址盒子消失
-            this.cityValue=name 
         },
-
-        // 上传图片 1
-        addImg(event){
+    // 赛区列表
+        divisionListData(){
+            this.$http.post('/api/division/list').then((res)=>{
+                if(res.data.code==200){
+                    this.divisionData=res.data.data
+                }else{
+                    this.alertText(res.data.msg)
+                }
+            })
+        },
+    // 点报名成功提示上的X
+        signSuccessSha(){
+          this.$router.push('/')
+        },
+     // 点报名失败提示上的X
+        signFailSha(){
+          this.showSignFail=false
+        },
+     //   选择性别
+        sexSelectC(id){
+            if(id==1){
+              this.showSignFail=true
+            }
+        },
+    // 跳加入公会页面
+        addUnion(){
+          this.AddunionPages('/SignUp')
+            this.$router.push('/AddUnion')
+        },
+    // 返回
+        toReturn(){
+            this.$router.push('/')
+        },
+    // 上传图片 1
+          addImg(event){
               if(event.target.files[0]){
                 this.uploadimgsOpacity=true
                 var size = Math.floor(event.target.files[0].size / 1024);
@@ -298,136 +269,68 @@ export default {
               var objurl = this.getObjectURL(event.target.files[0])
               this.img=objurl
           },
-          // 上传图片 2
-      getObjectURL(file) {  
-          var url = null ;   
-          // 下面函数执行的效果是一样的，只是需要针对不同的浏览器执行不同的 js 函数而已  
-          if (window.createObjectURL!=undefined) { // basic  
-              url = window.createObjectURL(file) ;  
-          } else if (window.URL!=undefined) { // mozilla(firefox)  
-              url = window.URL.createObjectURL(file) ;  
-          } else if (window.webkitURL!=undefined) { // webkit or chrome  
-              url = window.webkitURL.createObjectURL(file) ;  
-          }  
-          return url ; 
+    // 上传图片 2
+          getObjectURL(file) {  
+              var url = null ;   
+              // 下面函数执行的效果是一样的，只是需要针对不同的浏览器执行不同的 js 函数而已  
+              if (window.createObjectURL!=undefined) { // basic  
+                  url = window.createObjectURL(file) ;  
+              } else if (window.URL!=undefined) { // mozilla(firefox)  
+                  url = window.URL.createObjectURL(file) ;  
+              } else if (window.webkitURL!=undefined) { // webkit or chrome  
+                  url = window.webkitURL.createObjectURL(file) ;  
+              }  
+              return url ; 
           },
      // 提交
-      SignUpBtn(){
-        this.formData=new FormData()
-        if(!this.username){
-                  var self=this
-                  clearInterval(self.timer2);
-                      this.promptContent='请输入您的姓名！'
-                      this.showPrompt=true
-                      self.timer2=setTimeout(function(){
-                            self.showPrompt=false
-                            clearInterval(self.timer2);
-                      },2000)
-                  return;
-            }else if(!this.tel){
-                  var self=this
-                  clearInterval(self.timer2);
-                      this.promptContent='请输入您的手机号！'
-                      this.showPrompt=true
-                      self.timer2=setTimeout(function(){
-                            self.showPrompt=false
-                            clearInterval(self.timer2);
-                      },2000)
-                  return;
-            }else if(!this.sex){
-                  var self=this
-                  clearInterval(self.timer2);
-                      this.promptContent='请选择性别！'
-                      this.showPrompt=true
-                      self.timer2=setTimeout(function(){
-                            self.showPrompt=false
-                            clearInterval(self.timer2);
-                      },2000)
-                  return;
-            }else  if(!this.selectValue){
-                  var self=this
-                  clearInterval(self.timer2);
-                      this.promptContent='请选择赛区'
-                      this.showPrompt=true
-                      self.timer2=setTimeout(function(){
-                            self.showPrompt=false
-                            clearInterval(self.timer2);
-                      },2000)
-                  return;
-            }
-            // else if(!this.wechatId){
-            //       var self=this
-            //       clearInterval(self.timer2);
-            //           this.promptContent='请输入您的微信号码！'
-            //           this.showPrompt=true
-            //           self.timer2=setTimeout(function(){
-            //                 self.showPrompt=false
-            //                 clearInterval(self.timer2);
-            //           },2000)
-            //       return;
-            // }
-            // else if(!this.idNumber){
-            //       var self=this
-            //       clearInterval(self.timer2);
-            //           this.promptContent='请输入您的身份证号'
-            //           this.showPrompt=true
-            //           self.timer2=setTimeout(function(){
-            //                 self.showPrompt=false
-            //                 clearInterval(self.timer2);
-            //           },2000)
-            //       return;
-            // }
-            
-            // else if(!this.cityValue){
-            //       var self=this
-            //       clearInterval(self.timer2);
-            //           this.promptContent='请选择城市！'
-            //           this.showPrompt=true
-            //           self.timer2=setTimeout(function(){
-            //                 self.showPrompt=false
-            //                 clearInterval(self.timer2);
-            //           },2000)
-            //       return;
-            // }
-            else if(!this.$refs.inputer.files[0]){
-                  var self=this
-                  clearInterval(self.timer2);
-                      this.promptContent='请选择您的照片！'
-                      this.showPrompt=true
-                      self.timer2=setTimeout(function(){
-                            self.showPrompt=false
-                            clearInterval(self.timer2);
-                      },2000)
-                  return;
-            } 
+          SignUpBtn(){
+                this.formData=new FormData()
+                if(!this.username){
+                    this.alertText('请输入您的姓名！')
+                }else if(!this.tel){
+                    this.alertText('请输入您的手机号！')
+                }else if(!this.sex){
+                    this.alertText('请选择性别！')
+                }else  if(!this.selectValue){
+                    this.alertText('请选择赛区')
+                }else if(!this.$refs.inputer.files[0]){
+                    this.alertText('请选择您的照片！')
+                } 
                 this.formData.append('photo_introduction',this.$refs.inputer.files[0]);
                 this.formData.append('division_id',this.selectValue);
                 this.formData.append('username',this.username);
                 this.formData.append('tel',this.tel);
                 this.formData.append('wechat_id',this.wechatId);
                 this.formData.append('sex',this.sex);
-                this.$http.post('api/player/sign_up',this.formData,{
-                  headers: {
-                      'authorization': this.tokenH
-                  }
-                }).then((res) => {
+                this.formData.append('parent_invite_code',this.invitationCode)
+                this.$http.post('api/player/sign_up',this.formData).then((res) => {
                         if(res.data.code==200){
                             this.showSignSuccess=true
                             this.erweimaImg=res.data.data.img
                         }else{
-                             var self=this
-                              clearInterval(self.timer2);
-                                  this.promptContent=res.data.msg
-                                  this.showPrompt=true
-                                  self.timer2=setTimeout(function(){
-                                        self.showPrompt=false
-                                        clearInterval(self.timer2);
-                                  },2000)
-                              return false;
+                             this.alertText(res.data.msg)
                         }
                 });
-      },
-       ...mapMutations(['AddunionPages'])
+          },
+       ...mapMutations(['AddunionPages']),
+       // 身份证验证
+        cardNumber(){
+            var idCardReg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
+            iFlag = idCardReg.test(this.idNumber);
+            if(!iFlag){
+                this.alertText('您输入的身份证格式有误！')
+            }
+        },
+    // 城市地址盒子显示
+          citydiv(){
+              this.citySHow=!this.citySHow
+          },
+    // 选择城市地址
+          citySel(name){
+              this.citySHow=false  //城市地址盒子消失
+              this.cityValue=name 
+          },
+
   },
         
 }
