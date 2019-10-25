@@ -451,7 +451,6 @@ export default {
                         if(!this.disabledXiu){
                                 this.sexImgIndex=id
                                 this.sex=id
-                                console.log(id)
                         }
                     },
             // 点击直播默认按钮

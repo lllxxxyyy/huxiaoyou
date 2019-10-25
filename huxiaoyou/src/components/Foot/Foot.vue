@@ -63,7 +63,6 @@ export default {
       footClick(itemId,itemUrl){
         this.idx=itemId
         this.idxNowHs(itemId)
-        console.log(itemUrl)
         this.$router.push(itemUrl)
       },
       ...mapMutations(['idxNowHs']),

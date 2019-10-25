@@ -154,8 +154,6 @@ methods: {
             }
         }).then((res)=>{
             if(res.data.code){
-                
-                console.log(res)
                 if(res.data.data.length!==0){
                      this.playerShow=true
                      this.searchHistoryShow=false

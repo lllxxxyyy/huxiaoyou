@@ -140,7 +140,6 @@
         this.$router.push(this.playerVideoPage);
       },
       playOrPause(){
-        console.log(this.video.paused)
         // 正在播放
         if(this.video.paused) {
           this.video.play();

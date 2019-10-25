@@ -110,10 +110,6 @@ export default {
    computed:{
         ...mapState(['staticImgH'])
     },
-  mounted() {
-      console.log(this.personData)
-  },
-
   methods: {
     toAccountBalance() {
       this.$router.push('/AccountBalance')
