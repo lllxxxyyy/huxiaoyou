@@ -409,7 +409,7 @@ export default {
       display :flex;
       align-items :center;
       >span{
-        width:6rem;
+        width:5.5rem;
         text-align:right;
         overflow :hidden;
         text-overflow :ellipsis;
