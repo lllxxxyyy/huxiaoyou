@@ -46,7 +46,7 @@
 
     </div>
     <div class="video_caozuo">
-      <span class="video_fenxiang"><img @click="wxShare" :src="staticImgH+'fenxiang.png'" alt=""></span>
+      <span class="video_fenxiang"><img  :src="staticImgH+'fenxiang.png'" alt=""></span>
       <span class="video_fenxiang">
         <img v-if="!video_info.is_videos" @click="zan()" :src="staticImgH+'shouchang.png'" alt="">
         <img v-if="video_info.is_videos" @click="zan()" :src="staticImgH+'xihuan.png'" alt="">
@@ -114,9 +114,9 @@
     },
 
     mounted() {
+      this.firstPanduan()
       this.video = document.getElementById('video')
       this.video.currentTime = 0.1;
-      this.currentPlayerData=this.playerStyleDetailedPlayer
 
       //视频详情
       let obj = qs.stringify({
@@ -130,11 +130,95 @@
       }).then((res) => {
         if (res.data.code === 200) {
           this.video_info = res.data.data
+          this.WShare()
         }
       })
     },
 
     methods: {
+      firstPanduan(){
+                //判断是否是分享出去的
+                    var shopUrl = window.location.href
+                        //var shopUrl = 'http://mobile.aibebi.cn/aibei/shopList.html?goods_id=1482'
+                        //截取？后的商品id
+                        var shopCan, value;  //初始化 
+                        shopCan = shopUrl.indexOf("#")  //找到？的下标
+                        shopUrl=shopUrl.substr(shopCan+1)
+                        shopCan=shopUrl.indexOf('?')
+                        if(shopCan > 0){
+                            shopUrl = shopUrl.substr(shopCan + 1)  //截取？后面的内容
+                            var shopArr = shopUrl.split('&') //分割成数组 
+                            var shopUrlId = {};// 初始化对象 找到的goodId放到里面
+                            for(var i = 0; i < shopArr.length; i++) {//循环shopArr数组
+                                shopCan = shopArr[i].indexOf("=");  //找到=号的下标
+                                if(shopCan > 0){ //判断有没有=
+                                    value = shopArr[i].substring(shopCan + 1); //找到=后面的值并截取     =>value
+                                    shopCan = shopArr[i].substring(0, shopCan);//找到=前面的值  =》key
+                                    shopUrlId[shopCan] = value;  // key value放到shopUrlId对象里
+                                }
+                            }
+                            if(shopUrlId.v_id && shopUrlId.id){
+                                this.currentPlayerData=shopUrlId
+                            }else{
+                                this.currentPlayerData=this.playerStyleDetailedPlayer
+                            }
+                        }else{
+                                this.currentPlayerData=this.playerStyleDetailedPlayer
+                        }
+            },
+      // 微信分享
+            WShare(){
+                var Wobj=qs.stringify({
+                    player_id:this.currentPlayerData.id,
+                    type:1,
+                })
+                this.$http.post('/api/wechat/get_sign',Wobj).then((res)=>{
+                    if(res.data.code==200){
+                        var data=res.data.data
+                            wx.config({
+                                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                                appId: data.appId, // 必填，公众号的唯一标识
+                                timestamp:data.timestamp, // 必填，生成签名的时间戳
+                                nonceStr: data.nonceStr, // 必填，生成签名的随机串
+                                signature: data.signature,// 必填，签名
+                                jsApiList: ['onMenuShareAppMessage','onMenuShareTimeline'] // 必填，需要使用的JS接口列表
+                            });
+                            this.toFriend()
+                            this.toFriendQuan()
+                    }else{
+                        this.toastMsg(res.data.msg);
+                    }
+                })
+            },
+        //   分享给朋友
+            toFriend(){
+                var vm=this
+                var realLocation=vm.apiH+'/#/PlayerStyleDetailed?v_id='+vm.currentPlayerData.v_id+'&id='+vm.currentPlayerData.id
+                wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+                    wx.onMenuShareAppMessage({ 
+                        title:vm.video_info.username, // 分享标题
+                        desc:'视频', // 分享描述
+                        link:vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                        imgUrl: vm.video_info.head_pic, // 分享图标
+                        success: function (res) {
+                        }
+                    })
+                });
+            },
+        //   分享到朋友圈
+            toFriendQuan(){
+                    var vm=this
+                    var realLocation=vm.apiH+'/#/PlayerStyleDetailed?v_id='+vm.currentPlayerData.v_id+'&id='+vm.currentPlayerData.id
+                    wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+                        wx.onMenuShareTimeline({
+                                title:vm.video_info.username, // 分享标题
+                                link: vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation),  // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                                imgUrl: vm.video_info.head_pic, // 分享图标
+                                success: function (res) {
+                                },
+                        })
+                });
+            },
       //   返回
       toReturn() {
         this.$router.push(this.playerVideoPage);
@@ -238,73 +322,7 @@
           clearInterval(self.timer2);
         }, 2000)
       },
-      wxShare(){
-        //   微信分享
-        var Wobj=qs.stringify({
-          player_id:this.currentPlayerData.id,
-          type:2,
-        })
-        this.$http.post('/api/wechat/get_sign',Wobj,{
-          headers: {
-            'authorization': this.tokenH
-          }
-        }).then((res)=>{
-          if(res.data.code===200){
-            debugger
-            var data=res.data.data
-            this.test=data.test
-            wx.config({
-              debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-              appId: data.appId, // 必填，公众号的唯一标识
-              timestamp:data.timestamp, // 必填，生成签名的时间戳
-              nonceStr: data.nonceStr, // 必填，生成签名的随机串
-              signature: data.signature,// 必填，签名
-              jsApiList: ['onMenuShareAppMessage','onMenuShareTimeline'] // 必填，需要使用的JS接口列表
-            });
-            this.toFriend()
-            this.toFriendQuan()
-          }else{
-            var self=this
-            clearInterval(self.timer2);
-            this.promptContent=res.data.msg
-            this.showPrompt=true
-            self.timer2=setTimeout(function(){
-              self.showPrompt=false
-              clearInterval(self.timer2);
-            },1000)
-            return false;
-          }
-        })
-      },
-      //   分享给朋友
-      toFriend(){
-        var vm=this
-        var realLocation=vm.apiH+'/#/PlayerDetails?player_id='+vm.playerId
-        wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
-          wx.onMenuShareAppMessage({
-            title:vm.test, // 分享标题
-            desc:'快来给我投票吧', // 分享描述
-            link:vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-            imgUrl: vm.detailData.head_pic, // 分享图标
-            success: function (res) {
-            }
-          })
-        });
-      },
-      //   分享到朋友圈
-      toFriendQuan(){
-        var vm=this
-        var realLocation=vm.apiH+'/#/PlayerDetails?player_id='+vm.playerId
-        wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
-          wx.onMenuShareTimeline({
-            title:vm.test, // 分享标题
-            link: vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation),  // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-            imgUrl:vm.detailData.head_pic, // 分享图标
-            success: function (res) {
-            },
-          })
-        });
-      },
+     
       ...mapMutations(['playerIds','PlayerDetailPages','addressIdIsSels','playDetailVoteDivs', 'PlayerStyleDetailedInfo']),
 
     }

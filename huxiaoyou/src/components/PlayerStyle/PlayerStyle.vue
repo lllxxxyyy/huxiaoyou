@@ -50,11 +50,11 @@
       </li>
     </ul>
     <div class="newsList">
-      <div v-for="(items, index) in newsList">
+      <div v-for="(items, index) in newsList" :key="index">
         <div class="date">{{showDay(index)}}</div>
         <div class="list" >
           <ul>
-            <li class="list-item" v-for="item in items">
+            <li class="list-item" v-for="(item,index) in items" :key="index">
               <span class="text">{{item.title}}</span>
               <img :src="attachImageUrl(item.images[0])" class="image"/>
             </li>
@@ -120,7 +120,7 @@
         }
       }).then((res) => {
         if (res.data.code === 200) {
-          debugger
+          // debugger
           this.PlayerStyleData = res.data.data.data
         } else {
           var self = this
@@ -152,8 +152,8 @@
       },
       goGoodsPage(player) {
           this.playerVideoPages('/PlayerStyle')   //设置选手视频返回页面
-        this.PlayerStyleDetailedPlayer(player);  //给选手视频页面传player
-        this.$router.push('/PlayerStyleDetailed') 
+          this.PlayerStyleDetailedPlayer(player);  //给选手视频页面传player
+          this.$router.push('/PlayerStyleDetailed') 
       },
       scrollBottom() {
         // 滚动到页面底部时，
