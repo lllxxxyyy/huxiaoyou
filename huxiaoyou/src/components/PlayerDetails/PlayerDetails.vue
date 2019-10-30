@@ -51,7 +51,7 @@
                 <div class="player_btnList">
                     <span class="voteBtn" @click.stop="vote">投票</span>
                     <span class="attentionBtn" v-if="personData.is_player==0">+关注</span>
-                    <span class="shareBtn" >为Ta分享</span>
+                    <span class="shareBtn" @click.stop="shareC">为Ta分享</span>
                     <span class="EnterBtn" v-if="personData.is_player==0">我也参赛</span>
                 </div>
             </div>
@@ -104,6 +104,13 @@
                     </div>
                 </div>
             </transition>
+        <!-- 提示分享 -->
+        <div class="shareText_wrap" v-if="shareTextShow" @click="hideShare">
+            <img :src="staticImgH+'timg.jpg'"/>
+            <div class="shareText">
+                点击右上角，分享您喜欢的选手
+            </div> 
+        </div>
         <!-- 分享成功提示 -->
             <div class="share_success_wrap" v-if="ShowShareSuccess">
                 <div class="share_success">
@@ -136,6 +143,7 @@ export default {
             speed:300,
         },
 
+        shareTextShow:false,//提示分享默认消失
         ShowShareSuccess:false,
         voteShow:false,   //投票盒子默认消失
         detailData:'',   //选手信息数据
@@ -297,6 +305,14 @@ export default {
         })
   },
   methods: {
+    //   隐藏提示分享
+    hideShare(){
+        this.shareTextShow=false
+    },
+    //   分享
+    shareC(){
+        this.shareTextShow=true
+    },
         // 到选手详情风采
             toPlayDetailstyle(){
                 this.playerNames(this.detailData.username)  //设置选手详情风采页的标题名字
@@ -975,9 +991,6 @@ export default {
         }
        
     }
-<<<<<<< HEAD
-//分享成功提示
-
 .share_success_wrap{
     width:100%;
     height:100%;
@@ -1008,8 +1021,38 @@ export default {
     }
     
 }
+.shareText_wrap{
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.9);
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:999;
+    >img{
+        width:4rem;
+        height:auto;
+        position:absolute;
+        right:0;
+        top:0;
+    }
+    >.shareText{
+        width:7.733rem;
+        height:5.01rem;
+        border-radius:0.3rem;
+        background:#fff;
+        position:absolute;
+        left:0;
+        right:0;
+        top:0;
+        bottom:0;
+        margin:auto;
+        font-size:0.48rem;
+        text-align:center;
+        padding:0.4rem;
+        line-height:1rem;
+        
+    }
+}
 </style>
-=======
-// 
-</style>
->>>>>>> 810d9bd20ae0b00513af7f57727e5b7db0f51acf
+

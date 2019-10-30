@@ -5,7 +5,7 @@
           <img @click="specialReturn"  :src="staticImgH+'zuojiantou.png'" alt="">
           <span>往届大赛风采</span>   
       </div>
-<div class="shopHide"></div>
+        <div class="shopHide"></div>
       <ul class="Special_list">
           <li v-for="(item,index) in specialList" :key="index" @click="toSpecialDetails(item.id)">
               <div class="SpecialList_left">
@@ -75,6 +75,7 @@ export default {
 .SpecialTopic{
   width:100%;
   height:100%;
+  background :#fff;
 }
 .shopHide{
   width:100%;

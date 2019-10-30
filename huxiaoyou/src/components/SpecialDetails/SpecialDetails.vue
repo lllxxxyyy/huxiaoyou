@@ -1,10 +1,10 @@
 <!--  -->
 <template>
-  <div>
+  <div class="SpecialDetails">
     
       <div class="SpecialDetailsHeader">
           <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
-          <span>往届大赛风采</span>
+          <span></span>
       </div>
       <div class="shopHide"></div>
       <div class="SpecialDetails_title" v-if="specialDetailData">
@@ -68,6 +68,13 @@ export default {
 
 </script>
 <style scoped lang="stylus">
+.SpecialDetails{
+    background :#fff;
+    img{
+        width:100%;
+        height:auto;
+    }
+}
 .shopHide{
   width:100%;
   height:1.2rem;
@@ -104,9 +111,15 @@ export default {
     padding:0 0.27rem;
 }
 .SpecialDetails_Con{
+    width:100%;
   padding:0 0.4rem;
   font-size:0.4rem;
-  >img{ width:100%;}
+  >>>p{
+      >img{
+          width:100%;
+          display :block;
+      }
+  }
 }
 .SpecialDetails_thumb{
   padding:0.2rem 0.4rem;
