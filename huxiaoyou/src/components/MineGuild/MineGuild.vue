@@ -12,7 +12,7 @@
                     <ul class="AddUnion_InfoList">
                         <li>
                             <div class="Info_name"><span>真实姓名</span>*</div>
-                            <input type="text" :disabled='true' v-model="nickname" placeholder="请填写您真实的名称">
+                            <input type="text" :disabled='true' v-model="nickname" placeholder="请填写您的真实姓名">
                         </li>
                         <li>
                             <div class="Info_name"><span>手机号码</span>*</div>

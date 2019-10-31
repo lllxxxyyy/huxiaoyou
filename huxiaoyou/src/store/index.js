@@ -41,14 +41,21 @@ const state = {
     playerVideoPage: sessionStorage.getItem('playerVideoPage'), //选手视频返回页面
     playerName: sessionStorage.getItem('playerName'), //选手详情=》选手风采=》选手视频的标题
     AddunionPage: sessionStorage.getItem('AddunionPage'), //加入公会页面返回
-  searchConditions: sessionStorage.getItem('searchConditions'), //搜索条件
+    searchConditions: sessionStorage.getItem('searchConditions'), //搜索条件
+
+    comOrder: JSON.parse(sessionStorage.getItem('comOrder')) || {},
 }
 const mutations = {
-  //加入公会页面返回
-  SearchConditions(state, searchConditions) {
-    sessionStorage.setItem('searchConditions', searchConditions);
-    state.searchConditions = searchConditions
-  },
+    //加入公会页面返回
+    SearchConditions(state, searchConditions) {
+        sessionStorage.setItem('searchConditions', searchConditions);
+        state.searchConditions = searchConditions
+    },
+    //确认清单信息
+    comOrders(state, comOrder) {
+        sessionStorage.setItem('comOrder', JSON.stringify(comOrder));
+        state.comOrder = comOrder
+    },
     //加入公会页面返回
     AddunionPages(state, AddunionPage) {
         sessionStorage.setItem('AddunionPage', AddunionPage);

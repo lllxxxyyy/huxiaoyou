@@ -59,6 +59,8 @@ import login from '@/components/login/login' //登录
 import videoDetail from '@/components/videoDetail/videoDetail' //登录
 import playDetailStyle from '@/components/playDetailStyle/playDetailStyle' //选手详情风采
 
+import comOrder from '@/components/comOrder/comOrder' //确认订单
+
 const routes = [{ //首页
         path: '/',
         name: 'Home',
@@ -390,13 +392,29 @@ const routes = [{ //首页
     { //登录
         path: '/videoDetail',
         name: 'videoDetail',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
         component: videoDetail
+
     },
     { //选手详情风采
         path: '/playDetailStyle',
         name: 'playDetailStyle',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
         component: playDetailStyle
-    }
+    },
+
+    { //确认订单
+        path: '/comOrder',
+        name: 'comOrder',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: comOrder
+    },
 ]
 
 

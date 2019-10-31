@@ -1,7 +1,7 @@
 <!-- 分类 -->
 <template>
   <div class="mine">
-      <minePerson v-bind:personData="ppersonData"/>
+      <minePerson v-bind:personData="personData"/>
       <!-- <mineOrderlist/> -->
       <mineBtns v-bind:personData="personData"/>
       <div class="Mine_SingingChina">歌游中国</div>

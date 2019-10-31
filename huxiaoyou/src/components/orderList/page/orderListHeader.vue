@@ -16,10 +16,9 @@
         <!-- 订单列表 -->
             <div class="myOrderListShop" v-if="showkonghezi"> 
                 <ul> 
-                  
                         <div class="myOrderListShop_list"  v-for="(item,index) in listdata" :key="index">
                             <!-- 待支付 -->
-                            <li class="waitPay" >
+                            <li class="waitPay" v-if="item.order_status==0 && item.pay_status==0">
                                 <div class="myOrderListShop_title">
                                     <span class="myOrderList_orderNumber">订单号：{{item.order_sn}}</span>
                                     <span class="myOrderList_transaction">待支付</span>
@@ -29,22 +28,57 @@
                                         <img :src="item.original_img" alt="">
                                         <div class="myOrderListShop_info">
                                             <h5>{{item.goods_name}}</h5>
-                                            <span class="myOrderListShop_feature">{{item.spec_key_name}}</span>
+                                            <div class="myOrderListShop_money">
+                                                <span>￥{{item.goods_price}}</span><img :src="staticImgH+'chenggrey.png'" alt="">* {{item.goods_num}}
+                                            </div>  
+                                        </div>
+                                    </div>
+                                    <div class="myOrderListShop_num"><span>共{{item.goods_num}}件商品</span><span>合计：¥{{item.order_amount}}</span> </div>
+                                </div>
+                                <div class="myOrderListShop_btn" @click.stop>
+                                    <span class="spanColor" @click="toPay(item.order_sn,item.order_amount)" >去付款</span>
+                                </div>
+                            </li>
+                             <!-- 待发货 -->
+                            <li class="waitPay" v-if="item.order_status==0  && item.pay_status ==1 && item.shipping_status!== 1">
+                                <div class="myOrderListShop_title">
+                                    <span class="myOrderList_orderNumber">订单号：{{item.order_sn}}</span>
+                                    <span class="myOrderList_transaction">待发货</span>
+                                </div>
+                                <div class="order_list">
+                                    <div class="myOrderListShop_Des" >
+                                        <img :src="item.original_img" alt="">
+                                        <div class="myOrderListShop_info">
+                                            <h5>{{item.goods_name}}</h5>
                                             <div class="myOrderListShop_money">
                                                 <span>￥{{item.goods_price}}</span><img :src="staticImgH+'chenggrey.png'" alt="">{{item.goods_num}}
                                             </div>  
                                         </div>
                                     </div>
-                                    <div class="myOrderListShop_num"><span>共{{item.goods_num}}件商品</span><span>合计：¥{{item.goods_total}}</span> </div>
+                                    <div class="myOrderListShop_num"><span>共{{item.goods_num}}件商品</span><span>合计：¥{{item.order_amount}}</span> </div>
                                 </div>
-                                <div class="myOrderListShop_btn" @click.stop>
-                                    <!-- <span >取消订单</span> -->
-                                    <!-- <span class="spanColor" @click="toPay(item.order_sn,item.order_amount)" >去付款</span> -->
+                            </li>
+                             <!-- 待收货 -->
+                            <li class="waitPay" v-if="item.order_status == 1 && item.shipping_status == 1">
+                                <div class="myOrderListShop_title">
+                                    <span class="myOrderList_orderNumber">订单号：{{item.order_sn}}</span>
+                                    <span class="myOrderList_transaction">待收货</span>
+                                </div>
+                                <div class="order_list">
+                                    <div class="myOrderListShop_Des" >
+                                        <img :src="item.original_img" alt="">
+                                        <div class="myOrderListShop_info">
+                                            <h5>{{item.goods_name}}</h5>
+                                            <div class="myOrderListShop_money">
+                                                <span>￥{{item.goods_price}}</span><img :src="staticImgH+'chenggrey.png'" alt="">{{item.goods_num}}
+                                            </div>  
+                                        </div>
+                                    </div>
+                                    <div class="myOrderListShop_num"><span>共{{item.goods_num}}件商品</span><span>合计：¥{{item.order_amount}}</span> </div>
                                 </div>
                             </li>
                         </div>
                 </ul> 
-                
             </div>  
             <div class="konghezi" v-else>
                 <!-- <img :src="staticImgH+'orderkong.png'" alt=""> -->
@@ -190,14 +224,14 @@ export default {
                             },2000)
                         return false;
                 }
-                    
-                
             })
         },
-        toPay(){
-
+        toPay(orderSn,orderAmount){
+             var comOrder={orderAmount:orderAmount,orderSn:orderSn}
+            this.comOrders(comOrder)
+            this.$router.push('/comOrder')
         },
-        ...mapMutations(['orderTypes']),
+        ...mapMutations(['orderTypes','comOrders']),
         //   到 我的页面
         toMime(){
             this.$router.push(this.myOrderListPage)
