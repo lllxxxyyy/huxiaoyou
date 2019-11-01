@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 const state = {
     WpersonInfoH: JSON.parse(localStorage.getItem('WpersonInfoH')) || {},
-    tokenH: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJpc3MiOiJodHRwczpcL1wvbG92eW91LnRvcCIsImF1ZCI6Imh0dHBzOlwvXC9sb3Z5b3UudG9wIiwiaWF0IjoxNTcxNTY0NDk4LCJuYmYiOjE1NzE1NjQ0OTgsImV4cCI6MTYwMzEwMDQ5OH0.rdIvz6Op71fQoygCztRay32bA-eI2qrN1Y-J-FFJ6Hc',
+    tokenH: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJpc3MiOiJodHRwczpcL1wvbG92eW91LnRvcCIsImF1ZCI6Imh0dHBzOlwvXC9sb3Z5b3UudG9wIiwiaWF0IjoxNTcyNjAzOTI5LCJuYmYiOjE1NzI2MDM5MjksImV4cCI6MTYwNDEzOTkyOX0.3xPl4K13wkoOzTpB_juw_NcYPL_30fjmLITiGqoUgYY',
     userIdH: localStorage.getItem('userIdH'), //用户Id
     userIdHInterest: localStorage.getItem('userIdHInterest'), //分享出去的商品详情页需要得到利益的用户Id
     idxNowH: localStorage.getItem('idxNowH'),
