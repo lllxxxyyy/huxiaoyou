@@ -20,10 +20,11 @@
       </li>
     </ul>
 
-
-    <div class="right">
-      <span><img :src="staticImgH+'tianjia.png'" alt=""></span>
-      <input type="file" class="upload" @change="uploadFile" ref="inputer" accept="video/*"/>
+    <div class="right_wrap">
+      <div class="right">
+        添加视频<span><img :src="staticImgH+'tianjia.png'" alt=""></span>
+        <input type="file" class="upload" @change="uploadFile" ref="inputer" accept="video/*"/>
+      </div>
     </div>
     <!-- 提示盒子 -->
     <transition name="fade">
@@ -192,20 +193,32 @@
     }
 	>.PresentPhoto_admin{ font-size:0.42rem;}
 }
+.right_wrap{
+  width:100%;
+  background :rgba(0,0,0,0.1);
+  display :flex;
+  align-items :center;
+  justify-content :center;
+  padding:0.3rem 0;
+  position :fixed;
+  bottom:0;
+  left:0;
+}
 .right{
-        position :relative;
-		width:0.8rem;
-		margin-top:0.3rem;
-		margin-bottom:0.3rem;
-		left:4.6rem;
+    position :relative;
+    display:flex;
+    align-items :center;
+    font-size:0.4rem;
         >span{
-            font-size:0.4rem;
+          margin-left:0.32rem;
             color:rgba(0, 0, 0, 1);
-			>img{ width:0.8rem;}
+            >img{ 
+              width:0.8rem;
+            }
         }
         >input{
-            width:0.8rem;
-			height:0.8rem;
+            width:100%;
+			      height:0.8rem;
             opacity :0;
             position :absolute;
             top:0;

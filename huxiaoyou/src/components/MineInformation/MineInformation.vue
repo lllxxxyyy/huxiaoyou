@@ -15,57 +15,57 @@
           </div>
           
         </li>
-        <li>
+        <li @click="changeInfo(1)">
           <span>姓名（或昵称）</span>
-          <div class="MineInfo_ListRight" @click="changeInfo(1)">
+          <div class="MineInfo_ListRight" >
             <span>{{nickNameM}}</span><img :src="staticImgH+'MineRight.png'" alt="">
           </div>
         </li>
-        <li>
+        <li @click="SignatureReturn">
           <span>个性签名</span>
-          <div @click="SignatureReturn" class="MineInfo_ListRight">
+          <div  class="MineInfo_ListRight">
             <span>{{signatureM}}</span><img :src="staticImgH+'MineRight.png'" alt="">
           </div>
         </li>
-        <li>
+        <li @click="secC">
           <span>性别</span>
-          <div @click="secC"  class="MineInfo_ListRight">
+          <div   class="MineInfo_ListRight">
             <span v-if='sexM==1'>男</span><span v-if='sexM==2'>女</span><img :src="staticImgH+'MineRight.png'" alt="">
           </div>
         </li>
-        <li>
+        <li @click="changeInfo(2)">
           <span>年龄</span>
-          <div  class="MineInfo_ListRight" @click="changeInfo(2)">
-            <span>{{ageM}}岁</span><img :src="staticImgH+'MineRight.png'" alt="">
+          <div  class="MineInfo_ListRight" >
+            <span v-if="ageM">{{ageM}}</span><img :src="staticImgH+'MineRight.png'" alt="">
           </div>
         </li>
-        <li>
+        <li @click="changeInfo(3)">
           <span>身高</span>
-          <div  class="MineInfo_ListRight" @click="changeInfo(3)">
+          <div  class="MineInfo_ListRight" >
             <span>{{heightM}}cm</span><img :src="staticImgH+'MineRight.png'" alt="">
           </div>
         </li>
-        <li>
+        <li @click="changeInfo(4)">
           <span>体重</span>
-          <div  class="MineInfo_ListRight" @click="changeInfo(4)">
+          <div  class="MineInfo_ListRight" >
             <span>{{weightM}}kg</span><img :src="staticImgH+'MineRight.png'" alt="">
           </div>
         </li>
-        <li>
+        <li @click="tocity">
           <span>常驻城市</span >
-          <div @click="tocity"  class="MineInfo_ListRight">
+          <div   class="MineInfo_ListRight">
             <span>{{cityM}}</span><img :src="staticImgH+'MineRight.png'" alt="">
           </div>
         </li>
-        <li>
+        <li @click="changeInfo(6)">
           <span>星座</span >
-          <div class="MineInfo_ListRight" @click="changeInfo(6)">
+          <div class="MineInfo_ListRight" >
             <span>{{constellationM}}</span><img :src="staticImgH+'MineRight.png'" alt="">
           </div>
         </li>
-        <li>
+        <li @click="toPhoto">
           <span>照片</span>
-          <div class="MineInfo_ListRight" @click="toPhoto">
+          <div class="MineInfo_ListRight" >
             <img :src="staticImgH+'MineRight.png'" alt="">
           </div>
         </li>
@@ -156,15 +156,9 @@ export default {
     },
     // 获取用户信息接口
     getInformation(){
-       var obj=qs.stringify({
-        
-      })
-      this.$http.post('api/player/per_sonals',obj,{
-            headers: {
-                'authorization': this.tokenH
-            }
-      }).then((res)=>{
+      this.$http.post('api/player/per_sonals').then((res)=>{
           if(res.data.code==200){
+            console.log(res)
               var personData=res.data.data
               this.headPicM=personData.head_pic
               //个签

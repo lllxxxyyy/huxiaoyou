@@ -601,9 +601,9 @@ export default {
     top:0;
     left:0;
     padding: 0 0.4rem;
+    overflow:hidden;
     >img{
         width:0.53rem;
-        height:0.45rem;
     }
     >span{
         font-size:0.427rem;
@@ -612,11 +612,10 @@ export default {
 }
 .playerBigImg{
     width:100%;
-    height:8.533rem;
+    height:8.52rem;
     display :flex;
     >img{
         width:100%;
-        height:6.213rem;
         z-index:-1;
     }
 }

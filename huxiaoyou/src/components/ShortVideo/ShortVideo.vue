@@ -10,7 +10,7 @@
           <li> <span>短视频平台</span>  <input v-model="LiveName" type="text" placeholder="请填写您常用的短视频平台"></li>
           <li> <span>id</span>  <input v-model="liveId"  type="text" placeholder="请填写您所对应的短视频平台的id号"></li>
       </ul>
-      <div class="delBind" @click="delbind">删除绑定</div>
+      <div class="delBind" @click="delbind">修改id号码</div>
       <!-- 提示盒子 -->
          <transition name="fade">
             <div class="promptFather" v-if="showPrompt">

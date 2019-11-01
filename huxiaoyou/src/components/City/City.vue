@@ -4,6 +4,7 @@
             <div class="city_header">
                 <img @click="cityReturn" :src="staticImgH+'zuojiantou.png'" alt="">
                 <span>常驻城市</span>
+                <span class="sureBtn" @click="sure">确定</span>
             </div>
             <div class="city_input">
                 <img :src="staticImgH+'citySearchImg.png'" alt="">
@@ -74,9 +75,13 @@ export default {
       toLetter(index){
           this.scroll.scrollToElement(this.$refs.letterKey[index])
       },
+      sure(){
+          this.cityNamePerXs(this.cityName)
+          this.$router.push('/MineInformation')
+      },
       // 返回
       cityReturn(){
-          this.cityNamePerXs(this.cityName)
+          
         this.$router.push('/MineInformation')
       },
     //   点击每个城市
@@ -106,18 +111,25 @@ export default {
     width:100%;
     height:1.23rem;
     display :flex;
-    justify-content :center;
+    justify-content :space-between;
     align-items :center;
     position :relative;
     background :#fff;
+    padding:0 0.4rem;
     img{
         width:0.32rem;
         height:0.56rem;
-        position :absolute;
-        left:0.27rem;
-        top:50%;
-        margin-top:-0.28rem;
+        // position :absolute;
+        // left:0.27rem;
+        // top:50%;
+        // margin-top:-0.28rem;
     }
+    >.sureBtn{
+        // position :absolute;
+        // left:0.27rem;
+        // top:50%;
+        // margin-top:-0.28rem;
+    }   
     >span{
         font-size:0.48rem;
         color:rgba(0, 0, 0, 1);

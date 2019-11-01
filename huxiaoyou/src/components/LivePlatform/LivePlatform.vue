@@ -10,7 +10,7 @@
           <li> <span>直播平台</span>  <input placeholder="请填写您常用的直播平台" v-model="LiveName" type="text"></li>
           <li> <span>直播id</span>  <input placeholder="请填写您所对应的直播平台的id号" v-model="liveId"  type="text"></li>
       </ul>
-      <div class="delBind" @click="delbind">删除绑定</div>
+      <div class="delBind" @click="delbind">修改id号码</div>
       <!-- 提示盒子 -->
          <transition name="fade">
             <div class="promptFather" v-if="showPrompt">
@@ -44,7 +44,10 @@ export default {
         ...mapState(['staticImgH','tokenH'])
     },
 
-//   mounted: {},
+  mounted(){
+      this.LiveName=this.$route.query.platform
+      this.liveId=this.$route.query.platformId
+  },
   methods: {
         // 返回
             toReturn(){

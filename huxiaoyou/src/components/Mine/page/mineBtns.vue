@@ -145,7 +145,7 @@ export default {
           }else if(index==2){
               this.$router.push('/PresentVideo')
           }else if(index==3){
-              this.$router.push('/LivePlatform')
+              this.$router.push({path:'/LivePlatform',query:{'platform':this.personData.live_platform,'platformId':this.personData.live_id}})
           }else if(index==4){
               this.$router.push('/ShortVideo')
           }else if(index==5){
@@ -166,9 +166,14 @@ export default {
           
       },
     //   普通用户跳转
-    UsertriggerBtn(){
-        if(index==1){
+    UsertriggerBtn(index){
+        if(index==0){
             this.$router.push('/MineGuild')
+        }else if(index==2){
+                this.myOrderListPages('/Mine')
+                this.orderTypes('')
+                this.orderNums(0)
+                this.$router.push('/orderList')
         }else if(index==3){
             this.ReceiptAddressPages('/Mine')
             this.$router.push('/ReceiptAddress')

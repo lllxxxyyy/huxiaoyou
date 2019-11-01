@@ -3,7 +3,7 @@
   <div class="Signature">
         <div class="Signature_header">
             <img @click="SignatureReturn" :src="staticImgH+'zuojiantou.png'" alt="">
-            <span>个人资料</span>
+            <span>个人签名</span>
             <span class="submit" @click="submit">提交</span>
       </div>
       <div class="Signature_des">

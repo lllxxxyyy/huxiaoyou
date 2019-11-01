@@ -14,6 +14,7 @@
       </ul>
       <div class="right_wrap">
              <div class="right">
+               添加照片
           <span><img :src="staticImgH+'tianjia.png'" alt=""></span>
           <input type="file" class="upload" @change="uploadFile" ref="inputer" accept="image/*"/>
         </div>
@@ -147,16 +148,18 @@
 }
 .right{
     position :relative;
-		width:0.8rem;
+    display:flex;
+    align-items :center;
+    font-size:0.4rem;
         >span{
-            font-size:0.4rem;
+          margin-left:0.32rem;
             color:rgba(0, 0, 0, 1);
             >img{ 
               width:0.8rem;
             }
         }
         >input{
-            width:0.8rem;
+            width:100%;
 			      height:0.8rem;
             opacity :0;
             position :absolute;
