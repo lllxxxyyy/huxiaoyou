@@ -44,8 +44,14 @@ const state = {
     searchConditions: sessionStorage.getItem('searchConditions'), //搜索条件
 
     comOrder: JSON.parse(sessionStorage.getItem('comOrder')) || {},
+    MineInformationPage: sessionStorage.getItem('MineInformationPage'), // 个人信息页面返回
 }
 const mutations = {
+    // 个人信息页面返回
+    MineInformationPages(state, MineInformationPage) {
+        sessionStorage.setItem('MineInformationPage', MineInformationPage);
+        state.MineInformationPage = MineInformationPage
+    },
     //加入公会页面返回
     SearchConditions(state, searchConditions) {
         sessionStorage.setItem('searchConditions', searchConditions);

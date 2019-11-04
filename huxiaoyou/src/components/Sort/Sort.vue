@@ -4,6 +4,14 @@
     <div class="PlayerRanking_header">
       <span>赛事商务</span>
     </div>
+    <div class="kabao">
+      <span>卡包助力投票</span>
+      <ul>
+        <li v-for="(item, index) in cardList" @click.stop="toshopdetail(item.goods_id)" v-if=" Number(index+1)" :key="index">
+          <img :src="item.original_img" alt=""><span>{{item.goods_name}}</span>
+        </li>
+      </ul>
+    </div>
     <div class="CoOperative">
       <span>合作商</span>
       <ul class="brandList">
@@ -12,14 +20,7 @@
         </li>
       </ul>
     </div>
-    <div class="kabao">
-      <span>卡包</span>
-      <ul>
-        <li v-for="(item, index) in cardList" @click.stop="toshopdetail(item.goods_id)" v-if=" Number(index+1)" :key="index">
-          <img :src="item.original_img" alt=""><span>{{item.goods_name}}</span>
-        </li>
-      </ul>
-    </div>
+    
     <!-- 提示盒子 -->
     <transition name="fade">
       <div class="promptFather" v-if="showPrompt">

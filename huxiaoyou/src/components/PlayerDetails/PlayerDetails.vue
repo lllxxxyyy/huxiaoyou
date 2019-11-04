@@ -4,7 +4,7 @@
         <!-- header -->
             <div class="PlayerRanking_header">
                 <img @click.stop="toReturn" :src="staticImgH+'zuojiantouWhite.png'" alt="">
-                <span @click.stop="toPlayDetailstyle">选手风采</span>
+                <span @click.stop="toPlayDetailstyle">选手视频</span>
             </div>
         <!-- 小轮播 -->
             <div @click.stop class="small_Carousel" v-if="smallSwiper.length>=1">
@@ -22,10 +22,17 @@
                     <div class="player_des_top">
                         <img class="player_desImg" :src="detailData.head_pic" alt="">
                         <ul>
-                            <li ><img @click="toMineInfo" v-if="personData.player_id==playerId" :src="staticImgH+'playBian.png'" alt=""><span class="username">{{detailData.username}}</span> </li>
-                            <li> <span class="playerId">参赛编号：{{detailData.player_id}}</span></li>
+                            <li><span class="username">{{detailData.username}}</span>
+                                <span @click="toMineInfo" v-if="personData.player_id==playerId">编辑</span>
+                                <img @click="toMineInfo" v-if="personData.player_id==playerId" :src="staticImgH+'playBian.png'" alt="">
+                            </li>
+                            <li><span>{{detailData.names}}</span></li>
                         </ul>
                     </div>
+                    <ul class="player_des_center">
+                        <li> <span class="playerId">参赛编号：{{detailData.player_id}}</span></li>
+                        
+                    </ul>
                     <ul class="piao_list">
                         <li>
                             <span class="piao_list_top">{{detailData.votes}}</span><span class="piao_list_bottom">总票数</span>
@@ -33,7 +40,7 @@
                         <li>
                             <span class="piao_list_top">{{detailData.division_ranking}}</span><span class="piao_list_bottom">赛区排名</span>
                         </li>
-                        <span>{{detailData.names}}</span>
+                        
                 </ul>
                 <div class="palylike" v-if="detailData.signature">{{detailData.signature}}</div>
                 <ul class="player_listdes">
@@ -50,9 +57,9 @@
                 </ul>
                 <div class="player_btnList">
                     <span class="voteBtn" @click.stop="vote">投票</span>
-                    <span class="attentionBtn" v-if="personData.is_player==0">+关注</span>
+                    <!-- <span class="attentionBtn" v-if="personData.is_player==0">+关注</span> -->
                     <span class="shareBtn" @click.stop="shareC">为Ta分享</span>
-                    <span class="EnterBtn" v-if="personData.is_player==0">我也参赛</span>
+                    <span class="EnterBtn" @click="tocanSai" v-if="personData.is_player==0">我也参赛</span>
                 </div>
             </div>
         <!-- 视频 -->
@@ -76,12 +83,12 @@
                 <div class="vote"  @click.stop>
                     <!-- 免费票 -->
                     <div class="FreeTicket">
-                        <span class="FreeTicket_title">免费票(剩余{{personData.user_votes}}票)</span>
+                        <span class="FreeTicket_title">每日免费投票 <span>（每人每天可投两票）</span></span>
                         <span class="FreeTicket_btn" @click.stop="freeticket">立即投票</span>
                     </div>
                     <!-- 助力票 -->
                     <div class="AssistTicket">
-                            <div class="AssistTicket_title">助力票</div>  
+                            <div class="AssistTicket_title"> <span class="AssistTicket_title_first">卡包助力投票</span><span>(分享卡包，成功购买可获得卡包金额10倍的票数)</span> </div>  
                             <span class="AssistTicket_text">助力票为实物，投票后请输入正确的收获地址，我司正常发货。</span>
                             <div class="SpecialTopicBody_bar">
                                 <!-- 商品列表 -->
@@ -105,10 +112,10 @@
                 </div>
             </transition>
         <!-- 提示分享 -->
-        <div class="shareText_wrap" v-if="shareTextShow" @click="hideShare">
+        <div class="shareText_wrap" v-if="shareTextShow"  @click="hideShare">
             <img :src="staticImgH+'timg.jpg'"/>
             <div class="shareText">
-                点击右上角，分享您喜欢的选手
+                点击右上角，为ta分享助力投票
             </div> 
         </div>
         <!-- 分享成功提示 -->
@@ -305,14 +312,18 @@ export default {
         })
   },
   methods: {
-    //   隐藏提示分享
-    hideShare(){
-        this.shareTextShow=false
-    },
-    //   分享
-    shareC(){
-        this.shareTextShow=true
-    },
+        // 去参赛
+            tocanSai(){
+                this.$router.push('/SignUp')
+            },
+        //   隐藏提示分享
+            hideShare(){
+                this.shareTextShow=false
+            },
+        //   分享
+            shareC(){
+                this.shareTextShow=true
+            },
         // 到选手详情风采
             toPlayDetailstyle(){
                 this.playerNames(this.detailData.username)  //设置选手详情风采页的标题名字
@@ -321,6 +332,9 @@ export default {
             },
         //点击编辑
             toMineInfo(){
+                this.addressIdIsSels('false') //设置地址没选中
+                this.playDetailVoteDivs('false') //选手详情的投票盒子的消失
+                this.MineInformationPages('/PlayerDetails')
                 this.$router.push('/MineInformation')
             },
         //分享成功提示上的X
@@ -521,7 +535,11 @@ export default {
             },
         //  返回
             toReturn(){
-                this.$router.push(this.PlayerDetailPage)  //PlayerDetailPage（vuex中全局定义，动态设置返回页面）
+                if(this.PlayerDetailPage){
+                    this.$router.push(this.PlayerDetailPage)  //PlayerDetailPage（vuex中全局定义，动态设置返回页面）
+                }else{
+                    this.$router.push('http://app.aibebi.net/#/')
+                }
             },
         // 获取免费票数  
             getpaioNUm(){
@@ -581,7 +599,7 @@ export default {
                     }
                 })
             },
-        ...mapMutations(['playDetailVoteDivs','ReceiptAddressPages','ReceiptAddressAddPages','orderTypes','orderNums','playDetailShopDESs','addressIdIsSels','myOrderListPages','playerIds','shopgoodIds','barcolorIndexShops','shopDetatilshows','shopDetailReturns','userIdHs','userIdHInterests','playerNames']),   
+        ...mapMutations(['playDetailVoteDivs','ReceiptAddressPages','ReceiptAddressAddPages','orderTypes','orderNums','playDetailShopDESs','addressIdIsSels','myOrderListPages','playerIds','shopgoodIds','barcolorIndexShops','shopDetatilshows','shopDetailReturns','userIdHs','userIdHInterests','playerNames','MineInformationPages']),   
       },
    
    
@@ -632,43 +650,57 @@ export default {
     padding:0 0.4rem;
     .player_des_top{
         display :flex;
-        justify-content :space-between;
         >.player_desImg{
             width:1.87rem;
             height:1.87rem;
             background :blue;
             border-radius:50%;
             margin-top:-0.53rem;
+            margin-right:0.32rem;
             border:0.1rem solid rgba(255, 255, 255, 1);
         }
         >ul{
             margin-top:0.333rem;
+            display:flex;
+            flex-direction :column;
             >li{
                 font-size:0.347rem;
-                color:rgba(0, 0, 0, 1);
+                color:rgba(0, 0, 0, 0.36);
                 line-height :0.747rem;
                 text-align:center;
                 border-radius:0.08rem;
                 display:flex;
                 align-items:center;
-                justify-content :flex-end;
+                font-size:0.32rem;
+                >.username{
+                    font-size:0.53rem;
+                    color:rgba(51, 51, 51, 1);
+                    line-height:0.747rem;
+                    margin-right:0.32rem;
+                }
                 >img{
                     width:0.293rem;
                     height:0.293rem;
                     margin-right:0.347rem;
                 }
-                >.username{
-                    font-size:0.53rem;
-                    color:rgba(51, 51, 51, 1);
-                    line-height:0.747rem;
-                }
-                >.playerId{
-                    margin-top:0.16rem;
-                    line-height:0.493rem;
-                    color:rgba(0, 0, 0, 1);
-                }
             }
         }
+    }
+    .player_des_center{
+        display:flex;
+        align-items:center;
+        >li{
+            font-size:0.347rem;
+            color:rgba(0, 0, 0, 1);
+            margin-right:0.32rem;
+            >.playerId{
+                margin-top:0.16rem;
+                line-height:0.493rem;
+                color:rgba(0, 0, 0, 1);
+            }
+            
+        }
+       
     }
     >.piao_list{
         width:100%;
@@ -831,9 +863,18 @@ export default {
         >.AssistTicket_title{
             width:100%;
             color:rgba(255, 255, 255, 1);
-            font-size:0.427rem;
             line-height :0.613rem;
             margin-bottom:0.213rem;
+            display:flex;
+            >span{
+                 flex:8.5;
+                font-size:0.32rem;
+            }
+            >.AssistTicket_title_first{
+                flex:3.5;
+                 font-size:0.4rem;
+            }
+            
         }
         >.AssistTicket_text{
             width:100%;
@@ -895,15 +936,18 @@ export default {
         align-items :center;
         margin:0.53rem 0.4rem;
         >.FreeTicket_title{
-            font-size:0.427rem;
+            font-size:0.4rem;
             color:rgba(255, 255, 255, 1);
             line-height :0.613rem;
+            >span{
+                font-size:0.32rem;
+            }
         }
         >.FreeTicket_btn{
             width:2.4rem;
             height:0.64rem;
             background:rgba(255, 157, 172, 1);
-            font-size:0.347rem;
+            font-size:0.32rem;
             color:rgba(255, 255, 255, 1);
             border-radius:2.67rem;
             text-align :center;
@@ -1029,17 +1073,15 @@ export default {
     left:0;
     z-index:999;
     >img{
-        width:4rem;
+        width:2.51rem;
         height:auto;
         position:absolute;
-        right:0;
-        top:0;
+        right:0.32rem;
+        top:0.32rem;
     }
     >.shareText{
         width:7.733rem;
         height:5.01rem;
-        border-radius:0.3rem;
-        background:#fff;
         position:absolute;
         left:0;
         right:0;
@@ -1050,7 +1092,7 @@ export default {
         text-align:center;
         padding:0.4rem;
         line-height:1rem;
-        
+        color:#fff;
     }
 }
 </style>

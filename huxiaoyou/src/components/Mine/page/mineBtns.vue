@@ -141,6 +141,7 @@ export default {
               this.weightPerXs('')     //体重
               this.constellationPerXs('')  //星座
               this.playerIds(this.personData.player_id)
+              this.MineInformationPages('/Mine')
               this.$router.push('/MineInformation')
           }else if(index==2){
               this.$router.push('/PresentVideo')
@@ -181,7 +182,7 @@ export default {
             this.$router.push('/AboutWe')
         }
     },
-    ...mapMutations(['ReceiptAddressPages','userIdHs','cityNamePerXs','SignaturePerXs','nickNamePerXs','agePerXs','heightPerXs','weightPerXs','constellationPerXs','myOrderListPages','orderTypes','orderNums','playerIds']),
+    ...mapMutations(['ReceiptAddressPages','userIdHs','cityNamePerXs','SignaturePerXs','nickNamePerXs','agePerXs','heightPerXs','weightPerXs','constellationPerXs','myOrderListPages','orderTypes','orderNums','playerIds','MineInformationPages']),
   }
 }
 

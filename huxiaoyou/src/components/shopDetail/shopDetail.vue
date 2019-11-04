@@ -28,6 +28,12 @@
             <div class="shopContent" v-html="shopData.goods_content"></div>
         <!-- 立即购买  -->
             <div class="shopDetail_btnWrap">
+                <div class="shopDetail_btnone" @click="toPlayStyle">
+                    选手视频 
+                </div>
+                <div  class="shopDetail_btnTwo" @click="toHome">
+                    了解更多 
+                </div>
                 <div  class="shopDetail_btn" @click="AssistTicketOne">
                     立即购买 
                 </div>
@@ -105,6 +111,14 @@ export default {
   },
 
   methods: {
+            //点击了解更多
+            toHome(){
+                this.$router.push('/')
+            },
+            // 点击选手视频
+            toPlayStyle(){
+                this.$router.push('/PlayerStyle')
+            },
             firstPanduan(){
                 //判断是否是分享出去的
                     var shopUrl = window.location.href
@@ -517,27 +531,42 @@ export default {
 }
 .shopDetail_btnWrap{
     width:100%;
-    height:1.55rem;
+    height:1.2rem;
     position:fixed;
     bottom:0;
     left:0;
     display:flex;
-    align-items:center;
-    justify-content :center;
 }
-.shopDetail_btn{
-    width:9.2rem;
-    height:0.8rem;
-    background:rgba(255, 157, 172, 1);
-    font-size:0.347rem;
+.shopDetail_btnone{
+    width:33.333%;
+    height:1.2rem;
+    background:#FED943;
+    font-size:0.37rem;
     color:rgba(255, 255, 255, 1);
     text-align:center;
-    line-height:0.8rem;
-    border-radius:0.667rem;
+    line-height:1.2rem;
+}
+.shopDetail_btnTwo{
+    width:33.333%;
+    height:1.2rem;
+    background:#4AABF9;
+    font-size:0.37rem;
+    color:rgba(255, 255, 255, 1);
+    text-align:center;
+    line-height:1.2rem;
+}
+.shopDetail_btn{
+    width:33.333%;
+    height:1.2rem;
+    background:rgba(255, 157, 172, 1);
+    font-size:0.37rem;
+    color:rgba(255, 255, 255, 1);
+    text-align:center;
+    line-height:1.2rem;
 }
 .shopDetail_hide{
      width:9.2rem;
-    height:0.8rem;
+   height:1.2rem;
 }
 .shopContent{
     width:100%;

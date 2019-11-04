@@ -2,16 +2,20 @@
 <template>
   <div class="PlayerStyle">
     <div class="PlayerRanking_header">
-      <img @click="toReturn" :src="staticImgH+'zuojiantoub.png'" alt="">
-    </div>
-    <div class="player_top">
-      <div class="player_name">
-        <img v-if="video_info" :src="video_info.head_pic" alt="">
-        <span>{{video_info.username}}</span>
-
-        <span class="guanzhu" v-if="!video_info.concern" @click="follow()">关注</span>
-        <span class="guanzhu" v-if="video_info.concern" @click="follow()">已关注</span>
+      <div class="PlayerRanking_header_left">
+        <img @click="toReturn" :src="staticImgH+'zuojiantoub.png'" alt="">
+        <div>
+          <div class="player_top">
+              <div class="player_name">
+                <img v-if="video_info" :src="video_info.head_pic" alt="">
+                <span>{{video_info.username}}</span>
+                <span class="guanzhu" v-if="!video_info.concern" @click="follow()">关注</span>
+                <span class="guanzhu" v-if="video_info.concern" @click="follow()">已关注</span>
+              </div>
+            </div>
+        </div>
       </div>
+      <span @click="toHome">更多分享</span>
     </div>
     <div class="player_paiming">{{currentPlayerData.names}}排名：{{video_info.rank}}名</div>
     <div class="video">
@@ -24,7 +28,7 @@
 		<div  @click="playOrPause()" class="play mask flex_center">
             <img v-show="show" class="playBtn" :src="staticImgH+'bofang.png'"/>
           </div>
-          <video v-if="mobile==='android'" id="video"
+          <video autoplay="autoplay" v-if="mobile==='android'" id="video"
                  width="100%"
                  height="100%"
                  x5-video-player-fullscreen="true"
@@ -35,7 +39,7 @@
                  poster="xx0.jpg"
                  :src="video_info.video_introduction"  >
           </video>
-          <video v-if="mobile==='iPhone'" id="video"
+          <video autoplay="autoplay" v-if="mobile==='iPhone'" id="video"
                  width="100%"
                  height="100%"
                  poster="xx0.jpg"
@@ -46,7 +50,7 @@
 
     </div>
     <div class="video_caozuo">
-      <span class="video_fenxiang"><img  :src="staticImgH+'fenxiang.png'" alt=""></span>
+      <span @click="toShare" class="video_fenxiang"><img  :src="staticImgH+'fenxiang.png'" alt=""></span>
       <span class="video_fenxiang">
         <img v-if="!video_info.is_videos" @click="zan()" :src="staticImgH+'shouchang.png'" alt="">
         <img v-if="video_info.is_videos" @click="zan()" :src="staticImgH+'xihuan.png'" alt="">
@@ -62,6 +66,13 @@
         </div>
       </div>
     </transition>
+    <!-- 提示分享 -->
+        <div class="shareText_wrap" v-if="shareTextShow"  @click="hideShare">
+            <img :src="staticImgH+'timg.jpg'"/>
+            <div class="shareText">
+                点击右上角，为ta分享助力投票
+            </div> 
+        </div>
   </div>
 </template>
 
@@ -75,13 +86,14 @@
     name: "PlayerStyleDetailed",
     data() {
       return {
+        shareTextShow:false,//分享提示，默认隐藏
         followFlag: false,
         zanFlag: false,
         voteFlag: false,
 
         playerOptions:{},
 
-        show:true,
+        show:false,
         mobile:"",
         text:"",
 
@@ -136,6 +148,18 @@
     },
 
     methods: {
+      // 点击了解更多
+          toHome(){
+            this.$router.push('/PlayerStyle')
+          },
+      // 分享提示
+          toShare(){
+              this.shareTextShow=true
+          },
+      //   隐藏提示分享
+            hideShare(){
+                this.shareTextShow=false
+            },
       firstPanduan(){
                 //判断是否是分享出去的
                     var shopUrl = window.location.href
@@ -332,55 +356,53 @@
 <style scoped lang="stylus">
 .PlayerStyle{
     width:100%;
+    
 }
 .PlayerRanking_header{
-    width:100%
-    height:1.23rem;
+    width:100%;
     display :flex;
     align-items :center;
-    justify-content :center;
+    justify-content :space-between;
     position :fixed;
-	z-index:99999;
-    >img{
+	  z-index:998;
+    padding:0.27rem 0.27rem;
+    .PlayerRanking_header_left{
+      display:flex;
+      align-items:center;
+      >img{
         width:0.32rem;
         height:0.56rem;
-        position :absolute;
-        top:50%;
-        margin-top:-0.28rem;
-        left:0.27rem;
+        margin-right:0.32rem;
+      } 
     }
+    
     >span{
-        font-size:0.48rem;
-        color:rgba(0, 0, 0, 1);
+        font-size:0.4rem;
+        color:#fff;
     }
 }
 .player_top{
-            display :flex;
-            align-items :center;
-            justify-content :space-between;
-            margin-bottom:0.313rem;
-			position :fixed;
-			z-index:999;
-			margin-top:1.2rem;
-			left:0.27rem;
-			background:rgba(255,255,255,0.8);
-			padding:0.14rem;
-			border-radius:0.92rem;
-            .player_name{
-                display :flex;
-                align-items :center;
-                >img{
-                    width:0.853rem;
-                    height:0.853rem;
-                    background :pink;
-                    margin-right:0.187rem;
-					border-radius:0.92rem;
-                }
-                >span{
-                    font-size:0.44rem;
-                    color:rgba(0, 0, 0, 0.8);
-                    font-weight:550;
-                }
+      display :flex;
+      align-items :center;
+      justify-content :space-between;
+      background:rgba(255,255,255,0.8);
+      padding:0.14rem;
+      border-radius:0.92rem;
+      .player_name{
+          display :flex;
+          align-items :center;
+          >img{
+              width:0.853rem;
+              height:0.853rem;
+              background :pink;
+              margin-right:0.187rem;
+              border-radius:0.92rem;
+          }
+          >span{
+              font-size:0.44rem;
+              color:rgba(0, 0, 0, 0.8);
+              font-weight:550;
+          }
 				>.guanzhu{background:rgba(255,157,172,1); width:1.6rem; height:0.8rem; border-radius:0.92rem; line-height:0.8rem; color:#fff; text-align:center; font-size:0.42rem; margin-left:0.3rem;}
             }
         }
@@ -411,7 +433,7 @@
 .video{ width:100%; height:100%; background:#444; position: fixed; top:100;
 >video{ width:100%; height:100%;}
 }
-.player_paiming{ position: fixed; z-index:999; top:2.6rem; text-align:center; font-size:0.37rem; background:rgba(255,255,255,0.8); margin-left:0.3rem; border-radius:0.4rem; padding:0.1rem 0.2rem;}
+.player_paiming{ position:fixed;top:1.8rem;left:0.9rem;z-index:999;  text-align:center; font-size:0.37rem; background:rgba(255,255,255,0.8);  border-radius:0.4rem; padding:0.1rem 0.2rem;}
 // 提示盒子
 .promptFather{
     width:100%;
@@ -465,4 +487,36 @@
 >img{ width:1.6rem; position:fixed; top:48%; left:42%; z-index:9999;}
 }
 .video-js.vjs-fluid, .video-js.vjs-16-9, .video-js.vjs-4-3{width:100%!important; height:100%!important; background:#444!important; position: fixed!important;}
+// 提示分享
+.shareText_wrap{
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.9);
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:999;
+    >img{
+        width:2.51rem;
+        height:auto;
+        position:absolute;
+        right:0.32rem;
+        top:0.32rem;
+    }
+    >.shareText{
+        width:7.733rem;
+        height:5.01rem;
+        position:absolute;
+        left:0;
+        right:0;
+        top:0;
+        bottom:0;
+        margin:auto;
+        font-size:0.48rem;
+        text-align:center;
+        padding:0.4rem;
+        line-height:1rem;
+        color:#fff;
+    }
+}
 </style>

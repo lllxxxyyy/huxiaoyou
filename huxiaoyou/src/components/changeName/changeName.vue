@@ -15,12 +15,12 @@
           <span class="change_destitle" v-if="changeIndexB==3">我的身高</span>
           <span class="change_destitle" v-if="changeIndexB==4">我的体重</span>
           <span class="change_destitle" v-if="changeIndexB==6">我的星座</span>
-          <input class="change_input" v-if="changeIndexB==1" type="text"  v-model="userName">
-          <input class="change_input" v-if="changeIndexB==2" type="text" oninput = "value=value.replace(/[^\d]/g,'')"  v-model="age">
-          <input class="change_input" v-if="changeIndexB==3" type="text" oninput = "value=value.replace(/[^\d]/g,'')" v-model="height">
-          <input class="change_input" v-if="changeIndexB==4" type="text" oninput = "value=value.replace(/[^\d]/g,'')" v-model="weight">
-          <input class="change_input" v-if="changeIndexB==6" type="text"  v-model="constellation">
-          <div class="change_num"><span>{{userName.length}}</span>/<span>20</span></div>
+          <input class="change_input" v-if="changeIndexB==1" type="text" maxlength="20"  v-model="userName">
+          <input class="change_input" v-if="changeIndexB==2" type="text" maxlength="3" oninput = "value=value.replace(/[^\d]/g,'')"  v-model="age">
+          <input class="change_input" v-if="changeIndexB==3" type="text" maxlength="3" oninput = "value=value.replace(/[^\d]/g,'')" v-model="height">
+          <input class="change_input" v-if="changeIndexB==4" type="text" maxlength="3" oninput = "value=value.replace(/[^\d]/g,'')" v-model="weight">
+          <input class="change_input" v-if="changeIndexB==6" type="text" maxlength="3"  v-model="constellation">
+          <div class="change_num" v-if="changeIndexB==1"><span>{{userName.length}}</span>/<span>20</span></div>
       </div>
   </div>
 </template>
@@ -58,8 +58,8 @@ export default {
           this.height=this.heightPerX
       }else if(this.changeIndexB==4){
           this.weight=this.weightPerX
-      }else if(this.changeIndexB==5){
-          this.changeIndexB=this.constellationPerX
+      }else if(this.changeIndexB==6){
+          this.constellation=this.constellationPerX
       }
   },
 
@@ -91,6 +91,9 @@ export default {
 </script>
 <style scoped lang="stylus">
 .changeName{
+    width:100%;
+    height:100%;
+    background :#fff;
     letter-spacing :0.04rem;
 }
 .change_title{

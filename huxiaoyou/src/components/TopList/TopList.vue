@@ -20,7 +20,7 @@
         <span class="xingming">姓名（昵称）</span>
         <span class="bianhao">参赛编号</span>
         <span class="piaoshu">票数</span>
-        <span class="jiapiao">为Ta加票</span>
+        <span class="jiapiao">为Ta投票</span>
       </div>
       <ul class="TopList">
         <template v-for="(item,index) in RankingData" v-if="true">

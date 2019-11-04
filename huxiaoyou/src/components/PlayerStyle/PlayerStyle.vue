@@ -5,7 +5,7 @@
       <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
       <span>选手风采</span>
     </div>
-    <div class="player_style_tuijian"><span>每日精彩推送</span></div>
+    <div class="player_style_tuijian"><span>每日精彩推荐</span> <span class="more" @click="toHome">了解更多</span></div>
     <ul class="player_list">
       <li v-for="(item,index) in PlayerStyleData" :key="index">
         <div class="player_center">
@@ -128,6 +128,10 @@
     },
     props: ["goodsImage", "goodsName", "goodsPrice", "PlayerStyleDetailedId"],
     methods: {
+      // 点了解更多跳首页
+      toHome(){
+        this.$router.push('/')
+      },
       //   跳选手详情
       toPlayerDetail(id) {
         this.playerIds(id) //保存选手id
@@ -413,15 +417,24 @@
    transform: translateY(0.32rem);
   opacity: 0;
 }
-.player_style_tuijian{padding:0 0.36rem; font-size:0.44rem; font-weight:550; margin-top:0.14rem; margin-bottom:0.44rem;
+.player_style_tuijian{display:flex;align-items:center;justify-content: space-between;padding:0 0.36rem; font-size:0.44rem; font-weight:550; margin-top:0.14rem; margin-bottom:0.44rem;
 >span{
     padding-bottom: 0.2rem;
     border-bottom: 0.053rem solid #ffccd4;
     color: #000;
     font-weight: 600;}
+>.more{
+  font-size:0.37rem;
+  color: #000;
+  padding-bottom: 0.2rem;
+  border-bottom: 0;
+  font-style: normal;
+}
 }
 .gengduo{ width:100%; height:2rem; margin-top:0.4rem; font-size:0.4rem;
 >.gengduo_left{ margin-left:4.28rem; text-align:center; margin-top:1rem;}
 >.gengduo_right{ width:100%; text-align:center;}
 }
+
+
 </style>

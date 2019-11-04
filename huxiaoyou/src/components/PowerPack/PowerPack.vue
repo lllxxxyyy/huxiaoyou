@@ -6,7 +6,7 @@
           <span>助力卡包</span>
       </div>
 	  <div class="zlkabao">
-	   <span>助力投票</span>
+	   <span>卡包助力投票</span>
       <ul>
           <li v-for="(item, index) in cardList" @click.stop="toshopdetail(item.goods_id)" v-if=" Number(index+1)" :key="index">
             <img :src="item.original_img" :alt="item.goods_name">

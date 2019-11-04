@@ -13,7 +13,6 @@
               <img :src="headPicM" alt="">
               <input type="file" class="upload" @change="uploadFile" ref="inputer" accept="image/*"/>
           </div>
-          
         </li>
         <li @click="changeInfo(1)">
           <span>姓名（或昵称）</span>
@@ -128,6 +127,7 @@ export default {
         promptContent:'', //提示盒子的内容
         showPrompt:false,//提示盒子的吸收和显示
         timer2:'',//定时器
+        timer3:"",
 
       // 上传图片
       formData:new FormData(),
@@ -137,7 +137,7 @@ export default {
   },
   // components: {},
    computed:{
-        ...mapState(['staticImgH','tokenH','nickNamePerX','agePerX','heightPerX','weightPerX','constellationPerX','SignaturePerX','cityNamePerX','tokenH'])
+        ...mapState(['staticImgH','tokenH','nickNamePerX','agePerX','heightPerX','weightPerX','constellationPerX','SignaturePerX','cityNamePerX','tokenH','MineInformationPage'])
     },
   mounted(){
         this.getInformation()
@@ -158,7 +158,6 @@ export default {
     getInformation(){
       this.$http.post('api/player/per_sonals').then((res)=>{
           if(res.data.code==200){
-            console.log(res)
               var personData=res.data.data
               this.headPicM=personData.head_pic
               //个签
@@ -199,7 +198,6 @@ export default {
               }
               //星座
               if(this.constellationPerX){
-                alert(constellationM)
                   this.constellationM=this.constellationPerX
                 }else {
                   this.constellationM=personData.constellation
@@ -255,7 +253,7 @@ export default {
     },
     // 我的信息返回
     InfoReturn(){
-        this.$router.push('/Mine')
+        this.$router.push(this.MineInformationPage)
     },
     // 个性签名跳转
     SignatureReturn(){
@@ -282,6 +280,7 @@ export default {
     // 提交
     submit(){
        var obj=qs.stringify({
+          username:this.nickNameM,
           signature:this.signatureM,
           constellation:this.constellationM,
           bloo:this.blooM,
@@ -291,8 +290,8 @@ export default {
           age:this.ageM,
           city:this.cityM,
           weight:this.weightM,
+          height:this.heightM,
           head_pic:this.headPicM,
-          username:this.usernameM,
           user_introduction:this.userIntroductionM
        })
        this.$http.post('api/player/add_sonals',obj,{
@@ -308,7 +307,15 @@ export default {
                     self.timer2=setTimeout(function(){
                         self.showPrompt=false
                         clearInterval(self.timer2);
-                    },2000)
+                    },1000)
+                    if(self.MineInformationPage=='/PlayerDetails'){
+                        clearInterval(self.timer3);
+                        self.timer3=setTimeout(function(){
+                          self.$router.push(self.MineInformationPage)
+                            clearInterval(self.timer3);
+                        },1500)
+                    }
+                    
               return false;
             }else{
               var self=this
@@ -330,6 +337,11 @@ export default {
 
 </script>
 <style scoped lang="stylus">
+.MineInformation{
+  width:100%;
+  height:100%;
+  background:#fff;
+}
 .MineInfo_title{
   width:100%;
   height:1.23rem;
@@ -493,5 +505,6 @@ export default {
   background :rgba(255, 157, 172, 1);
   margin: 0 auto;
   margin-top:0.4rem;
+  margin-bottom:0.4rem;
 }
 </style>

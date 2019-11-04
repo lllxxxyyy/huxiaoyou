@@ -19,7 +19,7 @@
           <!-- {{item.RankingImgData[index]}} -->
           <img v-if="item.photo_introduction[0]" :src="item.photo_introduction[0].src" alt="">
           <span class="angelNameTwo">{{item.username}}</span>
-          <span class="angelPriceTwo">ID号：{{item.id}}</span>
+          <!-- <span class="angelPriceTwo">ID号：{{item.id}}</span> -->
         </li>
       </template>
     </ul>
@@ -102,6 +102,12 @@ export default {
   methods: {
     //   跳加入公会
     toaddUnion(){
+        // var obj=qs.stringify({
+        //     type:1
+        // })
+        // this.$http.post('api/user/me_gong',obj).then((res)=>{
+        //     console.log(res)
+        // })
         this.AddunionPages('/LabourUnion')
         this.$router.push('/AddUnion')
     },

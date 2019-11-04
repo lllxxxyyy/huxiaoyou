@@ -18,10 +18,10 @@
               </div>
               <ul class="minePerson_EventInfo">
                 <li>
-                  参赛编号：{{personData.user_id}}
+                  参赛编号：{{personData.player_id}}
                 </li>
                 <li>赛区排名：{{personData.division_ranking}}</li>
-                <img @click="toMineInfo" :src="staticImgH+'playBian.png'" alt="">
+                <img @click="toMineInfo" :src="staticImgH+'playBian.png'" alt="">编辑
               </ul>
               <ul class="minePerson_artick ">
                  <li>
@@ -34,7 +34,7 @@
                   <span class="minePerson_artickNum">{{personData.app_vote}}</span><span>剩余免费票</span>
                 </li>
                 <li @click="toAccountBalance">
-                  <span class="minePerson_artickNum">{{personData.user_moneys}}</span><span>账户余额</span>
+                  <span class="minePerson_artickNum">{{personData.user_moneys}}</span><span>我的账单</span>
                 </li>
               </ul>
               <div class="minePerson_InfoLike" v-if="personData.signature">{{personData.signature}}</div>
@@ -78,7 +78,7 @@
               </div>
               <ul class="minePerson_artick ">
                 <li>
-                  <span class="minePerson_artickNum">{{personData.user_moneys}}</span><span>账户余额</span>
+                  <span class="minePerson_artickNum">{{personData.user_moneys}}</span><span>我的账单</span>
                 </li>
                 <li>
                   <span class="minePerson_artickNum">{{personData.user_votes}}</span><span>免费票数</span>
@@ -120,9 +120,10 @@ export default {
     },
     // 个人资料
     toMineInfo(){
+      this.MineInformationPages('/Mine')
       this.$router.push('/MineInformation')
     },
-    ...mapMutations(['ReceiptAddressPages']),
+    ...mapMutations(['ReceiptAddressPages','MineInformationPages']),
   }
 }
 </script>
@@ -164,6 +165,7 @@ export default {
         border:0.09rem solid #fff;
       }
       >.minePerson_InfoRight{
+        flex:1;
           display :flex;
           flex-direction :column;
           >.minePerson_playBian{
@@ -174,6 +176,7 @@ export default {
           >.minePerson_InfoRiTop{
               display :flex;
               align-items :center;  
+              justify-content :space-between;
               margin-top:0.133rem;
               >.minePerson_InfoName{
                     width:2.66rem;
@@ -188,6 +191,7 @@ export default {
                 align-items :center;
                 font-size:0.32rem;
                 color:rgba(255, 162, 0, 1);
+                margin-right:0.4rem;
                   >img{
                     width:0.4rem;
                     height:0.43rem;
