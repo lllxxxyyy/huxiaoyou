@@ -42,16 +42,16 @@ export default {
     },
   mounted() {
     // 判断本地有没有用户信息
-    // if(this.WpersonInfoH.unionid && this.WpersonInfoH.miniapp && this.WpersonInfoH.nickname && this.WpersonInfoH.head_pic && this.WpersonInfoH.sex){
-    //     this.unionid=this.WpersonInfoH.unionid
-    //     this.miniapp=this.WpersonInfoH.miniapp
-    //     this.nickname=this.WpersonInfoH.nickname
-    //     this.head_pic=this.WpersonInfoH.head_pic
-    //     this.sex=this.WpersonInfoH.sex
-    //     this.Islogin()  //走登录
-    // }else{  //否则重新获取code值
-    //     this.getCodes ()  
-    // }
+    if(this.WpersonInfoH.unionid && this.WpersonInfoH.miniapp && this.WpersonInfoH.nickname && this.WpersonInfoH.head_pic && this.WpersonInfoH.sex){
+        this.unionid=this.WpersonInfoH.unionid
+        this.miniapp=this.WpersonInfoH.miniapp
+        this.nickname=this.WpersonInfoH.nickname
+        this.head_pic=this.WpersonInfoH.head_pic
+        this.sex=this.WpersonInfoH.sex
+        this.Islogin()  //走登录
+    }else{  //否则重新获取code值
+        this.getCodes ()  
+    }
     
   },
   methods: {

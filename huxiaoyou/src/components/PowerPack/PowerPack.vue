@@ -45,7 +45,7 @@ export default {
 //   components: {},
 
   computed:{
-        ...mapState(['staticImgH','tokenH'])
+        ...mapState(['staticImgH','tokenH','playerId'])
     },
 
   mounted() {
@@ -64,16 +64,18 @@ export default {
 
   methods: {
        //   到商品id
+
         toshopdetail(goodid){
                 this.addressIdIsSels('false') //商品页默认地址不选中
                 this.shopDetailReturns('/PowerPack')//商品页返回哪
                 this.shopgoodIds(goodid)  //给商品页传gooid
+                this.playerIds(this.playerId)
                 this.$router.push('/shopDetail')  
         },
       toReturn(){
           this.$router.push('/Mine')
       },
-      ...mapMutations([ 'addressIdIsSels', 'shopDetailReturns','shopgoodIds'])
+      ...mapMutations([ 'addressIdIsSels', 'shopDetailReturns','shopgoodIds','playerIds'])
   }
 }
 

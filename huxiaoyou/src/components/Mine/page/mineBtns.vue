@@ -131,6 +131,7 @@ export default {
   methods: {
       triggerBtn(index){
           if(index==0){
+           this.playerIds(this.personData.player_id)
             this.$router.push('/PowerPack')
           }else if(index==1){
               this.cityNamePerXs('')   //城市

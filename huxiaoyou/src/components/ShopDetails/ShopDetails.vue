@@ -5,7 +5,7 @@
             <div class="shopDetail_header">
                 <img class="img_left" @click.stop="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
                 <span>卡包详情</span>
-                <img class="img_right" :src="staticImgH+'shopDetailShare.png'" alt="">
+                <img @click="shareC" class="img_right" :src="staticImgH+'shopDetailShare.png'" alt="">
             </div>
         <!-- 小轮播 -->
             <div class="shopDetail_con">
@@ -20,8 +20,8 @@
             </div>
         <!-- 商品信息  -->
             <div class="shop_detail">
-                    <div class="shop_detailTop"><span>¥{{shopData.shop_price}}</span> <span class="originalPrice">原价：156.00</span></div>
-                    <div class="shop_detailCenter">购买此卡包可为选手增加990票</div>
+                    <div class="shop_detailTop"><span>¥{{shopData.shop_price}}</span> <span class="originalPrice">原价：{{shopData.market_price}}</span></div>
+                    <div class="shop_detailCenter">购买此卡包可为选手增加{{shopData.goods_vote}}票</div>
                     <div class="shop_detailBottom">{{shopData.goods_name}}</div>
             </div>
         <!-- 商品内容图 -->
@@ -50,6 +50,13 @@
                     </div>
                 </div>
             </transition>
+        <!-- 提示分享 -->
+            <div class="shareText_wrap" v-if="shareTextShow"  @click="hideShare">
+                <img :src="staticImgH+'timg.jpg'"/>
+                <div class="shareText">
+                    点击右上角，为ta分享助力投票
+                </div> 
+            </div>
   </div>
 </template>
 <script>
@@ -90,6 +97,7 @@ export default {
         head_pic:'',
         sex:'',
         test:'',
+        shareTextShow:false,//提示分享默认隐藏
     };
   },
   components: {},
@@ -100,6 +108,14 @@ export default {
       this.firstPanduan()
   },
   methods: {
+            //   分享提示显示
+                    shareC(){
+                        this.shareTextShow=true
+                    },
+            //   隐藏提示分享
+                    hideShare(){
+                        this.shareTextShow=false
+                    },
             //点击了解更多
             toHome(){
                 this.$router.push('/')
@@ -427,9 +443,6 @@ export default {
     display :flex;
     align-items :center;
     justify-content :space-between;
-    position :fixed;
-    top:0;
-    left:0;
     padding:0 0.53rem;
     z-index:999;
     >.img_left{
@@ -569,5 +582,37 @@ export default {
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
    transform: translateY(0.32rem);
   opacity: 0;
+}
+
+.shareText_wrap{
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.9);
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:999;
+    >img{
+        width:2.51rem;
+        height:auto;
+        position:absolute;
+        right:0.32rem;
+        top:0.32rem;
+    }
+    >.shareText{
+        width:7.733rem;
+        height:5.01rem;
+        position:absolute;
+        left:0;
+        right:0;
+        top:0;
+        bottom:0;
+        margin:auto;
+        font-size:0.48rem;
+        text-align:center;
+        padding:0.4rem;
+        line-height:1rem;
+        color:#fff;
+    }
 }
 </style>

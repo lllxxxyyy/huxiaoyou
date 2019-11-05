@@ -4,7 +4,7 @@ Vue.use(Vuex)
 const state = {
     WpersonInfoH: JSON.parse(localStorage.getItem('WpersonInfoH')) || {},
     tokenH: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiNTAiLCJpc3MiOiJodHRwczpcL1wvbG92eW91LnRvcCIsImF1ZCI6Imh0dHBzOlwvXC9sb3Z5b3UudG9wIiwiaWF0IjoxNTcyNjAzNTkzLCJuYmYiOjE1NzI2MDM1OTMsImV4cCI6MTYwNDEzOTU5M30.xYTFxPE0qAujzj3vysFLd3_iW5uZEhec1OVOsqRcgj4',
-    userIdH: localStorage.getItem('userIdH'), //用户Id
+    userIdH: '3', //用户Id
     userIdHInterest: localStorage.getItem('userIdHInterest'), //分享出去的商品详情页需要得到利益的用户Id
     idxNowH: localStorage.getItem('idxNowH'),
     staticImgH: '../../static/mock/img/',
