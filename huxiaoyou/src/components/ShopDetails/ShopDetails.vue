@@ -99,7 +99,6 @@ export default {
   mounted(){
       this.firstPanduan()
   },
-
   methods: {
             //点击了解更多
             toHome(){
@@ -130,15 +129,13 @@ export default {
                                     shopUrlId[shopCan] = value;  // key value放到shopUrlId对象里
                                 }
                             }
-                            if(shopUrlId.user_id && shopUrlId.goods_id){
-                                this.BuserIdH=shopUrlId.user_id
+                            if(shopUrlId.goods_id){
                                 this.BshopId=shopUrlId.goods_id
                             }else{
-                                this.BuserIdH=this.userIdHInterest
                                 this.BshopId=this.shopgoodId
                             }
                         }else{
-                                this.BuserIdH=this.userIdHInterest
+                                this.BuserIdH=this.userIdH
                                 this.BshopId=this.shopgoodId
                         }
                 // 获取商品信息
@@ -172,7 +169,7 @@ export default {
         // 微信分享
             WShare(){
                 var Wobj=qs.stringify({
-                    player_id:this.BuserIdH,
+                    player_id:this.userIdH,
                     type:1,
                 })
                 this.$http.post('/api/wechat/get_sign',Wobj).then((res)=>{
@@ -205,7 +202,7 @@ export default {
         //   分享给朋友
             toFriend(){
                 var vm=this
-                var realLocation=vm.apiH+'/#/shopDetail?user_id='+vm.userIdH+'&goods_id='+vm.BshopId
+                var realLocation=vm.apiH+'/#/shopDetails?goods_id='+vm.BshopId
                 wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
                     wx.onMenuShareAppMessage({ 
                         title:vm.test, // 分享标题
@@ -220,7 +217,7 @@ export default {
         //   分享到朋友圈
             toFriendQuan(){
                     var vm=this
-                    var realLocation=vm.apiH+'/#/shopDetail?player_id='+vm.userIdH+'&goods_id='+vm.BshopId 
+                    var realLocation=vm.apiH+'/#/shopDetails?goods_id='+vm.BshopId 
                     wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
                         wx.onMenuShareTimeline({
                                 title:vm.test, // 分享标题
@@ -251,15 +248,8 @@ export default {
         //   先判断是否有地址
             AssistTicket(){
                     if(this.addressIdIsSel=='false'){   //如果 addressIdIsSel为false 选择获取添加地址
-                            var obj=qs.stringify({
-                            })
-                            this.$http.post("api/user/address_list",obj,{
-                                headers: {
-                                        'authorization': this.tokenH
-                                    }
-                            }).then((res)=>{
+                            this.$http.post("api/user/address_list").then((res)=>{
                                 this.shopgoodIds(this.BshopId)  //给商品页传gooid
-                                this.userIdHInterests(this.BuserIdH) //给商品页传获得利益的用户Id
                                 if(res.data.data.length){  //跳选择地址列表页面
                                     this.ReceiptAddressPages('/shopDetail')
                                     this.$router.push('/ReceiptAddress')
@@ -276,14 +266,10 @@ export default {
             AssistTicketTwo(){
                 var obj=qs.stringify({
                     goods_id:this.shopgoodId,
-                    player_id:this.BuserIdH,
+                    player_id:this.userIdH,
                     address_id:this.addressId
                 })
-                this.$http.post('api/goods/goods_buyer',obj,{
-                        headers: {
-                                'authorization': this.tokenH
-                            }
-                    }).then((res)=>{
+                this.$http.post('api/goods/goods_buyer',obj).then((res)=>{
                     if(res.data.code==200){
                         this.orderSn=res.data.data.result  //订单编号
                         this.getPayPermit()
@@ -306,11 +292,7 @@ export default {
                     order_sn:this.orderSn,
                     trade_type:'JSAPI',
                 })
-                this.$http.post('api/wechat/dopay',PayPermitObj,{
-                        headers: {
-                                'authorization': this.tokenH
-                            }
-                    }).then((res)=>{
+                this.$http.post('api/wechat/dopay',PayPermitObj).then((res)=>{
                         if(res.data.code==200){
                             var data=res.data.data
                             this.dataResult=data //微信支付认证信息

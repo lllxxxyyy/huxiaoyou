@@ -62,27 +62,27 @@
                         </li>
                         <li>
                             <div class="Info_name"><span>年龄</span>*</div>
-                            <input type="text" :disabled='disabledXiu' oninput = "value=value.replace(/[^\d]/g,'')" v-model="age" placeholder="请填写您的真实年龄">
+                            <input type="text" :disabled='disabledXiu' oninput = "value=value.replace(/[^\d]/g,'')" v-model="age" placeholder="请填写您的年龄">
                         </li>
                          <li>
                             <div class="Info_name"><span>身高</span></div>
-                            <input type="text" :disabled='disabledXiu' v-model="heightVal" oninput = "value=value.replace(/[^\d]/g,'')" placeholder="请填写您的真实年龄">
+                            <input type="text" :disabled='disabledXiu' v-model="heightVal" oninput = "value=value.replace(/[^\d]/g,'')" placeholder="请填写您的身高">
                         </li>
                         <li>
                             <div class="Info_name"><span>体重</span></div>
-                            <input type="text" :disabled='disabledXiu' v-model="weightVal" oninput = "value=value.replace(/[^\d]/g,'')" placeholder="请填写您的真实年龄">
+                            <input type="text" :disabled='disabledXiu' v-model="weightVal" oninput = "value=value.replace(/[^\d]/g,'')" placeholder="请填写您的体重">
                         </li>
                         <li>
                             <div class="Info_name"><span>星座</span></div>
-                            <input type="text" :disabled='disabledXiu' v-model="constellationVal" oninput="value=value.replace(/[^\u4e00-\u9fa5]/g,'')"  placeholder="请填写您的真实年龄">
+                            <input type="text" :disabled='disabledXiu' v-model="constellationVal"   placeholder="请填写您的星座">
                         </li>
                         <li>
                             <div class="Info_name"><span>特长</span></div>
-                            <input type="text" :disabled='disabledXiu' v-model="SpecialtyVal"  placeholder="请填写您的真实年龄">
+                            <input type="text" :disabled='disabledXiu' v-model="SpecialtyVal"  placeholder="请填写您的特长">
                         </li>
                         <li>
                             <div class="Info_name"><span>职业</span></div>
-                            <input type="text" :disabled='disabledXiu' v-model="CareerVal"  placeholder="请填写您的真实年龄">
+                            <input type="text" :disabled='disabledXiu' v-model="CareerVal"  placeholder="请填写您的职业">
                         </li>
                         <li>
                             <div class="Info_name"><span>个性签名</span>*</div>

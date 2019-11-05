@@ -150,7 +150,20 @@ export default {
           }else if(index==4){
               this.$router.push('/ShortVideo')
           }else if(index==5){
-              this.$router.push('/MineGuild')
+              var obj=qs.stringify({
+                  type:1
+              })
+              this.$http.post('/api/user/me_gong',obj).then((res)=>{
+                  if(res.data.code==200){
+                      if(res.data.data.result==1){
+                          this.AddunionPages('/Mine')
+                          this.$router.push('/AddUnion')
+                      }else{
+                          this.MineGuildPages('/Mine')
+                            this.$router.push('/MineGuild')
+                      }
+                  }
+              })
           }else if(index==7){
                 this.myOrderListPages('/Mine')
                 this.orderTypes('')
@@ -182,7 +195,7 @@ export default {
             this.$router.push('/AboutWe')
         }
     },
-    ...mapMutations(['ReceiptAddressPages','userIdHs','cityNamePerXs','SignaturePerXs','nickNamePerXs','agePerXs','heightPerXs','weightPerXs','constellationPerXs','myOrderListPages','orderTypes','orderNums','playerIds','MineInformationPages']),
+    ...mapMutations(['ReceiptAddressPages','userIdHs','cityNamePerXs','SignaturePerXs','nickNamePerXs','agePerXs','heightPerXs','weightPerXs','constellationPerXs','myOrderListPages','orderTypes','orderNums','playerIds','MineInformationPages','MineGuildPages','AddunionPages']),
   }
 }
 

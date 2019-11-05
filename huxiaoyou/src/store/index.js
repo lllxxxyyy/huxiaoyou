@@ -45,8 +45,14 @@ const state = {
 
     comOrder: JSON.parse(sessionStorage.getItem('comOrder')) || {},
     MineInformationPage: sessionStorage.getItem('MineInformationPage'), // 个人信息页面返回
+    MineGuildPage: sessionStorage.getItem('MineGuildPage'), // 我的公会页面返回
 }
 const mutations = {
+    // 我的公会页面返回
+    MineGuildPages(state, MineGuildPage) {
+        sessionStorage.setItem('MineGuildPage', MineGuildPage);
+        state.MineGuildPage = MineGuildPage
+    },
     // 个人信息页面返回
     MineInformationPages(state, MineInformationPage) {
         sessionStorage.setItem('MineInformationPage', MineInformationPage);

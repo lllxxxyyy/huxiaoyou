@@ -373,6 +373,7 @@ export default {
                 this.AlertText('加入即同意')
                 return 
             }
+            this.formData=new FormData()
             this.formData.append('just_number',this.$refs.inputer.files[0]);
             this.formData.append('over_number',this.$refs.inputerTwo.files[0]);
             this.formData.append('nickname',this.nickname);
