@@ -295,11 +295,8 @@ export default {
             },
         //   先判断是否有地址
             AssistTicket(){
-                alert(1)
                     if(this.addressIdIsSel=='false'){   //如果 addressIdIsSel为false 选择获取添加地址
-                    alert(2)
-                            this.$http.post("api/user/address_list",obj).then((res)=>{
-                                alert(JSON.stringify(res))
+                            this.$http.post("api/user/address_list").then((res)=>{
                                 this.shopgoodIds(this.BshopId)  //给商品页传gooid
                                 this.userIdHInterests(this.BuserIdH) //给商品页传获得利益的用户Id
                                 if(res.data.data.length){  //跳选择地址列表页面
@@ -311,7 +308,6 @@ export default {
                                 }
                             })
                         }else if(this.addressIdIsSel=='true'){  //否则进行支付
-                        alert(3)
                                 this.AssistTicketTwo()
                         }
             },
@@ -388,7 +384,6 @@ export default {
                             signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
                             paySign:  vm.dataResult.sign, // 支付签名
                             success: function (res) {
-                                alert(JSON.stringify(res))
                                 vm.orderTIshiSHow=true
                                 vm.addressIdIsSels('false')
                                 // vm.myOrderListPages('/shopDetail')  //订单列表页返回
