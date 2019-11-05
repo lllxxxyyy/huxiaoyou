@@ -89,6 +89,7 @@ export default {
         nickname:'',
         head_pic:'',
         sex:'',
+        test:'',
     };
   },
   components: {},
@@ -185,13 +186,10 @@ export default {
                     player_id:this.BuserIdH,
                     type:1,
                 })
-                this.$http.post('/api/wechat/get_sign',Wobj,{
-                    headers: {
-                            'authorization': this.tokenH
-                        }
-                    }).then((res)=>{
+                this.$http.post('/api/wechat/get_sign',Wobj).then((res)=>{
                     if(res.data.code==200){
                         var data=res.data.data
+                        this.test=data.test
                             wx.config({
                                 debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
                                 appId: data.appId, // 必填，公众号的唯一标识
@@ -221,8 +219,8 @@ export default {
                 var realLocation=vm.apiH+'/#/shopDetail?user_id='+vm.userIdH+'&goods_id='+vm.BshopId
                 wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
                     wx.onMenuShareAppMessage({ 
-                        title:vm.shopData.goods_name, // 分享标题
-                        desc:'未定', // 分享描述
+                        title:vm.test, // 分享标题
+                        desc:' ', // 分享描述
                         link:vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                         imgUrl: vm.shopData.original_img, // 分享图标
                         success: function (res) {
@@ -236,7 +234,7 @@ export default {
                     var realLocation=vm.apiH+'/#/shopDetail?player_id='+vm.userIdH+'&goods_id='+vm.BshopId 
                     wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
                         wx.onMenuShareTimeline({
-                                title:vm.shopData.goods_name, // 分享标题
+                                title:vm.test, // 分享标题
                                 link: vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation),  // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                                 imgUrl:vm.shopData.original_img, // 分享图标
                                 success: function (res) {

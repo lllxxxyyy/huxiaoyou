@@ -271,11 +271,7 @@ export default {
                 player_id:this.playerId,
                 type:2,
             })
-            this.$http.post('/api/wechat/get_sign',Wobj,{
-                headers: {
-                        'authorization': this.tokenH
-                    }
-                }).then((res)=>{
+            this.$http.post('/api/wechat/get_sign',Wobj).then((res)=>{
                 if(res.data.code==200){
                     var data=res.data.data
                     this.test=data.test
