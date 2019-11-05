@@ -122,36 +122,38 @@ export default {
             },
             firstPanduan(){
                 //判断是否是分享出去的
-                    var shopUrl = window.location.href
-                        //var shopUrl = 'http://mobile.aibebi.cn/aibei/shopList.html?goods_id=1482'
-                        //截取？后的商品id
-                        var shopCan, value;  //初始化 
-                        shopCan = shopUrl.indexOf("#")  //找到？的下标
-                        shopUrl=shopUrl.substr(shopCan+1)
-                        shopCan=shopUrl.indexOf('?')
-                        if(shopCan > 0){
-                            shopUrl = shopUrl.substr(shopCan + 1)  //截取？后面的内容
-                            var shopArr = shopUrl.split('&') //分割成数组 
-                            var shopUrlId = {};// 初始化对象 找到的goodId放到里面
-                            for(var i = 0; i < shopArr.length; i++) {//循环shopArr数组
-                                shopCan = shopArr[i].indexOf("=");  //找到=号的下标
-                                if(shopCan > 0){ //判断有没有=
-                                    value = shopArr[i].substring(shopCan + 1); //找到=后面的值并截取     =>value
-                                    shopCan = shopArr[i].substring(0, shopCan);//找到=前面的值  =》key
-                                    shopUrlId[shopCan] = value;  // key value放到shopUrlId对象里
-                                }
-                            }
-                            if(shopUrlId.user_id && shopUrlId.goods_id){
-                                this.BuserIdH=shopUrlId.user_id
-                                this.BshopId=shopUrlId.goods_id
-                            }else{
-                                this.BuserIdH=this.userIdHInterest
-                                this.BshopId=this.shopgoodId
-                            }
-                        }else{
-                                this.BuserIdH=this.userIdHInterest
-                                this.BshopId=this.shopgoodId
-                        }
+                    // var shopUrl = window.location.href
+                    //     //var shopUrl = 'http://mobile.aibebi.cn/aibei/shopList.html?goods_id=1482'
+                    //     //截取？后的商品id
+                    //     var shopCan, value;  //初始化 
+                    //     shopCan = shopUrl.indexOf("#")  //找到？的下标
+                    //     shopUrl=shopUrl.substr(shopCan+1)
+                    //     shopCan=shopUrl.indexOf('?')
+                    //     if(shopCan > 0){
+                    //         shopUrl = shopUrl.substr(shopCan + 1)  //截取？后面的内容
+                    //         var shopArr = shopUrl.split('&') //分割成数组 
+                    //         var shopUrlId = {};// 初始化对象 找到的goodId放到里面
+                    //         for(var i = 0; i < shopArr.length; i++) {//循环shopArr数组
+                    //             shopCan = shopArr[i].indexOf("=");  //找到=号的下标
+                    //             if(shopCan > 0){ //判断有没有=
+                    //                 value = shopArr[i].substring(shopCan + 1); //找到=后面的值并截取     =>value
+                    //                 shopCan = shopArr[i].substring(0, shopCan);//找到=前面的值  =》key
+                    //                 shopUrlId[shopCan] = value;  // key value放到shopUrlId对象里
+                    //             }
+                    //         }
+                    //         if(shopUrlId.user_id && shopUrlId.goods_id){
+                    //             this.BuserIdH=shopUrlId.user_id
+                    //             this.BshopId=shopUrlId.goods_id
+                    //         }else{
+                    //             this.BuserIdH=this.userIdHInterest
+                    //             this.BshopId=this.shopgoodId
+                    //         }
+                    //     }else{
+                    //             this.BuserIdH=this.userIdHInterest
+                    //             this.BshopId=this.shopgoodId
+                    //     }
+                    this.BuserIdH=this.userIdHInterest
+                    this.BshopId=this.shopgoodId
                 // 获取商品信息
                     var obj=qs.stringify({
                             goods_id:this.BshopId
@@ -182,61 +184,62 @@ export default {
             },
         // 微信分享
             WShare(){
+               //   微信分享
                 var Wobj=qs.stringify({
-                    player_id:this.BuserIdH,
-                    type:1,
-                })
-                this.$http.post('/api/wechat/get_sign',Wobj).then((res)=>{
-                    if(res.data.code==200){
-                        var data=res.data.data
-                        this.test=data.test
-                            wx.config({
-                                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-                                appId: data.appId, // 必填，公众号的唯一标识
-                                timestamp:data.timestamp, // 必填，生成签名的时间戳
-                                nonceStr: data.nonceStr, // 必填，生成签名的随机串
-                                signature: data.signature,// 必填，签名
-                                jsApiList: ['onMenuShareAppMessage','onMenuShareTimeline'] // 必填，需要使用的JS接口列表
-                            });
-                            this.toFriend()
-                            this.toFriendQuan()
-                    }else{
-                            var self=this
-                            clearInterval(self.timer2);
-                            this.promptContent=res.data.msg
-                            this.showPrompt=true
-                            self.timer2=setTimeout(function(){
-                                self.showPrompt=false
+                        player_id:this.playerId,
+                        type:2,
+                    })
+                    this.$http.post('/api/wechat/get_sign',Wobj).then((res)=>{
+                        if(res.data.code==200){
+                            var data=res.data.data
+                            this.test=data
+                                wx.config({
+                                    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                                    appId: data.appId, // 必填，公众号的唯一标识
+                                    timestamp:data.timestamp, // 必填，生成签名的时间戳
+                                    nonceStr: data.nonceStr, // 必填，生成签名的随机串
+                                    signature: data.signature,// 必填，签名
+                                    jsApiList: ['onMenuShareAppMessage','onMenuShareTimeline'] // 必填，需要使用的JS接口列表
+                                });
+                                this.toFriend()
+                                this.toFriendQuan()
+                        }else{
+                                var self=this
                                 clearInterval(self.timer2);
-                            },1000)
-                            return false;
-                    }
+                                this.promptContent=res.data.msg
+                                this.showPrompt=true
+                                self.timer2=setTimeout(function(){
+                                    self.showPrompt=false
+                                    clearInterval(self.timer2);
+                                },1000)
+                                return false;
+                        }
                 })
             },
         //   分享给朋友
             toFriend(){
-                var vm=this
-                var realLocation=vm.apiH+'/#/shopDetail?user_id='+vm.userIdH+'&goods_id='+vm.BshopId
-                wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
-                    wx.onMenuShareAppMessage({ 
-                        title:vm.test, // 分享标题
-                        desc:' ', // 分享描述
-                        link:vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                        imgUrl: vm.shopData.original_img, // 分享图标
-                        success: function (res) {
-                        }
-                    })
-                });
+                        var vm=this
+                        var realLocation=vm.apiH+'/#/PlayerDetails?player_id='+vm.playerId 
+                        wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+                            wx.onMenuShareAppMessage({ 
+                                title:vm.test.test, // 分享标题
+                                desc:'快来给我投票吧', // 分享描述
+                                link:vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                                imgUrl:vm.test.head_pic, // 分享图标
+                                success: function (res) {
+                                }
+                            })
+                        });
             },
         //   分享到朋友圈
             toFriendQuan(){
-                    var vm=this
-                    var realLocation=vm.apiH+'/#/shopDetail?player_id='+vm.userIdH+'&goods_id='+vm.BshopId 
-                    wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+                var vm=this
+                var realLocation=vm.apiH+'/#/PlayerDetails?player_id='+vm.playerId 
+                wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
                         wx.onMenuShareTimeline({
                                 title:vm.test, // 分享标题
                                 link: vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation),  // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                                imgUrl:vm.shopData.original_img, // 分享图标
+                                imgUrl:vm.test.head_pic, // 分享图标
                                 success: function (res) {
                                 },
                         })
@@ -262,13 +265,7 @@ export default {
         //   先判断是否有地址
             AssistTicket(){
                     if(this.addressIdIsSel=='false'){   //如果 addressIdIsSel为false 选择获取添加地址
-                            var obj=qs.stringify({
-                            })
-                            this.$http.post("api/user/address_list",obj,{
-                                headers: {
-                                        'authorization': this.tokenH
-                                    }
-                            }).then((res)=>{
+                            this.$http.post("api/user/address_list",obj).then((res)=>{
                                 this.shopgoodIds(this.BshopId)  //给商品页传gooid
                                 this.userIdHInterests(this.BuserIdH) //给商品页传获得利益的用户Id
                                 if(res.data.data.length){  //跳选择地址列表页面
@@ -290,11 +287,7 @@ export default {
                     player_id:this.BuserIdH,
                     address_id:this.addressId
                 })
-                this.$http.post('api/goods/goods_buyer',obj,{
-                        headers: {
-                                'authorization': this.tokenH
-                            }
-                    }).then((res)=>{
+                this.$http.post('api/goods/goods_buyer',obj).then((res)=>{
                     if(res.data.code==200){
                         this.orderSn=res.data.data.result  //订单编号
                         this.getPayPermit()
@@ -360,11 +353,12 @@ export default {
                             signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
                             paySign:  vm.dataResult.sign, // 支付签名
                             success: function (res) {
-                                vm.addressIdIsSels('false')
-                                vm.myOrderListPages('/shopDetail')  //订单列表页返回
-                                vm.orderTypes('WAITSEND')  //订单页面orderType
-                                vm.orderNums(2)   //订单页面导航下标
-                                vm.$router.push('/orderList')  //支付成功后跳订单列表
+                                // vm.addressIdIsSels('false')
+                                // vm.myOrderListPages('/shopDetail')  //订单列表页返回
+                                // vm.orderTypes('WAITSEND')  //订单页面orderType
+                                // vm.orderNums(2)   //订单页面导航下标
+                                // vm.$router.push('/orderList')  //支付成功后跳订单列表
+                                alert('您已成功为号选手投票')
                             },
                             fail(){
                                 alert('支付失败')

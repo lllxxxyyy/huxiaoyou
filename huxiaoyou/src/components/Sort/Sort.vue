@@ -74,7 +74,7 @@
                 this.addressIdIsSels('false') //商品页默认地址不选中
                 this.shopDetailReturns('/Sort')//商品页返回哪
                 this.shopgoodIds(goodid)  //给商品页传gooid
-                this.$router.push('/shopDetail')  
+                this.$router.push('/ShopDetails')  
             },
       //   获取数据
       getListData() {

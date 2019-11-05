@@ -477,8 +477,8 @@ export default {
                 this.shopDetailReturns('/PlayerDetails')//商品页返回哪
                 this.shopgoodIds(goodid)  //给商品页传gooid
                 this.playerIds(this.playerId)  //保存当前选手的playerID
-                this.userIdHInterests(this.detailData.user_id)  //给商品页传获得利益的选手编号
-                this.$router.push('/shopDetail')  
+                // this.userIdHInterests(this.detailData.user_id)  //给商品页传获得利益的选手编号
+                this.$router.push({path:'/shopDetail',query:{head_pic:this.detailData.head_pic}})  
             },
         //   隐藏放大的图片
             hideBigPlayImg(){
