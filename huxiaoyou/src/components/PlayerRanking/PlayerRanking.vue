@@ -19,7 +19,7 @@
                    :src="player.avatar"
                    alt="">
               <div class="top_img"><img :src="staticImgH+'paiming'+(seqNum+1)+'.png'" alt=""></div>
-              <div class="ta_vote" @click.stop="toPlayerDetail(player.id, 'true')">给Ta投票</div>
+              <!-- <div class="ta_vote" @click.stop="toPlayerDetail(player.id, 'true')">给Ta投票</div> -->
               <span class="angelNameTwo">选手：{{player.username}}</span>
               <span class="angelPriceTwo">编号：{{player.id}}</span>
             </li>

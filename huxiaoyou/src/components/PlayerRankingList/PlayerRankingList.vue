@@ -27,9 +27,9 @@
           <img v-if="item.photo_introduction[0]" :src="item.photo_introduction[0].src" alt="">
           <div class="top_img"><img :src="staticImgH+'paiming'+(index+1)+'.png'" alt=""></div>
           <!--<div class="ta_vote to_vote1">给Ta投票</div>-->
-          <div class="ta_vote" :class="{
+          <!-- <div class="ta_vote" :class="{
               ta_vote1: (index+1) > 3 && (index+1) <= 100,
-              ta_vote2: (index+1) > 100}" @click.stop="toPlayerDetail(item.id, 'true')">给Ta投票</div>
+              ta_vote2: (index+1) > 100}" @click.stop="toPlayerDetail(item.id, 'true')">给Ta投票</div> -->
           <span class="angelNameTwo">{{item.username}}</span>
           <span class="angelPriceTwo">{{item.votes}}+</span>
         </li>

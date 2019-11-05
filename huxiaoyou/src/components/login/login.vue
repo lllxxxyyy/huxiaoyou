@@ -66,6 +66,7 @@ export default {
         })
         this.$http.post('api/user/logins',LoginObj).then((res)=>{
           if(res.data.code==200){
+            this.userIdHs(res.data.data.result.user_id)
             this.tokenHs(res.data.data.result.token)  //token
             if(!!this.$route.query.redirect){
                 this.$router.push(this.$route.query.redirect)//这里是拦截前想跳转的页面
@@ -131,7 +132,7 @@ export default {
               })
           }
       },
-      ...mapMutations(['WpersonInfoHs','tokenHs']),
+      ...mapMutations(['WpersonInfoHs','tokenHs','userIdHs']),
   }
 }
 

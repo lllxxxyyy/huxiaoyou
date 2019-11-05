@@ -48,9 +48,9 @@
                         <span v-if="detailData.sex==2">女</span>
                         <span v-if="detailData.sex==1">男</span>
                     </li>
-                    <li> <span v-if="detailData.age!==0">{{detailData.age}}</span></li>
+                    <li><span v-if="detailData.age!==0">年龄:{{detailData.age}}</span></li>
                     <li v-if="detailData.city">{{detailData.city}}</li>
-                    <li v-if="detailData.constellation">{{detailData.constellation}}</li>
+                    <li v-if="detailData.constellation">星座:{{detailData.constellation}}</li>
                     <li v-if="detailData.height">{{detailData.height}}cm</li>
                     <li v-if="detailData.weight">{{detailData.weight}}kg</li>
                     <li><span v-if="detailData.union_id">公会成员</span><span v-else>工会未认证</span></li>
@@ -149,7 +149,6 @@ export default {
             　　},
             speed:300,
         },
-
         shareTextShow:false,//提示分享默认消失
         ShowShareSuccess:false,
         voteShow:false,   //投票盒子默认消失
@@ -538,7 +537,7 @@ export default {
                 if(this.PlayerDetailPage){
                     this.$router.push(this.PlayerDetailPage)  //PlayerDetailPage（vuex中全局定义，动态设置返回页面）
                 }else{
-                    this.$router.push('http://app.aibebi.net/#/')
+                    this.$router.push('/')
                 }
             },
         // 获取免费票数  
