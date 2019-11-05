@@ -45,7 +45,7 @@ export default {
 //   components: {},
 
   computed:{
-        ...mapState(['staticImgH','tokenH','playerId'])
+        ...mapState(['staticImgH','tokenH','playerId','userIdH'])
     },
 
   mounted() {
@@ -70,12 +70,13 @@ export default {
                 this.shopDetailReturns('/PowerPack')//商品页返回哪
                 this.shopgoodIds(goodid)  //给商品页传gooid
                 this.playerIds(this.playerId)
+                this.userIdHInterests(this.userIdH)
                 this.$router.push('/shopDetail')  
         },
       toReturn(){
           this.$router.push('/Mine')
       },
-      ...mapMutations([ 'addressIdIsSels', 'shopDetailReturns','shopgoodIds','playerIds'])
+      ...mapMutations([ 'addressIdIsSels', 'shopDetailReturns','shopgoodIds','playerIds','userIdHInterests'])
   }
 }
 

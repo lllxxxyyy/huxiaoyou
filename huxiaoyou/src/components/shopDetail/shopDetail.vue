@@ -57,6 +57,13 @@
                     点击右上角，为ta分享助力投票
                 </div> 
             </div>
+        <!-- 订单提交后提示 -->
+            <div class="orderTIshi_wrap" @click="sureOrderTi" v-if="orderTIshiSHow">
+                <div class="orderTIshi" @click.stop>
+                    <span class="orderTIshi_des">您已成功为{{playerId}}号选手{{test.username}}投票{{shopData.goods_vote}}票，将按照所填快递地址寄出精美礼品</span>
+                    <span class="orderTIshi_btn" @click="sureOrderTi">确定</span>
+                </div>
+            </div>
   </div>
 </template>
 <script>
@@ -98,6 +105,7 @@ export default {
         sex:'',
         test:'',
         shareTextShow:false,//提示分享默认隐藏
+        orderTIshiSHow:false,//订单成功后的提示默认隐藏
     };
   },
   components: {},
@@ -120,6 +128,10 @@ export default {
   },
 
   methods: {
+            // 隐藏提交订单提示盒子显示
+                   sureOrderTi(){
+                       this.orderTIshiSHow=false
+                   },
             //   分享提示显示
                     shareC(){
                         this.shareTextShow=true
@@ -243,6 +255,7 @@ export default {
                                 link:vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                                 imgUrl:vm.test.head_pic, // 分享图标
                                 success: function (res) {
+
                                 }
                             })
                         });
@@ -369,12 +382,12 @@ export default {
                             signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
                             paySign:  vm.dataResult.sign, // 支付签名
                             success: function (res) {
-                                // vm.addressIdIsSels('false')
+                                vm.addressIdIsSels('false')
                                 // vm.myOrderListPages('/shopDetail')  //订单列表页返回
                                 // vm.orderTypes('WAITSEND')  //订单页面orderType
                                 // vm.orderNums(2)   //订单页面导航下标
                                 // vm.$router.push('/orderList')  //支付成功后跳订单列表
-                                alert('您已成功为号选手投票')
+                                vm.orderTIshiSHow=true
                             },
                             fail(){
                                 alert('支付失败')
@@ -667,6 +680,49 @@ export default {
         padding:0.4rem;
         line-height:1rem;
         color:#fff;
+    }
+}
+// 订单提交后提示
+.orderTIshi_wrap{
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.9);
+    position:fixed;
+    left:0;
+    top:0;
+    z-index:999;
+   
+    >.orderTIshi{
+        width:8rem;
+        height:3.84rem;
+        background:#fff;
+        border-radius:0.133rem;
+         display:flex;
+        flex-direction:column;
+        position:absolute;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+        margin:auto;
+        >.orderTIshi_des{
+            width:100%;
+            height:3rem;
+            font-size:0.373rem;
+            color:rgba(0, 0, 0, 1);
+            line-height:0.8rem;
+            text-align:center;
+            padding:0.4rem;
+        }
+        >.orderTIshi_btn{
+            width:100%;
+            height:1.253rem;
+            font-size:0.373rem;
+            color:rgba(255, 57, 36, 1);
+            text-align:center;
+            line-height:1.253rem;
+            border-top:0.03rem solid rgba(204, 204, 204, 0.4);
+        }
     }
 }
 </style>
