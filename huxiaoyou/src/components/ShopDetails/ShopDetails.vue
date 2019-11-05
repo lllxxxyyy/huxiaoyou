@@ -106,6 +106,8 @@ export default {
         test:'',
         shareTextShow:false,//提示分享默认隐藏
         orderTIshiSHow:false,//订单提交后的提示默认隐藏
+
+        dataResult:'',
     };
   },
   components: {},

@@ -106,6 +106,8 @@ export default {
         test:'',
         shareTextShow:false,//提示分享默认隐藏
         orderTIshiSHow:false,//订单成功后的提示默认隐藏
+
+        dataResult:"",
     };
   },
   components: {},
@@ -382,12 +384,14 @@ export default {
                             signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
                             paySign:  vm.dataResult.sign, // 支付签名
                             success: function (res) {
+                                alert(JSON.stringify(res))
+                                vm.orderTIshiSHow=true
                                 vm.addressIdIsSels('false')
                                 // vm.myOrderListPages('/shopDetail')  //订单列表页返回
                                 // vm.orderTypes('WAITSEND')  //订单页面orderType
                                 // vm.orderNums(2)   //订单页面导航下标
                                 // vm.$router.push('/orderList')  //支付成功后跳订单列表
-                                vm.orderTIshiSHow=true
+                                
                             },
                             fail(){
                                 alert('支付失败')
