@@ -251,10 +251,10 @@ export default {
                             this.$http.post("api/user/address_list").then((res)=>{
                                 this.shopgoodIds(this.BshopId)  //给商品页传gooid
                                 if(res.data.data.length){  //跳选择地址列表页面
-                                    this.ReceiptAddressPages('/shopDetail')
+                                    this.ReceiptAddressPages('/shopDetails')
                                     this.$router.push('/ReceiptAddress')
                                 }else{  //跳添加地址列表页面
-                                    this.ReceiptAddressAddPages('/shopDetail')
+                                    this.ReceiptAddressAddPages('/shopDetails')
                                     this.$router.push('/ReceiptAddressAdd')
                                 }
                             })
