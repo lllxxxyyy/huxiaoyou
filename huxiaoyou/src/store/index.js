@@ -46,8 +46,15 @@ const state = {
     comOrder: JSON.parse(sessionStorage.getItem('comOrder')) || {},
     MineInformationPage: sessionStorage.getItem('MineInformationPage'), // 个人信息页面返回
     MineGuildPage: sessionStorage.getItem('MineGuildPage'), // 我的公会页面返回
+
+    Shopvote: sessionStorage.getItem('Shopvote'), // 商品票数
 }
 const mutations = {
+    // 商品票数
+    Shopvotes(state, Shopvote) {
+        sessionStorage.setItem('Shopvote', Shopvote);
+        state.Shopvote = Shopvote
+    },
     // 我的公会页面返回
     MineGuildPages(state, MineGuildPage) {
         sessionStorage.setItem('MineGuildPage', MineGuildPage);

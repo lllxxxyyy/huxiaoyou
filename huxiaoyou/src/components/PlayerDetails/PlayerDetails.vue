@@ -93,9 +93,9 @@
                             <div class="SpecialTopicBody_bar">
                                 <!-- 商品列表 -->
                                 <ul>
-                                    <li  :class="barcolorIndex==index?'SpecialTopicBody_barColor':''" @click.stop="getShopDes(item.goods_id,index)" v-for="(item,index) in shopList" v-if=" Number(index+1)" :key="index">
+                                    <li  :class="barcolorIndex==index?'SpecialTopicBody_barColor':''" @click.stop="getShopDes(item.goods_id,index,item.vote)" v-for="(item,index) in shopList" v-if=" Number(index+1)" :key="index">
                                         <img :src="item.original_img" alt="">
-                                        <span @click.stop="toshopdetail(item.goods_id)">查看详情>></span>
+                                        <span @click.stop="toshopdetail(item.goods_id,item.vote)">查看详情>></span>
                                     </li>
                                 </ul>
                             </div>
@@ -123,6 +123,13 @@
                 <div class="share_success">
                      <img  class="firstEnter_chaimg" @click="shareSuccessCha" :src="staticImgH+'cha.png'" alt="">
                     <img class="add_successImg" :src="staticImgH+'share_success.png'">
+                </div>
+            </div>
+        <!-- 订单提交后提示 -->
+            <div class="orderTIshi_wrap" @click="sureOrderTi" v-if="orderTIshiSHow">
+                <div class="orderTIshi" @click.stop>
+                    <span class="orderTIshi_des">您已成功为{{playerId}}号选手{{detailData.username}}投票{{shopVotes}}票，将按照所填快递地址寄出精美礼品</span>
+                    <span class="orderTIshi_btn" @click="sureOrderTi">确定</span>
                 </div>
             </div>
             
@@ -158,6 +165,8 @@ export default {
         smallSwiper:'',//顶部小轮播数据
         playerInterest:'',//获得利益的选手Id
         itemSrc:'',//初始化大图地址
+        shopVotes:'',//商品票数
+        orderTIshiSHow:false,//订单提示默认隐藏
         
         test:'',  //微信分享的认证数据
         dataResult:'',  //微信支付认证信息数据
@@ -178,7 +187,7 @@ export default {
 //   components: {},
 
    computed:{
-            ...mapState(['staticImgH','playerId','addressIdIsSel','addressId','PlayerDetailPage','playDetailVoteDiv','tokenH','playDetailShopDES','apiH','shopDetatilshow','barcolorIndexShop','shopgoodId'])
+            ...mapState(['staticImgH','playerId','addressIdIsSel','addressId','PlayerDetailPage','playDetailVoteDiv','tokenH','playDetailShopDES','apiH','shopDetatilshow','barcolorIndexShop','shopgoodId','Shopvote'])
         },
   mounted(){
     //  判断是否是分享出去的
@@ -252,6 +261,9 @@ export default {
             }).then((res)=>{
                 if(res.data.code==200){
                     this.shopList=res.data.data.result
+                    if(this.Shopvote){
+                        this.shopVotes=this.Shopvote
+                    }
                 }else{
                     var self=this
                     clearInterval(self.timer2);
@@ -307,6 +319,10 @@ export default {
         })
   },
   methods: {
+        // 隐藏提交订单提示盒子显示
+                   sureOrderTi(){
+                       this.orderTIshiSHow=false
+                   },
         // 去参赛
             tocanSai(){
                 this.$router.push('/SignUp')
@@ -457,10 +473,13 @@ export default {
                             signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
                             paySign:  vm.dataResult.sign, // 支付签名
                             success: function (res) {
-                                this.myOrderListPages('/PlayerDetails')  //订单列表页返回
-                                vm.orderTypes('WAITSEND')  //订单页面orderType
-                                vm.orderNums(2)   //订单页面导航下标
-                                vm.$router.push('/orderList')  //支付成功后跳订单列表
+                                alert(JSON.stringify(res))
+                                 vm.addressIdIsSels('false') //商品页默认地址不选中
+                                 vm.orderTIshiSHow=true
+                                // this.myOrderListPages('/PlayerDetails')  //订单列表页返回
+                                // vm.orderTypes('WAITSEND')  //订单页面orderType
+                                // vm.orderNums(2)   //订单页面导航下标
+                                // vm.$router.push('/orderList')  //支付成功后跳订单列表
                             },
                             fail(){
                                 alert('支付失败')
@@ -469,11 +488,12 @@ export default {
                     }) 
             },
         //   到商品id
-            toshopdetail(goodid){
+            toshopdetail(goodid,vote){
                 this.addressIdIsSels('false') //商品页默认地址不选中
                 this.shopDetatilshows('true')  // 判断是不是商品详情页返回到此页面
                 this.playDetailVoteDivs('true')  //设置为true是为了返回到当前页面的时候 助力盒子显示
                 this.barcolorIndexShops(this.barcolorIndex) //为了返回到当前页面的时候 显示哪个商品被选中状态
+                this.Shopvotes(vote)//为了返回到当前页面的时候 保存商品的票数
                 this.shopDetailReturns('/PlayerDetails')//商品页返回哪
                 this.shopgoodIds(goodid)  //给商品页传gooid
                 this.playerIds(this.playerId)  //保存当前选手的playerID
@@ -524,9 +544,10 @@ export default {
                 this.barcolorIndex=-1
             },
         // 获取goodid
-            getShopDes(goodId,index){
+            getShopDes(goodId,index,vote){
                 this.barcolorIndex=index  //被选中下标
                 this.goodId=goodId   
+                this.shopVotes=vote
             },
         //  返回
             toReturn(){
@@ -594,7 +615,7 @@ export default {
                     }
                 })
             },
-        ...mapMutations(['playDetailVoteDivs','ReceiptAddressPages','ReceiptAddressAddPages','orderTypes','orderNums','playDetailShopDESs','addressIdIsSels','myOrderListPages','playerIds','shopgoodIds','barcolorIndexShops','shopDetatilshows','shopDetailReturns','userIdHs','userIdHInterests','playerNames','MineInformationPages']),   
+        ...mapMutations(['playDetailVoteDivs','ReceiptAddressPages','ReceiptAddressAddPages','orderTypes','orderNums','playDetailShopDESs','addressIdIsSels','myOrderListPages','playerIds','shopgoodIds','barcolorIndexShops','shopDetatilshows','shopDetailReturns','userIdHs','userIdHInterests','playerNames','MineInformationPages','Shopvotes']),   
       },
    
    
@@ -1088,6 +1109,49 @@ export default {
         padding:0.4rem;
         line-height:1rem;
         color:#fff;
+    }
+}
+// 订单提交后提示
+.orderTIshi_wrap{
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.9);
+    position:fixed;
+    left:0;
+    top:0;
+    z-index:999;
+   
+    >.orderTIshi{
+        width:8rem;
+        height:3.84rem;
+        background:#fff;
+        border-radius:0.133rem;
+         display:flex;
+        flex-direction:column;
+        position:absolute;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+        margin:auto;
+        >.orderTIshi_des{
+            width:100%;
+            height:3rem;
+            font-size:0.373rem;
+            color:rgba(0, 0, 0, 1);
+            line-height:0.8rem;
+            text-align:center;
+            padding:0.4rem;
+        }
+        >.orderTIshi_btn{
+            width:100%;
+            height:1.253rem;
+            font-size:0.373rem;
+            color:rgba(255, 57, 36, 1);
+            text-align:center;
+            line-height:1.253rem;
+            border-top:0.03rem solid rgba(204, 204, 204, 0.4);
+        }
     }
 }
 </style>
