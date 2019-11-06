@@ -29,14 +29,14 @@
             <img v-show="show" class="playBtn" :src="staticImgH+'bofang.png'"/>
           </div>
           <!-- x5-video-player-fullscreen="true"
-                 x5-playsinline -->
+                 x5-playsinline  preload="auto"-->
           <video autoplay="autoplay" v-if="mobile==='android'" id="video"
                  width="100%"
                  height="100%"
                  
                  webkit-playsinline
                  playsinline
-                 preload="auto"
+                 
                  poster="xx0.jpg"
                  :src="video_info.video_introduction"  >
           </video>
