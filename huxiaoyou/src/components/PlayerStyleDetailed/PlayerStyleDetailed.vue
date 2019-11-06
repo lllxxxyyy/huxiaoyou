@@ -28,13 +28,14 @@
 		<div  @click="playOrPause()" class="play mask flex_center">
             <img v-show="show" class="playBtn" :src="staticImgH+'bofang.png'"/>
           </div>
+          <!-- x5-video-player-fullscreen="true"
+                 x5-playsinline -->
           <video autoplay="autoplay" v-if="mobile==='android'" id="video"
                  width="100%"
                  height="100%"
-                 x5-video-player-fullscreen="true"
-                 x5-playsinline
-                 playsinline
+                 
                  webkit-playsinline
+                 playsinline
                  preload="auto"
                  poster="xx0.jpg"
                  :src="video_info.video_introduction"  >
