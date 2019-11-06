@@ -191,13 +191,15 @@
             },
       // 微信分享
             WShare(){
+              console.log(this.currentPlayerData.id)
                 var Wobj=qs.stringify({
                     player_id:this.currentPlayerData.id,
                     type:3,
                 })
                 this.$http.post('/api/wechat/get_sign',Wobj).then((res)=>{
+                    console.log(res)
                     if(res.data.code==200){
-                        data=res.data.data
+                        var data=res.data.data
                         this.test=data
                             wx.config({
                                 debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
