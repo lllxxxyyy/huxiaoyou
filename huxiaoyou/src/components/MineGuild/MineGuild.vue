@@ -8,7 +8,7 @@
                  <span v-if="disabledXiu" @click="editYes">编辑</span>
                  <span v-else @click="saveYes">保存</span>
             </div>
-            <div class="AddUnion_Info">
+            <div class="AddUnion_Info" v-if="guildData.is_show==1">
                     <ul class="AddUnion_InfoList">
                         <li>
                             <div class="Info_name"><span>真实姓名</span>*</div>
@@ -143,6 +143,8 @@
                         </li>
                     </ul>
             </div>
+            <div v-if="guildData.is_show==0">待审核</div>
+            <div v-if="guildData.is_show==2">已拒绝</div>
             <!-- <div class="ImmAdd" @click.stop="ImmAddC">立即加入</div> -->
         </div>
       <!-- 提示盒子 -->
@@ -238,6 +240,8 @@ export default {
         img:'',//证件照正面
         uploadimgsOpacityTwo:false,// 个人形象的显示与消失
         imgTwo:'',//证件照反面
+
+        guildData:'',
     };
   },
 //   components: {},
@@ -255,6 +259,7 @@ export default {
             }).then((res)=>{
                     if(res.data.code==200){
                             var data=res.data.data.result
+                            this.guildData=data
                             this.nickname=data.nickname
                             this.phone=data.phone
                             this.wechatId=data.wechat_id

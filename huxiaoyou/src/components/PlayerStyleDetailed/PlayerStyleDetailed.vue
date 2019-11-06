@@ -33,10 +33,10 @@
           <video autoplay="autoplay" v-if="mobile==='android'" id="video"
                  width="100%"
                  height="100%"
-                 
+                 controls  
                  webkit-playsinline
                  playsinline
-                 
+                 style="object-fit:fill"  
                  poster="xx0.jpg"
                  :src="video_info.video_introduction"  >
           </video>
@@ -145,7 +145,6 @@
         }
       })
     },
-
     methods: {
       // 点击了解更多
           toHome(){
@@ -160,7 +159,7 @@
                 this.shareTextShow=false
             },
       // 
-      firstPanduan(){
+          firstPanduan(){
                   //判断是否是分享出去的
                       var shopUrl = window.location.href
                         //var shopUrl = 'http://mobile.aibebi.cn/aibei/shopList.html?goods_id=1482'
@@ -226,6 +225,23 @@
                         link:vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                         imgUrl: vm.video_info.username, // 分享图标
                         success: function (res) {
+                                var GetVotesData=qs.stringify({
+                                                type:3,
+                                                amount:1
+                                            })
+                                            vm.$http.post('api/user/get_votes',GetVotesData).then((resTwo)=>{
+                                                if(res.data.code!==200){
+                                                    alert('yes')
+                                                    clearInterval(vm.timer2);
+                                                    vm.promptContent=resTwo.data.msg
+                                                    vm.showPrompt=true
+                                                    vm.timer2=setTimeout(function(){
+                                                        vm.showPrompt=false
+                                                        clearInterval(vm.timer2);
+                                                    },2000)
+                                                    return false;
+                                                }
+                                            })
                         }
                     })
                 });
@@ -240,6 +256,23 @@
                                 link: vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation),  // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                                 imgUrl: vm.video_info.username, // 分享图标
                                 success: function (res) {
+                                        var GetVotesData=qs.stringify({
+                                                type:3,
+                                                amount:1
+                                            })
+                                            vm.$http.post('api/user/get_votes',GetVotesData).then((resTwo)=>{
+                                                if(res.data.code!==200){
+                                                    alert('yes')
+                                                    clearInterval(vm.timer2);
+                                                    vm.promptContent=resTwo.data.msg
+                                                    vm.showPrompt=true
+                                                    vm.timer2=setTimeout(function(){
+                                                        vm.showPrompt=false
+                                                        clearInterval(vm.timer2);
+                                                    },2000)
+                                                    return false;
+                                                }
+                                            })
                                 },
                         })
                 });

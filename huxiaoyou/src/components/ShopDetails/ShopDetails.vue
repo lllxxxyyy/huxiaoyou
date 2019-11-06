@@ -240,7 +240,23 @@ export default {
                         link:vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                         imgUrl: vm.shopData.original_img, // 分享图标
                         success: function (res) {
-                            // vm.
+                                            var GetVotesData=qs.stringify({
+                                                type:3,
+                                                amount:1
+                                            })
+                                            vm.$http.post('api/user/get_votes',GetVotesData).then((resTwo)=>{
+                                                if(res.data.code!==200){
+                                                    alert('yes')
+                                                    clearInterval(vm.timer2);
+                                                    vm.promptContent=resTwo.data.msg
+                                                    vm.showPrompt=true
+                                                    vm.timer2=setTimeout(function(){
+                                                        vm.showPrompt=false
+                                                        clearInterval(vm.timer2);
+                                                    },2000)
+                                                    return false;
+                                                }
+                                            })
                         }
                     })
                 });
@@ -255,6 +271,23 @@ export default {
                                 link: vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation),  // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                                 imgUrl:vm.shopData.original_img, // 分享图标
                                 success: function (res) {
+                                            var GetVotesData=qs.stringify({
+                                                type:3,
+                                                amount:1
+                                            })
+                                            vm.$http.post('api/user/get_votes',GetVotesData).then((resTwo)=>{
+                                                if(res.data.code!==200){
+                                                    alert('yes')
+                                                    clearInterval(vm.timer2);
+                                                    vm.promptContent=resTwo.data.msg
+                                                    vm.showPrompt=true
+                                                    vm.timer2=setTimeout(function(){
+                                                        vm.showPrompt=false
+                                                        clearInterval(vm.timer2);
+                                                    },2000)
+                                                    return false;
+                                                }
+                                            })
                                 },
                         })
                 });
