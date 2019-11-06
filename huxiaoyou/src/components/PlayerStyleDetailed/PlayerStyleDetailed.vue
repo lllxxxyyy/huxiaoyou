@@ -191,13 +191,11 @@
             },
       // 微信分享
             WShare(){
-              console.log(this.currentPlayerData.id)
                 var Wobj=qs.stringify({
                     player_id:this.currentPlayerData.id,
                     type:3,
                 })
                 this.$http.post('/api/wechat/get_sign',Wobj).then((res)=>{
-                    console.log(res)
                     if(res.data.code==200){
                         var data=res.data.data
                         this.test=data
@@ -225,7 +223,7 @@
                         title:vm.test.test, // 分享标题
                         desc:'选手视频', // 分享描述
                         link:vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                        imgUrl: vm.test.head_pic, // 分享图标
+                        imgUrl: vm.video_info.username, // 分享图标
                         success: function (res) {
                         }
                     })
@@ -239,7 +237,7 @@
                         wx.onMenuShareTimeline({
                                 title:vm.test.test, // 分享标题
                                 link: vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation),  // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                                imgUrl: vm.test.head_pic, // 分享图标
+                                imgUrl: vm.video_info.username, // 分享图标
                                 success: function (res) {
                                 },
                         })
