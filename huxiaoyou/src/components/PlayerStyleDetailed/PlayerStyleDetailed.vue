@@ -112,7 +112,10 @@
           division_id: null,
           concern: 0,
           is_videos: 0,
-          rank: 0
+          rank: 0,
+
+          test:'',//分享视频数据
+
         }
       };
     },
@@ -124,7 +127,6 @@
       this.text=navigator.appVersion
       this.mobile = navigator.appVersion.indexOf('iPhone') !== -1 ? 'iPhone' :  'android'
     },
-
     mounted() {
       this.firstPanduan()
       this.video = document.getElementById('video')
@@ -135,11 +137,7 @@
         v_id: this.currentPlayerData.v_id,
         player_id: this.currentPlayerData.id
       })
-      this.$http.post('api/user/vide_info', obj, {
-        headers: {
-          'authorization': this.token
-        }
-      }).then((res) => {
+      this.$http.post('api/user/vide_info', obj).then((res) => {
         if (res.data.code === 200) {
           this.video_info = res.data.data
           this.WShare()
@@ -160,9 +158,10 @@
             hideShare(){
                 this.shareTextShow=false
             },
+      // 
       firstPanduan(){
-                //判断是否是分享出去的
-                    var shopUrl = window.location.href
+                  //判断是否是分享出去的
+                      var shopUrl = window.location.href
                         //var shopUrl = 'http://mobile.aibebi.cn/aibei/shopList.html?goods_id=1482'
                         //截取？后的商品id
                         var shopCan, value;  //初始化 
@@ -194,13 +193,14 @@
             WShare(){
                 var Wobj=qs.stringify({
                     player_id:this.currentPlayerData.id,
-                    type:1,
+                    type:3,
                 })
                 this.$http.post('/api/wechat/get_sign',Wobj).then((res)=>{
                     if(res.data.code==200){
-                        var data=res.data.data
+                        data=res.data.data
+                        this.test=data
                             wx.config({
-                                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                                debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
                                 appId: data.appId, // 必填，公众号的唯一标识
                                 timestamp:data.timestamp, // 必填，生成签名的时间戳
                                 nonceStr: data.nonceStr, // 必填，生成签名的随机串
@@ -220,10 +220,10 @@
                 var realLocation=vm.apiH+'/#/PlayerStyleDetailed?v_id='+vm.currentPlayerData.v_id+'&id='+vm.currentPlayerData.id
                 wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
                     wx.onMenuShareAppMessage({ 
-                        title:vm.video_info.username, // 分享标题
-                        desc:'视频', // 分享描述
+                        title:vm.test.test, // 分享标题
+                        desc:'选手视频', // 分享描述
                         link:vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                        imgUrl: vm.video_info.head_pic, // 分享图标
+                        imgUrl: vm.test.head_pic, // 分享图标
                         success: function (res) {
                         }
                     })
@@ -235,9 +235,9 @@
                     var realLocation=vm.apiH+'/#/PlayerStyleDetailed?v_id='+vm.currentPlayerData.v_id+'&id='+vm.currentPlayerData.id
                     wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
                         wx.onMenuShareTimeline({
-                                title:vm.video_info.username, // 分享标题
+                                title:vm.test.test, // 分享标题
                                 link: vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation),  // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                                imgUrl: vm.video_info.head_pic, // 分享图标
+                                imgUrl: vm.test.head_pic, // 分享图标
                                 success: function (res) {
                                 },
                         })

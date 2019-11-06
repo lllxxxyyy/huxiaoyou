@@ -7,7 +7,7 @@
     </div>
     <div class="player_style_tuijian"><span>每日精彩推荐</span> <span class="more" @click="toHome">了解更多</span></div>
     <ul class="player_list">
-      <li v-for="(item,index) in PlayerStyleData" :key="index">
+      <li v-for="(item,index) in PlayerStyleData" :key="index" v-if="index<6">
         <div class="player_center">
           <video v-if="item.video_introduction" @click.stop="goGoodsPage(item)">
             <source :src="item.video_introduction" type="video/mp4"/>
@@ -30,7 +30,7 @@
     </ul>
     <div class="player_style_tuijian"><span>实时风采</span></div>
     <ul class="player_list_fencai">
-      <li v-for="(item,index) in PlayerStyleData" :key="index">
+      <li v-for="(item,index) in PlayerStyleData" :key="index" v-if="index>=6">
         <div class="player_center">
           <video v-if="item.video_introduction" @click.stop="goGoodsPage(item)">
             <source :src="item.video_introduction" type="video/mp4"/>

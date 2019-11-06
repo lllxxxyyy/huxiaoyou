@@ -74,7 +74,27 @@ export default {
                 this.$router.push('/')//这里填你默认跳转的地址
                 
             }
-            
+            var GetVotesData=qs.stringify({
+                type:1,
+                amount:1
+            })
+            this.$http.post('api/user/get_votes',GetVotesData,{
+                headers: {
+                    'authorization': res.data.data.result.token
+                }
+            }).then((res)=>{
+                if(res.data.code!==200){
+                    var self=this
+                    clearInterval(self.timer2);
+                    this.promptContent=res.data.msg
+                    this.showPrompt=true
+                    self.timer2=setTimeout(function(){
+                        self.showPrompt=false
+                        clearInterval(self.timer2);
+                    },2000)
+                    return false;
+                }
+            })
           }else{
             var self=this
             clearInterval(self.timer2);
