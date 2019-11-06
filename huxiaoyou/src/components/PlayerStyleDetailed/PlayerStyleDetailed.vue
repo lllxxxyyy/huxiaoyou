@@ -121,7 +121,7 @@
     },
 
     computed: {
-      ...mapState(['staticImgH', 'tokenH', 'playerStyleDetailedPlayer','playerVideoPage'])
+      ...mapState(['staticImgH', 'tokenH', 'playerStyleDetailedPlayer','playerVideoPage','apiH'])
     },
     created(){
       this.text=navigator.appVersion
