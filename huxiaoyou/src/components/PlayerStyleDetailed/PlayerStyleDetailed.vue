@@ -30,12 +30,18 @@
           </div>
           <!-- x5-video-player-fullscreen="true"
                  x5-playsinline  preload="auto"-->
+                  <!-- controls  
+                 webkit-playsinline
+                 playsinline -->
           <video autoplay="autoplay" v-if="mobile==='android'" id="video"
                  width="100%"
                  height="100%"
-                 controls  
-                 webkit-playsinline
-                 playsinline
+                 webkit-playsinline="true"
+                 x-webkit-airplay="true"
+                 playsinline="true"
+                 x5-video-player-type="h5"
+                 x5-video-player-fullscreen="true"
+                 preload="auto"
                  style="object-fit:fill"  
                  poster="xx0.jpg"
                  :src="video_info.video_introduction"  >
