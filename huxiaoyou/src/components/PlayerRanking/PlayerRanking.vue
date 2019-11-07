@@ -10,13 +10,13 @@
       <div class="SpecialTopicBody_center" v-for="(item, index) in topThree" :key="index">
         <div class="SpecialTopicBody_li">
           <span>{{item.names}}（排位前三名）</span>
-          <span class="more" @click="toMore(item)">查看更多&gt;&gt;</span>
+          <span class="more" @click="toMore(item,index)">查看更多&gt;&gt;</span>
         </div>
         <div class="SpecialTopicBody_list">
           <ul class="HomeAngel_listTwo">
             <li v-for="(player, seqNum) in item.players" :key='seqNum' @click="toPlayerDetail(player.id, 'false')">
               <img class="Two_img"
-                   :src="player.avatar"
+                   :src="player.head_pic"
                    alt="">
               <div class="top_img"><img :src="staticImgH+'paiming'+(seqNum+1)+'.png'" alt=""></div>
               <!-- <div class="ta_vote" @click.stop="toPlayerDetail(player.id, 'true')">给Ta投票</div> -->
@@ -64,20 +64,17 @@ export default {
 //   },
 
     computed:{
-            ...mapState(['staticImgH','tokenH'])
+            ...mapState(['staticImgH','tokenH','barIdINdex'])
         },
 
   mounted(){
-
-      var barobj=qs.stringify({
-      })
-      this.$http.post('api/division/list',barobj,{
-          headers: {
-              'authorization': this.tokenH
-          }
-    }).then((res)=>{
+      this.$http.post('api/division/list').then((res)=>{
          this.SpecialTopicBodyBar=res.data.data
-         this.barId=res.data.data[0].id
+         if(this.barIdINdex){
+           this.barId=this.barIdINdex
+         }else{
+           this.barId=res.data.data[0].id
+         }
          this.getlistData()
     })
 
@@ -104,8 +101,9 @@ export default {
       toReturn(){
           this.$router.push('/')
       },
-    toMore(){
-      this.$router.push('/PlayerRankingList')
+    toMore(item){
+        this.barIdINdexs(item.id)
+        this.$router.push('/PlayerRankingList')
     },
     alert(msg){
       let self=this;
@@ -121,11 +119,7 @@ export default {
         var obj=qs.stringify({
           page:1
         })
-        this.$http.post('api/division/players/',obj,{
-          headers: {
-            'authorization': this.tokenH
-          }
-        }).then((res)=>{
+        this.$http.post('api/division/players/',obj).then((res)=>{
           if(res.data.code===200){
             this.topThree=res.data.data.data
           }else{
@@ -169,7 +163,7 @@ export default {
             //
             // });
       },
-      ...mapMutations(['playerIds','PlayerDetailPages','addressIdIsSels','playDetailVoteDivs']),
+      ...mapMutations(['playerIds','PlayerDetailPages','addressIdIsSels','playDetailVoteDivs','barIdINdexs']),
   }
 }
 

@@ -48,8 +48,14 @@ const state = {
     MineGuildPage: sessionStorage.getItem('MineGuildPage'), // 我的公会页面返回
 
     Shopvote: sessionStorage.getItem('Shopvote'), // 商品票数
+    barIdINdex: sessionStorage.getItem('barIdINdex'), // 选手排行赛区id
 }
 const mutations = {
+    // 选手排行赛区id
+    barIdINdexs(state, barIdINdex) {
+        sessionStorage.setItem('barIdINdex', barIdINdex);
+        state.barIdINdex = barIdINdex
+    },
     // 商品票数
     Shopvotes(state, Shopvote) {
         sessionStorage.setItem('Shopvote', Shopvote);

@@ -8,13 +8,13 @@
         <option label="姓名" value="1"></option>
         <option label="编号" value="2"></option>
       </select>
-      <input v-model="search.value" placeholder="搜索选手的名字或编号"></input>
+      <input v-model="search.value" placeholder="搜索选手的名字或编号"/>
 	  </div>
       <span @click="toSearchResult()">搜索</span>
     </div>
     <div class="SpecialTopicBody_bar">
       <ul>
-        <li @click="SpecialBarBtn(index,item.id)" :class="SpecialBarindex==index?'Special_barColor':''"
+        <li @click="SpecialBarBtn(index,item.id)" :class="barId==item.id?'Special_barColor':''"
             v-for="(item,index) in SpecialTopicBodyBar" :key="index">
           {{item.names}}
         </li>
@@ -76,21 +76,21 @@ export default {
 //   components: {},
 
     computed:{
-            ...mapState(['staticImgH','tokenH', 'searchConditions'])
+            ...mapState(['staticImgH','tokenH', 'searchConditions','barIdINdex'])
         },
 
   mounted(){
-if (this.searchConditions) {
-  this.search=this.searchConditions
-}
-      var barobj=qs.stringify(this.search)
-      this.$http.post('api/division/list',barobj,{
-          headers: {
-              'authorization': this.tokenH
-          }
-    }).then((res)=>{
+    if (this.searchConditions) {
+        this.search=this.searchConditions
+    }
+      this.$http.post('api/division/list').then((res)=>{
          this.SpecialTopicBodyBar=res.data.data
-         this.barId=res.data.data[0].id
+         if(this.barIdINdex){
+             this.barId=this.barIdINdex
+         }else{
+              this.barId=res.data.data[0].id
+         }
+        
          this.getlistData()
     })
     
@@ -98,7 +98,6 @@ if (this.searchConditions) {
   },
 
   methods: {
-
       //to 跳转搜索结果页面
     toSearchResult(){
       this.SearchConditions(this.search);
@@ -125,11 +124,7 @@ if (this.searchConditions) {
             var obj=qs.stringify({
                 page:1
             })
-            this.$http.post('api/player/division_ranking/'+this.barId,obj,{
-                headers: {
-                    'authorization': this.tokenH
-                }
-            }).then((res)=>{
+            this.$http.post('api/player/division_ranking/'+this.barId,obj).then((res)=>{
                 if(res.data.code==200){
                      this.RankingData=res.data.data.data
                 }else{

@@ -15,7 +15,7 @@
             </div>
         </div>
       </div>
-      <span @click="toHome">更多分享</span>
+      <span @click="toHome">更多精彩</span>
     </div>
     <div class="player_paiming">{{currentPlayerData.names}}排名：{{video_info.rank}}名</div>
     <div class="video">
@@ -30,25 +30,24 @@
           </div>
           <!-- x5-video-player-fullscreen="true"
                  x5-playsinline  -->
-          <video autoplay="autoplay"  id="video" width="100%" height="100%"
-                  playsinline
+          <video  id="video" width="100%" height="100%"
+                 playsinline
                   x-webkit-airplay 
                   webkit-playsinline
-                 
-                  x5-video-player-fullscreen="true"
-                  :src="video_info.video_introduction"
-                  x5-playsinline="true" 
+                   x5-video-player-type="h5" 
+                   x5-video-player-fullscreen="true"
+                    :src="video_info.video_introduction"
                   poster="xx0.jpg">
                   <!-- <source : type="video/mp4" /> -->
                   <!-- <source :src="video_info.video_introduction" type="video/mp4" />
                   <source :src="video_info.video_introduction" type="video/mp4" /> -->
           </video>
-          <video autoplay="autoplay" v-if="mobile==='iPhone'" id="video"
+          <!-- <video autoplay="autoplay" v-if="mobile==='iPhone'" id="video"
                  width="100%"
                  height="100%"
                  poster="xx0.jpg"
                  :src="video_info.video_introduction"  >
-          </video>
+          </video> -->
         </div>
       </div>
 

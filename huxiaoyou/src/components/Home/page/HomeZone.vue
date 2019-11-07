@@ -88,13 +88,14 @@ export default {
       },
     //   选手风采
       toPlayerStyle(){
+          this.barIdINdexs('')
           this.$router.push('/PlayerStyle')
       },
     //   参赛福利
       toAiBei(){
           window.location.href="http://app.aibebi.cn/aibei/dist/"
       },
-      ...mapMutations(['playerIds','addressIdIsSels','PlayerDetailPages','playDetailVoteDivs']),
+      ...mapMutations(['playerIds','addressIdIsSels','PlayerDetailPages','playDetailVoteDivs','barIdINdexs']),
   }
 }
 </script>

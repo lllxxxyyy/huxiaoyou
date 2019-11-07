@@ -322,6 +322,11 @@ export default {
         // 隐藏提交订单提示盒子显示
                    sureOrderTi(){
                        this.orderTIshiSHow=false
+                       if(this.PlayerDetailPage){
+                            this.$router.push(this.PlayerDetailPage)  //PlayerDetailPage（vuex中全局定义，动态设置返回页面）
+                        }else{
+                            this.$router.push('/')
+                        }
                    },
         // 去参赛
             tocanSai(){
@@ -582,6 +587,7 @@ export default {
                 this.barcolorIndex=index  //被选中下标
                 this.goodId=goodId   
                 this.shopVotes=vote
+                this.Shopvotes(vote)//为了返回到当前页面的时候 保存商品的票数
             },
         //  返回
             toReturn(){
