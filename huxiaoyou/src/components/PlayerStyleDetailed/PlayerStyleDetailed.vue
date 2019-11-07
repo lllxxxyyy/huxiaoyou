@@ -34,9 +34,10 @@
                   playsinline
                   x-webkit-airplay 
                   webkit-playsinline
-                  x5-video-player-type="h5" 
+                 
                   x5-video-player-fullscreen="true"
                   :src="video_info.video_introduction"
+                  x5-playsinline="true" 
                   poster="xx0.jpg">
                   <!-- <source : type="video/mp4" /> -->
                   <!-- <source :src="video_info.video_introduction" type="video/mp4" />
