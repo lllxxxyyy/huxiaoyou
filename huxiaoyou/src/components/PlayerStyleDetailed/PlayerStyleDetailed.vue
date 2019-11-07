@@ -29,22 +29,18 @@
             <img v-show="show" class="playBtn" :src="staticImgH+'bofang.png'"/>
           </div>
           <!-- x5-video-player-fullscreen="true"
-                 x5-playsinline  preload="auto"-->
-                  <!-- controls  
-                 webkit-playsinline
-                 playsinline -->
-          <video autoplay="autoplay" v-if="mobile==='android'" id="video"
-                 width="100%"
-                 height="100%"
-                 webkit-playsinline="true"
-                 x-webkit-airplay="true"
-                 playsinline="true"
-                 x5-video-player-type="h5"
-                 x5-video-player-fullscreen="true"
-                 preload="auto"
-                 style="object-fit:fill"  
-                 poster="xx0.jpg"
-                 :src="video_info.video_introduction"  >
+                 x5-playsinline  -->
+          <video autoplay="autoplay"  id="video" width="100%" height="100%"
+                  playsinline
+                  x-webkit-airplay 
+                  webkit-playsinline
+                  x5-video-player-type="h5" 
+                  x5-video-player-fullscreen="true"
+                  :src="video_info.video_introduction"
+                  poster="xx0.jpg">
+                  <!-- <source : type="video/mp4" /> -->
+                  <!-- <source :src="video_info.video_introduction" type="video/mp4" />
+                  <source :src="video_info.video_introduction" type="video/mp4" /> -->
           </video>
           <video autoplay="autoplay" v-if="mobile==='iPhone'" id="video"
                  width="100%"
@@ -137,7 +133,7 @@
     mounted() {
       this.firstPanduan()
       this.video = document.getElementById('video')
-      this.video.currentTime = 0.1;
+      // this.video.currentTime = 0.1;
 
       //视频详情
       let obj = qs.stringify({
@@ -147,10 +143,12 @@
       this.$http.post('api/user/vide_info', obj).then((res) => {
         if (res.data.code === 200) {
           this.video_info = res.data.data
+          // this.video.play()
           this.WShare()
         }
       })
     },
+
     methods: {
       // 点击了解更多
           toHome(){
@@ -165,7 +163,7 @@
                 this.shareTextShow=false
             },
       // 
-          firstPanduan(){
+      firstPanduan(){
                   //判断是否是分享出去的
                       var shopUrl = window.location.href
                         //var shopUrl = 'http://mobile.aibebi.cn/aibei/shopList.html?goods_id=1482'
@@ -231,23 +229,23 @@
                         link:vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                         imgUrl: vm.video_info.username, // 分享图标
                         success: function (res) {
-                                var GetVotesData=qs.stringify({
-                                                type:3,
-                                                amount:1
-                                            })
-                                            vm.$http.post('api/user/get_votes',GetVotesData).then((resTwo)=>{
-                                                if(res.data.code!==200){
-                                                    alert('yes')
-                                                    clearInterval(vm.timer2);
-                                                    vm.promptContent=resTwo.data.msg
-                                                    vm.showPrompt=true
-                                                    vm.timer2=setTimeout(function(){
-                                                        vm.showPrompt=false
-                                                        clearInterval(vm.timer2);
-                                                    },2000)
-                                                    return false;
-                                                }
-                                            })
+                                   var GetVotesData=qs.stringify({
+                                        type:3,
+                                        amount:1
+                                    })
+                                    vm.$http.post('api/user/get_votes',GetVotesData).then((resTwo)=>{
+                                        if(res.data.code!==200){
+                                            alert('yes')
+                                            clearInterval(vm.timer2);
+                                            vm.promptContent=resTwo.data.msg
+                                            vm.showPrompt=true
+                                            vm.timer2=setTimeout(function(){
+                                                vm.showPrompt=false
+                                                clearInterval(vm.timer2);
+                                            },2000)
+                                            return false;
+                                        }
+                                    })
                         }
                     })
                 });
@@ -262,23 +260,23 @@
                                 link: vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation),  // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                                 imgUrl: vm.video_info.username, // 分享图标
                                 success: function (res) {
-                                        var GetVotesData=qs.stringify({
-                                                type:3,
-                                                amount:1
-                                            })
-                                            vm.$http.post('api/user/get_votes',GetVotesData).then((resTwo)=>{
-                                                if(res.data.code!==200){
-                                                    alert('yes')
-                                                    clearInterval(vm.timer2);
-                                                    vm.promptContent=resTwo.data.msg
-                                                    vm.showPrompt=true
-                                                    vm.timer2=setTimeout(function(){
-                                                        vm.showPrompt=false
-                                                        clearInterval(vm.timer2);
-                                                    },2000)
-                                                    return false;
-                                                }
-                                            })
+                                      var GetVotesData=qs.stringify({
+                                          type:3,
+                                          amount:1
+                                      })
+                                      vm.$http.post('api/user/get_votes',GetVotesData).then((resTwo)=>{
+                                          if(res.data.code!==200){
+                                              alert('yes')
+                                              clearInterval(vm.timer2);
+                                              vm.promptContent=resTwo.data.msg
+                                              vm.showPrompt=true
+                                              vm.timer2=setTimeout(function(){
+                                                  vm.showPrompt=false
+                                                  clearInterval(vm.timer2);
+                                              },2000)
+                                              return false;
+                                          }
+                                      })
                                 },
                         })
                 });
