@@ -16,7 +16,7 @@
           <ul class="HomeAngel_listTwo">
             <li v-for="(player, seqNum) in item.players" :key='seqNum' @click="toPlayerDetail(player.id, 'false')">
               <img class="Two_img"
-                   :src="player.head_pic"
+                   :src="player.avatar"
                    alt="">
               <div class="top_img"><img :src="staticImgH+'paiming'+(seqNum+1)+'.png'" alt=""></div>
               <!-- <div class="ta_vote" @click.stop="toPlayerDetail(player.id, 'true')">给Ta投票</div> -->

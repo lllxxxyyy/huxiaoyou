@@ -321,9 +321,8 @@ export default {
   methods: {
         // 隐藏提交订单提示盒子显示
                    sureOrderTi(){
-                       this.orderTIshiSHow=false
                        if(this.PlayerDetailPage){
-                            this.$router.push(this.PlayerDetailPage)  //PlayerDetailPage（vuex中全局定义，动态设置返回页面）
+                            this.orderTIshiSHow=false
                         }else{
                             this.$router.push('/')
                         }

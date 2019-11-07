@@ -24,7 +24,7 @@
       <template v-for="(item,index) in RankingData" v-if="true">
         <li :key="index" @click="toPlayerDetail(item.id, 'false')">
           <!-- {{item.RankingImgData[index]}} -->
-          <img v-if="item.photo_introduction[0]" :src="item.photo_introduction[0].src" alt="">
+          <img v-if="item.photo_introduction[0]" :src="item.head_pic" alt="">
           <div class="top_img"><img :src="staticImgH+'paiming'+(index+1)+'.png'" alt=""></div>
           <!--<div class="ta_vote to_vote1">给Ta投票</div>-->
           <!-- <div class="ta_vote" :class="{
