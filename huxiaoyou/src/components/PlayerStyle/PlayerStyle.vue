@@ -30,7 +30,7 @@
     </ul>
     <div class="player_style_tuijian"><span>实时风采</span></div>
     <ul class="player_list_fencai">
-      <li v-for="(item,index) in PlayerStyleData" :key="index" v-if="index>=6">
+      <li v-for="(item,index) in PlayerStyleData" :key="index" >
         <div class="player_center">
           <video v-if="item.video_introduction" @click.stop="goGoodsPage(item)">
             <source :src="item.video_introduction" type="video/mp4"/>
