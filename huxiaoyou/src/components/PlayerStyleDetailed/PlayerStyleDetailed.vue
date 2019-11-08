@@ -30,24 +30,22 @@
           </div>
           <!-- x5-video-player-fullscreen="true"
                  x5-playsinline  -->
-          <video  id="video" width="100%" height="100%"
-                 playsinline
+          <video autoplay="autoplay" v-if="mobile==='android'"  id="video" width="100%" height="100%"
                   x-webkit-airplay 
-                  webkit-playsinline
-                   x5-video-player-type="h5" 
-                   x5-video-player-fullscreen="true"
-                    :src="video_info.video_introduction"
-                  poster="xx0.jpg">
+                   x5-video-player-type="h5"  
+                   x5-video-player-fullscreen="false"
+                   poster="xx0.jpg"
+                    :src="video_info.video_introduction">
                   <!-- <source : type="video/mp4" /> -->
                   <!-- <source :src="video_info.video_introduction" type="video/mp4" />
                   <source :src="video_info.video_introduction" type="video/mp4" /> -->
           </video>
-          <!-- <video autoplay="autoplay" v-if="mobile==='iPhone'" id="video"
+          <video autoplay="autoplay" v-if="mobile==='iPhone'" id="video"
                  width="100%"
                  height="100%"
                  poster="xx0.jpg"
                  :src="video_info.video_introduction"  >
-          </video> -->
+          </video>
         </div>
       </div>
 
@@ -133,7 +131,7 @@
     mounted() {
       this.firstPanduan()
       this.video = document.getElementById('video')
-      // this.video.currentTime = 0.1;
+      this.video.currentTime = 0.1;
 
       //视频详情
       let obj = qs.stringify({
