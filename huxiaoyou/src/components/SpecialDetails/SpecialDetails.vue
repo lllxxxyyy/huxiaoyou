@@ -115,8 +115,11 @@ export default {
   padding:0 0.4rem;
   font-size:0.4rem;
   >>>p{
-      >img{
-          width:100%;
+      >span{
+          position :relative!important;
+      }
+      img{
+          width:100%!important;
           display :block;
       }
   }
