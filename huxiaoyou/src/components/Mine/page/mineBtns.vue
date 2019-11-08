@@ -149,7 +149,7 @@ export default {
           }else if(index==3){
               this.$router.push({path:'/LivePlatform',query:{'platform':this.personData.live_platform,'platformId':this.personData.live_id}})
           }else if(index==4){
-              this.$router.push('/ShortVideo')
+              this.$router.push({path:'/ShortVideo',query:{'platform':this.personData.is_video,'platformId':this.personData.is_video_id}})
           }else if(index==5){
               var obj=qs.stringify({
                   type:1

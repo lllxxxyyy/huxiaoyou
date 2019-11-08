@@ -87,7 +87,7 @@
             </div>
         </transition>
       <!-- 恭喜您报名成功  -->
-      <div class="sign_success_wrap"  v-if="showSignSuccess">
+      <div class="sign_success_wrap" v-if="showSignSuccess" >
          <div class="sign_success" >
               <div class="sign_Cha"><img @click.stop="signSuccessSha"  :src="staticImgH+'cha.png'" alt=""></div>
               <div class="sign_succeddImg"><span>恭喜您报名成功</span><img  :src="staticImgH+'sign_success.png'"></div> 
@@ -98,11 +98,11 @@
               <img class="erweima_down" :src="staticImgH+'erweima_down.png'" alt="">
          </div>
       </div>
-       <!-- 提示只能女性参与报名  -->
-      <div class="sign_fail_wrap" v-if="showSignFail">
+       <!-- 提示只能女性参与报名 -->
+      <div class="sign_fail_wrap"   v-if="showSignFail">
          <div class="sign_fail">
               <div class="sign_fail_Cha"><img @click.stop="signFailSha"  :src="staticImgH+'cha.png'" alt=""></div>
-              <div class="sign_failImg"><img  :src="staticImgH+'sign_fail.png'"></div> 
+              <div class="sign_failImg"><span>您的信息不符合报名条件</span><img  :src="staticImgH+'sign_fail.png'"></div> 
               <span class="sign_failtext">您可以加入公共参加分享赚钱活动</span>
               <div class="sign_failBtn" @click.stop="addUnion">去了解</div>
          </div>
@@ -817,16 +817,16 @@ export default {
             height:6rem;
           }
           >span{
-              position:absolute;
-              top:0.18rem;
-              left:1.2rem;
-              font-size:0.373rem;
-              color:rgba(255, 157, 172, 1);
+                 position: absolute;
+                top: 0.1rem;
+                left: 0.7rem;
+                font-size: 0.48rem;
+                color: #ff9dac;
           }
           
         }
         >.sign_succeddtext{
-          font-size:0.43rem;
+          font-size:0.48rem;
           color:rgba(236, 10, 66, 1);
           line-height:0.5rem;
           margin-top:0.27rem;
@@ -837,7 +837,7 @@ export default {
           height:0.8rem;
           border-radius:0.67rem;
           background:rgba(255, 157, 172, 1);
-          font-size:0.347rem;
+          font-size:0.48rem;
           color:rgba(255, 255, 255, 1);
           text-align :center;
           line-height:0.8rem;
@@ -849,7 +849,7 @@ export default {
           margin-bottom:0.27rem;
         }
         >.erweima_des{
-          font-size:0.32rem;
+          font-size:0.373rem;
           color:rgba(255, 255, 255, 1);
         }
         >.erweima_down{
@@ -893,13 +893,13 @@ export default {
           >span{
               position:absolute;
               top:0.33rem;
-              left:2rem;
-              font-size:0.373rem;
+              left:1.1rem;
+              font-size:0.48rem;
               color:rgba(255, 157, 172, 1);
           }
         }
         >.sign_failtext{
-          font-size:0.43rem;
+          font-size:0.48rem;
           color:rgba(236, 10, 66, 1);
           line-height:0.5rem;
           margin-top:0.27rem;
@@ -910,7 +910,7 @@ export default {
           height:0.8rem;
           border-radius:0.67rem;
           background:rgba(255, 157, 172, 1);
-          font-size:0.347rem;
+          font-size:0.48rem;
           color:rgba(255, 255, 255, 1);
           text-align :center;
           line-height:0.8rem;

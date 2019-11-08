@@ -147,8 +147,8 @@
                 </div>
             </div>
         </transition>
-        <!-- 加入公会成功 -->
-        <div class="add_success_wrap" v-if="showAddSuccess">
+        <!-- 加入公会成功  v-if="showAddSuccess"-->
+        <div class="add_success_wrap">
             <div class="add_success">
                 <div class="add_success_Cha"><img @click.stop="addSuccessCha"  :src="staticImgH+'cha.png'" alt=""></div>
                 <img class="add_successImg" :src="staticImgH+'add_succedd.png'">
@@ -958,17 +958,17 @@ export default {
           height:0.8rem;
           border-radius:0.67rem;
           background:rgba(255, 157, 172, 1);
-          font-size:0.347rem;
+          font-size:0.48rem;
           color:rgba(255, 255, 255, 1);
           text-align :center;
           line-height:0.8rem;
         }
         >.add_successText{
-            font-size:0.32rem;
+            font-size:0.35rem;
             color:#fff;
             position:absolute;
             top:7rem;
-            left:4.16rem;
+            left:4.1rem;
         }
     }
 }

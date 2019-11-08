@@ -55,15 +55,16 @@ export default {
             },
         // 绑定
             tobind(){
+                if (!this.LiveName || !this.liveId) {
+                    this.alertText('请输入完整信息')
+                    return
+              }
                 var obj=qs.stringify({
                     live_platform:this.LiveName,
-                    live_id:this.liveId
+                    live_id:this.liveId,
+                    type:1,
                     })
-                this.$http.post('/api/player/bind_live',obj,{
-                    headers: {
-                        'authorization': this.tokenH
-                    }
-                }).then((res)=>{
+                this.$http.post('/api/player/bind_live',obj).then((res)=>{
                     if(res.data.code==200){
                         this.alertText('绑定成功')
                     }else{

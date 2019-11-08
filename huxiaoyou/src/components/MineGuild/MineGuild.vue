@@ -246,7 +246,7 @@ export default {
   },
 //   components: {},
     computed:{
-        ...mapState(['staticImgH','tokenH'])
+        ...mapState(['staticImgH','tokenH','MineGuildPage'])
     },
     mounted(){
             var obj=qs.stringify({
@@ -555,7 +555,7 @@ export default {
                     }
                 },
                 toReturn(){
-                    this.$router.push('/Mine')
+                    this.$router.push(this.MineGuildPage)
                 },
     }
 }

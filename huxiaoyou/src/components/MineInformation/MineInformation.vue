@@ -339,7 +339,7 @@ export default {
 <style scoped lang="stylus">
 .MineInformation{
   width:100%;
-  height:100%;
+  padding-bottom:0.4rem;
   background:#fff;
 }
 .MineInfo_title{
@@ -505,6 +505,6 @@ export default {
   background :rgba(255, 157, 172, 1);
   margin: 0 auto;
   margin-top:0.4rem;
-  margin-bottom:0.4rem;
+  
 }
 </style>

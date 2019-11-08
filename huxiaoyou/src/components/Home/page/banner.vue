@@ -68,15 +68,15 @@ export default {
 <style scoped lang='stylus'>
 .homeBanner{
   width:100%;
-  height:3.6rem;
+  height:6rem;
   margin-bottom:0.453rem;
 }
 .banner_list{
   width:100%;
-  height:3.6rem;
+  height:6rem;
   >swiper-slide{
     width:100%;
-    height:3.6rem;
+    height:6rem;
     >img{
       width:100%;
       height:100%;
@@ -87,7 +87,7 @@ export default {
   img{
       display :block;
       width:100%;
-      height:3.6rem;
+      height:6rem;
     }
 }
 .swiper-container >.swiper-pagination{

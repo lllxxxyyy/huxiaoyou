@@ -4,7 +4,7 @@
       <ul>
           <li v-for="(item,index) in footData" :key="index" @click="footClick(index,item.url)">
               <img :src="index==idx?item.img2:item.img1" alt="">
-              <span :class="index==idx?'nameRed':''">{{item.name}}</span>
+              <span  :class="index==idx?'nameRed':''">{{item.name}}</span>
           </li>
       </ul>
   </div>
@@ -73,10 +73,11 @@ export default {
 <style scoped lang="stylus">
 .foot{
     width:100%;
+     background :#fff;
     >ul{
         width:100%;
         height:1.458rem;
-        background :#fff;
+        background :#fedee375;
         display :flex;
         justify-content :space-between;
         align-items :center;
@@ -87,7 +88,7 @@ export default {
             align-items :center;
             >span{
                 font-size:0.32rem;
-                color:rgba(255, 193, 203, 1);
+                color:rgba(0, 0, 0, 0.7);
             }
             >img{
                 width:0.604rem;

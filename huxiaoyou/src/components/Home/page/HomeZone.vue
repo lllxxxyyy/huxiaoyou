@@ -2,9 +2,18 @@
 <template>
   <div class="homeZoneWrap">
       <ul class="zone_list">
+           <li>
+              <div><img :src="staticImgH+'ZAsaishibaoming.png'" alt=""></div>
+              <span>最新通告</span>
+          </li>
           <li @click="toSignUp">
               <div><img :src="staticImgH+'ZAsaishibaoming.png'" alt=""></div>
               <span>报名通道</span>
+          </li>
+          <li >
+              <div><img :src="staticImgH+'Zcansaifuli.png'" alt=""></div>
+              
+              <span>赛事秘籍</span>
           </li>
           <li @click="toPlayerRanking">
               <div><img  :src="staticImgH+'ZBxuanshouanpai.png'" alt=""></div>
@@ -15,11 +24,11 @@
               <div><img :src="staticImgH+'ZCxuanshoufencai.png'" alt=""></div>
               <span>选手风采</span>
           </li>
-          <li @click="toAiBei">
+          <!-- <li @click="toAiBei">
               <div><img :src="staticImgH+'Zcansaifuli.png'" alt=""></div>
               
               <span>参赛福利</span>
-          </li>
+          </li> -->
       </ul>
       <!-- 提示盒子 -->
          <transition name="fade">

@@ -45,7 +45,10 @@ export default {
         ...mapState(['staticImgH','tokenH'])
     },
 
-//   mounted: {},
+  mounted(){
+      this.LiveName=this.$route.query.platform
+      this.liveId=this.$route.query.platformId
+  },
 
   methods: {
         // 返回
@@ -56,17 +59,14 @@ export default {
             tobind(){
               if (!this.LiveName || !this.liveId) {
                 this.alertText('请输入完整信息')
+                return
               }
                 var obj=qs.stringify({
                     live_platform:this.LiveName,
                     live_id:this.liveId,
-                  type: 2
+                    type: 2
                 })
-                this.$http.post('/api/player/bind_live',obj,{
-                    headers: {
-                        'authorization': this.tokenH
-                    }
-                }).then((res)=>{
+                this.$http.post('/api/player/bind_live',obj).then((res)=>{
                     if(res.data.code==200){
                          this.alertText('绑定成功')
                     }else{
