@@ -68,26 +68,26 @@ export default {
 <style scoped lang='stylus'>
 .homeBanner{
   width:100%;
-  height:6rem;
+  height:rem;
   margin-bottom:0.453rem;
 }
-.banner_list{
-  width:100%;
-  height:6rem;
-  >swiper-slide{
-    width:100%;
-    height:6rem;
-    >img{
-      width:100%;
-      height:100%;
-    }
-  }
-}
+// .banner_list{
+//   width:100%;
+//   height:rem;
+//   >swiper-slide{
+//     width:100%;
+//     height:5rem;
+//     >img{
+//       width:100%;
+//       height:5rem;
+//     }
+//   }
+// }
 .swiper-slide{
   img{
       display :block;
       width:100%;
-      height:6rem;
+      height:5rem;
     }
 }
 .swiper-container >.swiper-pagination{
