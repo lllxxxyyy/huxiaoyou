@@ -150,7 +150,7 @@ export default {
 
 
 
-.player_style_tuijian{display:flex;align-items:center;justify-content: space-between;padding:0 0.36rem; font-size:0.44rem; font-weight:550; margin-top:0.14rem; margin-bottom:0.44rem;
+.player_style_tuijian{display:flex;align-items:center;justify-content: space-between;padding:0 0.36rem; font-size:0.427rem; font-weight:550; margin-top:0.14rem; margin-bottom:0.44rem;
 >span{
     padding-bottom: 0.2rem;
     border-bottom: 0.053rem solid #ffccd4;

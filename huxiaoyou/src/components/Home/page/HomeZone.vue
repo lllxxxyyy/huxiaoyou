@@ -3,7 +3,7 @@
   <div class="homeZoneWrap">
       <ul class="zone_list">
            <li @click="LatestNotice(35)">
-              <div><img :src="staticImgH+'ZAsaishibaoming.png'" alt=""></div>
+              <div><img :src="staticImgH+'newSHuo.png'" alt=""></div>
               <span>最新通告</span>
           </li>
           <li @click="toSignUp">

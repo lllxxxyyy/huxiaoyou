@@ -21,7 +21,7 @@
                   参赛编号：{{personData.player_id}}
                 </li>
                 <li>赛区排名：{{personData.division_ranking}}</li>
-                <img @click="toMineInfo" :src="staticImgH+'playBian.png'" alt="">编辑
+                <li @click="toMineInfo"><img  :src="staticImgH+'playBian.png'" alt="">编辑</li>
               </ul>
               <ul class="minePerson_artick ">
                  <li>
@@ -223,11 +223,12 @@ export default {
         margin-bottom:0.32rem;
         >li{
           margin-right:0.53rem;
-        }
-        >img{
+           >img{
           width:0.293rem;
           height:0.293rem;
         }
+        }
+       
     }
     >.minePerson_artick{
       display :flex;

@@ -147,8 +147,8 @@
                 </div>
             </div>
         </transition>
-        <!-- 加入公会成功  v-if="showAddSuccess"-->
-        <div class="add_success_wrap">
+        <!-- 加入公会成功  -->
+        <div class="add_success_wrap" v-if="showAddSuccess">
             <div class="add_success">
                 <div class="add_success_Cha"><img @click.stop="addSuccessCha"  :src="staticImgH+'cha.png'" alt=""></div>
                 <img class="add_successImg" :src="staticImgH+'add_succedd.png'">
@@ -274,6 +274,8 @@ export default {
         img:'',//证件照正面
         uploadimgsOpacityTwo:false,// 个人形象的显示与消失
         imgTwo:'',//证件照反面
+
+        ifSignUpText:''//报名成功的状态值
         
     };
   },
@@ -283,6 +285,14 @@ export default {
     },
 //   mounted: {},
   methods: {
+    //   判断有没有报名成功
+    ifSignUp(){
+        this.$http.post('/api/player/is_sign').then((res)=>{
+                if(res.data.code==200){
+                    this.ifSignUpText=res.data.data.result 
+                }
+            })
+    },
     //   去赚钱
     tozhuan(){
         this.$router.push('/PowerPack')
@@ -292,7 +302,17 @@ export default {
         this.IsAgree=!this.IsAgree
     },
       addSuccessCha(){
-          this.$router.push('/')
+          if(this.AddunionPage=='/SignUp'){
+              if(this.ifSignUpText==-1){
+                    this.$router.push(this.AddunionPage)
+                }else{
+                    this.$router.push('/')
+                }
+          }else{
+              this.$router.push(this.AddunionPage)
+          }
+          
+          
       },
        // 上传身份证前图片 1
         addImg(event){
@@ -504,11 +524,20 @@ export default {
       },
     //   返回
       toReturn(){
-        this.$router.push(this.AddunionPage)
+          if(this.AddunionPage=='/SignUp'){
+              if(this.ifSignUpText==-1){
+                    this.$router.push(this.AddunionPage)
+                }else{
+                    this.$router.push('/')
+                }
+          }else{
+              this.$router.push(this.AddunionPage)
+          }
+        
       },
       setAddressBtn(){
       },
-    //    ...mapMutations(['AddunionPages'])
+       ...mapMutations(['AddunionPages'])
   }
 }
 
