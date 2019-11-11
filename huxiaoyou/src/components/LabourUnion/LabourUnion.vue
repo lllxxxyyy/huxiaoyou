@@ -102,20 +102,20 @@ export default {
   methods: {
     //   跳加入公会
     toaddUnion(){
-        //  var obj=qs.stringify({
-        //           type:1
-        //       })
-        //       this.$http.post('/api/user/me_gong',obj).then((res)=>{
-        //           if(res.data.code==200){
-        //               if(res.data.data.result==1){
+         var obj=qs.stringify({
+                  type:1
+              })
+              this.$http.post('/api/user/me_gong',obj).then((res)=>{
+                  if(res.data.code==200){
+                      if(res.data.data.result==1){
                           this.AddunionPages('/LabourUnion')
                           this.$router.push('/AddUnion')
-                //       }else{
-                //           this.MineGuildPages('/LabourUnion')
-                //             this.$router.push('/MineGuild')
-                //       }
-                //   }
-            //   })
+                      }else{
+                          this.MineGuildPages('/LabourUnion')
+                            this.$router.push('/MineGuild')
+                      }
+                  }
+              })
     },
     //   跳选手详情
     toPlayerDetail(id){

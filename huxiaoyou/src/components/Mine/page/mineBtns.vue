@@ -183,7 +183,20 @@ export default {
     //   普通用户跳转
     UsertriggerBtn(index){
         if(index==0){
-            this.$router.push('/MineGuild')
+             var obj=qs.stringify({
+                  type:1
+              })
+              this.$http.post('/api/user/me_gong',obj).then((res)=>{
+                  if(res.data.code==200){
+                      if(res.data.data.result==1){
+                          this.AddunionPages('/Mine')
+                          this.$router.push('/AddUnion')
+                      }else{
+                          this.MineGuildPages('/Mine')
+                            this.$router.push('/MineGuild')
+                      }
+                  }
+              })
         }else if(index==2){
                 this.myOrderListPages('/Mine')
                 this.orderTypes('')
