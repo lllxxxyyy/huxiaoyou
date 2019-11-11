@@ -242,6 +242,7 @@ export default {
         imgTwo:'',//证件照反面
 
         guildData:'',
+        ifSignUpText:"",//报名状态
     };
   },
 //   components: {},
@@ -317,8 +318,19 @@ export default {
                         this.alertText(res.data.msg)
                     }
             })
+
+            //   判断有没有报名成功
+                this.ifSignUp()
     },
     methods: {
+            //   判断有没有报名成功
+                    ifSignUp(){
+                        this.$http.post('/api/player/is_sign').then((res)=>{
+                                if(res.data.code==200){
+                                    this.ifSignUpText=res.data.data.result 
+                                }
+                            })
+                    },
             // 上传身份证前图片 1
                     addImg(event){
                         if(event.target.files[0]){
@@ -555,7 +567,16 @@ export default {
                     }
                 },
                 toReturn(){
-                    this.$router.push(this.MineGuildPage)
+                    if(this.MineGuildPage=='/SignUp'){
+                        if(this.ifSignUpText==-1){
+                                this.$router.push(this.MineGuildPage)
+                            }else{
+                                this.$router.push('/')
+                            }
+                    }else{
+                        this.$router.push(this.MineGuildPage)
+                    }
+                    
                 },
     }
 }

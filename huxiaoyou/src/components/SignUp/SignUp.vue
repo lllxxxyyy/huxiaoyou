@@ -247,6 +247,20 @@ export default {
         },
     // 跳加入公会页面
         addUnion(){
+          var obj=qs.stringify({
+                  type:1
+              })
+              this.$http.post('/api/user/me_gong',obj).then((res)=>{
+                  if(res.data.code==200){
+                      if(res.data.data.result==1){
+                          this.AddunionPages('/SignUp')
+                          this.$router.push('/AddUnion')
+                      }else{
+                          this.MineGuildPages('/SignUp')
+                          this.$router.push('/MineGuild')
+                      }
+                  }
+              })
           this.AddunionPages('/SignUp')
             this.$router.push('/AddUnion')
         },

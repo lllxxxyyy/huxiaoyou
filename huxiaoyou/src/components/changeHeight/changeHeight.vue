@@ -11,7 +11,7 @@
           <span class="change_destitle">我的身高</span>
            <select v-model="height">
             <option value ="">请选择</option>
-            <option :value ="item" v-for="(item,index) in 200" :key="index" v-if="item>=100">{{item}}</option>
+            <option :value ="item" v-for="(item,index) in 200" :key="index" v-if="item>=100">{{item}}cm</option>
         </select>
       </div>
   </div>
@@ -96,7 +96,9 @@ export default {
     }
     >select{
         height:1rem;
-        outline :none;
+        border:0.03rem solid rgba(0, 0, 0, 0.2);
+        outline:none;
+        background:#fff;
     }
     >.change_input{
         border:0;

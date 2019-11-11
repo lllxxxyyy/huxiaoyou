@@ -61,19 +61,32 @@
                         </li>
                         <li>
                             <div class="Info_name"><span>年龄</span></div>
-                            <input type="text" v-model="age"  oninput = "value=value.replace(/[^\d]/g,'')" placeholder="请填写您的真实年龄">
+                            <select v-model="age">
+                                <option value ="">请选择您的真实年龄</option>
+                                <option :value ="item" v-for="(item,index) in 60" :key="index" v-if="item>=18">{{item}}岁</option>
+                            </select>
                         </li>
                         <li>
                             <div class="Info_name"><span>身高</span></div>
-                            <input type="text" v-model="heightVal" oninput = "value=value.replace(/[^\d]/g,'')" placeholder="请填写您的身高">
+                            <select v-model="heightVal">
+                                <option value ="">请选择您的身高</option>
+                                <option :value ="item" v-for="(item,index) in 200" :key="index" v-if="item>=100">{{item}}cm</option>
+                            </select>
                         </li>
+
                         <li>
                             <div class="Info_name"><span>体重</span></div>
-                            <input type="text" v-model="weightVal" oninput = "value=value.replace(/[^\d]/g,'')" placeholder="请填写您的体重">
+                            <select v-model="weightVal">
+                                <option value ="">请选择您的体重</option>
+                                <option :value ="item" v-for="(item,index) in 200" :key="index" v-if="item>=30">{{item}}kg</option>
+                            </select>
                         </li>
                         <li>
                             <div class="Info_name"><span>星座</span></div>
-                            <input type="text" v-model="constellationVal" oninput="value=value.replace(/[^\u4e00-\u9fa5]/g,'')"  placeholder="请填写您的星座">
+                            <select v-model="constellationVal">
+                                <option value ="">请选择您的星座</option>
+                                <option :value ="item.c_name" v-for="(item,index) in constellationData" :key="index">{{item.c_name}}</option>
+                            </select>
                         </li>
                         <li>
                             <div class="Info_name"><span>特长</span></div>
@@ -275,7 +288,9 @@ export default {
         uploadimgsOpacityTwo:false,// 个人形象的显示与消失
         imgTwo:'',//证件照反面
 
-        ifSignUpText:''//报名成功的状态值
+        ifSignUpText:'',//报名成功的状态值
+
+        constellationData:'',//星座数据
         
     };
   },
@@ -283,7 +298,16 @@ export default {
    computed:{
         ...mapState(['staticImgH','tokenH','AddunionPage'])
     },
-//   mounted: {},
+  mounted(){
+      //   判断有没有报名成功
+      this.ifSignUp()
+
+       this.$http.post('/api/division/conste_List').then((res)=>{
+          if(res.data.code==200){
+              this.constellationData=res.data.data
+          }
+      })
+  },
   methods: {
     //   判断有没有报名成功
     ifSignUp(){
@@ -626,6 +650,12 @@ export default {
             >span{
                 color:#000000;
             }
+            
+        }
+        >select{
+            border:0.03rem solid rgba(0, 0, 0, 0.3);
+            outline:none;
+            background:#fff;
         }
         >textarea{
             width:100%;

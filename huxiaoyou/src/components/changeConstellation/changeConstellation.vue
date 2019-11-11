@@ -101,7 +101,9 @@ export default {
     }
     >select{
         height:1rem;
-        outline :none;
+        border:0.03rem solid rgba(0, 0, 0, 0.2);
+        outline:none;
+        background:#fff;
     }
     >.change_input{
         border:0;

@@ -35,7 +35,7 @@
         <li @click="changeAge">
           <span>年龄</span>
           <div  class="MineInfo_ListRight" >
-            <span v-if="ageM">{{ageM}}</span><img :src="staticImgH+'MineRight.png'" alt="">
+            <span v-if="ageM">{{ageM}}岁</span><img :src="staticImgH+'MineRight.png'" alt="">
           </div>
         </li>
         <li @click="changeHeight">
