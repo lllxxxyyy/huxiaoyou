@@ -45,7 +45,7 @@ axios.interceptors.response.use(
             switch (error.response.status) {
                 case 401:
                     // 401 清除token信息并跳转到登录页面
-                    localStorage.removeItem('tokenH');
+                    sessionStorage.removeItem('tokenH');
                     // 只有在当前路由不是登录页面才跳转
                     router.currentRoute.path !== '/login' &&
                         router.replace({

@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 const state = {
     WpersonInfoH: JSON.parse(localStorage.getItem('WpersonInfoH')) || {},
-    tokenH: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo2NiwiaXNzIjoiaHR0cHM6XC9cL2xvdnlvdS50b3AiLCJhdWQiOiJodHRwczpcL1wvbG92eW91LnRvcCIsImlhdCI6MTU3MzAzMjU3OSwibmJmIjoxNTczMDMyNTc5LCJleHAiOjE2MDQ1Njg1Nzl9.cNuwSLCE5zi-AB-Zv111TLnC9VLPlk783hx4m_uRzzA',
+    tokenH: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMSIsImlzcyI6Imh0dHBzOlwvXC9sb3Z5b3UudG9wIiwiYXVkIjoiaHR0cHM6XC9cL2xvdnlvdS50b3AiLCJpYXQiOjE1NzM0NTI2MTUsIm5iZiI6MTU3MzQ1MjYxNSwiZXhwIjoxNjA0OTg4NjE1fQ.weJ0Ybn3PAAdYLZkWQH1H-TVYdCmEWEACJPHL6-mqnk',
     userIdH: '3', //用户Id
     userIdHInterest: localStorage.getItem('userIdHInterest'), //分享出去的商品详情页需要得到利益的用户Id
     idxNowH: localStorage.getItem('idxNowH'),
@@ -175,7 +175,7 @@ const mutations = {
         state.specialDetailInfo = specialDetailInfo
     },
     tokenHs(state, tokenH) {
-        localStorage.setItem('tokenH', tokenH);
+        sessionStorage.setItem('tokenH', tokenH);
         state.tokenH = tokenH
     },
     WpersonInfoHs(state, WpersonInfoH) {
