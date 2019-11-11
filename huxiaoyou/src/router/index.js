@@ -61,6 +61,8 @@ import playDetailStyle from '@/components/playDetailStyle/playDetailStyle' //选
 
 import comOrder from '@/components/comOrder/comOrder' //确认订单
 
+import RaceCheats from '@/components/RaceCheats/RaceCheats' //赛事秘籍  最新通告
+
 const routes = [{ //首页
         path: '/',
         name: 'Home',
@@ -414,6 +416,14 @@ const routes = [{ //首页
             requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
         },
         component: comOrder
+    },
+    { //最新通告 赛事秘籍
+        path: '/RaceCheats',
+        name: 'RaceCheats',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: RaceCheats
     },
 ]
 

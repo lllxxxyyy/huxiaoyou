@@ -24,29 +24,25 @@
       <!--<video-player class="video-player-box ovideo" controls="controls" autoplay="autoplay" ref="videoPlayer" :options="playerOptions" :playsinline="true">-->
       <!--</video-player>-->
       <div class="contenter flex_center">
-        <div class="videoBox" >
-		<div  @click="playOrPause()" class="play mask flex_center">
-            <img v-show="show" class="playBtn" :src="staticImgH+'bofang.png'"/>
+          <div class="videoBox" >
+                <div  @click="playOrPause()" class="play mask flex_center">
+                    <img v-show="show" class="playBtn" :src="staticImgH+'bofang.png'"/>
+                </div>
+                <!-- x5-video-player-fullscreen="true"
+                  x5-playsinline  -->
+                <video v-if="mobile==='android'"  id="video" width="100%" height="100%"
+                        x-webkit-airplay 
+                        x5-video-player-type="h5"  
+                        x5-video-player-fullscreen="false"
+                        :src="video_info.video_introduction">
+                </video>
+                <video autoplay="autoplay" v-if="mobile==='iPhone'" id="video"
+                      width="100%"
+                      height="100%"
+                      :src="video_info.video_introduction"  >
+                </video>
+                <div id="output"></div>
           </div>
-          <!-- x5-video-player-fullscreen="true"
-                 x5-playsinline  -->
-          <video autoplay="autoplay" v-if="mobile==='android'"  id="video" width="100%" height="100%"
-                  x-webkit-airplay 
-                   x5-video-player-type="h5"  
-                   x5-video-player-fullscreen="false"
-                   poster="xx0.jpg"
-                    :src="video_info.video_introduction">
-                  <!-- <source : type="video/mp4" /> -->
-                  <!-- <source :src="video_info.video_introduction" type="video/mp4" />
-                  <source :src="video_info.video_introduction" type="video/mp4" /> -->
-          </video>
-          <video autoplay="autoplay" v-if="mobile==='iPhone'" id="video"
-                 width="100%"
-                 height="100%"
-                 poster="xx0.jpg"
-                 :src="video_info.video_introduction"  >
-          </video>
-        </div>
       </div>
 
     </div>
@@ -94,10 +90,9 @@
 
         playerOptions:{},
 
-        show:false,
+        show:true,
         mobile:"",
         text:"",
-
 
         PlayerStyleData: '',
         currentPlayerData: {},
@@ -116,6 +111,8 @@
           rank: 0,
 
           test:'',//分享视频数据
+          output:'',
+          video:'',
 
         }
       };
@@ -126,11 +123,12 @@
     },
     created(){
       this.text=navigator.appVersion
-      this.mobile = navigator.appVersion.indexOf('iPhone') !== -1 ? 'iPhone' :  'android'
+      this.mobile = navigator.appVersion.indexOf('iPhone') !== -1 ? 'android' :  'iPhone'
     },
     mounted() {
       this.firstPanduan()
       this.video = document.getElementById('video')
+      this.output = document.getElementById("output");
       this.video.currentTime = 0.1;
 
       //视频详情
@@ -145,9 +143,31 @@
           this.WShare()
         }
       })
+        
     },
 
     methods: {
+      videoZhen(){
+        var vm=this
+          wx.ready(function() { //播放。为什么这里不直接dom.play()。妈**** 因为微信不让啊。我也很无奈啊。
+              vm.video.play();
+          });
+          
+        this.video.onloadeddata = this.videoOnloadeddata() 
+      },
+      videoOnloadeddata(){
+            var scale = 0.8;
+            var canvas = document.createElement("canvas");
+                canvas.width = this.video.videoWidth * scale;
+                canvas.height = this.video.videoHeight * scale;
+                canvas.getContext('2d').drawImage(this.video, 0, 0, canvas.width,
+                        canvas.height);
+                var img = document.createElement("img");
+                img.src = canvas.toDataURL("image/png");
+                img.width = 400;
+                img.height = 300;
+                this.output.appendChild(img)
+      },
       // 点击了解更多
           toHome(){
             this.$router.push('/PlayerStyle')
@@ -211,6 +231,7 @@
                             });
                             this.toFriend()
                             this.toFriendQuan()
+                            this.videoZhen()
                     }else{
                         this.toastMsg(res.data.msg);
                     }

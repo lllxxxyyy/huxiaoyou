@@ -13,7 +13,7 @@
       </ul>
     </div>
     <div class="CoOperative">
-      <span>合作商</span>
+      <span>合作品牌</span>
       <ul class="brandList">
         <li class="brand" v-for="(item,index) in brandList" :key="index">
           <img :src="item.logo" alt="">

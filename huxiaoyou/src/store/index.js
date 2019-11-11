@@ -49,8 +49,15 @@ const state = {
 
     Shopvote: sessionStorage.getItem('Shopvote'), // 商品票数
     barIdINdex: sessionStorage.getItem('barIdINdex'), // 选手排行赛区id
+
+    RaceCheatsId: sessionStorage.getItem('RaceCheatsId'), // 最新通告、赛事秘籍ID
 }
 const mutations = {
+    // 最新通告、赛事秘籍ID
+    RaceCheatsIds(state, RaceCheatsId) {
+        sessionStorage.setItem('RaceCheatsId', RaceCheatsId);
+        state.RaceCheatsId = RaceCheatsId
+    },
     // 选手排行赛区id
     barIdINdexs(state, barIdINdex) {
         sessionStorage.setItem('barIdINdex', barIdINdex);

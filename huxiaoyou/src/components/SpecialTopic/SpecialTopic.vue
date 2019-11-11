@@ -3,14 +3,14 @@
   <div class="SpecialTopic">
       <div class="SpecialTopicHeader">
           <img @click="specialReturn"  :src="staticImgH+'zuojiantou.png'" alt="">
-          <span>往届大赛风采</span>   
+          <span>{{specialList[0].name}}</span>   
       </div>
         <div class="shopHide"></div>
       <ul class="Special_list">
           <li v-for="(item,index) in specialList" :key="index" @click="toSpecialDetails(item.id)">
               <div class="SpecialList_left">
                   <span class="SpecialList_name">{{item.title}}</span>
-                  <span class="SpecialList_num"></span>
+                  <span class="SpecialList_num">{{item.created_at}}</span>
               </div>
               <div class="SpecialList_right">
                   <img :src="item.thumb" alt="">
@@ -163,8 +163,9 @@ export default {
            justify-content :space-between;
            font-size:0.32rem;
            >.SpecialList_name{
-            color:#494949;
-			font-size:16px;
+                color:#494949;
+                font-size:16px;
+                margin-top:0.27rem;
            }
            >.SpecialList_num{
                color:#797979;

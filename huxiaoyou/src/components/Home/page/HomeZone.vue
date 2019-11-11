@@ -2,7 +2,7 @@
 <template>
   <div class="homeZoneWrap">
       <ul class="zone_list">
-           <li>
+           <li @click="LatestNotice(35)">
               <div><img :src="staticImgH+'ZAsaishibaoming.png'" alt=""></div>
               <span>最新通告</span>
           </li>
@@ -10,7 +10,7 @@
               <div><img :src="staticImgH+'ZAsaishibaoming.png'" alt=""></div>
               <span>报名通道</span>
           </li>
-          <li >
+          <li @click="LatestNotice(39)">
               <div><img :src="staticImgH+'Zcansaifuli.png'" alt=""></div>
               
               <span>赛事秘籍</span>
@@ -19,7 +19,6 @@
               <div><img  :src="staticImgH+'ZBxuanshouanpai.png'" alt=""></div>
               <span>选手排名</span>
           </li>
-          
           <li @click="toPlayerStyle">
               <div><img :src="staticImgH+'ZCxuanshoufencai.png'" alt=""></div>
               <span>选手风采</span>
@@ -65,8 +64,13 @@ export default {
 //   mounted: {},
 
   methods: {
+    //   最新通告
+        LatestNotice(id){
+            this.RaceCheatsIds(id)
+            this.$router.push('/RaceCheats')
+        },
     //   报名通道
-      toSignUp(){
+        toSignUp(){
           this.$http.post('/api/player/is_sign').then((res)=>{
                 if(res.data.code==200){
                     if(res.data.data.result==-1){
@@ -104,7 +108,7 @@ export default {
       toAiBei(){
           window.location.href="http://app.aibebi.cn/aibei/dist/"
       },
-      ...mapMutations(['playerIds','addressIdIsSels','PlayerDetailPages','playDetailVoteDivs','barIdINdexs']),
+      ...mapMutations(['playerIds','addressIdIsSels','PlayerDetailPages','playDetailVoteDivs','barIdINdexs','RaceCheatsIds']),
   }
 }
 </script>

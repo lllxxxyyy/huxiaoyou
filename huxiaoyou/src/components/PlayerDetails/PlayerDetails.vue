@@ -60,6 +60,7 @@
                     <!-- <span class="attentionBtn" v-if="personData.is_player==0">+关注</span> -->
                     <span class="shareBtn" @click.stop="shareC">为Ta分享</span>
                     <span class="EnterBtn" @click="tocanSai" v-if="personData.is_player==0">我也参赛</span>
+                    <span class="EnterBtn" @click.stop="toPlayDetailstyle">选手视频</span>
                 </div>
             </div>
         <!-- 视频 -->
