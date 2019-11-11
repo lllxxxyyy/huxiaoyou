@@ -63,6 +63,12 @@ import comOrder from '@/components/comOrder/comOrder' //确认订单
 
 import RaceCheats from '@/components/RaceCheats/RaceCheats' //赛事秘籍  最新通告
 
+import changeAge from '@/components/changeAge/changeAge' //个人信息 修改年龄
+import changeHeight from '@/components/changeHeight/changeHeight' //个人信息 修改年龄
+import changeWeight from '@/components/changeWeight/changeWeight' //个人信息 修改年龄
+
+import changeConstellation from '@/components/changeConstellation/changeConstellation' //个人信息 修改年龄
+
 const routes = [{ //首页
         path: '/',
         name: 'Home',
@@ -424,6 +430,38 @@ const routes = [{ //首页
             requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
         },
         component: RaceCheats
+    },
+    { //个人信息，修改年龄
+        path: '/changeAge',
+        name: 'changeAge',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: changeAge
+    },
+    { //个人信息，修改身高
+        path: '/changeHeight',
+        name: 'changeHeight',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: changeHeight
+    },
+    { //个人信息，修改身高
+        path: '/changeWeight',
+        name: 'changeWeight',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: changeWeight
+    },
+    { //个人信息，修改身高
+        path: '/changeConstellation',
+        name: 'changeConstellation',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: changeConstellation
     },
 ]
 

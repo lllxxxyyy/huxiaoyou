@@ -3,14 +3,16 @@
   <div class="changeName">
         <div class="change_title">
         <img @click="changeRetuurn" :src="staticImgH+'zuojiantou.png'" alt="">
-        <span>修改昵称</span>
+        <span>修改星座</span> 
 
         <span class="submit" @click="submit">保存</span>
       </div>
       <div class="change_des">
-          <span class="change_destitle" >我的名字（或昵称）</span>
-          <input class="change_input"  type="text" maxlength="20"  v-model="userName">
-          <div class="change_num"><span>{{userName.length}}</span>/<span>20</span></div>
+          <span class="change_destitle">我的星座</span>
+           <select v-model="constellation">
+            <option value ="">请选择</option>
+            <option :value ="item.c_name" v-for="(item,index) in constellationData" :key="index">{{item.c_name}}</option>
+        </select>
       </div>
   </div>
 </template>
@@ -23,18 +25,24 @@ export default {
     name:"changeName",
   data () {
     return {
-        userName:'例：花椒花椒',
+        constellation:'',//星座
+        constellationData:'',
     };
   },
 
 //   components: {},
 
     computed:{
-        ...mapState(['staticImgH','nickNamePerX'])
+        ...mapState(['staticImgH','constellationPerX'])
     },
 
   mounted(){
-          this.userName=this.nickNamePerX
+      this.constellation=this.constellationPerX
+      this.$http.post('/api/division/conste_List').then((res)=>{
+          if(res.data.code==200){
+              this.constellationData=res.data.data
+          }
+      })
   },
 
   methods: {
@@ -44,11 +52,10 @@ export default {
       },
     //   保存
     submit(){
-          this.nickNamePerXs(this.userName)
-        
-        this.$router.push('/MineInformation')
+            this.constellationPerXs(this.constellation)
+            this.$router.push('/MineInformation')
     },
-    ...mapMutations(['nickNamePerXs']),
+    ...mapMutations(['constellationPerXs']),
   }
 }
 
@@ -90,6 +97,11 @@ export default {
     >.change_destitle{
         font-size:0.32rem;
         color:rgba(0, 0, 0, 0.6);
+        margin-bottom:0.32rem;
+    }
+    >select{
+        height:1rem;
+        outline :none;
     }
     >.change_input{
         border:0;

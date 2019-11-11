@@ -30,7 +30,7 @@
               <span v-if="(index+1) >= 4">{{index+1}}</span>
             </div>
             <span class="touxiang">
-            <img v-if="item.photo_introduction[0]" :src="item.photo_introduction[0].src" alt="">
+            <img v-if="item.head_pic" :src="item.photo_introduction[0].src" alt="">
           </span>
             <span class="angelNameTwo">{{item.username}}</span>
             <span class="angelPriceid">{{item.id}}</span>

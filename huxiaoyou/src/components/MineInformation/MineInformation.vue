@@ -14,7 +14,7 @@
               <input type="file" class="upload" @change="uploadFile" ref="inputer" accept="image/*"/>
           </div>
         </li>
-        <li @click="changeInfo(1)">
+        <li @click="changeInfo">
           <span>姓名（或昵称）</span>
           <div class="MineInfo_ListRight" >
             <span>{{nickNameM}}</span><img :src="staticImgH+'MineRight.png'" alt="">
@@ -32,19 +32,19 @@
             <span v-if='sexM==1'>男</span><span v-if='sexM==2'>女</span><img :src="staticImgH+'MineRight.png'" alt="">
           </div>
         </li>
-        <li @click="changeInfo(2)">
+        <li @click="changeAge">
           <span>年龄</span>
           <div  class="MineInfo_ListRight" >
             <span v-if="ageM">{{ageM}}</span><img :src="staticImgH+'MineRight.png'" alt="">
           </div>
         </li>
-        <li @click="changeInfo(3)">
+        <li @click="changeHeight">
           <span>身高</span>
           <div  class="MineInfo_ListRight" >
             <span>{{heightM}}cm</span><img :src="staticImgH+'MineRight.png'" alt="">
           </div>
         </li>
-        <li @click="changeInfo(4)">
+        <li @click="changeWeight">
           <span>体重</span>
           <div  class="MineInfo_ListRight" >
             <span>{{weightM}}kg</span><img :src="staticImgH+'MineRight.png'" alt="">
@@ -56,7 +56,7 @@
             <span>{{cityM}}</span><img :src="staticImgH+'MineRight.png'" alt="">
           </div>
         </li>
-        <li @click="changeInfo(6)">
+        <li @click="changeConstellation">
           <span>星座</span >
           <div class="MineInfo_ListRight" >
             <span>{{constellationM}}</span><img :src="staticImgH+'MineRight.png'" alt="">
@@ -245,15 +245,31 @@ export default {
     // 修改昵称
     changeInfo(index){
           this.nickNamePerXs(this.nickNameM)//名字
-          this.agePerXs(this.ageM) //年龄
-          this.heightPerXs(this.heightM) //身高
-          this.weightPerXs(this.weightM) //体重 
-          this.constellationPerXs(this.constellationM)  //星座
-          this.$router.push({path:'/changeName',query:{changeIndex:index}})
+          this.$router.push('/changeName')
+    },
+    // 修改年龄
+    changeAge(){
+        this.agePerXs(this.ageM) //年龄
+        this.$router.push('/changeAge')
+    },
+    // 修改体重
+    changeWeight(){
+     
+        this.weightPerXs(this.weightM) //体重 
+         this.$router.push('/changeWeight')
+    },
+    // 修改星座
+    changeConstellation(){
+         this.$router.push('/changeConstellation')
     },
     // 我的信息返回
     InfoReturn(){
         this.$router.push(this.MineInformationPage)
+    },
+    // 修改身高
+    changeHeight(){
+       this.heightPerXs(this.heightM) //身高
+        this.$router.push('/changeHeight')
     },
     // 个性签名跳转
     SignatureReturn(){

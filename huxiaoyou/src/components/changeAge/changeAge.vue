@@ -3,14 +3,16 @@
   <div class="changeName">
         <div class="change_title">
         <img @click="changeRetuurn" :src="staticImgH+'zuojiantou.png'" alt="">
-        <span>修改昵称</span>
+        <span>修改年龄</span> 
 
         <span class="submit" @click="submit">保存</span>
       </div>
       <div class="change_des">
-          <span class="change_destitle" >我的名字（或昵称）</span>
-          <input class="change_input"  type="text" maxlength="20"  v-model="userName">
-          <div class="change_num"><span>{{userName.length}}</span>/<span>20</span></div>
+          <span class="change_destitle">我的年龄</span>
+           <select v-model="age">
+            <option value ="">请选择</option>
+            <option :value ="item" v-for="(item,index) in 60" :key="index" v-if="item>=18">{{item}}</option>
+        </select>
       </div>
   </div>
 </template>
@@ -23,18 +25,18 @@ export default {
     name:"changeName",
   data () {
     return {
-        userName:'例：花椒花椒',
+        age:'',//年龄
     };
   },
 
 //   components: {},
 
     computed:{
-        ...mapState(['staticImgH','nickNamePerX'])
+        ...mapState(['staticImgH','agePerX'])
     },
 
   mounted(){
-          this.userName=this.nickNamePerX
+      this.age=this.agePerX
   },
 
   methods: {
@@ -44,11 +46,10 @@ export default {
       },
     //   保存
     submit(){
-          this.nickNamePerXs(this.userName)
-        
-        this.$router.push('/MineInformation')
+          this.agePerXs(this.age)
+            this.$router.push('/MineInformation')
     },
-    ...mapMutations(['nickNamePerXs']),
+    ...mapMutations(['agePerXs']),
   }
 }
 
@@ -90,6 +91,11 @@ export default {
     >.change_destitle{
         font-size:0.32rem;
         color:rgba(0, 0, 0, 0.6);
+        margin-bottom:0.32rem;
+    }
+    >select{
+        height:1rem;
+        outline :none;
     }
     >.change_input{
         border:0;
