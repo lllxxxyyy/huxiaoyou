@@ -826,6 +826,7 @@ export default {
     }
     .player_btnList{
         display:flex;
+        flex-wrap:wrap;
         margin-bottom:0.53rem;
         letter-spacing:0.04rem;
         >span{
@@ -833,6 +834,7 @@ export default {
             font-size:0.427rem;
             border-radius:0.5rem;
             margin-right:0.1rem;
+            margin-bottom:0.27rem;
             &:last-child{
                 margin-right:0;
             }

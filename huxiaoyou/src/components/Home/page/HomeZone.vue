@@ -67,6 +67,7 @@ export default {
     //   最新通告
         LatestNotice(id){
             this.RaceCheatsIds(id)
+            this.RaceCheatsPages('/')
             this.$router.push('/RaceCheats')
         },
     //   报名通道
@@ -108,7 +109,7 @@ export default {
       toAiBei(){
           window.location.href="http://app.aibebi.cn/aibei/dist/"
       },
-      ...mapMutations(['playerIds','addressIdIsSels','PlayerDetailPages','playDetailVoteDivs','barIdINdexs','RaceCheatsIds']),
+      ...mapMutations(['playerIds','addressIdIsSels','PlayerDetailPages','playDetailVoteDivs','barIdINdexs','RaceCheatsIds','RaceCheatsPages']),
   }
 }
 </script>

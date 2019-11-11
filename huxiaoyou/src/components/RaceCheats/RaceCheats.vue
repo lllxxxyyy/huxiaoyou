@@ -40,7 +40,7 @@ export default {
     };
   },
   computed:{
-        ...mapState(['staticImgH','RaceCheatsId'])
+        ...mapState(['staticImgH','RaceCheatsId','RaceCheatsPage'])
     },
 
   mounted() {
@@ -53,10 +53,9 @@ export default {
       }
       })
   },
-
   methods: {
     toReturn(){
-        this.$router.push('/')
+        this.$router.push(this.RaceCheatsPage)
     }
   }
 }

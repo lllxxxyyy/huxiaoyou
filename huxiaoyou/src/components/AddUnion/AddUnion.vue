@@ -495,7 +495,6 @@ export default {
            }
       },
       WangBtnDefa(){
-          
           this.isShop='',
           this.WangisDefault==0?this.WangisDefault=1:this.WangisDefault=0
           if(this.WangisDefault==0){
@@ -653,9 +652,12 @@ export default {
             
         }
         >select{
-            border:0.03rem solid rgba(0, 0, 0, 0.3);
+            height:0.67rem;
+            border-radius:0.08rem;
+            border:0.03rem solid rgba(0, 0, 0, 0.38);
             outline:none;
             background:#fff;
+             color: rgba(0, 0, 0, 0.38);
         }
         >textarea{
             width:100%;

@@ -51,8 +51,15 @@ const state = {
     barIdINdex: sessionStorage.getItem('barIdINdex'), // 选手排行赛区id
 
     RaceCheatsId: sessionStorage.getItem('RaceCheatsId'), // 最新通告、赛事秘籍ID
+
+    RaceCheatsPage: sessionStorage.getItem('RaceCheatsPage'), //报名通道上的四个按钮和 首页最新通告、秘籍的跳转页面
 }
 const mutations = {
+    //报名通道上的四个按钮和 首页最新通告、秘籍的跳转页面
+    RaceCheatsPages(state, RaceCheatsPage) {
+        sessionStorage.setItem('RaceCheatsPage', RaceCheatsPage);
+        state.RaceCheatsPage = RaceCheatsPage
+    },
     // 最新通告、赛事秘籍ID
     RaceCheatsIds(state, RaceCheatsId) {
         sessionStorage.setItem('RaceCheatsId', RaceCheatsId);

@@ -8,7 +8,7 @@
             </div>
             <div class="BeforeSubmit">
                   <ul class="sign_btn">
-                    <li v-for="(item,index) in signUpData" :key='index'>{{item.name}}</li>
+                    <li @click="LatestNotice(item.id)" v-for="(item,index) in signUpData" :key='index'>{{item.name}}</li>
                   </ul>
                   <ul class="SignUp_list">
                     <li>
@@ -86,16 +86,17 @@
                 </div>
             </div>
         </transition>
-      <!-- 恭喜您报名成功  -->
-      <div class="sign_success_wrap" v-if="showSignSuccess" >
+      <!-- 恭喜您报名成功  v-if="showSignSuccess"-->
+      <div class="sign_success_wrap"  >
          <div class="sign_success" >
               <div class="sign_Cha"><img @click.stop="signSuccessSha"  :src="staticImgH+'cha.png'" alt=""></div>
-              <div class="sign_succeddImg"><span>恭喜您报名成功</span><img  :src="staticImgH+'sign_success.png'"></div> 
+              <div class="sign_succeddImg"><span>恭喜您报名成功</span></div> 
+              <img class="sign_succeddYes" :src="staticImgH+'sign_success.png'" alt="">
               <span class="sign_succeddtext">您获得了一个多赚10%的机会！</span>
               <div class="sign_succeddBtn" @click.stop="addUnion">去了解</div>
-              <img class="erweima_img" :src="erweimaImg" alt="">
+              <!-- <img class="erweima_img" :src="erweimaImg" alt="">
               <span class="erweima_des">华北客服微信二维码</span>
-              <img class="erweima_down" :src="staticImgH+'erweima_down.png'" alt="">
+              <img class="erweima_down" :src="staticImgH+'erweima_down.png'" alt=""> -->
          </div>
       </div>
        <!-- 提示只能女性参与报名 -->
@@ -128,19 +129,24 @@ export default {
         ],
       signUpData:[
         {
-          name:'报名条件'
+          name:'报名条件',
+          id:43,
         },
         {
-          name:'赛事规则'
+          name:'赛事规则',
+          id:45,
         },
         {
-          name:'赛事奖励'
+          name:'赛事奖励',
+          id:46,
         },
         {
-          name:'投票规则'
+          name:'投票规则',
+          id:44,
         },
         {
-          name:'赛区介绍'
+          name:'赛区介绍',
+          id:4,
         },
       ],
       showSignSuccess:false,//报名成功提示默认消失
@@ -175,12 +181,19 @@ export default {
         ...mapState(['staticImgH'])
     },
   mounted() {
+    
     // 赛区列表
         this.divisionListData()
     //判断是否是分享出去的 截取邀请码字段
         this.getCode()
   },
   methods: {
+    //   顶部按钮跳转
+        LatestNotice(id){
+            this.RaceCheatsIds(id)
+            this.RaceCheatsPages('/SignUp')
+            this.$router.push('/RaceCheats')
+        },
     //判断是否是分享出去的 截取邀请码字段
         getCode(){
               var shopUrl = window.location.href
@@ -326,7 +339,7 @@ export default {
                         }
                 });
           },
-       ...mapMutations(['AddunionPages']),
+       ...mapMutations(['AddunionPages','RaceCheatsIds','RaceCheatsPages']),
        // 身份证验证
         cardNumber(){
             var idCardReg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
@@ -814,30 +827,32 @@ export default {
         flex-direction :column;
         align-items:center;
         >.sign_Cha{
-          width:5.3rem;
+          width:8.07rem;
           text-align:right;
           >img{
             width:0.493rem;
             height:0.493rem;
-            margin-right:0.187rem;
+            // margin-right:0.187rem;
           }
         }
         >.sign_succeddImg{
-            width:5.3rem;
-            height:6rem;
+            width:8.07rem;
+            height:2.09rem;
             position:relative;
-          >img{
-            width:5.3rem;
-            height:6rem;
-          }
-          >span{
-                 position: absolute;
-                top: 0.1rem;
-                left: 0.7rem;
-                font-size: 0.48rem;
-                color: #ff9dac;
-          }
-          
+            background:url('/static/mock/img/signUpText.png') no-repeat;
+            background-size:100% 100%;
+            text-align:center;
+            line-height :2.09rem;
+            >span{
+                  font-size: 0.72rem;
+                  color: rgba(255, 157, 172, 1);
+            }
+        }
+        >.sign_succeddYes{
+          width:8.27rem;
+          height:8.613rem;
+          margin:0 auto;
+          margin-top:0.32rem;
         }
         >.sign_succeddtext{
           font-size:0.48rem;
