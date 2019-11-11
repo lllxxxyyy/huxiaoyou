@@ -15,7 +15,7 @@
     <div class="CoOperative">
       <span>合作品牌</span>
       <ul class="brandList">
-        <li class="brand" v-for="(item,index) in brandList" :key="index">
+        <li class="brand" v-for="(item,index) in sponsorImg" :key="index">
           <img :src="item.logo" alt="">
         </li>
       </ul>
@@ -53,6 +53,7 @@
 
         brandList: [],
         cardList: [],
+        sponsorImg:'',//赞助品牌
       };
     },
     components: {
@@ -66,6 +67,9 @@
     mounted() {
       this.getListData();
 
+      this.$http.post('/api/goods/brand_list').then((res)=>{
+       this.sponsorImg=res.data.data.result
+      })
     },
 
     methods: {
@@ -144,8 +148,12 @@
 .CoOperative{
 		padding:0 0.4rem;
 		>span{ padding-bottom:0.1rem; border-bottom:0.053rem solid #ffccd4; color:#000; font-size:0.48rem;}
-		>ul{display:-webkit-box; display:-ms-flexbox; display:flex; -webkit-box-pack:justify; -ms-flex-pack:justify; justify-content:space-between; -ms-flex-wrap:wrap; flex-wrap:wrap; margin-top:0.7rem;
-		>li{ width:2.6rem; height:5.4rem; background:rgba(0,0,0,0.1); width:100%;}
+		>ul{display:-webkit-box; display:-ms-flexbox; display:flex; -webkit-box-pack:justify; -ms-flex-pack:justify;justify-content :space-between;  -ms-flex-wrap:wrap; flex-wrap:wrap; margin-top:0.7rem;
+		>li{ width:2.4rem; height:1.2rem; background:rgba(0,0,0,0.1);
+        >img{
+          width:100%;
+          height:100%;
+        }}
 		}
 }
 .kabao{
@@ -239,13 +247,17 @@
   display: block;
   background-color red;
 }
-  .brandList{
-    width: 100%;
-    height: 200px;
-    overflow:hidden;
-    >img{
-      width: 100%;
-      height: 100%;
-    }
-  }
+// .brandList{
+//   width: 100%;
+//   display:flex;
+//   >li{
+//     width:2.4rem!important;
+//     height:1.2rem!important;
+//     >img{
+//       width:100%;
+//       height:100%;
+
+//     }
+//   }
+// }
 </style>
