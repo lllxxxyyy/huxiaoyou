@@ -122,6 +122,7 @@
           },
       // 上传视频
           uploadFile(){
+            this.lodingShow=true
               this.delFlag=false
               let inputDOM = this.$refs.inputer;
               // 通过DOM取文件数据
@@ -129,6 +130,7 @@
               let oldLen = this.imgLen;
               let len = this.fil.length + oldLen;
               if (len > 2) {
+                this.lodingShow=false
                 this.toastMsg('每天最多可上传2个，您还可以上传' + (2 - oldLen) + '个')
                 return false;
               }
@@ -136,8 +138,9 @@
               for (let i = 0; i < this.fil.length; i++) {
                 let size = Math.floor(this.fil[i].size / 1024);
                 if (size > 10 * 1024 * 1024) {
+                  this.lodingShow=false
                   this.toastMsg('请选择5M以内的视频！')
-                  return false
+                  return
                 }
                 this.imgLen++;
                 this.formData.delete('video_introduction');
@@ -150,9 +153,9 @@
                   this.$refs.inputer.value=''
                   if(res.data.code==200){
                       this.lodingShow=true
-                       this.$refs.inputer.val=''
                       this.videoData()
                   }else{
+                      this.lodingShow=false
                       this.imgLen--
                       this.toastMsg(res.data.msg)
                   }

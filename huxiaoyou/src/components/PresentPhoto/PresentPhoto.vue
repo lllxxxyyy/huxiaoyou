@@ -106,12 +106,15 @@
         this.$router.push('/MineInformation')
       },
       uploadFile() {
+            this.lodingShow=true
             let inputDOM = this.$refs.inputer;
             // 通过DOM取文件数据
             this.fil = inputDOM.files;
             let oldLen = this.imgLen;
             let len = this.fil.length + oldLen;
+            
             if (len > 4) {
+              this.lodingShow=false
               alert('最多可上传4张，您还可以上传' + (4 - oldLen) + '张');
               return false;
             }
@@ -120,16 +123,21 @@
               let size = Math.floor(this.fil[i].size / 1024);
               if (size > 5 * 1024 * 1024) {
                 alert('请选择5M以内的图片！');
-                return false
+                this.lodingShow=false
+                return
               }
               this.imgLen++;
               this.formData.append('photo_introduction', this.fil[i])
             }
+            
             this.$http.post('api/player/photo_introduction', this.formData).then(res => {
+                    this.$refs.inputer.value=""
                     if(res.data.code==200){
-                      this.lodingShow=true
+                        this.lodingShow=true
                         this.photoData()
                     }else{
+                      this.lodingShow=false
+                        this.imgLen--
                         this.alertText(res.data.msg)
                     }
             });
