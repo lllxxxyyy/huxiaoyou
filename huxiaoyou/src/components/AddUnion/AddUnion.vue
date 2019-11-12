@@ -160,8 +160,8 @@
                 </div>
             </div>
         </transition>
-        <!-- 加入公会成功  -->
-        <div class="add_success_wrap" v-if="showAddSuccess">
+        <!-- 加入公会成功 -->
+        <div class="add_success_wrap"  v-if="showAddSuccess">
             <div class="add_success">
                 <div class="add_success_Cha"><img @click.stop="addSuccessCha"  :src="staticImgH+'cha.png'" alt=""></div>
                 <img class="add_successImg" :src="staticImgH+'add_succedd.png'">
@@ -169,6 +169,12 @@
                 <span class="add_successText">已提交申请</span>
             </div>
         </div>
+        <!-- loding -->
+      <div class="login_wrap" v-if="lodingShow">
+         <div class="loginImg">
+           <img :src="staticImgH+'jiazai.gif'" alt="">
+         </div>
+      </div>
   </div>
 </template>
 <script>
@@ -291,6 +297,8 @@ export default {
         ifSignUpText:'',//报名成功的状态值
 
         constellationData:'',//星座数据
+
+        lodingShow:false, //加载状态默认不显示
         
     };
   },
@@ -417,6 +425,7 @@ export default {
                 this.AlertText('加入即同意')
                 return 
             }
+            this.lodingShow=true
             this.formData=new FormData()
             this.formData.append('just_number',this.$refs.inputer.files[0]);
             this.formData.append('over_number',this.$refs.inputerTwo.files[0]);
@@ -440,9 +449,11 @@ export default {
             this.formData.append('career',this.CareerVal);
             this.$http.post('api/player/union_players',this.formData).then((res)=>{
                     if(res.data.code==200){
+                        this.lodingShow=false
                         this.showAddSuccess=true
                         // this.submitAfterImg=res.data.data.img
                     }else{
+                         this.lodingShow=false
                         this.AlertText(res.data.msg)
                     }
                 })
@@ -1045,5 +1056,29 @@ export default {
         height:0.27rem;
         
     }
+}
+
+.login_wrap{
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.9);
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:999;
+  .loginImg{
+    width:1.28rem;
+    height:1.28rem;
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    margin:auto;
+    >img{
+      width:100%;
+      height:100%;
+    }
+  }
 }
 </style>

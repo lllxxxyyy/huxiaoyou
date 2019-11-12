@@ -87,25 +87,32 @@
             </div>
         </transition>
       <!-- 恭喜您报名成功  -->
-      <div class="sign_success_wrap"  v-if="showSignSuccess">
+      <div class="sign_success_wrap" v-if="showSignSuccess" >
          <div class="sign_success" >
               <div class="sign_Cha"><img @click.stop="signSuccessSha"  :src="staticImgH+'cha.png'" alt=""></div>
               <div class="sign_succeddImg"><span>恭喜您报名成功</span></div> 
               <img class="sign_succeddYes" :src="staticImgH+'sign_success.png'" alt="">
               <span class="sign_succeddtext">您获得了一个多赚10%的机会！</span>
               <div class="sign_succeddBtn" @click.stop="addUnion">去了解</div>
-              <!-- <img class="erweima_img" :src="erweimaImg" alt="">
-              <span class="erweima_des">华北客服微信二维码</span>
-              <img class="erweima_down" :src="staticImgH+'erweima_down.png'" alt=""> -->
+              <img class="erweima_img" :src="erweimaImg" alt="">
+              <!-- <span class="erweima_des">华北客服微信二维码</span> -->
+              <!-- <img class="erweima_down" :src="staticImgH+'erweima_down.png'" alt="">  -->
          </div>
       </div>
        <!-- 提示只能女性参与报名 -->
-      <div class="sign_fail_wrap"   v-if="showSignFail">
+      <div class="sign_fail_wrap"  v-if="showSignFail" >
          <div class="sign_fail">
               <div class="sign_fail_Cha"><img @click.stop="signFailSha"  :src="staticImgH+'cha.png'" alt=""></div>
-              <div class="sign_failImg"><span>您的信息不符合报名条件</span><img  :src="staticImgH+'sign_fail.png'"></div> 
+              <div class="sign_failImg"><span>您的信息不符合报名条件</span></div> 
+              <img class="sign_failImgNo"  :src="staticImgH+'sign_fail.png'">
               <span class="sign_failtext">您可以加入公共参加分享赚钱活动</span>
               <div class="sign_failBtn" @click.stop="addUnion">去了解</div>
+         </div>
+      </div>
+      <!-- loding -->
+      <div class="login_wrap" v-if="lodingShow">
+         <div class="loginImg">
+           <img :src="staticImgH+'jiazai.gif'" alt="">
          </div>
       </div>
   </div>
@@ -175,6 +182,8 @@ export default {
       cityValue:'城市',
       cityData:'',  //城市数据
       citySHow:false,  //城市列表显示
+
+      lodingShow:false, //加载状态默认不显示
     };
   },
   computed:{
@@ -323,6 +332,7 @@ export default {
                 }else if(!this.$refs.inputer.files[0]){
                     this.alertText('请选择您的照片！')
                 } 
+                this.lodingShow=true
                 this.formData.append('photo_introduction',this.$refs.inputer.files[0]);
                 this.formData.append('division_id',this.selectValue);
                 this.formData.append('username',this.username);
@@ -332,9 +342,11 @@ export default {
                 this.formData.append('parent_invite_code',this.invitationCode)
                 this.$http.post('api/player/sign_up',this.formData).then((res) => {
                         if(res.data.code==200){
+                           this.lodingShow=false
                             this.showSignSuccess=true
                             this.erweimaImg=res.data.data.img
                         }else{
+                          this.lodingShow=false
                              this.alertText(res.data.msg)
                         }
                 });
@@ -849,10 +861,10 @@ export default {
             }
         }
         >.sign_succeddYes{
-          width:8.27rem;
-          height:8.613rem;
+          width:5.52rem;
+          height:5.742rem;
           margin:0 auto;
-          margin-top:0.32rem;
+          margin-top:0.27rem;
         }
         >.sign_succeddtext{
           font-size:0.48rem;
@@ -872,8 +884,8 @@ export default {
           line-height:0.8rem;
         }
         >.erweima_img{
-          width:2rem;
-          height:2rem;
+          width:3rem;
+          height:3rem;
           margin-top:0.8rem;
           margin-bottom:0.27rem;
         }
@@ -912,20 +924,23 @@ export default {
           }
         }
         >.sign_failImg{
-          width:7.88rem;
-          height:8.9rem;
-          position:relative;
-          >img{
-            width:7.88rem;
-            height:8.9rem;
-          }
-          >span{
-              position:absolute;
-              top:0.33rem;
-              left:1.1rem;
-              font-size:0.48rem;
-              color:rgba(255, 157, 172, 1);
-          }
+            width:8.07rem;
+            height:2.09rem;
+            position:relative;
+            background:url('/static/mock/img/signUpText.png') no-repeat;
+            background-size:100% 100%;
+            text-align:center;
+            line-height :2.09rem;
+            >span{
+                  font-size: 0.62rem;
+                  color: rgba(255, 157, 172, 1);
+            }
+        }
+        >.sign_failImgNo{
+            width:5.52rem;
+            height:5.742rem;
+            margin:0 auto;
+            margin-top:0.27rem;
         }
         >.sign_failtext{
           font-size:0.48rem;
@@ -945,5 +960,28 @@ export default {
           line-height:0.8rem;
         }
     }
+}
+.login_wrap{
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.9);
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:999;
+  .loginImg{
+    width:1.28rem;
+    height:1.28rem;
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    margin:auto;
+    >img{
+      width:100%;
+      height:100%;
+    }
+  }
 }
 </style>

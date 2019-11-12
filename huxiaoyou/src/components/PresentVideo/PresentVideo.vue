@@ -34,6 +34,12 @@
         </div>
       </div>
     </transition>
+    <!-- loding -->
+      <div class="login_wrap" v-if="lodingShow">
+         <div class="loginImg">
+           <img :src="staticImgH+'jiazai.gif'" alt="">
+         </div>
+      </div>
   </div>
 </template>
 <script>
@@ -58,6 +64,8 @@
         promptContent: '', //提示盒子的内容
         showPrompt: false,//提示盒子的吸收和显示
         timer2:'',
+
+        lodingShow:false, //加载状态默认不显示
 
       };
     },
@@ -92,6 +100,7 @@
           },
       // 点击删除
           delVideo(src, id) {
+            this.lodingShow=true
             // @TODO 个人视频删除，感觉接口调用的不对
             this.$http.delete('api/player/video_del', {
               params: {
@@ -101,13 +110,18 @@
               }
             }).then((res) => {
               if (res.data.code === 200) {
+                this.lodingShow=false
+                this.$refs.inputer.val=''
+                this.imgLen--
                 this.videoData();
                 this.toastMsg("视频删除成功")
+              }else{
+                this.lodingShow=false
               }
             })
           },
       // 上传视频
-          uploadFile() {
+          uploadFile(){
               this.delFlag=false
               let inputDOM = this.$refs.inputer;
               // 通过DOM取文件数据
@@ -118,6 +132,7 @@
                 this.toastMsg('每天最多可上传2个，您还可以上传' + (2 - oldLen) + '个')
                 return false;
               }
+              
               for (let i = 0; i < this.fil.length; i++) {
                 let size = Math.floor(this.fil[i].size / 1024);
                 if (size > 10 * 1024 * 1024) {
@@ -131,11 +146,14 @@
                 this.formData.append('type', 1)
               }
               this.$http.post('api/player/video_introduction', this.formData).then(res => {
-                debugger
-                this.$refs.inputer.value=''
+                // debugger
+                  this.$refs.inputer.value=''
                   if(res.data.code==200){
+                      this.lodingShow=true
+                       this.$refs.inputer.val=''
                       this.videoData()
                   }else{
+                      this.imgLen--
                       this.toastMsg(res.data.msg)
                   }
               });
@@ -145,8 +163,10 @@
           videoData() {
             this.$http.post('/api/player/user_video').then((res) => {
               if (res.data.code === 200) {
+                this.lodingShow=false
                 this.reply = res.data.data.result
               } else {
+                this.lodingShow=false
                 this.toastMsg(res.data.msg)
                 return false;
               }
@@ -263,6 +283,29 @@
         border-radius:0.5rem;
         font-size:0.32rem;
     }
+}
+.login_wrap{
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.9);
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:999;
+  .loginImg{
+    width:1.28rem;
+    height:1.28rem;
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    margin:auto;
+    >img{
+      width:100%;
+      height:100%;
+    }
+  }
 }
 .fade-enter-active, .fade-leave-active {
 //   transition: opacity .5s;

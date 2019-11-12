@@ -45,15 +45,14 @@
                 <div class="palylike" v-if="detailData.signature">{{detailData.signature}}</div>
                 <ul class="player_listdes">
                     <li>
-                        <span v-if="detailData.sex==2">女</span>
-                        <span v-if="detailData.sex==1">男</span>
+                        <span v-if="detailData.sex==2">女</span><span v-if="detailData.sex==1">男</span>
                     </li>
-                    <li><span v-if="detailData.age!==0">年龄:{{detailData.age}}</span></li>
+                    <li><span v-if="detailData.age!==0">{{detailData.age}}岁</span></li>
                     <li v-if="detailData.city">{{detailData.city}}</li>
-                    <li v-if="detailData.constellation">星座:{{detailData.constellation}}</li>
+                    <li v-if="detailData.constellation">{{detailData.constellation}}</li>
                     <li v-if="detailData.height">{{detailData.height}}cm</li>
                     <li v-if="detailData.weight">{{detailData.weight}}kg</li>
-                    <li><span v-if="detailData.union_id">公会成员</span><span v-else>公会未认证</span></li>
+                    <li v-if="detailData.union_id">公会成员</li>
                 </ul>
                 <div class="player_btnList">
                     <span class="voteBtn" @click.stop="vote">投票</span>
@@ -133,7 +132,6 @@
                     <span class="orderTIshi_btn" @click="sureOrderTi">确定</span>
                 </div>
             </div>
-            
   </div>
 </template>
 
@@ -530,8 +528,9 @@ export default {
                                                 amount:1
                                             })
                                             vm.$http.post('api/user/get_votes',GetVotesData).then((resTwo)=>{
-                                                if(res.data.code!==200){
-                                                    alert('yes')
+                                                if(res.data.code==200){
+                                                    this.ShowShareSuccess=true
+                                                }else{
                                                     clearInterval(vm.timer2);
                                                     vm.promptContent=resTwo.data.msg
                                                     vm.showPrompt=true
