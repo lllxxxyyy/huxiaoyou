@@ -42,11 +42,7 @@ export default {
         type:this.specialInfo.type,
         project_id:this.specialInfo.projectId
     })
-    this.$http.post('api/ad/comment_list',obj,{
-                headers: {
-                    'authorization': this.tokenH
-                }
-    }).then((res)=>{
+    this.$http.post('api/ad/comment_list',obj).then((res)=>{
       if(res.data.code==200){
           this.specialList=res.data.data.result
       }

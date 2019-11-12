@@ -9,20 +9,51 @@
       <ul>
         <li @click="SpecialBarBtn(index,item.id)" :class="SpecialBarindex==index?'Special_barColor':''"
             v-for="(item,index) in SpecialTopicBodyBar" :key="index">
-          {{item.name}}
+          {{item.username}}
         </li>
       </ul>
     </div>
     <ul class="LabourUnion_listTwo">
-      <template v-for="(item,index) in RankingData" v-if="true">
-        <li @click="toPlayerDetail(item.id)" :key="index">
+      <template v-for="(item,index) in RankingData" v-if="SpecialBarindex==0">
+        <li @click="toSpecialDetails(item.id)" :key="index">
           <!-- {{item.RankingImgData[index]}} -->
-          <img v-if="item.photo_introduction[0]" :src="item.photo_introduction[0].src" alt="">
+          <img v-if="item.img" :src="item.img"  alt="">
           <span class="angelNameTwo">{{item.username}}</span>
+          <span v-if="item.carrer!==0" class="angelNameTwoB">{{item.carrer}}</span>
           <!-- <span class="angelPriceTwo">ID号：{{item.id}}</span> -->
         </li>
       </template>
     </ul>
+    <ul class="LabourUnion_listTwo">
+      <template v-for="(item,index) in RankingData" v-if="SpecialBarindex==1">
+        <li@click="toSpecialDetails(item.id)" :key="index">
+          <!-- {{item.RankingImgData[index]}} -->
+          <img v-if="item.img" :src="item.img"  alt="">
+          <span class="angelNameTwo">{{item.username}}</span>
+        </li>
+      </template>
+    </ul>
+    <ul class="Special_list" v-if="SpecialBarindex==2">
+          <li v-for="(item,index) in RankingData" :key="index" @click="toSpecialDetails(item.id)">
+              <div class="SpecialList_left">
+                  <span class="SpecialList_name">{{item.username}}</span>
+              </div>
+              <div class="SpecialList_right">
+                  <img :src="item.img" alt="">
+              </div>
+          </li>
+      </ul>
+      <ul class="Special_list" v-if="SpecialBarindex==3">
+          <li v-for="(item,index) in RankingData" :key="index" @click="toSpecialDetails(item.id)">
+              <div class="SpecialList_left">
+                  <span class="SpecialList_name">{{item.username}}</span>
+                  <span class="SpecialList_num">时间:{{item.ct_time}}</span>
+              </div>
+              <div class="SpecialList_right">
+                  <img :src="item.img" alt="">
+              </div>
+          </li>
+      </ul>
         <!-- 提示盒子 -->
          <transition name="fade">
             <div class="promptFather" v-if="showPrompt">
@@ -68,38 +99,28 @@ export default {
         },
 
   mounted(){
-
-      //
-    this.SpecialTopicBodyBar=[{
-            id: '男艺人',
-            name: '男艺人',
-          },{
-            id: '女艺人',
-            name: '女艺人',
-          },{
-            id: '大V主播',
-            name: '大V主播',
-          }]
-         this.barId=this.SpecialTopicBodyBar[0].id
-         this.getlistData()
-
-    //   var barobj=qs.stringify({
-    //   })
-    //   this.$http.post('api/division/list',barobj,{
-    //       headers: {
-    //           'authorization': this.token
-    //       }
-    // }).then((res)=>{
-    //      this.SpecialTopicBodyBar=res.data.data
-    //      this.barId=res.data.data[0].id
-    //      this.getlistData()
-    // })
-    
+        
+        
+         
+        this.$http.post('/api/datum/datum_list').then((res)=>{
+            if(res.data.code==200){
+                this.SpecialTopicBodyBar=res.data.data.result
+                 this.barId=this.SpecialTopicBodyBar[0].id
+                this.getlistData()
+            }
+        })
 
   },
 
        
   methods: {
+    //   跳文章详情
+      toSpecialDetails(id){
+          this.SpecialDetailsPages('/LabourUnion')//设置专题详情页返回哪
+          var specialDetailInfo={projectId:id,type:3}
+          this.specialDetailInfos(specialDetailInfo)
+          this.$router.push('/SpecialDetails')
+      },
     //   跳加入公会
     toaddUnion(){
          var obj=qs.stringify({
@@ -136,15 +157,12 @@ export default {
     //   获取数据
       getlistData(){
             var obj=qs.stringify({
-                page:1
+               is_parent:this.barId
             })
-            this.$http.post('api/player/union_ranking/'+this.barId,obj,{
-                headers: {
-                    'authorization': this.token
-                }
-            }).then((res)=>{
+            this.$http.post('api/datum/datum_list',obj).then((res)=>{
                 if(res.data.code==200){
-                     this.RankingData=res.data.data.data
+                    console.log(res)
+                     this.RankingData=res.data.data.result
                 }else{
                      var self=this
                     clearInterval(self.timer2);
@@ -159,7 +177,7 @@ export default {
                
             })
       },
-      ...mapMutations(['playerIds','PlayerDetailPages','addressIdIsSels','playDetailVoteDivs','AddunionPages','MineGuildPages']),
+      ...mapMutations(['playerIds','PlayerDetailPages','addressIdIsSels','playDetailVoteDivs','AddunionPages','MineGuildPages','specialDetailInfos','SpecialDetailsPages']),
   }
 }
 
@@ -254,7 +272,7 @@ export default {
 			border-radius:0.16rem 0.16rem 0 0;
         }
        >.angelNameTwo{
-           font-size:0.347rem;
+           font-size:0.32rem;
            color:rgba(0, 0, 0, 0.8);
            font-weight:550;
            margin-top:0.27rem;
@@ -266,7 +284,20 @@ export default {
            word-break:break-all;
            overflow:hidden;
            -webkit-line-clamp:1;
-           
+       }
+       >.angelNameTwoB{
+            font-size:0.32rem;
+           color:rgba(0, 0, 0, 0.8);
+           font-weight:550;
+           margin-top:0.05rem;
+           margin-bottom:0.053rem;
+           padding:0 0.27rem;
+           line-height :0.5rem;
+           display:-webkit-box;
+           -webkit-box-orient:vertical;
+           word-break:break-all;
+           overflow:hidden;
+           -webkit-line-clamp:1;
        }
        >.angelPriceTwo{
            color:rgba(0, 0, 0, 0.8);
@@ -319,4 +350,47 @@ export default {
    background :#fff;
 }
 
+
+// 列表
+.Special_list{
+    padding-top:0.27rem;
+    
+    >li{
+        height:3.396rem;
+        display :flex;
+        justify-content :space-between;
+        // align-items :center;
+        padding:0.4rem 0.267rem;
+		box-shadow:0px 3px 12px 0px rgba(254,216,222,0.5);
+		border-radius:12px;
+        background :#fff;
+		margin:0 0.27rem;
+        margin-bottom:0.2rem;
+       >.SpecialList_left{
+           display :flex;
+           flex-direction :column;
+           justify-content :space-between;
+           font-size:0.32rem;
+           >.SpecialList_name{
+                color:#494949;
+                font-size:16px;
+                margin-top:0.27rem;
+           }
+           >.SpecialList_num{
+               color:#797979;
+           }
+       } 
+       >.SpecialList_right{
+           display :flex;
+           align-items :center;
+           justify-content :center;
+           >img{
+               background :skyblue;
+			   width:2.58rem;
+               height:2.58rem;
+			   border-radius:10px;
+           }
+       }
+    }
+}
 </style>

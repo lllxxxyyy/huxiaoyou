@@ -5,8 +5,8 @@
       <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
       <div class="search">
         <select v-model="search.type" placeholder="请选择">
-          <option label="姓名" value="1"></option>
-          <option label="编号" value="2"></option>
+          <option label="姓名" value="1">姓名</option>
+          <option label="编号" value="2">编号</option>
         </select>
         <input v-model="search.value"/>
       </div>
@@ -128,11 +128,7 @@ export default {
         type: type,
         value: value
       })
-      this.$http.post('api/player/search',obj,{
-        headers: {
-          'authorization': this.tokenH
-        }
-      }).then((res)=>{
+      this.$http.post('api/player/search',obj).then((res)=>{
         if(res.data.code===200){
           this.searchResult=res.data.data.data
         }

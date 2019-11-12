@@ -9,13 +9,13 @@
       <div class="addressAddWrite">
           <ul>
               <li>
-                  <span>收货人</span><input ref="consigneeInput" type="text">
+                  <span>收货人</span><input placeholder="请输入您的姓名" ref="consigneeInput" type="text">
               </li>
               <li>
-                  <span>手机号码</span><input  maxlength="11" oninput = "value=value.replace(/[^\d]/g,'')" ref="mobile" type="text">
+                  <span>手机号码</span><input placeholder="请输入您的手机号码"  maxlength="11" oninput = "value=value.replace(/[^\d]/g,'')" ref="mobile" type="text">
               </li>
               <li class="Area" @click="Area">
-                  <span>所在地区</span><span>{{inArea}}</span>
+                  <span>所在地区</span><span v-if="!inArea">请选择您所在地区</span><span v-if="inArea">{{inArea}}</span>
               </li>
               <li class="fullAddress">
                   <span>详细地址：</span><input ref="fullAddressInput" type="text" placeholder="如道路、问牌号、小区、楼栋号、单 元室等">

@@ -60,7 +60,7 @@
                     <!-- <span class="attentionBtn" v-if="personData.is_player==0">+关注</span> -->
                     <span class="shareBtn" @click.stop="shareC">为Ta分享</span>
                     <span class="EnterBtn" @click="tocanSai" v-if="personData.is_player==0">我也参赛</span>
-                    <span class="EnterBtn" @click.stop="toPlayDetailstyle">选手视频</span>
+                    <span class="playerVideoBtn" @click.stop="toPlayDetailstyle">选手视频</span>
                 </div>
             </div>
         <!-- 视频 -->
@@ -703,7 +703,7 @@ export default {
     border-radius:0.4rem 0.4rem 0 0rem;
     margin:0 auto;
     margin-top:-3.73rem;
-    padding:0 0.4rem;
+    padding:0 0.35rem;
     .player_des_top{
         display :flex;
         >.player_desImg{
@@ -830,30 +830,34 @@ export default {
         margin-bottom:0.53rem;
         letter-spacing:0.04rem;
         >span{
-            padding:0.2rem 0.25rem;
-            font-size:0.427rem;
+            padding:0.2rem 0.24rem;
+            font-size:0.4rem;
             border-radius:0.5rem;
             margin-right:0.1rem;
-            margin-bottom:0.27rem;
+            margin-bottom:0.2rem;
             &:last-child{
                 margin-right:0;
             }
         }
         >.voteBtn{
-            background:rgba(255, 157, 172, 0.2);
-            color:rgba(255, 157, 172, 1);
+            background:rgba(252, 64, 93, 1);
+            color:#fff;
         }
         >.attentionBtn{
-            background:rgba(74, 171, 249, 0.2);
-            color:rgba(74, 171, 249, 1);
+            background:rgba(16, 137, 235, 1);
+            color:#fff;
         }
         >.shareBtn{
-            background:rgba(92, 216, 192, 0.2);
-            color:rgba(92, 216, 192, 1);
+            background:rgba(16, 137, 235, 1);
+            color:#fff;
         }
         >.EnterBtn{
-            background:rgba(254, 217, 67, 0.2);
-            color:rgba(254, 217, 67, 1);
+            background:rgba(23, 205, 170, 1);
+            color:#fff;
+        }
+        >.playerVideoBtn{
+             background:rgba(236, 189, 0, 1);
+            color:#fff;
         }
     }
     >.playNum{

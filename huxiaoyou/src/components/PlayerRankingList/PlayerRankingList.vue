@@ -4,9 +4,9 @@
     <div class="PlayerRanking_header">
       <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
       <div class="search">
-	  <select  v-model="search.type" placeholder="请选择">
-        <option label="姓名" value="1"></option>
-        <option label="编号" value="2"></option>
+	  <select v-model="search.type" placeholder="请选择">
+        <option label="姓名" value="1">姓名</option>
+        <option label="编号" value="2">编号</option>
       </select>
       <input v-model="search.value" placeholder="搜索选手的名字或编号"/>
 	  </div>
@@ -24,7 +24,7 @@
       <template v-for="(item,index) in RankingData" v-if="true">
         <li :key="index" @click="toPlayerDetail(item.id, 'false')">
           <!-- {{item.RankingImgData[index]}} -->
-          <img v-if="item.photo_introduction[0]" :src="item.head_pic" alt="">
+          <img v-if="item.head_pic" :src="item.head_pic" alt="">
           <div class="top_img"><img :src="staticImgH+'paiming'+(index+1)+'.png'" alt=""></div>
           <!--<div class="ta_vote to_vote1">给Ta投票</div>-->
           <!-- <div class="ta_vote" :class="{
@@ -90,11 +90,8 @@ export default {
          }else{
               this.barId=res.data.data[0].id
          }
-        
          this.getlistData()
     })
-    
-
   },
 
   methods: {
