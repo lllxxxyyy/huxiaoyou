@@ -53,7 +53,7 @@
                     <li v-if="detailData.constellation">星座:{{detailData.constellation}}</li>
                     <li v-if="detailData.height">{{detailData.height}}cm</li>
                     <li v-if="detailData.weight">{{detailData.weight}}kg</li>
-                    <li><span v-if="detailData.union_id">公会成员</span><span v-else>工会未认证</span></li>
+                    <li><span v-if="detailData.union_id">公会成员</span><span v-else>公会未认证</span></li>
                 </ul>
                 <div class="player_btnList">
                     <span class="voteBtn" @click.stop="vote">投票</span>

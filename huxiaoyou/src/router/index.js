@@ -68,6 +68,7 @@ import changeHeight from '@/components/changeHeight/changeHeight' //个人信息
 import changeWeight from '@/components/changeWeight/changeWeight' //个人信息 修改年龄
 
 import changeConstellation from '@/components/changeConstellation/changeConstellation' //个人信息 修改年龄
+import unionDetail from '@/components/unionDetail/unionDetail' //公会详情
 
 const routes = [{ //首页
         path: '/',
@@ -462,6 +463,14 @@ const routes = [{ //首页
             requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
         },
         component: changeConstellation
+    },
+    { //工会详情
+        path: '/unionDetail',
+        name: 'unionDetail',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: unionDetail
     },
 ]
 

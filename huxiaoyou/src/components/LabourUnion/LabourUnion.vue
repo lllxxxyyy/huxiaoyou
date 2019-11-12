@@ -15,7 +15,7 @@
     </div>
     <ul class="LabourUnion_listTwo">
       <template v-for="(item,index) in RankingData" v-if="SpecialBarindex==0">
-        <li @click="toSpecialDetails(item.id)" :key="index">
+        <li @click="toSpecialDetails(item.content)" :key="index">
           <!-- {{item.RankingImgData[index]}} -->
           <img v-if="item.img" :src="item.img"  alt="">
           <span class="angelNameTwo">{{item.username}}</span>
@@ -26,7 +26,7 @@
     </ul>
     <ul class="LabourUnion_listTwo">
       <template v-for="(item,index) in RankingData" v-if="SpecialBarindex==1">
-        <li@click="toSpecialDetails(item.id)" :key="index">
+        <li@click="toSpecialDetails(item.content)" :key="index">
           <!-- {{item.RankingImgData[index]}} -->
           <img v-if="item.img" :src="item.img"  alt="">
           <span class="angelNameTwo">{{item.username}}</span>
@@ -34,7 +34,7 @@
       </template>
     </ul>
     <ul class="Special_list" v-if="SpecialBarindex==2">
-          <li v-for="(item,index) in RankingData" :key="index" @click="toSpecialDetails(item.id)">
+          <li v-for="(item,index) in RankingData" :key="index" @click="toSpecialDetails(item.content)">
               <div class="SpecialList_left">
                   <span class="SpecialList_name">{{item.username}}</span>
               </div>
@@ -44,7 +44,7 @@
           </li>
       </ul>
       <ul class="Special_list" v-if="SpecialBarindex==3">
-          <li v-for="(item,index) in RankingData" :key="index" @click="toSpecialDetails(item.id)">
+          <li v-for="(item,index) in RankingData" :key="index" @click="toSpecialDetails(item.content)">
               <div class="SpecialList_left">
                   <span class="SpecialList_name">{{item.username}}</span>
                   <span class="SpecialList_num">时间:{{item.ct_time}}</span>
@@ -115,11 +115,9 @@ export default {
        
   methods: {
     //   跳文章详情
-      toSpecialDetails(id){
-          this.SpecialDetailsPages('/LabourUnion')//设置专题详情页返回哪
-          var specialDetailInfo={projectId:id,type:3}
-          this.specialDetailInfos(specialDetailInfo)
-          this.$router.push('/SpecialDetails')
+      toSpecialDetails(Con){
+          
+          this.$router.push({path:'/unionDetail',query:{content:Con}})
       },
     //   跳加入公会
     toaddUnion(){
@@ -161,7 +159,6 @@ export default {
             })
             this.$http.post('api/datum/datum_list',obj).then((res)=>{
                 if(res.data.code==200){
-                    console.log(res)
                      this.RankingData=res.data.data.result
                 }else{
                      var self=this
