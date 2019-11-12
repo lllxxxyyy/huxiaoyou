@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.use(Vuex)
 const state = {
-    WpersonInfoH: JSON.parse(localStorage.getItem('WpersonInfoH')) || {},
+    WpersonInfoH: JSON.parse(sessionStorage.getItem('WpersonInfoH')) || {},
     tokenH: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMSIsImlzcyI6Imh0dHBzOlwvXC9sb3Z5b3UudG9wIiwiYXVkIjoiaHR0cHM6XC9cL2xvdnlvdS50b3AiLCJpYXQiOjE1NzM0NTI2MTUsIm5iZiI6MTU3MzQ1MjYxNSwiZXhwIjoxNjA0OTg4NjE1fQ.weJ0Ybn3PAAdYLZkWQH1H-TVYdCmEWEACJPHL6-mqnk',
     userIdH: '3', //用户Id
     userIdHInterest: localStorage.getItem('userIdHInterest'), //分享出去的商品详情页需要得到利益的用户Id
@@ -186,7 +186,7 @@ const mutations = {
         state.tokenH = tokenH
     },
     WpersonInfoHs(state, WpersonInfoH) {
-        localStorage.setItem('WpersonInfoH', JSON.stringify(WpersonInfoH));
+        sessionStorage.setItem('WpersonInfoH', JSON.stringify(WpersonInfoH));
         state.WpersonInfoH = WpersonInfoH
     },
     playDetailShopDESs(state, playDetailShopDES) {
