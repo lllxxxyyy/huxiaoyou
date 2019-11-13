@@ -23,7 +23,6 @@
     <div class="right_wrap">
       <div class="right">
         添加视频<span><img :src="staticImgH+'tianjia.png'" alt=""></span>
-        <input type="file" class="upload" @change="uploadFile" ref="inputer" accept="video/*"/>
       </div>
     </div>
     <!-- 提示盒子 -->
@@ -129,35 +128,37 @@
               let inputDOM = this.$refs.inputer;
               // 通过DOM取文件数据
               this.fil = inputDOM.files;
-              var videoFuBEn=document.getElementById('videoFUBEN')
-              videoFuBEn.src=this.getObjectURL(this.fil[0])
-              var self=this
-               videoFuBEn.oncanplay = function () {
-                self.duration = videoFuBEn.duration;
-                self.uploadFileTwo()
-            }
+              // var videoFuBEn=document.getElementById('videoFUBEN')
+              // videoFuBEn.src=this.getObjectURL(this.fil[0])
+              // var self=this
+              // videoFuBEn.oncanplay = function () {
+              //     self.duration = videoFuBEn.duration;
+              //     
+              // }
+              this.uploadFileTwo()
           },
            // 上传图片 2
-          getObjectURL(file) {  
-              var url = null ;   
-              // 下面函数执行的效果是一样的，只是需要针对不同的浏览器执行不同的 js 函数而已  
-              if (window.createObjectURL!=undefined) { // basic  
-                  url = window.createObjectURL(file) ;  
-              } else if (window.URL!=undefined) { // mozilla(firefox)  
-                  url = window.URL.createObjectURL(file) ;  
-              } else if (window.webkitURL!=undefined) { // webkit or chrome  
-                  url = window.webkitURL.createObjectURL(file) ;  
-              }  
-              return url ; 
-          },
+          // getObjectURL(file) {  
+          //     var url = null ;   
+          //     // 下面函数执行的效果是一样的，只是需要针对不同的浏览器执行不同的 js 函数而已  
+          //     if (window.createObjectURL!=undefined) { // basic  
+          //         url = window.createObjectURL(file) ;  
+          //     } else if (window.URL!=undefined) { // mozilla(firefox)  
+          //         url = window.URL.createObjectURL(file) ;  
+          //     } else if (window.webkitURL!=undefined) { // webkit or chrome  
+          //         url = window.webkitURL.createObjectURL(file) ;  
+          //     }  
+          //     return url ; 
+          // },
           uploadFileTwo(){
               let oldLen = this.imgLen;
               let len = this.fil.length + oldLen;
-              if(this.duration>15){
-                  this.lodingShow=false
-                  this.toastMsg('上传的视频不能超过15秒')
-                  return
-              }else if(len > 2){
+              // if(this.duration>15){
+              //     this.lodingShow=false
+              //     this.toastMsg('上传的视频不能超过15秒')
+              //     return
+              // }else 
+              if(len > 2){
                   this.lodingShow=false
                   this.toastMsg('每天最多可上传2个，您还可以上传' + (2 - oldLen) + '个')
                   return 
