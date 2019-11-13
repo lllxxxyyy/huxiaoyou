@@ -150,6 +150,7 @@
 		>span{ padding-bottom:0.1rem; border-bottom:0.053rem solid #ffccd4; color:#000; font-size:0.48rem;}
 		>ul{display:-webkit-box; display:-ms-flexbox; display:flex; -webkit-box-pack:justify; -ms-flex-pack:justify;justify-content :space-between;  -ms-flex-wrap:wrap; flex-wrap:wrap; margin-top:0.7rem;
 		>li{ width:2.4rem; height:1.2rem; background:rgba(0,0,0,0.1);
+    margin-bottom:0.32rem;
         >img{
           width:100%;
           height:100%;

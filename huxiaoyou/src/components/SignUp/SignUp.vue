@@ -153,7 +153,7 @@ export default {
         },
         {
           name:'赛区介绍',
-          id:4,
+          id:47,
         },
       ],
       showSignSuccess:false,//报名成功提示默认消失
