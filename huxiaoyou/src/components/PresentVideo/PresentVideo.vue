@@ -124,7 +124,7 @@
           },
       // 上传视频
           uploadFile(){
-              // this.lodingShow=true
+              this.lodingShow=true
               this.delFlag=false
               let inputDOM = this.$refs.inputer;
               // 通过DOM取文件数据
