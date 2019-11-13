@@ -152,10 +152,10 @@
               }else{
                   for (let i = 0; i < this.fil.length; i++) {
                       // let size = Math.floor( / 1024);
-                      // console.log(size)
+                      // console.log(this.fil[i].size,10*1024*1024  )
                       if (this.fil[i].size > 10*1024*1024) {
                         this.lodingShow=false
-                        this.toastMsg('请选择10M以内的视频！')
+                        this.toastMsg('您选择的视频超过限制')
                         return
                       }
                       this.imgLen++;
