@@ -234,11 +234,7 @@ export default {
           }
            this.formData.append('avatar',this.fil[i])
         }
-        this.$http.post('api/user/avatar', this.formData,{
-            headers: {
-                    'authorization': this.tokenH
-                }
-        }).then(res => {
+        this.$http.post('api/user/avatar', this.formData).then(res => {
               this.getInformation()
         });
       },
