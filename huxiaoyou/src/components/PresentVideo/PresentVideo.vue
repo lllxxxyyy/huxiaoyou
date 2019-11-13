@@ -6,8 +6,6 @@
       <span>介绍视频</span>
       <div @click="delStatus()" class="PresentPhoto_admin">管理</div>
     </div>
-
-
     <ul class="videoList">
       <li v-for="(item,index) in reply" :key="index">
         <div class="present_video">
@@ -67,6 +65,8 @@
 
         lodingShow:false, //加载状态默认不显示
 
+        audioElement:'',
+
       };
     },
     computed: {
@@ -122,45 +122,58 @@
           },
       // 上传视频
           uploadFile(){
-            this.lodingShow=true
+              this.lodingShow=true
               this.delFlag=false
               let inputDOM = this.$refs.inputer;
               // 通过DOM取文件数据
               this.fil = inputDOM.files;
+
+              var url = URL.createObjectURL(this.fil[0]);
+              //经测试，发现audio也可获取视频的时长
+              this.audioElement = new Audio(url);
+              
+              this.audioElement.addEventListener("loadedmetadata", this.uploadFileTwo);
+          },
+          uploadFileTwo(){
+              var duration;
+              duration = this.audioElement.duration;
               let oldLen = this.imgLen;
               let len = this.fil.length + oldLen;
-              if (len > 2) {
-                this.lodingShow=false
-                this.toastMsg('每天最多可上传2个，您还可以上传' + (2 - oldLen) + '个')
-                return false;
-              }
-              
-              for (let i = 0; i < this.fil.length; i++) {
-                let size = Math.floor(this.fil[i].size / 1024);
-                if (size > 10 * 1024 * 1024) {
+              if(duration>15){
                   this.lodingShow=false
-                  this.toastMsg('请选择5M以内的视频！')
+                  this.toastMsg('上传的视频不能超过15秒')
                   return
-                }
-                this.imgLen++;
-                this.formData.delete('video_introduction');
-                this.formData.delete('type');
-                this.formData.append('video_introduction', this.fil[i])
-                this.formData.append('type', 1)
-              }
-              this.$http.post('api/player/video_introduction', this.formData).then(res => {
-                // debugger
-                  this.$refs.inputer.value=''
-                  if(res.data.code==200){
-                      this.lodingShow=true
-                      this.videoData()
-                  }else{
-                      this.lodingShow=false
-                      this.imgLen--
-                      this.toastMsg(res.data.msg)
+              }else if(len > 2){
+                  this.lodingShow=false
+                  this.toastMsg('每天最多可上传2个，您还可以上传' + (2 - oldLen) + '个')
+                  return 
+              }else{
+                  for (let i = 0; i < this.fil.length; i++) {
+                      let size = Math.floor(this.fil[i].size / 1024);
+                      if (size > 10 * 1024 * 1024) {
+                        this.lodingShow=false
+                        this.toastMsg('请选择5M以内的视频！')
+                        return
+                      }
+                      this.imgLen++;
+                      this.formData.delete('video_introduction');
+                      this.formData.delete('type');
+                      this.formData.append('video_introduction', this.fil[i])
+                      this.formData.append('type', 1)
                   }
-              });
-
+                  this.$http.post('api/player/video_introduction', this.formData).then(res => {
+                    // debugger
+                      this.$refs.inputer.value=''
+                      if(res.data.code==200){
+                          this.lodingShow=true
+                          this.videoData()
+                      }else{
+                          this.lodingShow=false
+                          this.imgLen--
+                          this.toastMsg(res.data.msg)
+                      }
+                  });
+              }
           },
       // 获取视频数据
           videoData() {
