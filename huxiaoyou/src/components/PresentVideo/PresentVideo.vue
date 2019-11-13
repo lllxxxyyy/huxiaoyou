@@ -9,7 +9,7 @@
     <ul class="videoList">
       <li v-for="(item,index) in reply" :key="index">
         <div class="present_video">
-		      <video id="video1">
+		<video id="video1">
           <source :src="item.video_introduction" type="video/mp4">
         </video>
 		</div>
@@ -17,12 +17,11 @@
         <div v-if="delFlag" @click="delVideo(item.video_introduction, item.v_id)" class="gxuan">删除</div>
       </li>
     </ul>
-       <video id="videoFUBEN">
-          <source type="video/mp4">
-        </video>
+
     <div class="right_wrap">
       <div class="right">
         添加视频<span><img :src="staticImgH+'tianjia.png'" alt=""></span>
+        <input type="file" class="upload" @change="uploadFile" ref="inputer" accept="video/*"/>
       </div>
     </div>
     <!-- 提示盒子 -->
@@ -66,7 +65,7 @@
 
         lodingShow:false, //加载状态默认不显示
 
-        duration:'',
+        audioElement:'',
 
       };
     },
@@ -128,32 +127,20 @@
               let inputDOM = this.$refs.inputer;
               // 通过DOM取文件数据
               this.fil = inputDOM.files;
-              // var videoFuBEn=document.getElementById('videoFUBEN')
-              // videoFuBEn.src=this.getObjectURL(this.fil[0])
-              // var self=this
-              // videoFuBEn.oncanplay = function () {
-              //     self.duration = videoFuBEn.duration;
-              //     
-              // }
+
+              // var url = URL.createObjectURL(this.fil[0]);
+              //经测试，发现audio也可获取视频的时长
+              // this.audioElement = new Audio(url);
+              
+              // this.audioElement.addEventListener("loadedmetadata", this.uploadFileTwo);
               this.uploadFileTwo()
           },
-           // 上传图片 2
-          // getObjectURL(file) {  
-          //     var url = null ;   
-          //     // 下面函数执行的效果是一样的，只是需要针对不同的浏览器执行不同的 js 函数而已  
-          //     if (window.createObjectURL!=undefined) { // basic  
-          //         url = window.createObjectURL(file) ;  
-          //     } else if (window.URL!=undefined) { // mozilla(firefox)  
-          //         url = window.URL.createObjectURL(file) ;  
-          //     } else if (window.webkitURL!=undefined) { // webkit or chrome  
-          //         url = window.webkitURL.createObjectURL(file) ;  
-          //     }  
-          //     return url ; 
-          // },
           uploadFileTwo(){
+              // var duration;
+              // duration = this.audioElement.duration;
               let oldLen = this.imgLen;
               let len = this.fil.length + oldLen;
-              // if(this.duration>15){
+              // if(duration>15){
               //     this.lodingShow=false
               //     this.toastMsg('上传的视频不能超过15秒')
               //     return
