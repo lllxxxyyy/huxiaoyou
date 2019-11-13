@@ -65,7 +65,7 @@
 
         lodingShow:false, //加载状态默认不显示
 
-        audioElement:'',
+        duration:'',
 
       };
     },
@@ -128,18 +128,33 @@
               // 通过DOM取文件数据
               this.fil = inputDOM.files;
 
-              var url = URL.createObjectURL(this.fil[0]);
+              // var url = URL.createObjectURL(this.fil[0]);
               //经测试，发现audio也可获取视频的时长
-              this.audioElement = new Audio(url);
+              // this.audioElement = new Audio(url);
               
-              this.audioElement.addEventListener("loadedmetadata", this.uploadFileTwo);
+              // this.audioElement.addEventListener("loadedmetadata", this.uploadFileTwo);
+
+
+               ;
+                var video = document.createElement('video');
+                video.preload = 'metadata';
+
+                var self=this
+                video.onloadedmetadata = function () {
+                    var url = video.src
+                    if (url.startsWith("blob:")) {
+                        url = url.substr(5);
+                    }
+                    window.URL.revokeObjectURL(url);
+                    self.duration = video.duration;
+                    self.uploadFileTwo()
+                }
+                video.src = URL.createObjectURL(this.fil[0]);
           },
           uploadFileTwo(){
-              var duration;
-              duration = this.audioElement.duration;
               let oldLen = this.imgLen;
               let len = this.fil.length + oldLen;
-              if(duration>15){
+              if(this.duration>15){
                   this.lodingShow=false
                   this.toastMsg('上传的视频不能超过15秒')
                   return
