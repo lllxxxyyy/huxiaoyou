@@ -134,7 +134,7 @@
               var self=this
                videoFuBEn.oncanplay = function () {
                 self.duration = videoFuBEn.duration;
-                
+                self.uploadFileTwo()
             }
           },
            // 上传图片 2
