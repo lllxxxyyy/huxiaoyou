@@ -29,11 +29,19 @@
                     <img v-show="show" class="playBtn" :src="staticImgH+'bofang.png'"/>
                 </div>
                 <!-- x5-video-player-fullscreen="true"
-                  x5-playsinline  -->
-                <video v-if="mobile==='android'"  id="video" width="100%" height="100%"
-                        x-webkit-airplay 
+                  x5-playsinline  x-webkit-airplay 
                         x5-video-player-type="h5"  
-                        x5-video-player-fullscreen="false"
+                        x5-video-player-fullscreen="false"-->
+                <video v-if="mobile==='android'"  width="100%" height="100%"
+                        muted="true" 
+                        x5-playsinline="true" 
+                        playsinline="true"    
+                        id="video"
+                        webkit-playsinline
+                        autoplay
+                        controls
+                        preload="preload" 
+                        
                         :src="video_info.video_introduction">
                 </video>
                 <video autoplay="autoplay" v-if="mobile==='iPhone'" id="video"
@@ -147,6 +155,20 @@
     },
 
     methods: {
+      getObjectURL(file) { //转换成blob对象 不要问。
+          var url = null;
+          if (window.createObjectURL != undefined) {
+            // basic
+            url = window.createObjectURL(file);
+          } else if (window.URL != undefined) {
+            // mozilla(firefox)
+            url = window.URL.createObjectURL(file);
+          } else if (window.webkitURL != undefined) {
+            // webkit or chrome
+            url = window.webkitURL.createObjectURL(file);
+          }
+          return url;
+        },
       videoZhen(){
         var vm=this
           wx.ready(function() { //播放。为什么这里不直接dom.play()。妈**** 因为微信不让啊。我也很无奈啊。
@@ -540,6 +562,13 @@
 .ovideo{width:100%; height:100%; background:#444; position: fixed;}
 .contenter{width:100%; height:100%; position: fixed;}
 .videoBox{width:100%; height:100%; position: fixed;}
+.videoBox{
+    #output{
+        position:absolute;
+        top:0;
+        left:0;
+    }
+}
 .mask{width:100%; height:100%; position: fixed; z-index:999; text-align:center;
 >img{ width:1.6rem; position:fixed; top:48%; left:42%; z-index:9999;}
 }
