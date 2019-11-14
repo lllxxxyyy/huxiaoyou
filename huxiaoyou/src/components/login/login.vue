@@ -1,7 +1,7 @@
 <!-- 首页 -->
 <template>
   <div class="login">
-        登陆中。。。
+      <img :src="staticImgH+'lginLoading.gif'" alt="">
       <!-- 提示盒子 -->
          <transition name="fade">
             <div class="promptFather" v-if="showPrompt">
@@ -38,7 +38,7 @@ export default {
     };
   },
   computed:{
-        ...mapState(['WpersonInfoH'])
+        ...mapState(['WpersonInfoH','staticImgH'])
     },
   mounted() {
     // 判断本地有没有用户信息
@@ -158,4 +158,9 @@ export default {
 
 </script>
 <style scoped lang="stylus">
+.login>img{
+    width:0.53rem;
+    height:0.53rem;
+    margin:auto;
+}
 </style>

@@ -3,7 +3,7 @@
   <div class="SpecialTopic">
       <div class="SpecialTopicHeader">
           <img @click="specialReturn"  :src="staticImgH+'zuojiantou.png'" alt="">
-          <span>{{specialList[0].name}}</span>   
+          <span>{{specialListName}}</span>   
       </div>
         <div class="shopHide"></div>
       <ul class="Special_list">
@@ -30,6 +30,7 @@ export default {
   data () {
     return {
         specialList:'',
+        specialListName:'',
     };
   },
 
@@ -45,6 +46,7 @@ export default {
     this.$http.post('api/ad/comment_list',obj).then((res)=>{
       if(res.data.code==200){
           this.specialList=res.data.data.result
+          this.specialListName=this.specialList[0].name
       }
     })
   },

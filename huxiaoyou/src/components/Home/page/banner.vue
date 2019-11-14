@@ -54,10 +54,10 @@ export default {
           this.specialInfos(specialInfo)
          this.$router.push('/SpecialTopic')
       }else if(type==3){
-        var specialDetailInfo={projectId:projectId,type:type}
+          var specialDetailInfo={projectId:projectId,type:type}
           this.specialDetailInfos(specialDetailInfo)
           this.SpecialDetailsPages('/')
-        this.$router.push('/SpecialDetails')
+          this.$router.push('/SpecialDetails')
       }
     },
     ...mapMutations(['specialInfos','specialDetailInfos','SpecialDetailsPages']),
