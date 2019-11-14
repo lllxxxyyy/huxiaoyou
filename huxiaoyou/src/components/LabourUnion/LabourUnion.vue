@@ -99,9 +99,6 @@ export default {
         },
 
   mounted(){
-        
-        
-         
         this.$http.post('/api/datum/datum_list').then((res)=>{
             if(res.data.code==200){
                 this.SpecialTopicBodyBar=res.data.data.result
@@ -109,14 +106,11 @@ export default {
                 this.getlistData()
             }
         })
-
   },
-
-       
   methods: {
     //   跳文章详情
       toSpecialDetails(Con){
-          
+          this.unionDetailPages('/LabourUnion')
           this.$router.push({path:'/unionDetail',query:{content:Con}})
       },
     //   跳加入公会
@@ -174,7 +168,7 @@ export default {
                
             })
       },
-      ...mapMutations(['playerIds','PlayerDetailPages','addressIdIsSels','playDetailVoteDivs','AddunionPages','MineGuildPages','specialDetailInfos','SpecialDetailsPages']),
+      ...mapMutations(['playerIds','PlayerDetailPages','addressIdIsSels','playDetailVoteDivs','AddunionPages','MineGuildPages','specialDetailInfos','SpecialDetailsPages','unionDetailPages']),
   }
 }
 

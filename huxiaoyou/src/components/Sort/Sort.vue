@@ -13,9 +13,9 @@
       </ul>
     </div>
     <div class="CoOperative">
-      <span>合作品牌</span>
+      <span>赛事合作品牌</span>
       <ul class="brandList">
-        <li class="brand" v-for="(item,index) in sponsorImg" :key="index">
+        <li class="brand" @click="toSpecialDetails(item.content)" v-for="(item,index) in sponsorImg" :key="index">
           <img :src="item.logo" alt="">
         </li>
       </ul>
@@ -73,6 +73,17 @@
     },
 
     methods: {
+       //   跳文章详情
+      toSpecialDetails(Con){
+          this.unionDetailPages('/Sort')
+          this.$router.push({path:'/unionDetail',query:{content:Con}})
+      },
+      //   最新通告
+        LatestNotice(id){
+            this.RaceCheatsIds(id)
+            this.RaceCheatsPages('/')
+            this.$router.push('/RaceCheats')
+        },
        //   到商品id
             toshopdetail(goodid){
                 this.addressIdIsSels('false') //商品页默认地址不选中
@@ -115,7 +126,7 @@
         }, 2000)
         return false;
       },
-      ...mapMutations(['playerIds', 'PlayerDetailPages', 'addressIdIsSels', 'playDetailVoteDivs','shopDetailReturns','shopgoodIds']),
+      ...mapMutations(['playerIds', 'PlayerDetailPages', 'addressIdIsSels', 'playDetailVoteDivs','shopDetailReturns','shopgoodIds','unionDetailPages']),
     }
   }
 
@@ -149,7 +160,7 @@
 		padding:0 0.4rem;
 		>span{ padding-bottom:0.1rem; border-bottom:0.053rem solid #ffccd4; color:#000; font-size:0.48rem;}
 		>ul{display:-webkit-box; display:-ms-flexbox; display:flex; -webkit-box-pack:justify; -ms-flex-pack:justify;justify-content :space-between;  -ms-flex-wrap:wrap; flex-wrap:wrap; margin-top:0.7rem;
-		>li{ width:2.4rem; height:1.2rem; background:rgba(0,0,0,0.1);
+		>li{ width:2.4rem; height:2.4rem; background:rgba(0,0,0,0.1);
     margin-bottom:0.32rem;
         >img{
           width:100%;

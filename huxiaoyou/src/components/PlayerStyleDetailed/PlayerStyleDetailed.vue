@@ -32,23 +32,24 @@
                   x5-playsinline  x-webkit-airplay 
                         x5-video-player-type="h5"  
                         x5-video-player-fullscreen="false"-->
-                <video v-if="mobile==='android'"  width="100%" height="100%"
-                        muted="true" 
-                        x5-playsinline="true" 
-                        playsinline="true"    
-                        id="video"
-                        webkit-playsinline
-                        autoplay
-                        controls
-                        preload="preload" 
-                        
-                        :src="video_info.video_introduction">
-                </video>
-                <video autoplay="autoplay" v-if="mobile==='iPhone'" id="video"
-                      width="100%"
-                      height="100%"
-                      :src="video_info.video_introduction"  >
-                </video>
+                <div class="videoNo" v-show="videoNo">
+                    <video  v-if="mobile==='android'"  width="100%" height="100%"
+                            muted="true" 
+                            x5-playsinline="true" 
+                            playsinline="true"    
+                            id="video"
+                            webkit-playsinline
+                            autoplay
+                            controls
+                            preload="preload" 
+                            :src="video_info.video_introduction">
+                    </video>
+                    <video autoplay="autoplay" v-if="mobile==='iPhone'" id="video"
+                          width="100%"
+                          height="100%"
+                          :src="video_info.video_introduction"  >
+                    </video>
+                </div>
                 <div id="output"></div>
           </div>
       </div>
@@ -91,6 +92,7 @@
     name: "PlayerStyleDetailed",
     data() {
       return {
+         videoNo:false,
         shareTextShow:false,//分享提示，默认隐藏
         followFlag: false,
         zanFlag: false,
@@ -121,6 +123,7 @@
           test:'',//分享视频数据
           output:'',
           video:'',
+         
 
         }
       };
@@ -171,24 +174,23 @@
         },
       videoZhen(){
         var vm=this
-          wx.ready(function() { //播放。为什么这里不直接dom.play()。妈**** 因为微信不让啊。我也很无奈啊。
-              vm.video.play();
-          });
-          
+          // wx.ready(function() { //播放。为什么这里不直接dom.play()。妈**** 因为微信不让啊。我也很无奈啊。
+          //     vm.video.play();
+          // });
         this.video.onloadeddata = this.videoOnloadeddata() 
       },
       videoOnloadeddata(){
             var scale = 0.8;
             var canvas = document.createElement("canvas");
-                canvas.width = this.video.videoWidth * scale;
-                canvas.height = this.video.videoHeight * scale;
-                canvas.getContext('2d').drawImage(this.video, 0, 0, canvas.width,
-                        canvas.height);
-                var img = document.createElement("img");
-                img.src = canvas.toDataURL("image/png");
-                img.width = 400;
-                img.height = 300;
-                this.output.appendChild(img)
+            canvas.width = this.video.videoWidth * scale;
+            canvas.height = this.video.videoHeight * scale;
+            canvas.getContext('2d').drawImage(this.video, 0, 0, canvas.width,
+                    canvas.height);
+            var img = document.createElement("img");
+            img.src = canvas.toDataURL("image/png");
+            img.width = 400;
+            img.height = 300;
+            this.output.appendChild(img)
       },
       // 点击了解更多
           toHome(){
@@ -327,13 +329,16 @@
         this.$router.push(this.playerVideoPage);
       },
       playOrPause(){
+        
         // 正在播放
         if(this.video.paused) {
           this.video.play();
           this.show = false
+          this.videoNo=true
         } else {
           this.video.pause();
           this.show = true
+          this.videoNo=false
         }
 
       },
@@ -510,7 +515,7 @@
             }
         }
 .video{ width:100%; height:100%; background:#444; position: fixed; top:100;
->video{ width:100%; height:100%;}
+     >video{ width:100%; height:100%;}
 }
 .player_paiming{ position:fixed;top:1.8rem;left:0.9rem;z-index:999;  text-align:center; font-size:0.37rem; background:rgba(255,255,255,0.8);  border-radius:0.4rem; padding:0.1rem 0.2rem;}
 // 提示盒子

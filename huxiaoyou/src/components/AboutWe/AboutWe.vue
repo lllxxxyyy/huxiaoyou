@@ -9,7 +9,7 @@
         <!-- 服务列表 -->
         <div class="custtomer_body">
             <img :src="staticImgH+'cusKefu.jpg'" alt="">
-            <p>工作时间，周一至周五9.00-1800</p>
+            <p>工作时间，周一至周五9:00-18:00</p>
             <p>客服电话：010-5333423</p>
         </div>
         
@@ -65,8 +65,8 @@ computed:{
 }
 .custtomer_body{
     >img{
-        width:1.5rem;
-        height:1.5rem;
+        width:4.43rem;
+        height:4.293rem;
         margin:0.4rem auto;
         display :block;
     }

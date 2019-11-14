@@ -23,7 +23,7 @@ export default {
     };
   },
   computed:{
-        ...mapState(['staticImgH'])
+        ...mapState(['staticImgH','unionDetailPage'])
     },
 
   mounted() {
@@ -32,7 +32,7 @@ export default {
 
   methods: {
     toReturn(){
-        this.$router.push('/LabourUnion')
+        this.$router.push(this.unionDetailPage)
     }
   }
 }
