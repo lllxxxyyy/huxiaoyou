@@ -154,27 +154,27 @@
     },
 
     methods: {
-      getObjectURL(file) { //转换成blob对象 不要问。
-          var url = null;
-          if (window.createObjectURL != undefined) {
-            // basic
-            url = window.createObjectURL(file);
-          } else if (window.URL != undefined) {
-            // mozilla(firefox)
-            url = window.URL.createObjectURL(file);
-          } else if (window.webkitURL != undefined) {
-            // webkit or chrome
-            url = window.webkitURL.createObjectURL(file);
-          }
-          return url;
+        getObjectURL(file) { //转换成blob对象 不要问。
+            var url = null;
+            if (window.createObjectURL != undefined) {
+              // basic
+              url = window.createObjectURL(file);
+            } else if (window.URL != undefined) {
+              // mozilla(firefox)
+              url = window.URL.createObjectURL(file);
+            } else if (window.webkitURL != undefined) {
+              // webkit or chrome
+              url = window.webkitURL.createObjectURL(file);
+            }
+            return url;
         },
-      videoZhen(){
-        var vm=this
-        wx.ready(function() { //播放。为什么这里不直接dom.play()。妈**** 因为微信不让啊。我也很无奈啊。
-            vm.video.play();
-        });
-        this.video.onloadeddata = this.videoOnloadeddata() 
-      },
+        videoZhen(){
+            var vm=this
+            wx.ready(function() { //播放。为什么这里不直接dom.play()。妈**** 因为微信不让啊。我也很无奈啊。
+                vm.video.play();
+            });
+            this.video.onloadeddata = this.videoOnloadeddata() 
+        },
       videoOnloadeddata(){
             var scale = 0.8;
             var canvas = document.createElement("canvas");
