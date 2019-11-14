@@ -31,25 +31,21 @@
                 <!-- x5-video-player-fullscreen="true"
                   x5-playsinline  x-webkit-airplay 
                         x5-video-player-type="h5"  
-                        x5-video-player-fullscreen="false"-->
-                <div class="videoNo" v-show="videoNo">
-                    <video  v-if="mobile==='android'"  width="100%" height="100%"
+                        x5-video-player-fullscreen="false" android-->
+                    <video id="video"   v-if="mobile==='iPhone'"  width="100%" height="100%"
                             muted="true" 
                             x5-playsinline="true" 
                             playsinline="true"    
-                            id="video"
                             webkit-playsinline
-                            autoplay
                             controls
                             preload="preload" 
                             :src="video_info.video_introduction">
                     </video>
-                    <video autoplay="autoplay" v-if="mobile==='iPhone'" id="video"
+                    <!-- <video autoplay="autoplay" v-if="mobile==='iPhone'" id="video"
                           width="100%"
                           height="100%"
                           :src="video_info.video_introduction"  >
-                    </video>
-                </div>
+                    </video> -->
                 <div id="output"></div>
           </div>
       </div>
@@ -92,7 +88,7 @@
     name: "PlayerStyleDetailed",
     data() {
       return {
-         videoNo:false,
+         video:'',
         shareTextShow:false,//分享提示，默认隐藏
         followFlag: false,
         zanFlag: false,
@@ -134,7 +130,7 @@
     },
     created(){
       this.text=navigator.appVersion
-      this.mobile = navigator.appVersion.indexOf('iPhone') !== -1 ? 'android' :  'iPhone'
+      this.mobile = navigator.appVersion.indexOf('iPhone') !== -1 ? 'iPhone' :  'android'
     },
     mounted() {
       this.firstPanduan()
@@ -334,11 +330,9 @@
         if(this.video.paused) {
           this.video.play();
           this.show = false
-          this.videoNo=true
         } else {
           this.video.pause();
           this.show = true
-          this.videoNo=false
         }
 
       },
