@@ -32,8 +32,7 @@
                   x5-playsinline  x-webkit-airplay 
                         x5-video-player-type="h5"  
                         x5-video-player-fullscreen="false" android-->
-                    <video id="video"   v-if="mobile==='iPhone'"  width="100%" height="100%"
-                            muted="true" 
+                    <video id="video"   v-if="mobile==='android'"  width="100%" height="100%"
                             x5-playsinline="true" 
                             playsinline="true"    
                             webkit-playsinline
@@ -254,7 +253,7 @@
                             });
                             this.toFriend()
                             this.toFriendQuan()
-                            this.videoZhen()
+                            // this.videoZhen()
                     }else{
                         this.toastMsg(res.data.msg);
                     }

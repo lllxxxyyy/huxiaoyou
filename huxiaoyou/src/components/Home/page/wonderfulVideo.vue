@@ -1,7 +1,7 @@
 <!-- 精彩视频 -->
 <template>
   <div class="wonderfulVideo">
-      <div class="wonderfulVideo_title"><span>精彩视频</span> </div>
+      <div class="wonderfulVideo_title"><span>推广视频</span> </div>
       <ul class="voideo_list">
         <li v-for="(item,index) in videoImg" :key="index" @click="tovideoDetail(item.value)">
           <img class="bofangBtn" :src="staticImgH+'bofangBtn.png'" alt="">
@@ -9,7 +9,7 @@
         </li>
       </ul>
 
-      <div class="player_style_tuijian"><span>每日精彩推荐</span></div>
+      <div class="player_style_tuijian"><span>选手每日精彩推荐</span></div>
       <ul class="player_list">
         <li v-for="(item,index) in PlayerStyleData" :key="index" v-if="index<6">
           <div class="player_center">
