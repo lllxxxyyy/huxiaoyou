@@ -159,8 +159,14 @@ export default {
 </script>
 <style scoped lang="stylus">
 .login>img{
-    width:0.53rem;
-    height:0.53rem;
+    width:1rem;
+    height:1rem;
+    display:block;
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
     margin:auto;
 }
 </style>
