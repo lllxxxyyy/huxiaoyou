@@ -41,11 +41,11 @@
                             preload="preload" 
                             :src="video_info.video_introduction">
                     </video>
-                    <!-- <video autoplay="autoplay" v-if="mobile==='iPhone'" id="video"
+                    <video autoplay="autoplay" v-if="mobile==='iPhone'" id="video"
                           width="100%"
                           height="100%"
                           :src="video_info.video_introduction"  >
-                    </video> -->
+                    </video>
                 <div id="output"></div>
           </div>
       </div>
@@ -170,9 +170,9 @@
         },
       videoZhen(){
         var vm=this
-          // wx.ready(function() { //播放。为什么这里不直接dom.play()。妈**** 因为微信不让啊。我也很无奈啊。
-          //     vm.video.play();
-          // });
+        wx.ready(function() { //播放。为什么这里不直接dom.play()。妈**** 因为微信不让啊。我也很无奈啊。
+            vm.video.play();
+        });
         this.video.onloadeddata = this.videoOnloadeddata() 
       },
       videoOnloadeddata(){
@@ -183,7 +183,10 @@
             canvas.getContext('2d').drawImage(this.video, 0, 0, canvas.width,
                     canvas.height);
             var img = document.createElement("img");
-            img.src = canvas.toDataURL("image/png");
+            // img.src = canvas.toDataURL("image/png");
+            setTimeout(() => { //这里为什么延迟到下次执行。因为有的时候。绘制不到。很奇怪。
+              img.src = canvas.toDataURL();
+            }, 0);
             img.width = 400;
             img.height = 300;
             this.output.appendChild(img)
