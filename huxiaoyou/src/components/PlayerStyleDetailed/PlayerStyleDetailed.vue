@@ -31,16 +31,17 @@
                 <!-- x5-video-player-fullscreen="true"
                   x5-playsinline  x-webkit-airplay 
                         x5-video-player-type="h5"  
-                        x5-video-player-fullscreen="false" android-->
-                    <video id="video"   v-if="mobile==='android'"  width="100%" height="100%"
+                        x5-video-player-fullscreen="false" preload="preload" android-->
+                    <video id="video" :class="{'videoOpcity':videoOpcityY}"   v-if="mobile==='android'"  width="100%" height="100%"
+                          x5-video-player-type="h5"
+                          x5-video-player-fullscreen="true"
+                          preload="auto"
                             x5-playsinline="true" 
                             playsinline="true"    
                             webkit-playsinline
-                            controls
-                            preload="preload" 
                             :src="video_info.video_introduction">
                     </video>
-                    <video autoplay="autoplay" v-if="mobile==='iPhone'" id="video"
+                    <video  :class="{'videoOpcity':videoOpcityY}"  autoplay="autoplay" v-if="mobile==='iPhone'" id="video"
                           width="100%"
                           height="100%"
                           :src="video_info.video_introduction"  >
@@ -92,7 +93,7 @@
         followFlag: false,
         zanFlag: false,
         voteFlag: false,
-
+        videoOpcityY:true,
         playerOptions:{},
 
         show:true,
@@ -179,8 +180,7 @@
             var canvas = document.createElement("canvas");
             canvas.width = this.video.videoWidth * scale;
             canvas.height = this.video.videoHeight * scale;
-            canvas.getContext('2d').drawImage(this.video, 0, 0, canvas.width,
-                    canvas.height);
+            canvas.getContext('2d').drawImage(this.video, 0, 0, canvas.width,canvas.height);
             var img = document.createElement("img");
             // img.src = canvas.toDataURL("image/png");
             setTimeout(() => { //这里为什么延迟到下次执行。因为有的时候。绘制不到。很奇怪。
@@ -253,7 +253,7 @@
                             });
                             this.toFriend()
                             this.toFriendQuan()
-                            // this.videoZhen()
+                            this.videoZhen()
                     }else{
                         this.toastMsg(res.data.msg);
                     }
@@ -605,5 +605,8 @@
         line-height:1rem;
         color:#fff;
     }
+}
+.videoOpcity{
+  opacity:0;
 }
 </style>
