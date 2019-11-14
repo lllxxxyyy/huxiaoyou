@@ -212,26 +212,31 @@ export default {
     >li{
         width:100%;
         display:-webkit-box; display:-ms-flexbox; display:flex; -webkit-box-pack:justify; -ms-flex-pack:justify; justify-content:space-between; -ms-flex-wrap:wrap; flex-wrap:wrap; margin-top:0.27rem; margin-bottom:0.14rem;
-        >span img{
+        >span{
             width:0.4rem;
             height:0.4rem;
-            background :skyblue;
-			border-radius:0.06rem;
+            >img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius:0.06rem;
+            }
+        } 
+		>span{
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
         }
-		>span{display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    -webkit-box-pack: justify;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    }
        >.angelNameTwo{
            font-size:0.347rem;
            color:#fff;

@@ -20,7 +20,7 @@
         <!-- 选手信息 -->
             <div class="player_des">
                     <div class="player_des_top">
-                        <img class="player_desImg" :src="detailData.head_pic" alt="">
+                        <div class="player_desImg"><img  :src="detailData.head_pic" alt=""></div>
                         <ul>
                             <li><span class="username">{{detailData.username}}</span>
                                 <span @click="toMineInfo" v-if="personData.player_id==playerId">编辑</span>
@@ -688,7 +688,9 @@ export default {
     height:8.52rem;
     display :flex;
     >img{
-        width:100%;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
         z-index:-1;
     }
 }
@@ -708,11 +710,16 @@ export default {
         >.player_desImg{
             width:1.87rem;
             height:1.87rem;
-            background :blue;
-            border-radius:50%;
             margin-top:-0.53rem;
             margin-right:0.32rem;
             border:0.1rem solid rgba(255, 255, 255, 1);
+            border-radius:50%;
+            >img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius:50%;
+            }
         }
         >ul{
             margin-top:0.333rem;
@@ -894,8 +901,9 @@ export default {
         margin-bottom:0.4rem;
         background :skyblue;
         >img{
-            width:100%;
-            height:100%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     }
 

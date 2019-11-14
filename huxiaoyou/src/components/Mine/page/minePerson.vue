@@ -7,7 +7,7 @@
           </div>
           <div class="minePerson_des">
               <div class="minePerson_Info">
-                  <img :src="personData.head_pic" alt="" class="minePerson_Avatar">
+                  <div class="minePerson_Avatar"><img :src="personData.head_pic" alt="" ></div>
                   <div class="minePerson_InfoRight">
                       <div class="minePerson_InfoRiTop">
                         <span class="minePerson_InfoName">{{personData.username}}</span>
@@ -67,7 +67,7 @@
           </div>
           <div class="minePerson_des">
               <div class="minePerson_Info">
-                  <img :src="personData.head_pic" alt="" class="minePerson_Avatar">
+                  <div class="minePerson_Avatar"><img :src="personData.head_pic" alt="" ></div>
                   <div class="minePerson_InfoRight">
                       <div class="minePerson_InfoRiTop">
                         <span class="minePerson_InfoName">{{personData.username}}</span>
@@ -154,7 +154,7 @@ export default {
     box-shadow :0 0.05rem 0.3rem rgba(241, 241, 241, 0.9);
     >.minePerson_Info{
       display :flex;
-      >img{
+      >.minePerson_Avatar{
         border:0.03rem solid #fff;
         width:1.87rem;
         height:1.87rem;
@@ -163,7 +163,14 @@ export default {
         margin-top:-0.53rem;
         border-radius:50%;
         border:0.09rem solid #fff;
+        >img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius:50%;
+        }
       }
+      
       >.minePerson_InfoRight{
         flex:1;
           display :flex;

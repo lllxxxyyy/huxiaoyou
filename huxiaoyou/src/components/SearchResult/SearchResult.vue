@@ -15,7 +15,7 @@
     <ul class="HomeAngel_listTwo" v-if="searchResult && searchResult.length > 0">
       <li v-for="(item,index) in searchResult" :key="index" @click="toPlayerDetail(item.user_id, 'false')">
         <!-- {{item.RankingImgData[index]}} -->
-        <img v-if="item.head_pic" :src="item.head_pic" alt="">
+         <div class="HomeAngel_listTwoImg"><img v-if="item.head_pic" :src="item.head_pic" alt=""></div>
         <div class="top_img">
           <img v-if="item.rank<=3" :src="staticImgH+'paiming'+item.rank+'.png'" alt="">
         </div>
@@ -260,12 +260,17 @@ export default {
 		box-shadow:0px 3px 12px 0px rgba(255,204,212,0.5);
 		border-radius:0.2rem;
 		margin-bottom:0.6rem;
-        >img{
+        >.HomeAngel_listTwoImg{
             width:2.6rem;
             height:2.6rem;
-            background :skyblue;
-			border-radius:0.16rem;
+            >img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius:0.16rem;
+            }
         }
+        
        >.angelNameTwo{
            font-size:0.347rem;
            color:rgba(0, 0, 0, 0.8);

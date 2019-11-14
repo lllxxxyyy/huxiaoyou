@@ -17,7 +17,7 @@
       <template v-for="(item,index) in RankingData" v-if="SpecialBarindex==0">
         <li @click="toSpecialDetails(item.content)" :key="index">
           <!-- {{item.RankingImgData[index]}} -->
-          <img v-if="item.img" :src="item.img"  alt="">
+          <div class="LabourUnion_listTwoImg"><img v-if="item.img" :src="item.img"  alt=""></div>
           <span class="angelNameTwo">{{item.username}}</span>
           <span v-if="item.carrer!==0" class="angelNameTwoB">{{item.carrer}}</span>
           <!-- <span class="angelPriceTwo">ID号：{{item.id}}</span> -->
@@ -26,9 +26,9 @@
     </ul>
     <ul class="LabourUnion_listTwo">
       <template v-for="(item,index) in RankingData" v-if="SpecialBarindex==1">
-        <li@click="toSpecialDetails(item.content)" :key="index">
+        <li @click="toSpecialDetails(item.content)" :key="index">
           <!-- {{item.RankingImgData[index]}} -->
-          <img v-if="item.img" :src="item.img"  alt="">
+          <div class="LabourUnion_listTwoImg"><img v-if="item.img" :src="item.img"  alt=""></div>
           <span class="angelNameTwo">{{item.username}}</span>
         </li>
       </template>
@@ -256,12 +256,16 @@ export default {
 		border-radius:0.2rem;
 		margin-bottom:0.6rem;
 		padding-bottom:0.26rem;
-        >img{
+        >.LabourUnion_listTwoImg{
             width:4.4rem;
             height:4.4rem;
-            background :skyblue;
-			border-radius:0.16rem 0.16rem 0 0;
+            >img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
         }
+        
        >.angelNameTwo{
            font-size:0.32rem;
            color:rgba(0, 0, 0, 0.8);
@@ -372,13 +376,15 @@ export default {
            }
        } 
        >.SpecialList_right{
+           width:2.58rem;
+           height:2.58rem;
            display :flex;
            align-items :center;
            justify-content :center;
            >img{
-               background :skyblue;
-			   width:2.58rem;
-               height:2.58rem;
+               width: 100%;
+                height: 100%;
+                object-fit: cover;
 			   border-radius:10px;
            }
        }

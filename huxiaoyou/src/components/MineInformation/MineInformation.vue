@@ -402,10 +402,10 @@ export default {
         height:1.07rem;
         position :relative;
         >img{
-            width:1.07rem;
-            height:1.07rem;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             border-radius:50%;
-            background :pink;
         }
         >input{
           width:1.07rem;

@@ -210,10 +210,11 @@
 		display:inline-block;
 		margin-right:0.31rem;
         >img{
-            width:4.44rem;
-            height:4.44rem;
-			border-radius:0.2rem;
-			display:block;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius:0.2rem;
+          display:block;
         }
     }
 }

@@ -15,9 +15,9 @@
         <div class="SpecialTopicBody_list">
           <ul class="HomeAngel_listTwo">
             <li v-for="(player, seqNum) in item.players" :key='seqNum' @click="toPlayerDetail(player.id, 'false')">
-              <img class="Two_img"
+              <div class="HomeAngel_listTwotop"><img class="Two_img"
                    :src="player.avatar"
-                   alt="">
+                   alt=""></div>
               <div class="top_img"><img :src="staticImgH+'paiming'+(seqNum+1)+'.png'" alt=""></div>
               <!-- <div class="ta_vote" @click.stop="toPlayerDetail(player.id, 'true')">给Ta投票</div> -->
               <span class="angelNameTwo">选手：{{player.username}}</span>
@@ -241,14 +241,20 @@ export default {
     margin-top:0.27rem;
     >li{
         width:2.6rem;
+        
         display:flex;
         flex-direction :column;
 		position: relative;
-        >img{
+        .HomeAngel_listTwotop{
             width:2.6rem;
             height:2.6rem;
-            background :skyblue;
+            >img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
         }
+        
        >.angelNameTwo{
            font-size:0.347rem;
            color:rgba(0, 0, 0, 0.8);
