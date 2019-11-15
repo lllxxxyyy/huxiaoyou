@@ -13,7 +13,7 @@
       <ul class="player_list">
         <li v-for="(item,index) in PlayerStyleData" :key="index" v-if="index<6">
           <div class="player_center">
-            <video v-if="item.video_introduction" @click.stop="goGoodsPage(item)">
+            <video v-if="item.video_introduction" :poster="item.video_introduction+'?x-oss-process=video/snapshot,t_10000,m_fast'"  @click.stop="goGoodsPage(item)">
               <source :src="item.video_introduction" type="video/mp4"/>
             </video>
             <!--<img v-if="item.video_introduction" @click="goGoodsPage(item)" :src="item.video_introduction[1].src"/>-->

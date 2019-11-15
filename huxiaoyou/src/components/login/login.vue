@@ -118,7 +118,8 @@ export default {
       },
     // 获取微信用户
       getCodes () {
-          const AppId='wx0c2b0e01cb1d50b4';
+        //   const AppId='wx0c2b0e01cb1d50b4';  //狐小游
+          const AppId='wx7cb8b9da4ff3bac2';//艾贝网
           const code=this.getUrlParam('code')
           const local=window.location.href
           if(code==null || code===''){

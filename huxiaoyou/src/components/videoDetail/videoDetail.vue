@@ -17,13 +17,13 @@
                  playsinline
                  webkit-playsinline
                  preload="auto"
-                 poster="xx0.jpg"
+                 :poster="videoSrc+'?x-oss-process=video/snapshot,t_10000,m_fast'"
                  :src="videoSrc"  >
           </video>
           <video v-if="mobile==='iPhone'" id="video"
                  width="100%"
                  height="100%"
-                 poster="xx0.jpg"
+                 :poster="videoSrc+'?x-oss-process=video/snapshot,t_10000,m_fast'"
                  :src="videoSrc"  >
           </video>
         </div>

@@ -158,61 +158,7 @@
     },
 
     methods: {
-        // getObjectURL(file) { //转换成blob对象 不要问。
-        //     var url = null;
-        //     if (window.createObjectURL != undefined) {
-        //       // basic
-        //       url = window.createObjectURL(file);
-        //     } else if (window.URL != undefined) {
-        //       // mozilla(firefox)
-        //       url = window.URL.createObjectURL(file);
-        //     } else if (window.webkitURL != undefined) {
-        //       // webkit or chrome
-        //       url = window.webkitURL.createObjectURL(file);
-        //     }
-        //     return url;
-        // },
-        videoZhen(){
-            var vm=this
-            var video = document.getElementById('video')
-            // wx.ready(function() { //播放。为什么这里不直接dom.play()。妈**** 因为微信不让啊。我也很无奈啊。
-            //     if(vm.video.paused) {
-            //       videoDom.play();
-            //       vm.show = false
-            //     } else {
-            //       videoDom.pause();
-            //       vm.show = true
-            //     }
-            // });
-            if (window.WeixinJSBridge) {
-                WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
-                    video.play();
-                }, false);
-            } else {
-                document.addEventListener("WeixinJSBridgeReady", function () {
-                    WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
-                        video.play();
-                    });
-                }, false);
-            }
-            video.play();
-            // this.video.onloadeddata = this.videoOnloadeddata() 
-        },
-      videoOnloadeddata(){
-            var scale = 0.8;
-            var canvas = document.createElement("canvas");
-            canvas.width = this.video.videoWidth * scale;
-            canvas.height = this.video.videoHeight * scale;
-            canvas.getContext('2d').drawImage(this.video, 0, 0, canvas.width,canvas.height);
-            var img = document.createElement("img");
-            // img.src = canvas.toDataURL("image/png");
-            setTimeout(() => { //这里为什么延迟到下次执行。因为有的时候。绘制不到。很奇怪。
-              img.src = canvas.toDataURL();
-            }, 0);
-            img.width = 400;
-            img.height = 300;
-            this.output.appendChild(img)
-      },
+      
       // 点击了解更多
           toHome(){
             this.$router.push('/PlayerStyle')
@@ -276,7 +222,6 @@
                             });
                             this.toFriend()
                             this.toFriendQuan()
-                            this.videoZhen()
                     }else{
                         this.toastMsg(res.data.msg);
                     }
@@ -449,7 +394,47 @@
           clearInterval(self.timer2);
         }, 2000)
       },
-     
+       // videoZhen(){
+        //     var vm=this
+        //     var video = document.getElementById('video')
+        //     // wx.ready(function() { //播放。为什么这里不直接dom.play()。妈**** 因为微信不让啊。我也很无奈啊。
+        //     //     if(vm.video.paused) {
+        //     //       videoDom.play();
+        //     //       vm.show = false
+        //     //     } else {
+        //     //       videoDom.pause();
+        //     //       vm.show = true
+        //     //     }
+        //     // });
+        //     if (window.WeixinJSBridge) {
+        //         WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+        //             video.play();
+        //         }, false);
+        //     } else {
+        //         document.addEventListener("WeixinJSBridgeReady", function () {
+        //             WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+        //                 video.play();
+        //             });
+        //         }, false);
+        //     }
+        //     video.play();
+        //     // this.video.onloadeddata = this.videoOnloadeddata() 
+        // },
+      // videoOnloadeddata(){
+      //       var scale = 0.8;
+      //       var canvas = document.createElement("canvas");
+      //       canvas.width = this.video.videoWidth * scale;
+      //       canvas.height = this.video.videoHeight * scale;
+      //       canvas.getContext('2d').drawImage(this.video, 0, 0, canvas.width,canvas.height);
+      //       var img = document.createElement("img");
+      //       // img.src = canvas.toDataURL("image/png");
+      //       setTimeout(() => { //这里为什么延迟到下次执行。因为有的时候。绘制不到。很奇怪。
+      //         img.src = canvas.toDataURL();
+      //       }, 0);
+      //       img.width = 400;
+      //       img.height = 300;
+      //       this.output.appendChild(img)
+      // },
       ...mapMutations(['playerIds','PlayerDetailPages','addressIdIsSels','playDetailVoteDivs', 'PlayerStyleDetailedInfo']),
 
     }

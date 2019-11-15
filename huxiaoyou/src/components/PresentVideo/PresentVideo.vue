@@ -9,7 +9,7 @@
     <ul class="videoList">
       <li v-for="(item,index) in reply" :key="index">
         <div class="present_video">
-		<video id="video1">
+		<video id="video1" :poster="item.video_introduction+'?x-oss-process=video/snapshot,t_10000,m_fast'">
           <source :src="item.video_introduction" type="video/mp4">
         </video>
 		</div>
