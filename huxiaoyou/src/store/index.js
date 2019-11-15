@@ -55,8 +55,15 @@ const state = {
     RaceCheatsPage: sessionStorage.getItem('RaceCheatsPage'), //报名通道上的四个按钮和 首页最新通告、秘籍的跳转页面
 
     unionDetailPage: sessionStorage.getItem('unionDetailPage'), //工会 和赛事商务里的赛事合作品牌跳转页面
+
+    labourUnionIndexIdX: JSON.parse(sessionStorage.getItem('labourUnionIndexIdX')) || {}, //公会 索引和id
+
 }
 const mutations = {
+    labourUnionIndexIdXs(state, labourUnionIndexIdX) {
+        sessionStorage.setItem('labourUnionIndexIdX', JSON.stringify(labourUnionIndexIdX));
+        state.labourUnionIndexIdX = labourUnionIndexIdX
+    },
     //工会 和赛事商务里的赛事合作品牌跳转页面
     unionDetailPages(state, unionDetailPage) {
         sessionStorage.setItem('unionDetailPage', unionDetailPage);

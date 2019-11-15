@@ -64,16 +64,13 @@
         </transition>
         <Foot class="PublicFoot" />
       <div class="footer">
-         
       </div>
   </div>
 </template>
-
 <script>
 import Foot from './../Foot/Foot'
 import {mapState} from 'vuex'
 import {mapMutations} from 'vuex'
-
 import qs from 'qs'
 export default {
     name:'PlayerRanking',
@@ -84,29 +81,34 @@ export default {
             RankingData:'',
             RankingImgData:[],
             barId:0,
-            token:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJpc3MiOiJodHRwczpcL1wvbG92eW91LnRvcCIsImF1ZCI6Imh0dHBzOlwvXC9sb3Z5b3UudG9wIiwiaWF0IjoxNTY5NDA4NzE2LCJuYmYiOjE1Njk0MDg3MTYsImV4cCI6MTYwMDk0NDcxNn0.FPH-pgQp-2Vt1kbnZc_Z9JnJYvGYMeLOUHtkC4Tyj_w',
              // 提示盒子
             promptContent:'', //提示盒子的内容
             showPrompt:false,//提示盒子的吸收和显示
         };
     },
-  components: {
-      Foot
-  },
-
+    components: {
+        Foot
+    },
     computed:{
-            ...mapState(['staticImgH',])
-        },
-
-  mounted(){
+        ...mapState(['staticImgH','labourUnionIndexIdX'])
+    },
+    mounted(){
+        if(this.labourUnionIndexIdX.id && this.labourUnionIndexIdX.index){
+                this.barId=this.labourUnionIndexIdX.id
+                this.SpecialBarindex=this.labourUnionIndexIdX.index
+        }
         this.$http.post('/api/datum/datum_list').then((res)=>{
             if(res.data.code==200){
                 this.SpecialTopicBodyBar=res.data.data.result
-                 this.barId=this.SpecialTopicBodyBar[0].id
+                if(this.labourUnionIndexIdX.id){
+                    this.barId=this.labourUnionIndexIdX.id
+                }else{
+                    this.barId=this.SpecialTopicBodyBar[0].id
+                }
                 this.getlistData()
             }
         })
-  },
+    },
   methods: {
     //   跳文章详情
       toSpecialDetails(Con){
@@ -115,9 +117,9 @@ export default {
       },
     //   跳加入公会
     toaddUnion(){
-         var obj=qs.stringify({
+                var obj=qs.stringify({
                   type:1
-              })
+                })
               this.$http.post('/api/user/me_gong',obj).then((res)=>{
                   if(res.data.code==200){
                       if(res.data.data.result==1){
@@ -141,6 +143,8 @@ export default {
       SpecialBarBtn(index,id){
           this.barId=id
           this.SpecialBarindex=index
+          var labourUnionIndexId={index:index,id:id}
+          this.labourUnionIndexIdXs(labourUnionIndexId)
           this.getlistData()
       },
       toReturn(){
@@ -168,7 +172,7 @@ export default {
                
             })
       },
-      ...mapMutations(['playerIds','PlayerDetailPages','addressIdIsSels','playDetailVoteDivs','AddunionPages','MineGuildPages','specialDetailInfos','SpecialDetailsPages','unionDetailPages']),
+      ...mapMutations(['playerIds','PlayerDetailPages','addressIdIsSels','playDetailVoteDivs','AddunionPages','MineGuildPages','specialDetailInfos','SpecialDetailsPages','unionDetailPages','labourUnionIndexIdXs']),
   }
 }
 

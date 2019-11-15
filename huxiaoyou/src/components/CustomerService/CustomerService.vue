@@ -6,10 +6,15 @@
           <span>专属客服</span>
       </div>
 	  <div class="CustomerService">
-		  <span><img v-if="imgInfo.img" :src="imgInfo.img" alt=""><br />{{imgInfo.names}}</span>
-		  <div class="Customer_xiazai" @click="down(staticImgH+'Bitmap.png')">
-        <img v-if="imgInfo.img" :src="imgInfo.img" alt="">
-      </div>
+		    <span><img v-if="imgInfo.img" :src="imgInfo.img" alt=""><br />{{imgInfo.names}}</span>
+		    <!-- <div class="Customer_xiazai" @click="down(staticImgH+'Bitmap.png')"> -->
+                <!-- <img v-if="imgInfo.img" :src="staticImgH+'xiazai.png'" alt=""> -->
+                <!-- 长按图片后 点击"保存到手机" -->
+            <!-- </div> -->
+            <div class="Customer_xiazai" >
+                <!-- <img v-if="imgInfo.img" :src="staticImgH+'xiazai.png'" alt=""> -->
+                长按图片后 点击"保存到手机"
+            </div>
 	  </div>
       <!-- 提示盒子 -->
          <transition name="fade">
@@ -57,11 +62,7 @@ export default {
         let obj = qs.stringify({
           player_id: player_id
         })
-        this.$http.post('api/user/er_img', obj, {
-          headers: {
-            'authorization': this.tokenH
-          }
-        }).then((res) => {
+        this.$http.post('api/user/er_img', obj).then((res) => {
           if (res.data.code===200) {
             this.imgInfo = res.data.data.result
           }
@@ -132,7 +133,7 @@ export default {
     	font-weight: 500;
 		>img{ width:4.4rem; margin-bottom:0.5rem;}
 		}
-		>.Customer_xiazai{ margin-top:1.4rem; text-align:center;
+		>.Customer_xiazai{ margin-top:1.4rem; text-align:center;font-size:0.4rem;color:rgba(255, 157, 172, 1);
 		  >img{ width:0.6rem;}
 		}
 }

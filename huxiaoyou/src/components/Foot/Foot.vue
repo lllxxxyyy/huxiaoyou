@@ -63,9 +63,12 @@ export default {
       footClick(itemId,itemUrl){
         this.idx=itemId
         this.idxNowHs(itemId)
+        if(itemUrl=='/LabourUnion'){
+            this.labourUnionIndexIdXs('')
+        }
         this.$router.push(itemUrl)
       },
-      ...mapMutations(['idxNowHs']),
+      ...mapMutations(['idxNowHs','labourUnionIndexIdXs']),
   }
 }
 

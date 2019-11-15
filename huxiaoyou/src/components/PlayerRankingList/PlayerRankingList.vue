@@ -25,7 +25,7 @@
         <li :key="index" @click="toPlayerDetail(item.id, 'false')">
           <!-- {{item.RankingImgData[index]}} -->
           <div class="HomeAngel_listTwoImg"><img v-if="item.head_pic" :src="item.head_pic" alt=""></div>
-          <div class="top_img"><img :src="staticImgH+'paiming'+(index+1)+'.png'" alt=""></div>
+          <div class="top_img" v-if="index<4"><img :src="staticImgH+'paiming'+(index+1)+'.png'" alt=""></div>
           <!--<div class="ta_vote to_vote1">给Ta投票</div>-->
           <!-- <div class="ta_vote" :class="{
               ta_vote1: (index+1) > 3 && (index+1) <= 100,

@@ -5,9 +5,10 @@
             <div class="PlayerRanking_header">
                 <img @click.stop="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
                 <span>我的公会</span>
-                 <span v-if="disabledXiu" @click="editYes">编辑</span>
-                 <span v-else @click="saveYes">保存</span>
+                <span v-if="disabledXiu" @click="editYes">编辑</span>
+                <span v-else @click="saveYes">保存</span>
             </div>
+            <div class="AddUnion_hide"></div>
             <div class="AddUnion_Info" v-if="guildData.is_show==1">
                     <ul class="AddUnion_InfoList">
                         <li>
@@ -586,13 +587,20 @@ export default {
 .AddUnion_father{
     letter-spacing :0.04rem;
 }
+.AddUnion_hide{
+    width:100%
+    height:1.23rem;
+    background:#fff;
+}
 .PlayerRanking_header{
     width:100%
     height:1.23rem;
     display :flex;
     align-items :center;
     justify-content :space-between;
-    position :relative;
+    position :fixed;
+    top:0;
+    left:0;
     padding:0 0.4rem;
     >img{
         width:0.32rem;
