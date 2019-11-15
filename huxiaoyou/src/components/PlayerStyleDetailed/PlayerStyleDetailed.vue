@@ -39,12 +39,16 @@
                             x5-playsinline="true" 
                             playsinline="true"    
                             webkit-playsinline
-                            :src="video_info.video_introduction">
+                            :poster="video_info.video_introduction+'?x-oss-process=video/snapshot,t_10000,m_fast'"
+                            >
+                            <source :src="video_info.video_introduction" type="vedio/mp4">
+                              <source :src="video_info.video_introduction" type="vedio/ogg">
+                              <source :src="video_info.video_introduction" type="vedio/webm">
                     </video>
                     <video v-if="mobile==='iPhone'" id="video"
                           width="100%"
                           height="100%"
-                          :src="video_info.video_introduction"  >
+                          :src="video_info.video_introduction" :poster="video_info.video_introduction+'?x-oss-process=video/snapshot,t_10000,m_fast'" >
                     </video>
                 <div id="output"></div>
           </div>
