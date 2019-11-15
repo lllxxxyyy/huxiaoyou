@@ -173,10 +173,11 @@
             var videoDom = document.getElementById('video')
             wx.ready(function() { //播放。为什么这里不直接dom.play()。妈**** 因为微信不让啊。我也很无奈啊。
                 if(vm.video.paused) {
-                  vm.video.play();
+                  alert(videoDom.play())
+                  videoDom.play();
                   vm.show = false
                 } else {
-                  vm.video.pause();
+                  videoDom.pause();
                   vm.show = true
                 }
             });
