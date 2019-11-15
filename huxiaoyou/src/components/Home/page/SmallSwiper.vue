@@ -1,6 +1,6 @@
 <!-- home_轮播 -->
 <template>
-  <div class="smallBanner">
+  <div class="smallBanner" v-if="slidersData">
       <swiper class="smallbanner_list swiper-no-swiping" v-if="slidersData.length>=1"  :options="swiperOption">
             <!-- slides -->
             <swiper-slide     class="banner_li" v-for="(item,index) in slidersData" :key="index">

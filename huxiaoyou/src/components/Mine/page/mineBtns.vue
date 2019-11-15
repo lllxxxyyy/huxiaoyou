@@ -165,6 +165,11 @@ export default {
                       }
                   }
               })
+          }else if(index==6){
+              var specialDetailInfo={projectId:54,type:3}
+            this.specialDetailInfos(specialDetailInfo)
+            this.SpecialDetailsPages('/Mine')
+            this.$router.push('/SpecialDetails')
           }else if(index==7){
                 this.myOrderListPages('/Mine')
                 this.orderTypes('')
@@ -197,6 +202,11 @@ export default {
                       }
                   }
               })
+        }else if(index==1){
+           var specialDetailInfo={projectId:54,type:3}
+            this.specialDetailInfos(specialDetailInfo)
+            this.SpecialDetailsPages('/Mine')
+            this.$router.push('/SpecialDetails')
         }else if(index==2){
                 this.myOrderListPages('/Mine')
                 this.orderTypes('')
@@ -209,7 +219,7 @@ export default {
             this.$router.push('/AboutWe')
         }
     },
-    ...mapMutations(['ReceiptAddressPages','userIdHs','cityNamePerXs','SignaturePerXs','nickNamePerXs','agePerXs','heightPerXs','weightPerXs','constellationPerXs','myOrderListPages','orderTypes','orderNums','playerIds','MineInformationPages','MineGuildPages','AddunionPages']),
+    ...mapMutations(['ReceiptAddressPages','cityNamePerXs','SignaturePerXs','nickNamePerXs','agePerXs','heightPerXs','weightPerXs','constellationPerXs','myOrderListPages','orderTypes','orderNums','playerIds','MineInformationPages','MineGuildPages','AddunionPages','specialDetailInfos','SpecialDetailsPages']),
   }
 }
 
