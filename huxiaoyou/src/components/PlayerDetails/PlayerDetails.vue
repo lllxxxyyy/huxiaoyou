@@ -63,10 +63,13 @@
                 </div>
             </div>
         <!-- 视频 -->
-            <div v-if="detailData.user_introduction">
-                <video id="video1" width="399" height="300" poster="video_bg.jpg">
-                    <source :src="detailData.user_introduction" type="video/mp4" />
-                </video>
+            <div class="palyerVideo_wrap" v-if="detailData.user_introduction">
+                <div class="palyerVideo" v-if="detailData.user_introduction"> 
+                    <video id="video1"  :poster="detailData.user_introduction[0].src+'?x-oss-process=video/snapshot,t_10000,m_fast'">
+                        <source :src="detailData.user_introduction[0].src" type="video/mp4" />
+                    </video>
+                    <div class="zz" @click.stop="goGoodsPage()"></div>
+                </div>
             </div>
         <!-- 小图 -->
             <ul class="playerImg_list">
@@ -318,6 +321,10 @@ export default {
         })
   },
   methods: {
+      // 跳视频页
+        goGoodsPage() {
+                this.$router.push({path:'/videoDetail',query:{videoSrc:this.detailData.user_introduction[0].src}})
+          },
         // 隐藏提交订单提示盒子显示
                    sureOrderTi(){
                        if(this.PlayerDetailPage){
@@ -519,7 +526,7 @@ export default {
                         wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
                             wx.onMenuShareAppMessage({ 
                                 title:vm.test, // 分享标题
-                                desc:'我正在参加第二季天使旅行家大赛，直播大美中华美食，美景，美女行动，参与有惊喜。', // 分享描述
+                                desc:'我在参加第二季天使旅行家大赛，和我一起领略中华美景 美食 美女，报名参加有惊喜。', // 分享描述
                                 link:vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                                 imgUrl: vm.detailData.head_pic, // 分享图标
                                 success: function (res) {
@@ -1207,5 +1214,28 @@ export default {
         }
     }
 }
+// 视频
+.palyerVideo_wrap{
+        width:9.2rem;
+        height:4.5rem;
+        padding:0 0.4rem;
+        margin-top:0.32rem;
+        position:relative;
+    .palyerVideo{
+        width:9.2rem;
+        height:4.5rem;
+        overflow: hidden; border-radius:0.2rem; background :#4e4e4e;
+        position:relative;
+        >#video1{
+            width:100%;
+            height:408%;
+            border-radius:0.2rem;
+            margin-top:-66%;
+            
+        }
+        .zz{ width:9.2rem; height:4.5rem; position:absolute; top:0;left:0; z-index:998; background: url(/../../static/mock/img/bofangBtn.png) no-repeat center center; background-size:1rem;}
+    }
+}
+
 </style>
 

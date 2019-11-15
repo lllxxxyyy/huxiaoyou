@@ -59,7 +59,9 @@ const state = {
     labourUnionIndexIdX: JSON.parse(sessionStorage.getItem('labourUnionIndexIdX')) || {}, //公会 索引和id
 
 }
+
 const mutations = {
+    //公会 索引和id
     labourUnionIndexIdXs(state, labourUnionIndexIdX) {
         sessionStorage.setItem('labourUnionIndexIdX', JSON.stringify(labourUnionIndexIdX));
         state.labourUnionIndexIdX = labourUnionIndexIdX

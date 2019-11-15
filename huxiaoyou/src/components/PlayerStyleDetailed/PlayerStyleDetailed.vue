@@ -32,23 +32,26 @@
                   x5-playsinline  x-webkit-airplay 
                         x5-video-player-type="h5"  
                         x5-video-player-fullscreen="false" preload="preload" android :class="{'videoOpcity':videoOpcityY}"-->
-                    <video id="video"    v-if="mobile==='android'"  width="100%" height="100%"
-                          x5-video-player-type="h5"
-                          x5-video-player-fullscreen="true"
-                          preload="auto"
-                            x5-playsinline="true" 
-                            playsinline="true"    
-                            webkit-playsinline
+                    <video  id="video"    v-if="mobile==='android'"  width="100%" height="100%"
+                            x5-video-player-type="h5"
+                            x5-video-player-fullscreen="true"
+                            preload="auto"
+                            x5-playsinline="true"
                             :poster="video_info.video_introduction+'?x-oss-process=video/snapshot,t_10000,m_fast'"
+                            :src="video_info.video_introduction"
                             >
-                            <source :src="video_info.video_introduction" type="vedio/mp4">
+                            <!-- <source :src="video_info.video_introduction" type="vedio/mp4">
                               <source :src="video_info.video_introduction" type="vedio/ogg">
-                              <source :src="video_info.video_introduction" type="vedio/webm">
+                              <source :src="video_info.video_introduction" type="vedio/webm"> -->
                     </video>
-                    <video v-if="mobile==='iPhone'" id="video"
+                    <video autoplay="autoplay" v-if="mobile==='iPhone'" id="video"
                           width="100%"
                           height="100%"
-                          :src="video_info.video_introduction" :poster="video_info.video_introduction+'?x-oss-process=video/snapshot,t_10000,m_fast'" >
+                          preload="auto"
+                          webkit-playsinline
+                          playsinline="true"
+                          :poster="video_info.video_introduction+'?x-oss-process=video/snapshot,t_10000,m_fast'" 
+                          :src="video_info.video_introduction"  >
                     </video>
                 <div id="output"></div>
           </div>

@@ -68,6 +68,12 @@
             <img :src="staticImgH+'MineRight.png'" alt="">
           </div>
         </li>
+        <li @click="toVideo">
+          <span>视频</span>
+          <div class="MineInfo_ListRight" >
+            <img :src="staticImgH+'MineRight.png'" alt="">
+          </div>
+        </li>
       </ul>
       <div class="sign" @click="submit">提交</div>
       <!-- 性别选择 -->
@@ -143,6 +149,10 @@ export default {
         this.getInformation()
    },
   methods: {
+    // 上传视频
+    toVideo(){
+        this.$router.push('/MineVideo')
+    },
     // 去我的主页
     mineHomepage(){
         this.addressIdIsSels('false') //进入选手详情默认不选择地址

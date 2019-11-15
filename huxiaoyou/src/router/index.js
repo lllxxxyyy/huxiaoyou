@@ -70,6 +70,8 @@ import changeWeight from '@/components/changeWeight/changeWeight' //个人信息
 import changeConstellation from '@/components/changeConstellation/changeConstellation' //个人信息 修改年龄
 import unionDetail from '@/components/unionDetail/unionDetail' //公会详情
 
+import MineVideo from '@/components/MineVideo/MineVideo' //个人信息 上传视频
+
 const routes = [{ //首页
         path: '/',
         name: 'Home',
@@ -471,6 +473,14 @@ const routes = [{ //首页
             requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
         },
         component: unionDetail
+    },
+    { //客服
+        path: '/MineVideo',
+        name: 'MineVideo',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: MineVideo
     },
 ]
 
