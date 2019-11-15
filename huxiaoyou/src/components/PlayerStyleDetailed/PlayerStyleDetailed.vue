@@ -41,7 +41,7 @@
                             webkit-playsinline
                             :src="video_info.video_introduction">
                     </video>
-                    <video    autoplay="autoplay" v-if="mobile==='iPhone'" id="video"
+                    <video v-if="mobile==='iPhone'" id="video"
                           width="100%"
                           height="100%"
                           :src="video_info.video_introduction"  >
@@ -170,17 +170,28 @@
         // },
         videoZhen(){
             var vm=this
-            var videoDom = document.getElementById('video')
-            wx.ready(function() { //播放。为什么这里不直接dom.play()。妈**** 因为微信不让啊。我也很无奈啊。
-                if(vm.video.paused) {
-                  alert(videoDom.play())
-                  videoDom.play();
-                  vm.show = false
-                } else {
-                  videoDom.pause();
-                  vm.show = true
-                }
-            });
+            var video = document.getElementById('video')
+            // wx.ready(function() { //播放。为什么这里不直接dom.play()。妈**** 因为微信不让啊。我也很无奈啊。
+            //     if(vm.video.paused) {
+            //       videoDom.play();
+            //       vm.show = false
+            //     } else {
+            //       videoDom.pause();
+            //       vm.show = true
+            //     }
+            // });
+            if (window.WeixinJSBridge) {
+                WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+                    video.play();
+                }, false);
+            } else {
+                document.addEventListener("WeixinJSBridgeReady", function () {
+                    WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+                        video.play();
+                    });
+                }, false);
+            }
+            video.play();
             // this.video.onloadeddata = this.videoOnloadeddata() 
         },
       videoOnloadeddata(){
