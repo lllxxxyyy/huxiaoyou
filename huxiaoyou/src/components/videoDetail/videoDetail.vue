@@ -12,17 +12,19 @@
           <video v-if="mobile==='android'" id="video"
                  width="100%"
                  height="100%"
+                 x5-video-player-type="h5"
                  x5-video-player-fullscreen="true"
                  x5-playsinline
-                 playsinline
-                 webkit-playsinline
                  preload="auto"
                  :poster="videoSrc+'?x-oss-process=video/snapshot,t_10000,m_fast'"
                  :src="videoSrc"  >
           </video>
-          <video v-if="mobile==='iPhone'" id="video"
+          <video autoplay="autoplay" v-if="mobile==='iPhone'" id="video"
                  width="100%"
                  height="100%"
+                    preload="auto"
+                    webkit-playsinline
+                    playsinline="true"
                  :poster="videoSrc+'?x-oss-process=video/snapshot,t_10000,m_fast'"
                  :src="videoSrc"  >
           </video>
