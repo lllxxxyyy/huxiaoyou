@@ -170,9 +170,9 @@
         // },
         videoZhen(){
             var vm=this
+            var videoDom = document.getElementById('video')
             wx.ready(function() { //播放。为什么这里不直接dom.play()。妈**** 因为微信不让啊。我也很无奈啊。
-                alert(vm.video)
-                vm.video.play();
+                videoDom.play();
             });
             // this.video.onloadeddata = this.videoOnloadeddata() 
         },
