@@ -41,7 +41,7 @@
                             webkit-playsinline
                             :src="video_info.video_introduction">
                     </video>
-                    <video  :class="{'videoOpcity':videoOpcityY}"  autoplay="autoplay" v-if="mobile==='iPhone'" id="video"
+                    <video    autoplay="autoplay" v-if="mobile==='iPhone'" id="video"
                           width="100%"
                           height="100%"
                           :src="video_info.video_introduction"  >
@@ -172,7 +172,13 @@
             var vm=this
             var videoDom = document.getElementById('video')
             wx.ready(function() { //播放。为什么这里不直接dom.play()。妈**** 因为微信不让啊。我也很无奈啊。
-                videoDom.play();
+                if(vm.video.paused) {
+                  vm.video.play();
+                  vm.show = false
+                } else {
+                  vm.video.pause();
+                  vm.show = true
+                }
             });
             // this.video.onloadeddata = this.videoOnloadeddata() 
         },
