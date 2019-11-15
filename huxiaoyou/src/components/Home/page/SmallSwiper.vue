@@ -1,6 +1,6 @@
 <!-- home_轮播 -->
 <template>
-  <div class="smallBanner" v-if="slidersData">
+  <div class="smallBanner" v-if="slidersData.length!==0">
       <swiper class="smallbanner_list swiper-no-swiping" v-if="slidersData.length>=1"  :options="swiperOption">
             <!-- slides -->
             <swiper-slide     class="banner_li" v-for="(item,index) in slidersData" :key="index">
@@ -37,6 +37,7 @@ export default {
   mounted(){
     this.$http.post('/api/first/vote_list').then((res)=>{
          this.slidersData=res.data.data
+         console.log(this.slidersData)
         })
   },
   methods: {
