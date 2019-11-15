@@ -387,7 +387,6 @@ export default {
            justify-content :center;
            >img{
                width: 100%;
-                object-fit: cover;
 			   border-radius:0.27rem;
            }
        }
