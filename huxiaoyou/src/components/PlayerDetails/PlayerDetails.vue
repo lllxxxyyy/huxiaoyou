@@ -15,7 +15,7 @@
             </div>
         <!--顶部大头像  -->
             <div @click.stop="changeBigImg(detailData.head_pic)" class="playerBigImg" >
-                <img :src="detailData.head_pic" alt="">
+                <img :src="staticImgH+'mineBg.png'" alt="">
             </div>
         <!-- 选手信息 -->
             <div class="player_des">
@@ -691,8 +691,8 @@ export default {
     }
 }
 .playerBigImg{
-    width:100%;
-    height:8.52rem;
+     width:100%;
+    height:5.573rem;
     display :flex;
     >img{
         width: 100%;

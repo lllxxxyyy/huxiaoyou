@@ -6,7 +6,7 @@
       <span>我的视频</span>
       <div class="PresentPhoto_admin"></div>
     </div>
-    <ul class="videoList">
+    <ul class="videoList" v-if="this.videoSrc">
       <li>
         <div class="present_video">
 		<video v-if="this.videoSrc" ref="video1" id="video1" :poster="this.videoSrc+'?x-oss-process=video/snapshot,t_10000,m_fast'">
@@ -16,7 +16,7 @@
         <div class="zz" @click.stop="goGoodsPage()"></div>
       </li>
     </ul>
-    <div class="video_text">此视频展示在选手详情页面</div>
+    <div class="video_text" v-if="this.videoSrc">此视频展示在选手详情页面</div>
     <div class="right_wrap">
       <div class="right">
         修改视频<span><img :src="staticImgH+'tianjia.png'" alt=""></span>
@@ -75,6 +75,7 @@
         getUserInfo(){
             //获取个人信息
             this.$http.post('/api/user/info').then((res) => {
+                this.lodingShow=false
                 if (res.data.code === 200) {
                     this.videoSrc= res.data.data.user_introduction[0].src
                 } else {
@@ -114,7 +115,6 @@
                         // debugger
                         this.$refs.inputer.value=''
                         if(res.data.code==200){
-                            this.lodingShow=true
                             this.getUserInfo()
                         }else{
                             this.lodingShow=false
