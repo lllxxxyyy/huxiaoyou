@@ -295,7 +295,12 @@
             },
       //   返回
       toReturn() {
-        this.$router.push(this.playerVideoPage);
+          if(this.playerVideoPage==""){
+              this.$router.push('/');
+          }else{
+              this.$router.push(this.playerVideoPage);
+          }
+        
       },
       playOrPause(){
         

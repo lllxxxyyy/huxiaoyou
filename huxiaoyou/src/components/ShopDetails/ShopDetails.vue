@@ -294,12 +294,8 @@ export default {
             },
         //   返回
             toReturn(){
-                if(this.shopDetailReturn=="/PlayerDetails"){
-                        this.playerIds(this.playerId)//保存选手id
-                        this.playDetailVoteDivs('true') //选手详情的投票盒子的显示
-                        this.addressIdIsSels('false') //给选手详情页默认地址没选中状态 
-                        this.shopDetatilshows('true')//告诉选手详情是卡包详情返回的
-                        this.$router.push('/PlayerDetails')
+                if(this.shopDetailReturn==""){
+                    this.$router.push('/')
                 }else {
                     this.$router.push(this.shopDetailReturn)
                 }
