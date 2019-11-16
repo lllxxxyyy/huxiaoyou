@@ -75,7 +75,7 @@ export default {
       
   },
   computed:{
-        ...mapState(['staticImgH','WpersonInfoH','userIdH'])
+        ...mapState(['staticImgH','WpersonInfoH','userIdH','apiH'])
     },
   mounted() {
     // 判断本地有没有用户信息
