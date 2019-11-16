@@ -294,10 +294,10 @@ export default {
             },
         //   返回
             toReturn(){
-                if(this.shopDetailReturn==""){
-                    this.$router.push('/')
-                }else {
+                if(this.shopDetailReturn){
                     this.$router.push(this.shopDetailReturn)
+                }else {
+                    this.$router.push('/')
                 }
             },
         //   点击立即购买

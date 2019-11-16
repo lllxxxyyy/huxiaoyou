@@ -1233,7 +1233,7 @@ export default {
             margin-top:-66%;
             
         }
-        .zz{ width:9.2rem; height:4.5rem; position:absolute; top:0;left:0; z-index:998; background: url(/../../static/mock/img/bofangBtn.png) no-repeat center center; background-size:1rem;}
+        .zz{ width:9.2rem; height:4.5rem; position:absolute; top:0;left:0; z-index:887; background: url(/../../static/mock/img/bofangBtn.png) no-repeat center center; background-size:1rem;}
     }
 }
 
