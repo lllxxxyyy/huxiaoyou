@@ -75,7 +75,7 @@ export default {
       
   },
   computed:{
-        ...mapState(['staticImgH','WpersonInfoH'])
+        ...mapState(['staticImgH','WpersonInfoH','userIdH'])
     },
   mounted() {
     // 判断本地有没有用户信息
@@ -100,6 +100,68 @@ export default {
       toSignUp(){
         this.$router.push('/SignUp')
       },
+      // 微信分享
+            WShare(){
+                var Wobj=qs.stringify({
+                    player_id:this.userIdH,
+                    type:4,
+                })
+                this.$http.post('/api/wechat/get_sign',Wobj).then((res)=>{
+                    if(res.data.code==200){
+                        var data=res.data.data
+                        this.test=data.test
+                            wx.config({
+                                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                                appId: data.appId, // 必填，公众号的唯一标识
+                                timestamp:data.timestamp, // 必填，生成签名的时间戳
+                                nonceStr: data.nonceStr, // 必填，生成签名的随机串
+                                signature: data.signature,// 必填，签名
+                                jsApiList: ['onMenuShareAppMessage','onMenuShareTimeline'] // 必填，需要使用的JS接口列表
+                            });
+                            this.toFriend()
+                            this.toFriendQuan()
+                    }else{
+                            var self=this
+                            clearInterval(self.timer2);
+                            this.promptContent=res.data.msg
+                            this.showPrompt=true
+                            self.timer2=setTimeout(function(){
+                                self.showPrompt=false
+                                clearInterval(self.timer2);
+                            },1000)
+                            return false;
+                    }
+                })
+            },
+        //   分享给朋友
+            toFriend(){
+                var vm=this
+                var realLocation=vm.apiH+'/#/'
+                wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+                    wx.onMenuShareAppMessage({ 
+                        title:'快来围观天使旅行家大赛，领略美食、美景、美女！', // 分享标题
+                        desc:'狐小游 ', // 分享描述
+                        link:vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                        imgUrl: vm.staticImgH+'cusKefu.jpg', // 分享图标
+                        success: function (res) {
+                        }
+                    })
+                });
+            },
+        //   分享到朋友圈
+            toFriendQuan(){
+                    var vm=this
+                    var realLocation=vm.apiH+'/#/'
+                    wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+                        wx.onMenuShareTimeline({
+                                title:'快来围观天使旅行家大赛，领略美食、美景、美女！', // 分享标题
+                                link: vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation),  // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                                imgUrl:vm.staticImgH+'cusKefu.jpg', // 分享图标
+                                success: function (res) {
+                                },
+                        })
+                });
+            },
     // 登录接口
     //   Islogin(){
     //     var LoginObj=qs.stringify({
