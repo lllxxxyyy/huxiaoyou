@@ -78,6 +78,7 @@ export default {
         ...mapState(['staticImgH','WpersonInfoH','userIdH','apiH'])
     },
   mounted() {
+      this.WShare()
     // 判断本地有没有用户信息
     // if(this.WpersonInfoH.unionid && this.WpersonInfoH.miniapp && this.WpersonInfoH.nickname && this.WpersonInfoH.head_pic && this.WpersonInfoH.sex){
     //     this.unionid=this.WpersonInfoH.unionid
