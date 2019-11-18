@@ -48,7 +48,7 @@
                   <span v-if="personData.constellation">{{personData.constellation}}</span>
                   <span v-if="personData.height">{{personData.height}}cm</span>
                   <span v-if="personData.weight">{{personData.weight}}kg</span>
-                  <span v-if="personData.level==2">公会成员</span>
+                  <span v-if="personData.union_player==1">公会成员</span>
               </div>
           </div>
       </div>

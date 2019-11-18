@@ -141,9 +141,9 @@ export default {
                 wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
                     wx.onMenuShareAppMessage({ 
                         title:'快来围观天使旅行家大赛，领略美食、美景、美女！', // 分享标题
-                        desc:'狐小游 ', // 分享描述
+                        desc:'即刻报名，即领红包，每日分享更多收入惊喜 ', // 分享描述
                         link:vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                        imgUrl: '../../static/mock/imgcusKefu.jpg', // 分享图标
+                        imgUrl: vm.apiH+'/static/mock/imgcusKefu.jpg', // 分享图标
                         success: function (res) {
                         }
                     })
@@ -157,7 +157,7 @@ export default {
                         wx.onMenuShareTimeline({
                                 title:'快来围观天使旅行家大赛，领略美食、美景、美女！', // 分享标题
                                 link: vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation),  // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                                imgUrl:vm.staticImgH+'cusKefu.jpg', // 分享图标
+                                imgUrl:vm.apiH+'/static/mock/imgcusKefu.jpg', // 分享图标
                                 success: function (res) {
                                 },
                         })

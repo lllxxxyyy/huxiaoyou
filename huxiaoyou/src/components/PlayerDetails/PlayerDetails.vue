@@ -243,6 +243,7 @@ export default {
                         }else if(this.playDetailVoteDiv=='false'){
                             this.voteShow=false  //隐藏助力盒子
                         }
+                        this.toshare()
                 }else{
                     var self=this
                     clearInterval(self.timer2);
@@ -281,7 +282,20 @@ export default {
     //   获取免费票数 
         this.getpaioNUm()
     //   微信分享
-        var Wobj=qs.stringify({
+        
+    //  获取小轮播数据
+        this.$http.post('/api/first/vote_list',obj,{
+                headers: {
+                        'authorization': this.tokenH
+                    }
+            }).then((res)=>{
+                this.smallSwiper=res.data.data
+        })
+  },
+  methods: {
+      //   分享
+    toshare(){
+            var Wobj=qs.stringify({
                 player_id:this.playerId,
                 type:2,
             })
@@ -311,16 +325,7 @@ export default {
                         return false;
                 }
         })
-    //  获取小轮播数据
-        this.$http.post('/api/first/vote_list',obj,{
-                headers: {
-                        'authorization': this.tokenH
-                    }
-            }).then((res)=>{
-                this.smallSwiper=res.data.data
-        })
-  },
-  methods: {
+    },
       // 跳视频页
         goGoodsPage() {
                 this.$router.push({path:'/videoDetail',query:{videoSrc:this.detailData.user_introduction[0].src}})
@@ -526,7 +531,7 @@ export default {
                         wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
                             wx.onMenuShareAppMessage({ 
                                 title:vm.test, // 分享标题
-                                desc:'我在参加第二季天使旅行家大赛，和我一起领略中华美景 美食 美女，报名参加有惊喜。', // 分享描述
+                                desc:'我在参加第二季天使旅行家大赛，一起领略美食、美景、美女。参赛即刻领红包。', // 分享描述
                                 link:vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                                 imgUrl: vm.detailData.head_pic, // 分享图标
                                 success: function (res) {

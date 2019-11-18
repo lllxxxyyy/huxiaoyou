@@ -253,7 +253,7 @@ export default {
                         wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
                             wx.onMenuShareAppMessage({ 
                                 title:vm.test.test, // 分享标题
-                                desc:'我在参加第二季天使旅行家大赛，和我一起领略中华美景 美食 美女，报名参加有惊喜。', // 分享描述
+                                desc:'我在参加第二季天使旅行家大赛，一起领略中华美食、美景、美女，参赛即刻领红包。', // 分享描述
                                 link:vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                                 imgUrl:vm.test.head_pic, // 分享图标
                                 success: function (res) {
