@@ -26,14 +26,14 @@
                     <li>
                             <div class="SignUp_infoName"><span>性别</span>*</div>
                             <ul class="sex">
-                                <li @click.stop="sexSelectC(item.id)" v-for="(item,index) in sexData" :key="index"> <img :src="item.id==2?staticImgH+'noselYes.png':staticImgH+'nosel.png'" alt=""> <span>{{item.name}}</span> </li>
+                                <li> <img :src="staticImgH+'noselYes.png'" alt=""> <span>女</span> </li>
                             </ul>
                         </li>
                     <li>
                       <div  class="SignUp_infoName"><span>报名赛区</span>*</div>
                       <select v-model="selectValue">
                           <option value ="">请选择</option>
-                          <option :value ="item.id" v-for="(item,index) in divisionData" :key="index">{{item.names}}</option>
+                          <option :value ="item.id" v-for="(item,index) in divisionData" :key="index">{{item.names}} <span v-if="item.desc_city">( {{item.desc_city}} )</span> </option>
                         </select>
                     </li>
                     <li>
@@ -247,6 +247,7 @@ export default {
         divisionListData(){
             this.$http.post('/api/division/list').then((res)=>{
                 if(res.data.code==200){
+                  console.log(res)
                     this.divisionData=res.data.data
                 }else{
                     this.alertText(res.data.msg)
@@ -262,11 +263,11 @@ export default {
           this.showSignFail=false
         },
      //   选择性别
-        sexSelectC(id){
-            if(id==1){
-              this.showSignFail=true
-            }
-        },
+        // sexSelectC(id){
+        //     if(id==1){
+        //       this.showSignFail=true
+        //     }
+        // },
     // 跳加入公会页面
         addUnion(){
           var obj=qs.stringify({
