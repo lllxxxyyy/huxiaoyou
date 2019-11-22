@@ -1,9 +1,9 @@
 // 获取域名
       var domainName=''//初始化域名
-      if(window.location.protocol+"//"+window.location.host=="http://ceshi.aibebi.net"){
-          domainName=window.location.protocol+"//"+window.location.host
-      }else{
+      if(window.location.protocol+"//"+window.location.host=="http://region.aibebi.net"){
           domainName='http://www.aibebi.net'
+      }else{
+          domainName='http://ceshi.aibebi.net'
       }
 
 $(".Certi_wrapper").on("tap",'.renSumbit',function(){
