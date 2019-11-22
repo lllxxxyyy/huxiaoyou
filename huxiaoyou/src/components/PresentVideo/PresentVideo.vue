@@ -148,6 +148,7 @@
               if(len > 2){
                   this.lodingShow=false
                   this.toastMsg('每天最多可上传2个，您还可以上传' + (2 - oldLen) + '个')
+                  this.$refs.inputer.value=''
                   return 
               }else{
                   for (let i = 0; i < this.fil.length; i++) {
@@ -156,6 +157,7 @@
                       if (this.fil[i].size > 10*1024*1024) {
                         this.lodingShow=false
                         this.toastMsg('您选择的视频超过限制')
+                        this.$refs.inputer.value=''
                         return
                       }
                       this.imgLen++;
