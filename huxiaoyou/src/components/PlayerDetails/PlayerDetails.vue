@@ -982,7 +982,7 @@ export default {
             >ul{
                 // height:4.533rem;
                 display :flex;
-                justify-content:space-between;
+                // justify-content:space-between;
                 flex-wrap:wrap;
                 // align-items :center;
                 // overflow-x:scroll;

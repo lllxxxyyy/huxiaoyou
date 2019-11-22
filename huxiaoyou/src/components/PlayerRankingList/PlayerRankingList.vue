@@ -214,7 +214,6 @@ export default {
 
 .HomeAngel_listTwo{
     display :flex;
-    justify-content:space-between;
     flex-wrap:wrap;
     padding:0 0.4rem;
     margin-top:0.27rem;
@@ -227,6 +226,7 @@ export default {
 		box-shadow:0px 3px 12px 0px rgba(255,204,212,0.5);
 		border-radius:0.2rem;
 		margin-bottom:0.6rem;
+        margin-right:0.45rem;
         .HomeAngel_listTwoImg{
             width:2.6rem;
             height:2.6rem;
@@ -237,7 +237,6 @@ export default {
                 border-radius:0.16rem;
             }
         }
-        
        >.angelNameTwo{
            font-size:0.347rem;
            color:rgba(0, 0, 0, 0.8);

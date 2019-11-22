@@ -247,7 +247,6 @@ export default {
 
 .HomeAngel_listTwo{
     display :flex;
-    justify-content:space-between;
     flex-wrap:wrap;
     padding:0 0.4rem;
     margin-top:0.47rem;
@@ -260,6 +259,7 @@ export default {
 		box-shadow:0px 3px 12px 0px rgba(255,204,212,0.5);
 		border-radius:0.2rem;
 		margin-bottom:0.6rem;
+        margin-right:0.45rem;
         >.HomeAngel_listTwoImg{
             width:2.6rem;
             height:2.6rem;
@@ -277,7 +277,7 @@ export default {
            font-weight:550;
            margin-top:0.27rem;
            margin-bottom:0.053rem;
-           padding:0 0.27rem;
+           padding:0 0.2rem;
            line-height :0.5rem;
            display:-webkit-box;
            -webkit-box-orient:vertical;
