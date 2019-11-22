@@ -123,10 +123,12 @@
           },
       // 上传视频
           uploadFile(){
-              if(this.reply.length==2){
-                this.toastMsg('每天最多可上传2个')
-                return 
-              }
+            console.log(this.$refs.inputer.value)
+            if(this.reply.length==2){
+              this.$refs.inputer.value=''
+              this.toastMsg('一天只能上传2条视频，请明天再上传')
+              return 
+            }
               this.lodingShow=true
               this.delFlag=false
               let inputDOM = this.$refs.inputer;
@@ -152,34 +154,29 @@
               // }else 
               if(len > 2){
                   this.lodingShow=false
-                  this.toastMsg('每天最多可上传2个，您还可以上传' + (2 - oldLen) + '个')
+                  this.toastMsg('一天只能上传2条视频，请明天再上传')
                   this.$refs.inputer.value=''
                   return 
-              }else{
-                  for (let i = 0; i < this.fil.length; i++) {
-                      // let size = Math.floor( / 1024);
-                      // console.log(this.fil[i].size,10*1024*1024  )
-                      if (this.fil[i].size > 10*1024*1024) {
+              }else if(this.fil[0].size > 10*1024*1024) {
                         this.lodingShow=false
                         this.toastMsg('您选择的视频超过限制')
                         this.$refs.inputer.value=''
                         return
-                      }
-                      this.imgLen++;
+              }else{
                       this.formData.delete('video_introduction');
                       this.formData.delete('type');
-                      this.formData.append('video_introduction', this.fil[i])
+                      this.formData.append('video_introduction', this.fil[0])
                       this.formData.append('type', 1)
-                  }
+
                   this.$http.post('api/player/video_introduction', this.formData).then(res => {
                     // debugger
                       this.$refs.inputer.value=''
                       if(res.data.code==200){
+                          this.imgLen++;
                           this.lodingShow=true
                           this.videoData()
                       }else{
                           this.lodingShow=false
-                          this.imgLen--
                           this.toastMsg(res.data.msg)
                       }
                   });
