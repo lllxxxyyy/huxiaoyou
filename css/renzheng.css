@@ -1,0 +1,69 @@
+body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,dt,form,fieldset,legend,input,textarea,select{margin:0;padding:0}
+body{font:12px "宋体","Arial Narrow",HELVETICA;background:#fff;}
+a{text-decoration:none}
+em{font-style:normal}
+li{list-style:none}
+img{border:0;vertical-align:middle}
+table{border-collapse:collapse;border-spacing:0}
+p{word-wrap:break-word}
+.ind{text-indent:2em}
+.ind10{text-indent:10px;}
+.noborder{border:0;}
+.left{float:left;}
+.right{float:right;}
+.clearBoth{clear:both;}
+.font12{font-size:12px;}
+.Certi_wrapper{
+	
+}
+.Certi_header{
+	height:4.12rem;
+	display:flex;
+	align-items:center;
+	margin-bottom:0.27rem;
+}
+.Certi_header>span{
+	font-size:0.64rem;
+	margin-left:0.72rem;
+	font-weight:600;
+	
+}
+.Certi_headerImg>img{
+	width:4.24rem;
+	height:4.12rem;
+	position: absolute;
+	top:0;
+	right:0;
+
+}
+.Certi_center{
+	padding:0 0.72rem;
+}
+.Certi_center>li{
+		height:1.387rem;
+		display:flex;
+		align-items: center;
+		border-bottom:0.03rem  solid rgba(0, 0, 0, 0.14);
+		
+}
+.Certi_center>li>span{
+			font-size:0.427rem;
+			font-weight:600;
+	}
+.Certi_center>li>input{
+			font-size:0.453rem;
+			outline:none;
+			border:0;
+	}
+.renSumbit{
+	width:8.67rem;
+	height:1.07rem;
+	text-align: center;
+	line-height: 1.07rem;
+	font-size:0.437rem;
+	margin:0 auto;
+	margin-top:2rem;
+	background: rgba(77, 123, 244, 1);
+	border-radius: 0.67rem;
+	color:rgba(255, 255, 255, 1);
+}
