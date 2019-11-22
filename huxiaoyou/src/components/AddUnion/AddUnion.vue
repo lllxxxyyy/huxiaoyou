@@ -9,11 +9,11 @@
             <div class="AddUnion_Info">
                     <ul class="AddUnion_InfoList">
                         <li>
-                            <div class="Info_name"><span>真实姓名</span>*</div>
+                            <div class="Info_name"><span>真实姓名</span>* (必填)</div>
                             <input type="text" v-model="nickname" placeholder="请填写您的真实姓名">
                         </li>
                         <li>
-                            <div class="Info_name"><span>手机号码</span>*</div>
+                            <div class="Info_name"><span>手机号码</span>* (必填)</div>
                             <input type="text" maxlength="11" oninput = "value=value.replace(/[^\d]/g,'')" v-model="phone" placeholder="请填写您的正确的手机号">
                         </li>
                         <li>
@@ -21,7 +21,7 @@
                             <input maxlength="20" type="text" oninput ="value=value.replace(/[^\w_]/g,'')" v-model="wechatId" placeholder="请填写您的微信号，例：hsdjjkdo">
                         </li>
                         <li>
-                            <div class="Info_name"><span>身份证证件照</span>*</div>
+                            <div class="Info_name"><span>身份证证件照</span>* (必填)</div>
                             <div class="form-groupWrap">
                                     <div class="form-group">
                                         <ul class="upload-imgs">
@@ -96,7 +96,7 @@
                             <input type="text" v-model="CareerVal"  placeholder="请填写您的职业">
                         </li>
                         <li>
-                            <div class="Info_name"><span>个性签名</span>*</div>
+                            <div class="Info_name"><span>个性签名</span>* (必填)</div>
                             <textarea v-model="SignVal" placeholder="请编辑您的个人签名" name="" id="">
 
                             </textarea>
@@ -104,7 +104,7 @@
                         <!--  -->
                         <li>
                             <div class="Info_whether">
-                                <div class="Info_whethername"><span>是否有常用直播软件</span>*</div>
+                                <div class="Info_whethername"><span>是否有常用直播软件</span>* (必填)</div>
                                 <div :class="[{'setAddressBtnOne':WisDefault==0},{'setAddressBtnTwo':WisDefault==1}]" @click.stop="whetherBtnDefa"><span></span></div>
                             </div>
                             <ul class="Info_platform"  v-if="platformShow">
@@ -121,7 +121,7 @@
                         </li>
                         <li>
                             <div class="Info_whether">
-                                <div  class="Info_whethername"><span>是否有常用短视频软件 </span>*</div>
+                                <div  class="Info_whethername"><span>是否有常用短视频软件 </span>* (必填)</div>
                                 <div :class="[{'setAddressBtnOne':DisDefault==0},{'setAddressBtnTwo':DisDefault==1}]" @click.stop="DuanBtnDefa"><span></span></div>
                             </div>
                             <ul class="Info_platform" v-if="duanShow">
@@ -133,7 +133,7 @@
                         </li>
                         <li>
                             <div class="Info_whether">
-                                <div  class="Info_whethername"><span>是否有网店 </span>*</div>
+                                <div  class="Info_whethername"><span>是否有网店 </span>* (必填)</div>
                                 <div :class="[{'setAddressBtnOne':WangisDefault==0},{'setAddressBtnTwo':WangisDefault==1}]" @click.stop="WangBtnDefa"><span></span></div>
                             </div>
                             <div class="onlineShop_wrap" v-if="isWang">

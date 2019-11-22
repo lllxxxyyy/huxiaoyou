@@ -722,7 +722,7 @@ export default {
     box-shadow :0 0rem 0.3rem rgba(254, 208, 215, 0.5);
     border-radius:0.4rem 0.4rem 0 0rem;
     margin:0 auto;
-    margin-top:-3.73rem;
+    margin-top:-4.2rem;
     padding:0 0.35rem;
     .player_des_top{
         display :flex;
@@ -958,7 +958,6 @@ export default {
             width:100%;
             color:rgba(0, 0, 0, 1);
             line-height :0.613rem;
-            margin-bottom:0.213rem;
             display:flex;
             font-size:0.4rem;
             >span{
@@ -1018,9 +1017,8 @@ export default {
             color:rgba(255, 255, 255, 1);
             border-radius:2.67rem;
             text-align :center;
-            line-height :0.64rem;
-            margin-top:0.67rem;
-            margin-bottom:0.373rem;
+            line-height :0.64rem;\
+            margin-bottom:0.3rem;
         }
     }
     //免费票
@@ -1046,9 +1044,7 @@ export default {
             border-radius:2.67rem;
             text-align :center;
             line-height :0.64rem;
-            margin:0 auto;
-            margin-top:0.32rem;
-            margin-bottom:0.53rem;
+            margin:0.17rem auto;
         }
     }
 }

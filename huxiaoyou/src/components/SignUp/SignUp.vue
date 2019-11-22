@@ -12,11 +12,11 @@
                   </ul>
                   <ul class="SignUp_list">
                     <li>
-                        <div class="SignUp_infoName"><span>名称（或昵称）</span>*</div>
+                        <div class="SignUp_infoName"><span>名称（或昵称）</span>* (必填)</div>
                         <input type="text" v-model="username" placeholder="请填写您的名称">
                     </li>
                     <li>
-                      <div  class="SignUp_infoName"><span>手机号码</span>*</div>
+                      <div  class="SignUp_infoName"><span>手机号码</span>* (必填)</div>
                       <input  maxlength="11" oninput = "value=value.replace(/[^\d]/g,'')" type="text"  v-model="tel" placeholder="请填写您的手机号码">
                     </li>
                     <li>
@@ -24,20 +24,20 @@
                       <input  maxlength="20"   type="text" oninput ="value=value.replace(/[^\w_]/g,'')"  v-model="wechatId" placeholder="请填写您的微信号">
                     </li>
                     <li>
-                            <div class="SignUp_infoName"><span>性别</span>*</div>
+                            <div class="SignUp_infoName"><span>性别</span>* (必填)</div>
                             <ul class="sex">
                                 <li> <img :src="staticImgH+'noselYes.png'" alt=""> <span>女</span> </li>
                             </ul>
                         </li>
                     <li>
-                      <div  class="SignUp_infoName"><span>报名赛区</span>*</div>
+                      <div  class="SignUp_infoName"><span>报名赛区</span>* (必填)</div>
                       <select v-model="selectValue">
                           <option value ="">请选择</option>
                           <option :value ="item.id" v-for="(item,index) in divisionData" :key="index">{{item.names}} <span v-if="item.desc_city">( {{item.desc_city}} )</span> </option>
                         </select>
                     </li>
                     <li>
-                      <div  class="SignUp_infoName"><span>选手照片</span>*</div>
+                      <div  class="SignUp_infoName"><span>选手照片</span>* (必填)</div>
                       <div class="form-group">
                             <ul class="upload-imgs">
                               <li :class="['uploadimgs_first',{'uploadimgs_opacity':uploadimgsOpacity}]">
