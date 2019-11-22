@@ -123,12 +123,6 @@
           },
       // 上传视频
           uploadFile(){
-            console.log(this.$refs.inputer.value)
-            if(this.reply.length==2){
-              this.$refs.inputer.value=''
-              this.toastMsg('一天只能上传2条视频，请明天再上传')
-              return 
-            }
               this.lodingShow=true
               this.delFlag=false
               let inputDOM = this.$refs.inputer;

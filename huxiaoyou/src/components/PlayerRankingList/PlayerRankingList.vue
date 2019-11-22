@@ -30,8 +30,9 @@
           <!-- <div class="ta_vote" :class="{
               ta_vote1: (index+1) > 3 && (index+1) <= 100,
               ta_vote2: (index+1) > 100}" @click.stop="toPlayerDetail(item.id, 'true')">给Ta投票</div> -->
-          <span class="angelNameTwo">{{item.username}}</span>
-          <span class="angelPriceTwo">{{item.votes}}+</span>
+          <span class="angelNameTwo">选手：{{item.username}}</span>
+          
+          <span class="angelPriceTwo">编号：{{item.id}}</span>
         </li>
         <li v-if="(index+1)===100" class="list_tishi">
           <div class="tishi">最终前100名进入赛区决赛（音乐节），加油冲刺！</div>
@@ -243,7 +244,7 @@ export default {
            font-weight:550;
            margin-top:0.27rem;
            margin-bottom:0.053rem;
-           padding:0 0.27rem;
+           padding:0 0.2rem;
            line-height :0.5rem;
            display:-webkit-box;
            -webkit-box-orient:vertical;

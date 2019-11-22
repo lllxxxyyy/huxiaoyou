@@ -110,19 +110,10 @@
             let inputDOM = this.$refs.inputer;
             // 通过DOM取文件数据
             this.fil = inputDOM.files;
-            let oldLen = this.imgLen;
-            let len = this.fil.length + oldLen;
-            
-            if (len > 4) {
-              this.lodingShow=false
-              alert('最多可上传4张，您还可以上传' + (4 - oldLen) + '张');
-              return false;
-            }
-
             for (let i = 0; i < this.fil.length; i++) {
-              let size = Math.floor(this.fil[i].size / 1024);
+              let size = this.fil[i].size;
               if (size > 5 * 1024 * 1024) {
-                alert('请选择5M以内的图片！');
+                alert('您选择的照片超过限制');
                 this.lodingShow=false
                 return
               }

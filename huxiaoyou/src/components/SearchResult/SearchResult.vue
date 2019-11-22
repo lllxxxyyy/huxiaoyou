@@ -24,7 +24,7 @@
 		  		 ta_vote2: item.rank > 100,
 		  		 }" @click.stop="toPlayerDetail(item.user_id, 'true')">给Ta投票
         </div>
-        <span class="angelNameTwo">{{item.username}}</span>
+        <span class="angelNameTwo">选手：{{item.username}}</span>
         <span class="angelPriceTwo">{{item.votes}}+</span>
       </li>
     </ul>
