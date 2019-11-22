@@ -8,7 +8,9 @@
         <ul class="player_list">
             <li v-for="(item,index) in PlayerStyleData" :key="index">
                 <div class="player_center">
-                    <img v-if="item.video_introduction" @click="goGoodsPage(item)" :src="item.video_introduction[1].src+'?x-oss-process=video/snapshot,t_10000,m_fast'"/>
+                    <video v-if="item.video_introduction"  @click="goGoodsPage(item)" id="video1" :poster="item.video_introduction+'?x-oss-process=video/snapshot,t_10000,m_fast'">
+                        <source :src="item.video_introduction" type="video/mp4">
+                    </video>
                     <div class="bofang"><img @click="goGoodsPage(item)" :src="staticImgH+'bofang.png'" alt=""></div>
                 </div>
                 <span class="player_btn" @click="toPlayerDetail(item.id)">投票</span>
