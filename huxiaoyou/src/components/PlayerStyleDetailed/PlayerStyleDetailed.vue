@@ -25,8 +25,11 @@
       <!--</video-player>-->
       <div class="contenter flex_center">
           <div class="videoBox" >
-                <div  @click="playOrPause()" class="play mask flex_center">
+                <div  v-if="mobile==='android'"  @click="playOrPause()" class="play mask flex_center">
                     <img v-show="show" class="playBtn" :src="staticImgH+'bofang.png'"/>
+                </div>
+                <div v-if="mobile==='iPhone'"  @click="playOrPause()" class="play mask flex_center">
+                    <img v-show="showIPhone" class="playBtn" :src="staticImgH+'bofang.png'"/>
                 </div>
                 <!-- x5-video-player-fullscreen="true"
                   x5-playsinline  x-webkit-airplay 
@@ -104,6 +107,7 @@
         playerOptions:{},
 
         show:true,
+        showIPhone:false,
         mobile:"",
         text:"",
 
@@ -307,9 +311,11 @@
         if(this.video.paused) {
           this.video.play();
           this.show = false
+          this.showIPhone=false
         } else {
           this.video.pause();
           this.show = true
+          this.showIPhone=true
         }
 
       },

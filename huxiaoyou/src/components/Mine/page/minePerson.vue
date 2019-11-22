@@ -44,7 +44,7 @@
                     <span v-if="personData.sex==2">女</span>
                   </div>
                   <span v-if="personData.age">{{personData.age}}</span>
-                  <span v-if="personData.city">{{personData.city}}</span>
+                  <span v-if="personData.city!=0">{{personData.city}}</span>
                   <span v-if="personData.constellation">{{personData.constellation}}</span>
                   <span v-if="personData.height">{{personData.height}}cm</span>
                   <span v-if="personData.weight">{{personData.weight}}kg</span>

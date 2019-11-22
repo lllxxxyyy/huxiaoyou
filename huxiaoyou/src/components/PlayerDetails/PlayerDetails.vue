@@ -48,18 +48,19 @@
                         <span v-if="detailData.sex==2">女</span><span v-if="detailData.sex==1">男</span>
                     </li>
                     <li><span v-if="detailData.age!==0">{{detailData.age}}岁</span></li>
-                    <li v-if="detailData.city">{{detailData.city}}</li>
+                    <li v-if="detailData.city!=0">{{detailData.city}}</li>
                     <li v-if="detailData.constellation">{{detailData.constellation}}</li>
                     <li v-if="detailData.height">{{detailData.height}}cm</li>
                     <li v-if="detailData.weight">{{detailData.weight}}kg</li>
                     <li v-if="detailData.union_id">公会成员</li>
                 </ul>
                 <div class="player_btnList">
-                    <span class="voteBtn" @click.stop="vote">投票</span>
+                    <span class="voteBtn" @click.stop="vote">点击投票</span>
                     <!-- <span class="attentionBtn" v-if="personData.is_player==0">+关注</span> -->
                     <span class="shareBtn" @click.stop="shareC">为Ta分享</span>
                     <span class="EnterBtn" @click="tocanSai" v-if="personData.is_player==0">我也参赛</span>
                     <span class="playerVideoBtn" @click.stop="toPlayDetailstyle">选手视频</span>
+                    <span class="liaoMore" @click.stop="toHome">了解更多</span>
                 </div>
             </div>
         <!-- 视频 -->
@@ -86,7 +87,7 @@
                 <div class="vote"  @click.stop>
                     <!-- 免费票 -->
                     <div class="FreeTicket">
-                        <span class="FreeTicket_title">每日免费投票 <span>（每人每天可投两票）</span></span>
+                        <span class="FreeTicket_title">每日免费投票 （每人每天可投两票  <span> 剩余2票 </span>）</span>
                         <span class="FreeTicket_btn" @click.stop="freeticket">立即投票</span>
                     </div>
                     <!-- 助力票 -->
@@ -293,6 +294,10 @@ export default {
         })
   },
   methods: {
+    //   点击了解更多
+    toHome(){
+        this.$router.push('/')
+    },
       //   分享
     toshare(){
             var Wobj=qs.stringify({
@@ -531,7 +536,7 @@ export default {
                         wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
                             wx.onMenuShareAppMessage({ 
                                 title:vm.test, // 分享标题
-                                desc:'我在参加第二季天使旅行家大赛，一起领略美食、美景、美女。参赛即刻领红包。', // 分享描述
+                                desc:'跟我一起领略美食、美景、美女。参赛即刻领红包。', // 分享描述
                                 link:vm.apiH+'/static/html/redirect.html?app3Redirect='+encodeURIComponent(realLocation), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                                 imgUrl: vm.detailData.head_pic, // 分享图标
                                 success: function (res) {
@@ -696,8 +701,8 @@ export default {
     }
 }
 .playerBigImg{
-     width:100%;
-    height:5.573rem;
+    width:100%;
+    height:7.987rem;
     display :flex;
     >img{
         width: 100%;
@@ -877,6 +882,10 @@ export default {
              background:rgba(236, 189, 0, 1);
             color:#fff;
         }
+        >.liaoMore{
+             background:#ba4bce;
+            color:#fff;
+        }
     }
     >.playNum{
         font-size:0.32rem;
@@ -930,8 +939,8 @@ export default {
 }
 .vote{
     width:100%;
-    height:13.52rem;
-    background:rgba(0, 0, 0, 0.9);
+    // height:13.52rem;
+    background:rgba(203, 232, 255, 0.9);
     position :fixed;
     bottom:0;
     left:0;
@@ -943,25 +952,25 @@ export default {
         padding:0 0.4rem;
         >.AssistTicket_title{
             width:100%;
-            color:rgba(255, 255, 255, 1);
+            color:rgba(0, 0, 0, 1);
             line-height :0.613rem;
             margin-bottom:0.213rem;
             display:flex;
+            font-size:0.4rem;
             >span{
                  flex:8.5;
-                font-size:0.32rem;
             }
             >.AssistTicket_title_first{
                 flex:3.5;
-                 font-size:0.4rem;
+                //  font-weight:550;
             }
             
         }
         >.AssistTicket_text{
             width:100%;
             font-size:0.32rem;
-            color:rgba(196, 207, 232, 1);
-            line-height :0.453rem;
+            color:rgba(0, 0, 0, 0.8);
+            line-height :0.44rem;
         }
         >.SpecialTopicBody_bar{
             width:100%;
@@ -981,14 +990,14 @@ export default {
                     display:flex;
                     flex-direction:column;
                     margin-bottom:0.32rem;
-                    margin-right:0.32rem;
+                    margin-right:0.27rem;
                     >img{
-                        width:2.6rem;
-                        height:3.2rem;
+                        width:2.67rem;
+                        height:1.73rem;
                     }
                     >span{
-                        margin-top:0.27rem;
-                        color:rgba(255, 255, 255, 0.8);
+                        margin-top:0.147rem;
+                        color:rgba(0, 0, 0, 0.8);
                         font-size:0.32rem;
                     }
                 }
@@ -998,41 +1007,44 @@ export default {
             }
         }
         >.AssistTicket_btn{
-            width:3.253rem;
-            height:0.853rem;
+            width:2.4rem;
+            height:0.64rem;
             background :rgba(255, 157, 172, 1);
-            font-size:0.32rem;
+            font-size:0.347rem;
             color:rgba(255, 255, 255, 1);
             border-radius:2.67rem;
             text-align :center;
-            line-height :0.853rem;
-            margin-top:0.32rem;
-            margin-bottom:1rem;
+            line-height :0.64rem;
+            margin-top:0.67rem;
+            margin-bottom:0.373rem;
         }
     }
     //免费票
     >.FreeTicket{
         display :flex;
-        justify-content:space-between;
-        align-items :center;
-        margin:0.53rem 0.4rem;
+        flex-direction:column;
+        margin:0 0.4rem;
+        margin-top:0.32rem;
         >.FreeTicket_title{
-            font-size:0.4rem;
-            color:rgba(255, 255, 255, 1);
-            line-height :0.613rem;
+            font-size:0.427rem;
+            color:rgba(0, 0, 0, 1);
+            line-height :0.6rem;
             >span{
-                font-size:0.32rem;
+                color:rgba(252, 64, 93, 1);
             }
         }
         >.FreeTicket_btn{
             width:2.4rem;
             height:0.64rem;
             background:rgba(255, 157, 172, 1);
-            font-size:0.32rem;
+            font-size:0.347rem;
             color:rgba(255, 255, 255, 1);
             border-radius:2.67rem;
             text-align :center;
             line-height :0.64rem;
+            margin:0 auto;
+            margin-top:0.32rem;
+            margin-bottom:0.53rem;
         }
     }
 }

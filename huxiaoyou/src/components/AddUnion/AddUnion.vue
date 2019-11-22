@@ -12,14 +12,13 @@
                             <div class="Info_name"><span>真实姓名</span>*</div>
                             <input type="text" v-model="nickname" placeholder="请填写您的真实姓名">
                         </li>
-                        
                         <li>
                             <div class="Info_name"><span>手机号码</span>*</div>
                             <input type="text" maxlength="11" oninput = "value=value.replace(/[^\d]/g,'')" v-model="phone" placeholder="请填写您的正确的手机号">
                         </li>
                         <li>
                             <div class="Info_name"><span>微信号</span></div>
-                            <input type="text" oninput ="value=value.replace(/[^\w_]/g,'')" v-model="wechatId" placeholder="请填写您的微信号，例：hsdjjkdo">
+                            <input maxlength="20" type="text" oninput ="value=value.replace(/[^\w_]/g,'')" v-model="wechatId" placeholder="请填写您的微信号，例：hsdjjkdo">
                         </li>
                         <li>
                             <div class="Info_name"><span>身份证证件照</span>*</div>

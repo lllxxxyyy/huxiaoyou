@@ -21,7 +21,7 @@
                     </li>
                     <li>
                       <div  class="SignUp_infoName"><span>微信号</span></div>
-                      <input   type="text" oninput ="value=value.replace(/[^\w_]/g,'')"  v-model="wechatId" placeholder="请填写您的微信号">
+                      <input  maxlength="20"   type="text" oninput ="value=value.replace(/[^\w_]/g,'')"  v-model="wechatId" placeholder="请填写您的微信号">
                     </li>
                     <li>
                             <div class="SignUp_infoName"><span>性别</span>*</div>

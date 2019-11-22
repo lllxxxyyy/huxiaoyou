@@ -237,7 +237,6 @@ export default {
 
 .HomeAngel_listTwo{
     display :flex;
-    justify-content:space-between;
     flex-wrap:wrap;
     margin-top:0.27rem;
     >li{
@@ -246,6 +245,10 @@ export default {
         display:flex;
         flex-direction :column;
 		position: relative;
+        margin-right:0.27rem;
+        &:last-child{
+            margin-right:0;
+        }
         .HomeAngel_listTwotop{
             width:2.6rem;
             height:2.6rem;
