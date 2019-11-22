@@ -123,6 +123,10 @@
           },
       // 上传视频
           uploadFile(){
+              if(this.reply.length==2){
+                this.toastMsg('每天最多可上传2个')
+                return 
+              }
               this.lodingShow=true
               this.delFlag=false
               let inputDOM = this.$refs.inputer;
