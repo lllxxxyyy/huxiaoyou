@@ -64,6 +64,7 @@ var is_parent=""
                   if(res.code==200){
                       var data=res.data
                       is_parent=data.result.is_parent
+                      localStorage.setItem('token',data.result.token)
                   }else{
                         getCodes ()
                   }
@@ -72,7 +73,7 @@ var is_parent=""
               })
       }
       Islogin()
-      getCodes ()
+      // getCodes ()
 //获取code值
       function getUrlParam(name) {//封装方法
           var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
@@ -99,8 +100,7 @@ var is_parent=""
                 data: personInfo,
                 jsonp:"callback",
                 success:function(res){
-                  var data=JSON.parse(res)
-                  console.log(data)
+                  console.log(res)
                   // if(data.status=='1'){
                   //   window.location.href="././login.html"
                   // }else{

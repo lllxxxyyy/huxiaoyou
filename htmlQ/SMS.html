@@ -31,6 +31,7 @@
 	<script src="../js/Gpublic.js"></script>
 	<!-- <script src="../js/renzheng.js"></script> -->
 	<script>
+  var token=localStorage.getItem("token")
   var bb=""
 		if(localStorage.getItem("aa")){
 			bb=JSON.parse(localStorage.getItem("aa"))
@@ -93,11 +94,12 @@
                 datatype:'jsonp',
                 data: personInfo,
                 jsonp:"callback",
+                headers: {'Authorization': token},
                 success:function(res){
                      if(res.code==200){
                      	 window.location.href="Review.html"
                      }
-                 }
+                 },
 
               })
 		// window.location.href="renzheng.html"
