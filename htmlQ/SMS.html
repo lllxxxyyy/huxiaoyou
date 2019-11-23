@@ -4,7 +4,9 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
 	<title>渠道商认证</title>
-	<link rel="stylesheet" href="../css/renzheng.css">
+	<link rel="stylesheet" href="../css/SMS.css">
+	<link rel="stylesheet" href="../css/publicCss.css"/>
+	<link rel="stylesheet" href="../css/animation.css"/>
 </head>
 <body>
 	<div class="Certi_wrapper">
@@ -13,15 +15,93 @@
 			<div class="Certi_headerImg"><img src="../img/tuoyuan1.png" alt=""></div>
 		</div>
 		<ul class="Certi_center">
-			<li><span>手机号码：</span><input type="" placeholder="请填写您身份证上的名字"></li>
-			<li><span>短信验证码：</span><input type="" placeholder="请填写短信验证码"></li>
+			<li><span>手机号码：</span><input name="PhoneNum" type="" placeholder="请填写您身份证上的名字"></li>
+			<li>
+				<span>短信验证码：</span>
+				<input name="SMSNum" type="" placeholder="请填写短信验证码">
+				<button disabled="true">获取验证码</button>
+			</li>
 		</ul>
 		<div class="renSumbit">提交</div>
+		<div class="alertDIv"></div>
 	</div>	
 	<script src="../js/font.min.js"></script>
 	<script src="../js/zepto.min.js"></script>
 	<script src="../js/touch.js"></script>	
-	<script src="../js/renzheng.js"></script>
+	<script src="../js/Gpublic.js"></script>
+	<!-- <script src="../js/renzheng.js"></script> -->
+	<script>
+		if(localStorage.getItem("aa")){
+			var bb=JSON.parse(localStorage.getItem("aa"))
+			$('input[name="PhoneNum"]').val(bb.mobile)
+		}
+	// 获取域名
+      var domainName=''//初始化域名
+      if(window.location.protocol+"//"+window.location.host=="http://region.aibebi.net"){
+          domainName='http://www.aibebi.net'
+      }else{
+          // domainName='http://ceshi.aibebi.net'
+          domainName='http://www.aibebi.net'
+      }
+     var timer=""
+     var i=5
+		 //获取验证码
+    $(".Certi_center").on("tap",'button',function(){
+    	console.log($('button'))
+		var PhoneNum=$("input[name='PhoneNum']").val()
+	 	var personInfo= $.param({'mobile':PhoneNum,'scene':'1'})
+	 	animationChange('啦啦啦')
+        //  发送成功后秒数提示
+        clearInterval(timer)
+        timer=setInterval(function(){
+        	$('button').attr('disabled',false);
+            $('button')[0].innerHTML=i +"S"
+            i--;
+            if(i<0){
+                i=60;
+                $('button')[0].innerHTML='获取验证码'
+                $('button').attr('disabled',true);
+                clearInterval(timer)
+            }
+        },1000)
+              // $.ajax({
+              //   url:domainName+'/user/ver_tion',
+              //  	type:'post',
+              //   async:false,
+              //   datatype:'jsonp',
+              //   data: personInfo,
+              //   jsonp:"callback",
+              //   success:function(res){
+              //        if(res.code==200){
+                     		  	
+              //        }else {
+
+              //        }
+              //    }
+              // })
+		// window.location.href="renzheng.html"
+	})
+	$(".Certi_wrapper").on("tap",'.renSumbit',function(){
+		var PhoneNum=$("input[name='PhoneNum']").val()
+		var BankCard=$("input[name='SMSNum']").val()
+	 	var personInfo= $.param({'mobile':PhoneNum,'real_name':'lixinyue','id_card':'2222','bank_card':'333',code:'333','type':3})
+              $.ajax({
+                url:domainName+'/user/bang_Name',
+               	type:'post',
+                async:false,
+                datatype:'jsonp',
+                data: personInfo,
+                jsonp:"callback",
+                success:function(res){
+                     if(res.code==200){
+                     	 window.location.href="Review.html"
+                     }
+                 }
+
+              })
+		// window.location.href="renzheng.html"
+	})
+	</script>
 </body>
 </body>
 </html>

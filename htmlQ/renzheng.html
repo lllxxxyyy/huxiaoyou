@@ -5,6 +5,8 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
 	<title>渠道商认证</title>
 	<link rel="stylesheet" href="../css/renzheng.css">
+	<link rel="stylesheet" href="../css/publicCss.css"/>
+	<link rel="stylesheet" href="../css/animation.css"/>
 </head>
 <body>
 	<div class="Certi_wrapper">
@@ -14,16 +16,33 @@
 		</div>
 		<ul class="Certi_center">
 			<li><span>姓 名：</span><input name="userName" type="" placeholder="请填写您身份证上的名字"></li>
-			<li><span>身份证号：</span><input name="IDCard" type="" placeholder="请填写您正确的身份证号码"></li>
-			<li><span>手机号码：</span><input name="PhoneNum" type="" placeholder="请填写您正确的手机号码"></li>
+			<li>
+				<span>身份证号：</span>
+				<input 	name="IDCard"
+						maxlength="18" 
+						oninput="value=value.replace(/[\W]/g,'')"
+						placeholder="请填写您正确的身份证号码">
+			</li>
+			<li>
+				<span>手机号码：</span>
+				<input  name="PhoneNum"	
+						maxlength="11" 
+						oninput = "value=value.replace(/[^\d]/g,'')" 
+						type="text"  
+						placeholder="请填写您正确的手机号码">
+			</li>
 			<li><span>银行卡号：</span><input name="BankCard" type="" placeholder="请填写您正确的银行卡号"></li>
 		</ul>
 		<div class="renSumbit">提交</div>
+		<div class="alertDIv">
+
+		</div>
 	</div>	
 	<script src="../js/font.min.js"></script>
 	<script src="../js/zepto.min.js"></script>
 	<script src="../js/touch.js"></script>	
 	<script src="../js/renzheng.js"></script>
+	<script src="../js/Gpublic.js"></script>
 
 </body>
 </body>

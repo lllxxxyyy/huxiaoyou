@@ -51,10 +51,14 @@ p{word-wrap:break-word}
 			font-weight:600;
 	}
 .Certi_center>li>input{
+			width: 4rem;
 			font-size:0.453rem;
 			outline:none;
 			border:0;
 	}
+.Certi_center>li>::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    font-size: 0.427rem;
+}
 .renSumbit{
 	width:8.67rem;
 	height:1.07rem;
@@ -67,3 +71,19 @@ p{word-wrap:break-word}
 	border-radius: 0.67rem;
 	color:rgba(255, 255, 255, 1);
 }
+
+
+button{
+    background :#fff;
+    border:0;
+    outline :none;
+    font-size:0.32rem;
+    color:#FF3924;
+    letter-spacing :0.04rem;
+    padding:0;
+}
+.payPassPhoneCodeChange{
+    color:#CCCCCC;
+}
+
+

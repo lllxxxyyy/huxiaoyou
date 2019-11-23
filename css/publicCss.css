@@ -1,0 +1,15 @@
+.alertDIv {
+  width: 3.5rem;
+  height: auto;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  position: absolute;
+  top:50%;
+  left: 50%;
+  margin-left: -1.5rem;
+  z-index: 10;
+  font-size: 0.32rem;
+  border-radius: 0.15rem;
+  text-align: center;
+  padding: 0.27rem 0;
+  opacity: 0; }
