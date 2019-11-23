@@ -3,12 +3,9 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
-	<title>Document</title>
+	<title>渠道商</title>
+  <link rel="stylesheet" href="../css/publicCss.css"/>
 	<style>
-		html,body{
-			width:100%;
-			height:100%;
-		}
 		.Home{
 			width:100%;
 			height:100%;
@@ -95,7 +92,7 @@ var is_parent=""
             console.log(code)
               var personInfo= $.param({'code':code})
               $.ajax({
-                url:domainName+'/user/user_login',
+                url:domainName+'/channel/user_login',
                 type:'post',
                 async:false,
                 datatype:'jsonp',

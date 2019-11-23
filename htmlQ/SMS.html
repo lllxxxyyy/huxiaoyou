@@ -31,8 +31,9 @@
 	<script src="../js/Gpublic.js"></script>
 	<!-- <script src="../js/renzheng.js"></script> -->
 	<script>
+  var bb=""
 		if(localStorage.getItem("aa")){
-			var bb=JSON.parse(localStorage.getItem("aa"))
+			bb=JSON.parse(localStorage.getItem("aa"))
 			$('input[name="PhoneNum"]').val(bb.mobile)
 		}
 	// 获取域名
@@ -50,41 +51,41 @@
     	console.log($('button'))
 		var PhoneNum=$("input[name='PhoneNum']").val()
 	 	var personInfo= $.param({'mobile':PhoneNum,'scene':'1'})
-	 	animationChange('啦啦啦')
-        //  发送成功后秒数提示
-        clearInterval(timer)
-        timer=setInterval(function(){
-        	$('button').attr('disabled',false);
-            $('button')[0].innerHTML=i +"S"
-            i--;
-            if(i<0){
-                i=60;
-                $('button')[0].innerHTML='获取验证码'
-                $('button').attr('disabled',true);
-                clearInterval(timer)
-            }
-        },1000)
-              // $.ajax({
-              //   url:domainName+'/user/ver_tion',
-              //  	type:'post',
-              //   async:false,
-              //   datatype:'jsonp',
-              //   data: personInfo,
-              //   jsonp:"callback",
-              //   success:function(res){
-              //        if(res.code==200){
-                     		  	
-              //        }else {
-
-              //        }
-              //    }
-              // })
+	 	
+              $.ajax({
+                url:domainName+'/user/ver_tion',
+               	type:'post',
+                async:false,
+                datatype:'jsonp',
+                data: personInfo,
+                jsonp:"callback",
+                success:function(res){
+                     if(res.code==200){
+                     		  	animationChange(res.data.msg)
+                            //  发送成功后秒数提示
+                            clearInterval(timer)
+                            timer=setInterval(function(){
+                              $('button').attr('disabled',false);
+                                $('button')[0].innerHTML=i +"S"
+                                i--;
+                                if(i<0){
+                                    i=60;
+                                    $('button')[0].innerHTML='获取验证码'
+                                    $('button').attr('disabled',true);
+                                    clearInterval(timer)
+                                }
+                            },1000)
+                     }else {
+                          animationChange(res.msg)
+                     }
+                 }
+              })
 		// window.location.href="renzheng.html"
 	})
 	$(".Certi_wrapper").on("tap",'.renSumbit',function(){
 		var PhoneNum=$("input[name='PhoneNum']").val()
-		var BankCard=$("input[name='SMSNum']").val()
-	 	var personInfo= $.param({'mobile':PhoneNum,'real_name':'lixinyue','id_card':'2222','bank_card':'333',code:'333','type':3})
+		var code=$("input[name='SMSNum']").val()
+	 	var personInfo= $.param({'mobile':PhoneNum,'real_name':bb.real_name,'id_card':bb.id_card,'bank_card':bb.bank_card,code:code,'type':3})
               $.ajax({
                 url:domainName+'/user/bang_Name',
                	type:'post',
