@@ -39,6 +39,11 @@
 	<script src="../js/zepto.min.js"></script>
 	<script src="../js/touch.js"></script>	
 	<script>
+  var unionid=''
+  var miniapp=""
+  var nickname=""
+  var head_pic=""
+  var sex=""
 var is_parent=""
 // 获取域名
       var domainName=''//初始化域名
@@ -51,7 +56,7 @@ var is_parent=""
       
 // 登录接口
       function Islogin(){
-        var personInfo= $.param({'unionid':'2','miniapp':'2','nickname':'悦儿加油鸭','head_pic':'3','sex':2})
+        var personInfo= $.param({'unionid':unionid,'miniapp':miniapp,'nickname':nickname,'head_pic':head_pic,'sex':sex})
         // var personInfo= ''
          $.ajax({
                 url:domainName+'/channel/add_logins',
@@ -73,7 +78,6 @@ var is_parent=""
               })
       }
       Islogin()
-      getCodes ()
 //获取code值
       function getUrlParam(name) {//封装方法
           var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
@@ -101,11 +105,15 @@ var is_parent=""
                 jsonp:"callback",
                 success:function(res){
                   console.log(res)
-                  // if(data.status=='1'){
-                  //   window.location.href="././login.html"
-                  // }else{
-                  //   animationChange(data.msg)
-                  // }
+                  if(res.code==200){
+                      unionid=res.data.unionid
+                      nickname=res.data.nickname
+                      head_pic=res.data.headimgurl
+                      sex=res.data.sex
+                      Islogin()                  
+                    }else{
+                    animationChange(data.msg)
+                  }
 
                 }
               })
