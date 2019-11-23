@@ -21,11 +21,8 @@
                 data: personInfo,
                 jsonp:"callback",
                 success:function(res){
-                  
-                      localStorage.setItem('aa',JSON.stringify({"mobile":PhoneNum,'real_name':userName,'id_card':IDCard,'bank_card':BankCard,'type':3}))
-                      window.location.href="SMS.html"
                   if(res.code==200){
-                      // localStorage.setItem('aa',JSON.parse({"mobile": PhoneNum,'real_name':userName,'id_card':IDCard,'bank_card':BankCard,'type':3}))
+                      localStorage.setItem('aa',JSON.parse({"mobile": PhoneNum,'real_name':userName,'id_card':IDCard,'bank_card':BankCard,'type':3}))
                   		window.location.href="SMS.html"
                   }else{
                     animationChange(res.msg)

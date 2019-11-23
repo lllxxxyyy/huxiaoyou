@@ -8,8 +8,8 @@ function animationChange(alertValue) {
     $('.alertDIv').removeClass('bounceOutDown')
   }, 1000)
 }
-// var token=localStorage.getItem("token")
-// $.ajaxSettings.beforeSend = function(xhr,request){ 
-// 	// xhr.setRequestHeader('Authorization', token)   
-// 		// console.log( xhr ) 
-// }
+var token=localStorage.getItem("token")
+$.ajaxSettings.beforeSend = function(xhr,request){ 
+	xhr.setRequestHeader('Authorization', token)
+	
+}
