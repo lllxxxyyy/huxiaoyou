@@ -94,7 +94,6 @@
                 datatype:'jsonp',
                 data: personInfo,
                 jsonp:"callback",
-                headers: {'Authorization': token},
                 success:function(res){
                      if(res.code==200){
                      	 window.location.href="Review.html"
