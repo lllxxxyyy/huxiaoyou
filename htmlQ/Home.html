@@ -96,9 +96,10 @@ var is_parent=""
               var personInfo= $.param({'code':code})
               $.ajax({
                 url:domainName+'/user/user_login',
-                type:'post',
-                datatype:'json',
+                async:false,
+                datatype:'jsonp',
                 data: personInfo,
+                jsonp:"callback",
                 success:function(res){
                   var data=JSON.parse(res)
                   console.log(data)
