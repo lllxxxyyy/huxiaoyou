@@ -39,7 +39,7 @@
 			outline:none;
 			border:0;
 	}
-.Certi_center>li>::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+.Certi_center>li>input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     font-size: 0.427rem;
 }
 .renSumbit{

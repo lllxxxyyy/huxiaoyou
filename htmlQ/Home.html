@@ -5,6 +5,7 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
 	<title>渠道商</title>
   <link rel="stylesheet" href="../css/publicCss.css"/>
+  <link rel="stylesheet" href="../css/animation.css"/>
 	<style>
 		.Home{
 			width:100%;
@@ -34,17 +35,20 @@
 	<div class="Home">
 		<div class="personal CheckIn">个人入驻</div>
 		<div class="enterprise CheckIn">企业入驻</div>
+    
+    <div class="alertDIv"></div>
 	</div>
 	<script src="../js/font.min.js"></script>
 	<script src="../js/zepto.min.js"></script>
 	<script src="../js/touch.js"></script>	
+  <script src="../js/Gpublic.js"></script>
 	<script>
   var unionid=''
   var miniapp=""
   var nickname=""
   var head_pic=""
   var sex=""
-var is_parent=""
+  var is_parent=""
 // 获取域名
       var domainName=''//初始化域名
       if(window.location.protocol+"//"+window.location.host=="http://region.aibebi.net"){
@@ -53,7 +57,11 @@ var is_parent=""
           domainName='http://ceshi.aibebi.net'
           // domainName='http://www.aibebi.net'
       }
-      
+    if(unionid && miniapp && nickname && head_pic && sex){
+        Islogin()
+    }else{
+        getCodes()
+    }
 // 登录接口
       function Islogin(){
         var personInfo= $.param({'unionid':unionid,'miniapp':miniapp,'nickname':nickname,'head_pic':head_pic,'sex':sex})
@@ -77,7 +85,6 @@ var is_parent=""
                 }
               })
       }
-      Islogin()
 //获取code值
       function getUrlParam(name) {//封装方法
           var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
@@ -94,7 +101,6 @@ var is_parent=""
           if(code==null || code===''){
             window.location.href='https://open.weixin.qq.com/connect/oauth2/authorize?appid='+AppId+'&redirect_uri='+encodeURIComponent(local)+'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
           }else{
-            console.log(code)
               var personInfo= $.param({'code':code})
               $.ajax({
                 url:domainName+'/channel/user_login',
@@ -104,11 +110,11 @@ var is_parent=""
                 data: personInfo,
                 jsonp:"callback",
                 success:function(res){
-                  console.log(res)
                   if(res.code==200){
                       unionid=res.data.unionid
                       nickname=res.data.nickname
                       head_pic=res.data.headimgurl
+                      miniapp=res.data.miniapp
                       sex=res.data.sex
                       Islogin()                  
                     }else{
@@ -120,11 +126,11 @@ var is_parent=""
           }
       }
 	 $(".Home").on("tap",'.personal',function(){
-      // if(is_parent==0){
-          
-      // }else if(is_parent==1){
+      if(is_parent==0){
+          window.location.href="ChannelProvider.html"
+      }else if(is_parent==1){
           window.location.href="contract.html"
-      // }
+      }
 		
 	})
 // 

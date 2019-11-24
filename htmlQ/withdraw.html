@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+	<title>提现</title>
+	<link rel="stylesheet" href="../css/publicCss.css"/>
+	<link rel="stylesheet" href="../css/animation.css"/>
+	<style>
+		.withdraw{
+			padding:0 0.4rem;
+		}
+		.withdraw_header{
+			width:100%;
+			height:1.23rem;
+			line-height: 1.23rem;
+			text-align: center;
+			font-size:0.48rem;
+			color:rgba(0, 0, 0, 1);
+			font-weight: 600;
+		}
+		.withdraw_body{
+			display:flex;
+			align-items: center;
+			border-bottom:0.03rem solid rgba(0, 0, 0, 0.14);
+			padding:0.4rem 0;
+		}
+		.withdraw_body>span{
+			font-size: 0.427rem;
+			color:rgba(0, 0, 0, 1);
+			font-weight: 600;
+		}
+		.withdraw_body>input{
+			flex:1;
+			font-size:0.373rem;
+			border: 0;
+			outline: none;
+		}
+		.withdraw_body>.allWithdraw{
+			font-size:0.347rem;
+			color: rgba(255, 0, 0, 1);
+			font-weight:normal;
+		}
+		.withdraw_body>input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+		    font-size: 0.427rem;
+		    color:rgba(0, 0, 0, 0.36);
+		}
+		.withdraw_zhu{
+			font-size:0.347rem;
+			color:rgba(255, 0, 0, 1);
+			margin-top:0.32rem;
+		}
+		.withdraw_btn{
+			width:8.67rem;
+			height:1.07rem;
+			text-align: center;
+			line-height: 1.07rem;
+			font-size:0.437rem;
+			margin:0 auto;
+			margin-top:2rem;
+			background: rgba(77, 123, 244, 1);
+			border-radius: 0.67rem;
+			color:rgba(255, 255, 255, 1);
+		}
+	</style>
+</head>
+<body>
+	<div class="withdraw">
+		<div class="withdraw_header">
+			提现
+		</div>
+		<div class="withdraw_body">
+			<span>提现金额：</span>
+			<input type="text" name="withdrawMoney"   placeholder="您最高可提现元">
+			<span class="allWithdraw">全部提现</span>
+		</div>
+		<div class="withdraw_zhu">
+			注：提现平台代为扣税点4%
+		</div>
+		<div class="withdraw_btn">
+			提交
+		</div>
+		<div class="alertDIv">
+
+		</div>
+	</div>
+	<script src="../js/font.min.js"></script>
+	<script src="../js/zepto.min.js"></script>
+	<script src="../js/touch.js"></script>
+	<script src="../js/Gpublic.js"></script>
+	<script>
+		var withdrawMoney=''
+		if(localStorage.getItem("withdraw")){
+			withdrawMoney=JSON.parse(decodeURIComponent(window.atob(localStorage.getItem("withdraw"))))
+		      if(withdrawMoney.withdraw){
+		          // $("input[name='withdrawMoney']").text(withdraw.withdraw)
+		          $("input[name='withdrawMoney']").attr('placeholder','您最高可提现'+withdrawMoney.withdraw+'元')
+		      }
+		}
+		$('.withdraw_btn').on('tap',function(){
+					if(! $("input[name='withdrawMoney']").val()){
+						animationChange('您还没有输入要提现的金额')
+					}else{
+						var personInfo= $.param({'money':$("input[name='withdrawMoney']").val()})
+	                      $.ajax({
+	                        url:domainName+'/channel/user_money',
+	                        type:'post',
+	                        async:false,
+	                        datatype:'jsonp',
+	                        data: personInfo,
+	                        jsonp:"callback",
+	                        success:function(res){
+	                             if(res.code==200){
+	                                    animationChange(res.data.msg)
+	                             }else {
+	                                  
+	                             }
+	                         }
+	                      })
+					}
+			 		
+		})
+		$("$input[name='withdrawMoney']").on('tap',function(){
+			
+		})
+	</script>
+</body>
+</html>
