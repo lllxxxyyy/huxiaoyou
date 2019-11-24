@@ -142,6 +142,11 @@ export default {
 
 </script>
 <style scoped lang="stylus">
+.SMS{
+    width:100%;
+    height:100%;
+    background :#fff;
+}
  .Certi_header{
     width:100%
     height:1.23rem;

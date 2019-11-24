@@ -127,6 +127,11 @@ export default {
 
 </script>
 <style scoped lang="stylus">
+.RealName{
+    width:100%;
+    height :100%;
+    background :#fff;
+}
  .RealName_header{
     width:100%
     height:1.23rem;

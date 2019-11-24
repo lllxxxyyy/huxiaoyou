@@ -35,7 +35,7 @@ import qs from 'qs'
 export default {
   data () {
     return {
-        inputMoneyText:'60',
+        inputMoneyText:'',
         // 提示盒子
         promptContent:'', //提示盒子的内容
         showPrompt:false,//提示盒子的吸收和显示
@@ -56,9 +56,8 @@ export default {
             total:this.inputMoneyText
         })
         this.$http.post('/api/user/user_deposit',obj).then((res)=>{
-            console.log(res)
             if(res.data.code==200){
-
+                 this.alertText('提现成功')
             }else{
                 this.alertText(res.data.msg)
             }
@@ -105,6 +104,12 @@ export default {
 
 </script>
 <style scoped lang="stylus">
+.withdraw{
+    width:100%;
+    height:100%;
+    background :#fff;
+    padding:0 0.4rem;
+}
  .withdraw_header{
     width:100%
     height:1.23rem;
@@ -122,9 +127,6 @@ export default {
         padding-left:1.32rem;
     }
  }
-.withdraw{
-    padding:0 0.4rem;
-}
 .withdraw_body{
     display:flex;
     align-items: center;
