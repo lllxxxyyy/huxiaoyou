@@ -41,7 +41,7 @@
 	<script src="../js/font.min.js"></script>
 	<script src="../js/zepto.min.js"></script>
 	<script src="../js/touch.js"></script>	
-  <script src="../js/Gpublic.js"></script>
+  <!-- <script src="../js/Gpublic.js"></script> -->
 	<script>
   var unionid=''
   var miniapp=""
@@ -126,9 +126,9 @@
           }
       }
 	 $(".Home").on("tap",'.personal',function(){
-      if(is_parent==0){
+      if(is_parent==1){
           window.location.href="ChannelProvider.html"
-      }else if(is_parent==1){
+      }else if(is_parent==0){
           window.location.href="contract.html"
       }
 		
