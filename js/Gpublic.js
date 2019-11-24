@@ -19,6 +19,5 @@ function animationChange(alertValue) {
 }
 var token=localStorage.getItem("token")
 $.ajaxSettings.beforeSend = function(xhr,request){ 
-	console.log(xhr)
 	xhr.setRequestHeader('Authorization', token)
 }
