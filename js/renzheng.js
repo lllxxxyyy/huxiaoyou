@@ -1,11 +1,3 @@
-// 获取域名
-      var domainName=''//初始化域名
-      if(window.location.protocol+"//"+window.location.host=="http://region.aibebi.net"){
-          domainName='http://www.aibebi.net'
-      }else{
-          // domainName='http://ceshi.aibebi.net'
-          domainName='http://www.aibebi.net'
-      }
 
  	$(".Certi_wrapper").on("tap",'.renSumbit',function(){
 		var userName=$("input[name='userName']").val()
@@ -21,7 +13,6 @@
                 data: personInfo,
                 jsonp:"callback",
                 success:function(res){
-                  console.log(res)
                   if(res.code==200){
                       localStorage.setItem('aa',window.btoa(window.encodeURIComponent(JSON.stringify({"mobile": PhoneNum,'real_name':userName,'id_card':IDCard,'bank_card':BankCard,'type':3}))))
                   		window.location.href="SMS.html"
@@ -131,34 +122,34 @@
 // }
 // 
 // 
-$("input[name='BankCard']").on('change',function(e){
-  formatInput(this,/\D/g,19)
-})
-function formatInput(elem,patten,len) {
-    var curpos = elem.selectionStart;
-    var old_value = elem.value;
-    if (elem.value.replace(patten, '').length > len) {
-        elem.value = paddingSpace(elem.value.replace(patten, '')
-            .substring(0, len));
-    } else {
-        elem.value = paddingSpace(elem.value.replace(patten, ''));
-    }
-    if (old_value[curpos - 1] == ' ') {
-        curpos += -1;
-    } else {
-        var old_cursor = old_value.slice(0, curpos);
-        var old_cursor_spaced = paddingSpace(old_cursor.replace(patten,''));
-        curpos += old_cursor_spaced.length - old_cursor.length;
-    }
-    setTimeout(function() {
-        elem.focus();
-        //设置光标位置
-        elem.setSelectionRange(curpos, curpos);
-    }, 0);
-}
-// 格式化空格
-function paddingSpace(str){
-    return str.replace(/....(?!$)/g,'$& ')
-    // return str.replace(/\s/,'').replace(/([0-9,X]{4})(?=[0-9,X])/g,"$1 ");
-}
+// $("input[name='BankCard']").on('change',function(e){
+//   formatInput(this,/\D/g,19)
+// })
+// function formatInput(elem,patten,len) {
+//     var curpos = elem.selectionStart;
+//     var old_value = elem.value;
+//     if (elem.value.replace(patten, '').length > len) {
+//         elem.value = paddingSpace(elem.value.replace(patten, '')
+//             .substring(0, len));
+//     } else {
+//         elem.value = paddingSpace(elem.value.replace(patten, ''));
+//     }
+//     if (old_value[curpos - 1] == ' ') {
+//         curpos += -1;
+//     } else {
+//         var old_cursor = old_value.slice(0, curpos);
+//         var old_cursor_spaced = paddingSpace(old_cursor.replace(patten,''));
+//         curpos += old_cursor_spaced.length - old_cursor.length;
+//     }
+//     setTimeout(function() {
+//         elem.focus();
+//         //设置光标位置
+//         elem.setSelectionRange(curpos, curpos);
+//     }, 0);
+// }
+// // 格式化空格
+// function paddingSpace(str){
+//     return str.replace(/....(?!$)/g,'$& ')
+//     // return str.replace(/\s/,'').replace(/([0-9,X]{4})(?=[0-9,X])/g,"$1 ");
+// }
 

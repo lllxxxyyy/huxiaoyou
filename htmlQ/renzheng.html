@@ -32,7 +32,7 @@
 						type="text"  
 						placeholder="请填写您正确的手机号码">
 			</li>
-			<li><span>银行卡号：</span><input name="BankCard" type="" placeholder="请填写您正确的银行卡号"></li>
+			<li><span>银行卡号：</span><input name="BankCard" oninput="value=value.replace(/[\W]/g,'')" maxlength="19" type="" placeholder="请填写您正确的银行卡号"></li>
 		</ul>
 		<div class="renSumbit">提交</div>
 		<div class="alertDIv">
