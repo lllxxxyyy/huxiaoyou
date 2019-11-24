@@ -72,6 +72,13 @@ import unionDetail from '@/components/unionDetail/unionDetail' //公会详情
 
 import MineVideo from '@/components/MineVideo/MineVideo' //个人信息 上传视频
 
+import shiming from '@/components/shiming/shiming' //实名
+
+import withdraw from '@/components/withdraw/withdraw' //实名
+import SMS from '@/components/SMS/SMS' //短信验证
+
+import MoneyDetail from '@/components/MoneyDetail/MoneyDetail' //明细
+
 const routes = [{ //首页
         path: '/',
         name: 'Home',
@@ -482,6 +489,39 @@ const routes = [{ //首页
         },
         component: MineVideo
     },
+    { //实名
+        path: '/shiming',
+        name: 'shiming',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: shiming
+    },
+    { //提现
+        path: '/withdraw',
+        name: 'withdraw',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: withdraw
+    },
+    { //短信
+        path: '/SMS',
+        name: 'SMS',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: SMS
+    },
+    { //短信
+        path: '/MoneyDetail',
+        name: 'MoneyDetail',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: MoneyDetail
+    },
+
 ]
 
 

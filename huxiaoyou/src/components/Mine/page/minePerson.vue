@@ -34,7 +34,7 @@
                   <span class="minePerson_artickNum">{{personData.app_vote}}</span><span>剩余免费票</span>
                 </li>
                 <li @click="toAccountBalance">
-                  <span class="minePerson_artickNum">{{personData.user_moneys}}</span><span>我的账单</span>
+                  <span class="minePerson_artickNum">{{personData.user_moneys}}</span><span>账单详情</span>
                 </li>
               </ul>
               <div class="minePerson_InfoLike" v-if="personData.signature">{{personData.signature}}</div>
@@ -77,8 +77,8 @@
                   </div>
               </div>
               <ul class="minePerson_artick ">
-                <li>
-                  <span class="minePerson_artickNum">{{personData.user_moneys}}</span><span>我的账单</span>
+                <li  @click="toAccountBalance">
+                  <span class="minePerson_artickNum">{{personData.user_moneys}}</span><span>账单详情</span>
                 </li>
                 <li>
                   <span class="minePerson_artickNum">{{personData.user_votes}}</span><span>免费票数</span>
@@ -112,6 +112,9 @@ export default {
     },
   methods: {
     toAccountBalance() {
+      this.isRealnames(this.personData.is_realname)//实名状态
+      this.billMoneys(this.personData.user_moneys) //保存账单money
+      this.isPersons(this.personData.is_player)
       this.$router.push('/AccountBalance')
     },
     ToReceiptAddress(){
@@ -123,7 +126,7 @@ export default {
       this.MineInformationPages('/Mine')
       this.$router.push('/MineInformation')
     },
-    ...mapMutations(['ReceiptAddressPages','MineInformationPages']),
+    ...mapMutations(['ReceiptAddressPages','MineInformationPages','billMoneys','isRealnames','isPersons']),
   }
 }
 </script>

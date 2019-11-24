@@ -3,17 +3,10 @@
   <div class="LivePlatform">
     <div class="PlayerRanking_header">
       <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
-      <span>账户余额</span>
-      <div class="PresentPhoto_admin" @click="toMoneyDetail">明细</div>
+      <span>账单详情</span>
+      <div class="PresentPhoto_admin" @click="toZhuan">赚钱秘籍</div>
     </div>
-    <div class="mine_money"> 
-      <span >我的余额</span>
-      <span class="mine_moneydes">{{billMoney}}</span>
-    </div>
-    <div class="withdraw" @click="toti">
-      提现
-    </div>
-    <!-- <ul class="AccountBalance">
+    <ul class="AccountBalance">
       <li v-for="(item, index) in accountBalance" :key="index">
         <div class="Account"><span>{{item.desc}}</span>
           <span class="Account_time">{{formatDate(item.change_time)}}</span></div>
@@ -22,7 +15,7 @@
           <span class="Balance_right">+{{item.user_money}}</span>
         </div>
       </li>
-    </ul> -->
+    </ul>
     <!-- 提示盒子 -->
     <transition name="fade">
       <div class="promptFather" v-if="showPrompt">
@@ -63,21 +56,12 @@ export default {
   },
 
   methods: {
-    // 提现
-    toti(){
-      if(this.isRealname==0){
-        this.$router.push('/shiming')
-      }else{
-        this.$router.push('/withdraw')
-      }
-    },
       toReturn(){
-          this.$router.push('/Mine')
+          this.$router.push('/AccountBalance')
       },
       getAccountBalance(){
         // 没有找到账户明细接口
-        let obj=qs.stringify({})
-        this.$http.post('api/user/ba_money',obj).then((res)=>{
+        this.$http.post('api/user/ba_money').then((res)=>{
           if(res.data.code===200){
             this.accountBalance = res.data.data.result
           }
@@ -98,9 +82,14 @@ export default {
       s = s < 10 ? ('0' + s) : s;
       return y + '-' + MM + '-' + d + ' ' + h + ':' + m + ':' + s;
     },
-    toMoneyDetail(){
-      this.$router.push('/MoneyDetail')
-    }
+    //跳赚钱秘籍
+    toZhuan(){
+          var specialDetailInfo={projectId:54,type:3}
+            this.specialDetailInfos(specialDetailInfo)
+            this.SpecialDetailsPages('/MoneyDetail')
+            this.$router.push('/SpecialDetails')
+    },
+    ...mapMutations(['specialDetailInfos','SpecialDetailsPages']),
 
   }
 }

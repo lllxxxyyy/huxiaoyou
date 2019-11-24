@@ -147,7 +147,7 @@
                         </li>
                     </ul>
             </div>
-            <div class="Agree" @click="toAgree"> <img :src="IsAgree?staticImgH+'noselYes.png':staticImgH+'nosel.png'" alt="">已阅读且同意《公会条列条款》</div>
+            <div class="Agree" @click="toAgree"> <img :src="IsAgree?staticImgH+'noselYes.png':staticImgH+'nosel.png'" alt=""> 已阅读且同意  <span @click.stop="toUnion">《公会条列条款》</span> </div>
             <div class="ImmAdd" @click.stop="ImmAddC">立即加入</div>
             <div class="ImmAdds" ></div>
         </div>
@@ -316,6 +316,13 @@ export default {
       })
   },
   methods: {
+    //   去公会条款
+    toUnion(){
+       var specialDetailInfo={projectId:56,type:3}
+            this.specialDetailInfos(specialDetailInfo)
+            this.SpecialDetailsPages('/AddUnion')
+            this.$router.push('/SpecialDetails')
+    },
     //   判断有没有报名成功
     ifSignUp(){
         this.$http.post('/api/player/is_sign').then((res)=>{
@@ -570,7 +577,7 @@ export default {
       },
       setAddressBtn(){
       },
-       ...mapMutations(['AddunionPages'])
+       ...mapMutations(['AddunionPages','specialDetailInfos','SpecialDetailsPages'])
   }
 }
 

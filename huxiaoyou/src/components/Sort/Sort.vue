@@ -159,8 +159,9 @@
 .CoOperative{
 		padding:0 0.4rem;
 		>span{ padding-bottom:0.1rem; border-bottom:0.053rem solid #ffccd4; color:#000; font-size:0.48rem;}
-		>ul{display:-webkit-box; display:-ms-flexbox; display:flex; -webkit-box-pack:justify; -ms-flex-pack:justify;justify-content :space-between;  -ms-flex-wrap:wrap; flex-wrap:wrap; margin-top:0.7rem;
-		>li{ width:2.4rem; height:2.4rem; background:rgba(0,0,0,0.1);
+		>ul{display:-webkit-box; display:-ms-flexbox; display:flex; -webkit-box-pack:justify; -ms-flex-pack:justify;  -ms-flex-wrap:wrap; flex-wrap:wrap; margin-top:0.7rem;
+   
+		>li{ width:2.4rem; height:2.4rem; background:rgba(0,0,0,0.1); margin-right:0.66rem;
     margin-bottom:0.32rem;
         >img{
           width:100%;
@@ -186,20 +187,20 @@
     	display: flex;
     	-webkit-box-pack: justify;
     	-ms-flex-pack: justify;
-    	justify-content: space-between;
     	-ms-flex-wrap: wrap;
 	margin-top:0.5rem;
     	flex-wrap: wrap;
         >li{
             font-size:0.32rem;
             color:rgba(0, 0, 0, 1);
-			margin-bottom:0.36rem;
-			position: relative;
-			width:2.9rem;
-			text-align:center;
-			font-size:0.37rem;
-			>img{ width:2.9rem; margin-bottom:0.2rem;}
-      >span{
+			      margin-bottom:0.36rem;
+			      position: relative;
+			      width:2.9rem;
+			      text-align:center;
+			      font-size:0.37rem;
+            margin-right:0.16rem;
+			      >img{ width:2.9rem; margin-bottom:0.2rem;}
+            >span{
                 width:100%;
                 display:-webkit-box;
                 -webkit-box-orient:vertical;

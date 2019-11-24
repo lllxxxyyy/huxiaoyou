@@ -58,9 +58,33 @@ const state = {
 
     labourUnionIndexIdX: JSON.parse(sessionStorage.getItem('labourUnionIndexIdX')) || {}, //公会 索引和id
 
+    billMoney: sessionStorage.getItem('billMoney'), //账单余额
+    isRealname: sessionStorage.getItem('isRealname'), //实名状态
+    isPerson: sessionStorage.getItem('isPerson'), //判断是选手还是用户
+    realInfo: sessionStorage.getItem('realInfo'), //保存实名认证信息
 }
 
 const mutations = {
+    //保存实名认证信息
+    realInfos(state, realInfo) {
+        sessionStorage.setItem('realInfo', realInfo);
+        state.realInfo = realInfo
+    },
+    // 判断是选手还是用户
+    isPersons(state, isPerson) {
+        sessionStorage.setItem('isPerson', isPerson);
+        state.isPerson = isPerson
+    },
+    // 实名状态
+    isRealnames(state, isRealname) {
+        sessionStorage.setItem('isRealname', isRealname);
+        state.isRealname = isRealname
+    },
+    //账单余额
+    billMoneys(state, billMoney) {
+        sessionStorage.setItem('billMoney', billMoney);
+        state.billMoney = billMoney
+    },
     //公会 索引和id
     labourUnionIndexIdXs(state, labourUnionIndexIdX) {
         sessionStorage.setItem('labourUnionIndexIdX', JSON.stringify(labourUnionIndexIdX));

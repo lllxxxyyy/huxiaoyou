@@ -87,7 +87,7 @@
                 <div class="vote"  @click.stop>
                     <!-- 免费票 -->
                     <div class="FreeTicket">
-                        <span class="FreeTicket_title">每日免费投票 （每人每天可投两票  <span> 剩余2票 </span>）</span>
+                        <span class="FreeTicket_title">每日免费投票 （每人每天可投两票  <span> 剩余{{personData.user_votes}}票 </span>）</span>
                         <span class="FreeTicket_btn" @click.stop="freeticket">立即投票</span>
                     </div>
                     <!-- 助力票 -->
@@ -269,6 +269,7 @@ export default {
                     this.shopList=res.data.data.result
                     if(this.Shopvote){
                         this.shopVotes=this.Shopvote
+                        
                     }
                 }else{
                     var self=this
@@ -645,13 +646,10 @@ export default {
                 var obj=qs.stringify({
                     player_id:this.playerId
                 })
-                this.$http.post('api/user/spend_vote',obj,{
-                    headers: {
-                            'authorization':this.tokenH
-                        }
-                }).then((res)=>{
+                this.$http.post('api/user/spend_vote',obj).then((res)=>{
                     if(res.data.code==200){
                         var self=this
+                        this.getpaioNUm()
                         clearInterval(self.timer2);
                                 this.promptContent='投票成功'
                                 this.showPrompt=true
