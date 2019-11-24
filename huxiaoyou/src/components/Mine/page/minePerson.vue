@@ -13,7 +13,7 @@
                         <span class="minePerson_InfoName">{{personData.username}}</span>
                         <div class="minePerson_InfoVip"><img :src="staticImgH+'Mine_vip.png'" alt=""><span>{{personData.level_name}}</span></div>
                       </div>
-                      <span class="minePerson_InfoRiBott" >{{personData.names}}</span>
+                      <div class="minePerson_quRen"><span class="minePerson_InfoRiBott" >{{personData.names}}</span><span class="" v-if="personData.is_realname==1">已认证</span></div>
                   </div>
               </div>
               <ul class="minePerson_EventInfo">
@@ -49,7 +49,7 @@
                   <span v-if="personData.height">{{personData.height}}cm</span>
                   <span v-if="personData.weight">{{personData.weight}}kg</span>
                   <span v-if="personData.union_player==1">公会成员</span>
-                  <span v-if="personData.is_realname==1">已认证</span>
+                  
                   
               </div>
           </div>
@@ -211,11 +211,17 @@ export default {
                   }
               }
           }
-          >.minePerson_InfoRiBott{
+          >.minePerson_quRen{
+            font-size:0.32rem;
+            color:rgba(255, 162, 0, 1);
+              >.minePerson_InfoRiBott{
             font-size:0.32rem;
             color:rgba(0, 0, 0, 0.36);
             margin-top:0.16rem;
+            margin-right:0.32rem;
           }
+          }
+          
           >.minePerson_InfoRiBotts{
             font-size:0.32rem;
             color:rgba(0, 0, 0, 0.36);
