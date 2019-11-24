@@ -49,6 +49,8 @@
                   <span v-if="personData.height">{{personData.height}}cm</span>
                   <span v-if="personData.weight">{{personData.weight}}kg</span>
                   <span v-if="personData.union_player==1">公会成员</span>
+                  <span v-if="personData.is_realname==1">已认证</span>
+                  
               </div>
           </div>
       </div>
