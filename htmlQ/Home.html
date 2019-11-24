@@ -49,6 +49,7 @@
   var head_pic=""
   var sex=""
   var is_parent=""
+  var is_show=""
 // 获取域名
       var domainName=''//初始化域名
       if(window.location.protocol+"//"+window.location.host=="http://region.aibebi.net"){
@@ -77,6 +78,7 @@
                   if(res.code==200){
                       var data=res.data
                       is_parent=data.result.is_parent
+                      is_show=data.result.is_show
                       localStorage.setItem('token',data.result.token)
                   }else{
                         getCodes ()
@@ -127,7 +129,14 @@
       }
 	 $(".Home").on("tap",'.personal',function(){
       if(is_parent==1){
-          window.location.href="ChannelProvider.html"
+          if(is_show==0){
+                window.location.href="Review.html"
+          }else if(is_show==1){
+                window.location.href="ChannelProvider.html"
+          }else if(is_show==2){
+                window.location.href="daisheng.html"
+          }
+          
       }else if(is_parent==0){
           window.location.href="contract.html"
       }
