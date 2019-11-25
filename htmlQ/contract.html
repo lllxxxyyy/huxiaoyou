@@ -24,46 +24,92 @@
 			line-height: 0.493rem;
 		}
 		.contract_text{
-			position: absolute;
-			bottom:2.493rem;
+			/*position: fixed;
+			bottom:2.493rem;*/
 			font-size:0.347rem;
 			color:rgba(255, 0, 0, 1);
 			padding:0 0.4rem;
+			padding-top:0.2rem;
 		}
 		.contract_btn{
 			width:8.67rem;
 			height:1.07rem;
 			background: rgba(77, 123, 244, 1);
 			border-radius:0.667rem;
-			position: absolute;
+			/*position: fixed;
 			bottom:0.613rem;
 			left:50%;
-			margin-left:-4.33rem;
+			margin-left:-4.33rem;*/
 			text-align: center;
 			line-height: 1.07rem;
 			color:#fff;
 			font-size:0.427rem;
+			margin:0.4rem auto;
+
+		}
+		.aggress{
+			/*display: flex;
+			flex-direction: column;
+			align-items: center;*/
+			width:100%;
+			position: fixed;
+			background: #e3e3e8;
+			position: fixed;
+			bottom:0;
+			left:0;
 		}
 	</style>
 </head>
 <body>
 	<div class="contract">
 		<div class="contract_header">
-			渠道商合同
+			渠道商协议
 		</div>
 		<div class="contract_body">
 			 合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文合同正文。
 		</div>
+		<div class="aggress">
 		<div  class="contract_text">纸质合同将在审核通过后7个工作日内发出</div>
-		<div class="contract_btn" >同意并继续</div>
+		<div class="contract_btn" >同意并继续</div></div>
 	</div>
 	<script src="../js/font.min.js"></script>
 	<script src="../js/zepto.min.js"></script>
 	<script src="../js/touch.js"></script>	
+	 <!-- <script src="../js/Gpublic.js"></script> -->
 	<script>
+
+
+	// 获取域名
+      var domainName=''//初始化域名
+      if(window.location.protocol+"//"+window.location.host=="http://region.aibebi.net"){
+          domainName='http://www.aibebi.net'
+      }else{
+          // domainName='http://ceshi.aibebi.net'
+          domainName='http://www.aibebi.net'
+      }
 		$('.contract').on('tap','.contract_btn',function(){
 			 window.location.href="renzheng.html"
 		})
+		hetong()
+		function hetong(){
+			var personInfo= $.param({'type':3,'project_id':57})
+			$.ajax({
+                url:domainName+'/ad/comment_list',
+                type:'post',
+                async:false,
+                datatype:'jsonp',
+                data: personInfo,
+                jsonp:"callback",
+                success:function(res){
+                	console.log(res)
+                  if(res.code==200){
+				          var con=res.data.result[0].content
+				          $('.contract_body').html(con)
+				      }
+
+                }
+              })
+		}
 	</script>
 </body>
 </html>
