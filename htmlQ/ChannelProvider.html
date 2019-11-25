@@ -29,6 +29,7 @@
 			bottom:-1.073rem;
 			left:50%;
 			margin-left:-1.073rem;
+			box-shadow :0 0 0.2rem rgba(77, 123, 244, 1);
 		}
 		.Channel_first{
 			display: flex;
@@ -36,6 +37,7 @@
 
 		}
 		.Channel_first_left{
+			width:5rem;
 			display: flex;
 			align-items: flex-end;
 			font-size:0.32rem;
@@ -49,9 +51,13 @@
 			margin-right: 0.16rem;
 		}
 		.Channel_first_leftName{
+			flex:1;
 			font-size:0.53rem;
 			color:rgba(255, 255, 255, 1);
 			margin-right:0.32rem;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
 		}
 		.Channel_first_right{
 			font-size:0.427rem;
@@ -65,6 +71,12 @@
 			color:#fff;
 			margin-top:0.53rem;
 			
+		}
+		.Channel_two>li>.Channel_two_des{
+			font-size:0.373rem;
+		}
+		.Channel_two>li>.Channel_two_des>span{
+			font-size:0.667rem;
 		}
 		.Channel_two>li{
 				display:flex;
@@ -81,6 +93,7 @@
 			display: flex;
 			justify-content: space-between;
 			margin-top:0.53rem;
+			padding:0 0.4rem;
 		}
 		.Channel_three>li{
 			width:3.653rem;
@@ -102,13 +115,16 @@
 		.Channel_four{
 			width:100%;
 			font-size: 0.347rem;
-			color:#fff;
+			color:rgba(255, 255, 255, 0.8);
 			/*position: absolute;
 			bottom:0.5rem;*/
 			display: flex;
 			justify-content: space-between;
 			padding:0 0.5rem;
 			margin-top:0.53rem;
+		}
+		.Channel_four_active{
+			color:#fff;
 		}
 		.poster{
 			width:100%;
@@ -124,8 +140,8 @@
 
 		}
 		.poster>img{
-			width:5.648rem;
-			height:10.275rem;
+			width:8.67rem;
+			height:15.413rem;
 			background: pink;
 			margin-bottom:0.53rem;
 		}
@@ -138,6 +154,56 @@
 			color:rgba(255, 255, 255, 1);
 			text-align: center;
 			line-height: 1.067rem;
+		}
+		.poster .poster_cha{
+			width:0.53rem;
+			height:0.53rem;
+			position: absolute;top:0.08rem;right:0.4rem;
+		}
+		.poster .poster_cha >img{
+			width:0.53rem;
+			height:0.53rem;
+		}
+		.play_list{
+			margin-top:1.68rem;
+			padding:0 0.4rem;
+		}
+		.play_list >li{
+			display: flex;
+			justify-content: space-between;
+			align-items: flex-end;
+			padding:0.32rem 0.32rem;
+			border-top:0.02rem solid rgba(0, 0, 0, 0.14);
+
+		}
+		.play_list_left{
+			display: flex;
+			flex-direction: column;
+
+		}
+		.play_list_Info{
+			display: flex;
+			align-items: center;
+			margin-bottom:0.32rem;
+		}
+		.play_list_Info>img{
+			width:0.827rem;
+			height:0.827rem;
+			background: pink;
+			border-radius: 50%;
+			margin-right:0.16rem;
+		}
+		.play_list_Info>span{
+			font-size:0.427rem;
+			color:rgba(0, 0, 0, 1);
+		}
+		.play_list_ren{
+			color:rgba(0, 0, 0, 0.6);
+			font-size:0.373rem;
+		}
+		.play_list_right{
+			font-size: 0.347rem;
+			color:rgba(0, 0, 0, 1);
 		}
 	</style>
 </head>
@@ -155,20 +221,34 @@
 				</div>
 			</div>
 			<ul class="Channel_two">
-				<li><span class="Channel_two_title">可提取余额</span><span class="YuMoney">￥</span></li>
-				<li><span class="Channel_two_title">待选手认证</span><span class="isParent"></span></li>
-				<li><span class="Channel_two_title">邀请选手</span><span class="parentInvite">人</span></li>
+				<li><span class="Channel_two_title">可提取余额</span> <div class="Channel_two_des">￥<span class="YuMoney"></span></div> </li>
+				<li><span class="Channel_two_title">待选手认证</span><div class="Channel_two_des"><span class="isParent"></span></div></li>
+				<li><span class="Channel_two_title">邀请选手</span><div class="Channel_two_des"><span class="parentInvite"></span>人</div></li>
 			</ul>
 			<ul class="Channel_three">
-				<li class="Channel_three_title"><span >已认证选手</span><span class="noParent">人</span></li>
+				<li class="Channel_three_title" ><span >已认证选手</span><span class="noParent">人</span></li>
 				<li class="Channel_three_title"><span >未认证选手</span><span class="yesParent">人</span></li>
 			</ul>
 			<div class="Channel_four">
-				<span class="Channel_four_title">邀请选手列表</span><span>账户金额明细</span>
+				<span class="Channel_four_title">邀请选手列表</span><span class="Channel_four_Monry">账户金额明细</span>
 			</div>
+			
 			<div class="withdraw">提现</div>
 		</div>
+		<ul class="play_list">
+				<!-- <li>
+					<div class="play_list_left">
+						<div class="play_list_Info">
+							<img src="" alt=""><span>丹丹</span>
+						</div>
+						<span class="play_list_ren">未认证</span>
+					</div>
+					<div class="play_list_right">2019-11-19</div>
+				</li>  -->
+				
+			</ul>
 		<div class="poster" style="display: none">
+				<div class="poster_cha"><img  src="../img/cha.png" alt=""></div>
 		      <img  src="" alt="">
 		      <span>长按图片后 点击保存图片</span>
 	    </div>
@@ -181,6 +261,7 @@
 	
 	person()
 		function person(){
+			var con='';
 			$.ajax({
                 url:domainName+'/channel/user_info',
                 type:'post',
@@ -191,13 +272,26 @@
                   if(res.code==200){
                       var data=res.data
                       $('.Channel_first_left > img').attr('src',data.result.head_pics)
-                      $('.Channel_first_leftName').text(data.result.nickname)
+                      $('.Channel_first_leftName').text(data.result.nickname+'sssssssssssssssssssss')
                       $('.YuMoney').text(data.result.user_money)
-                      $('.noParent').text(data.result.no_parent)
-                      $('.yesParent').text(data.result.yes_parent)
-                      $('.parentInvite').text(data.result.parent_invite)
+                      $('.noParent').text(data.result.no_parent+'人')
+                      $('.yesParent').text(data.result.yes_parent+'人')
+                      $('.parentInvite').text(data.result.avatar)
                       $('.isParent').text(data.result.is_parent)
                       console.log(res)
+         //              for(var i=0;i<data.list.length;i++){
+         //              			con+=`
+									// <li>
+									// 	<div class="play_list_left">
+									// 		<div class="play_list_Info">
+									// 			<img src="" alt=""><span>${data.list[i].username}</span>
+									// 		</div>
+									// 		<span class="play_list_ren">${data.list[i].is_parent}</span>
+									// 	</div>
+									// 	<div class="play_list_right">2019-11-19</div>
+									// </li> 
+         //              			`
+         //              }
                   }else{
                   }
 
@@ -227,9 +321,12 @@
 			 localStorage.setItem('withdraw',window.btoa(window.encodeURIComponent(JSON.stringify({'withdraw':$('.YuMoney').text()}))))
 			window.location.href="withdraw.html"
 		})
-		// $('.poster').on('tap','img',function(e){
-		// 	event.stopPropagation()
-		// })
+		$('.poster >img').on('tap',function(event){
+			event.stopPropagation()
+		})
+		$('.poster >span').on('tap',function(event){
+			event.stopPropagation()
+		})
 		$('.poster').on('tap',function(){
 			$('.poster').hide()
 		})
