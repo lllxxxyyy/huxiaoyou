@@ -110,9 +110,10 @@
          </div>
       </div>
       <!-- loding -->
-      <div class="login_wrap" v-if="lodingShow">
-         <div class="loginImg">
+     <div class="login_wrap" v-if="lodingShow" >
+         <div class="loginImg" >
            <img :src="staticImgH+'jiazai.gif'" alt="">
+           正在提交，请稍等...
          </div>
       </div>
   </div>
@@ -261,7 +262,6 @@ export default {
         divisionListData(){
             this.$http.post('/api/division/list').then((res)=>{
                 if(res.data.code==200){
-                  console.log(res)
                     this.divisionData=res.data.data
                 }else{
                     this.alertText(res.data.msg)
@@ -985,17 +985,19 @@ export default {
   left:0;
   z-index:999;
   .loginImg{
-    width:1.28rem;
-    height:1.28rem;
-    position:absolute;
-    top:0;
-    bottom:0;
-    left:0;
-    right:0;
+     width:100%;
+    height:100%;
     margin:auto;
+    display:flex;
+    flex-direction:column;
+    align-items :center;
+    justify-content :center;
+    font-size:0.347rem;
+    color:#fff;
     >img{
-      width:100%;
-      height:100%;
+      width:1.28rem;
+      height:1.28rem;
+      margin-bottom:0.32rem;
     }
   }
 }

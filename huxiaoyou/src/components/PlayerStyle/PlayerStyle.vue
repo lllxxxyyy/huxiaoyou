@@ -314,12 +314,11 @@
     display: flex;
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
-    justify-content: space-between;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     >li{
         width:2.9rem;
-        margin-bottom:0.4rem;
+        margin-bottom:0.4rem;margin-right:0.19rem;
         box-shadow:0px 3px 12px 0px rgba(255,204,212,0.5); border-radius:0.16rem;
 		>.bofang{ width:100%; height:2rem; text-align:center; margin-top:-2.5rem; position: relative;
 			>img{ width:1rem; height:1rem;}

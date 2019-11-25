@@ -132,7 +132,6 @@ export default {
     	display: flex;
     	-webkit-box-pack: justify;
     	-ms-flex-pack: justify;
-    	justify-content: space-between;
     	-ms-flex-wrap: wrap;
 	margin-top:0.5rem;
     	flex-wrap: wrap;
@@ -147,6 +146,7 @@ export default {
             display:flex;
             flex-direction :column;
             align-items:center;
+            margin-right:0.06rem;
 			>img{ width:2.9rem; margin-bottom:0.2rem;}
             >span{
                 width:100%;
