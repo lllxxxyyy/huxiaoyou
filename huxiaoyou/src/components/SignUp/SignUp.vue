@@ -190,11 +190,25 @@ export default {
         ...mapState(['staticImgH'])
     },
   mounted() {
+    this.$http.post('/api/player/is_sign').then((res)=>{
+      if(res.data.code==200){
+           if(res.data.data.result==-1){
+               // 赛区列表
+               this.divisionListData()
+            //判断是否是分享出去的 截取邀请码字段
+               this.getCode()
+           }else {
+               this.playerIds(res.data.data.result)//保存选手id
+              this.addressIdIsSels('false') //投票盒子不显示 
+              this.PlayerDetailPages('/')  //选手详情返回页面
+              this.playDetailVoteDivs('false') //选手详情的投票盒子的消失
+              this.$router.push('/PlayerDetails')
+           }
+      }else{
+              this.alertText(res.data.msg)
+      }
+    })
     
-    // 赛区列表
-        this.divisionListData()
-    //判断是否是分享出去的 截取邀请码字段
-        this.getCode()
   },
   methods: {
     //   顶部按钮跳转
@@ -352,7 +366,7 @@ export default {
                         }
                 });
           },
-       ...mapMutations(['AddunionPages','RaceCheatsIds','RaceCheatsPages']),
+       ...mapMutations(['AddunionPages','RaceCheatsIds','RaceCheatsPages','playerIds','addressIdIsSels','PlayerDetailPages','playDetailVoteDivs']),
        // 身份证验证
         cardNumber(){
             var idCardReg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
