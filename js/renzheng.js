@@ -4,6 +4,22 @@
 		var IDCard=$("input[name='IDCard']").val()
 		var PhoneNum=$("input[name='PhoneNum']").val()
 		var BankCard=$("input[name='BankCard']").val()
+    var phoneReg=/^0?1[3|4|5|6|7|8][0-9]\d{8}$/
+    var idCardReg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
+    var regExp = /^([1-9]{1})(\d{15}|\d{18})$/
+    if(!userName){
+      animationChange('请填写您的名字!')
+      return
+    }else if(!idCardReg.test(IDCard)){
+      animationChange('您输入的身份证格式有误！')
+      return
+    }else if(!phoneReg.test(PhoneNum)){
+      animationChange('您输入的手机号格式有误！')
+      return
+    }else if(!regExp.test(BankCard)){
+      animationChange('您输入的银行卡格式有误！')
+      return
+    }
 	 	var personInfo= $.param({'mobile':PhoneNum,'real_name':userName,'id_card':IDCard,'bank_card':BankCard,'type':3})
               $.ajax({
                 url:domainName+'/user/real_Name',
@@ -28,7 +44,7 @@
             var idCardReg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
              iFlag = idCardReg.test(IDCard);
             if(!iFlag){
-                alert('您输入的身份证格式有误！')
+                animationChange('您输入的身份证格式有误！')
             }
   })
 

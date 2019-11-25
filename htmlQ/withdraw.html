@@ -71,7 +71,7 @@
 		</div>
 		<div class="withdraw_body">
 			<span>提现金额：</span>
-			<input type="text" name="withdrawMoney"   placeholder="您最高可提现元">
+			<input type="number" name="withdrawMoney"   oninput="inputHandler(this)"  placeholder="您最高可提现元">
 			<span class="allWithdraw">全部提现</span>
 		</div>
 		<div class="withdraw_zhu">
@@ -89,6 +89,7 @@
 	<script src="../js/touch.js"></script>
 	<script src="../js/Gpublic.js"></script>
 	<script>
+
 		var withdrawMoney=''
 		if(localStorage.getItem("withdraw")){
 			withdrawMoney=JSON.parse(decodeURIComponent(window.atob(localStorage.getItem("withdraw"))))
@@ -98,8 +99,13 @@
 		      }
 		}
 		$('.withdraw_btn').on('tap',function(){
-					if(! $("input[name='withdrawMoney']").val()){
-						animationChange('您还没有输入要提现的金额')
+					var money= $("input[name='withdrawMoney']").val()
+					if(!money){
+						animationChange('您还没有输入要提现的金额！')
+					}else if(money>withdrawMoney.withdraw){
+						animationChange('您输入的金额超出您最大可提现金额！')
+					}else if(money<=0){
+						animationChange('您输入的金额不能为0！')
 					}else{
 						var personInfo= $.param({'money':$("input[name='withdrawMoney']").val()})
 	                      $.ajax({
@@ -113,16 +119,26 @@
 	                             if(res.code==200){
 	                                    animationChange(res.data.msg)
 	                             }else {
-	                                  
+	                                  animationChange(res.data.msg)
 	                             }
 	                         }
 	                      })
 					}
 			 		
 		})
-		$("$input[name='withdrawMoney']").on('tap',function(){
-			
+		$('.allWithdraw').on('tap',function(){
+			$('input[name="withdrawMoney"]').val(withdrawMoney.withdraw)
 		})
+function inputHandler(e) {//金额输入
+    let val = e.value.replace(/[^\d.]/g, "")//只允许一个小数点              
+              .replace(/^\./g, "").replace(/\.{2,}/g, ".")//只能输入小数点后两位
+              .replace(".", "$#$")//把第一个'.'替换成'$#$',
+              .replace(/\./g, "")//把其余的字符'.'替换为空字符串(删除)
+              .replace("$#$", ".")//把字符'$#$'替换回原来的'.'
+              .replace(/^(\-)*(\d+)\.(\d{1,2}).*$/, '$1$2.$3')
+
+    $('input[name="withdrawMoney"]').val(val)
+}
 	</script>
 </body>
 </html>

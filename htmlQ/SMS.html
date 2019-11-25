@@ -18,7 +18,7 @@
 			<li><span>手机号码：</span><span class="phone"></span></li>
 			<li>
 				<span>短信验证码：</span>
-				<input name="SMSNum" type="" placeholder="请填写短信验证码">
+				<input maxlength='4' oninput = "value=value.replace(/[^\d]/g,'')" name="SMSNum" type="text"  placeholder="请填写短信验证码">
 				<button type="button" >获取验证码</button>
 
 			</li>
@@ -33,25 +33,22 @@
 	<script src="../js/Gpublic.js"></script>
 	<!-- <script src="../js/renzheng.js"></script> -->
 	<script>
-    var disabled=true
+    var disabled=true  //初始化'获取验证码按钮'能被点击
     var bb="" //认证带过来的信息
-    var timer=""
-    var i=60
-		if(localStorage.getItem("aa")){
+    var timer="" //初始化定时器
+    var i=60  //秒数
+		if(localStorage.getItem("aa")){ //认证页面带来的用户信息
 			bb=JSON.parse(decodeURIComponent(window.atob(localStorage.getItem("aa"))))
       if(bb.mobile){
           $('.phone').text(bb.mobile)
       }
-			
 		}
-     
 		 //获取验证码
     $(".Certi_center").on("tap",'button',function(){
       if(disabled){
-            disabled=false
-            var PhoneNum=$('.phone').text()
+            disabled=false //'获取验证码按钮'不能被点击
+            var PhoneNum=$('.phone').text() //手机号
             var personInfo= $.param({'mobile':PhoneNum,'scene':'1'})
-            
                       $.ajax({
                         url:domainName+'/user/ver_tion',
                         type:'post',
@@ -82,6 +79,7 @@
                       })
               }
 	   })
+    // 提交
 	$(".Certi_wrapper").on("tap",'.renSumbit',function(){
 		var PhoneNum=$('.phone').text()
 		var code=$("input[name='SMSNum']").val()
