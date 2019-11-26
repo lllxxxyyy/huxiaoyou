@@ -99,7 +99,7 @@ export default {
       verGetCode(){
             var obj=qs.stringify({
                   mobile:this.realInfo.mobile,
-                  scene:1,
+                  scene:23,
               })
            this.$http.post('api/user/ver_tion',obj).then((res)=>{
               var data=res.data
