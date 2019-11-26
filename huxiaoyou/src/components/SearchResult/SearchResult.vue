@@ -75,12 +75,14 @@ export default {
 
   mounted(){
 
-    if (this.$route.query) {
-      this.search = this.$route.query
+    if (this.$route.query.searchValue) {
+      this.search = this.$route.query.searchValue
+      console.log(this.search)
     } else {
       this.search = this.searchConditions
+      console.log(this.search)
     }
-      this.searchPlayer(this.$route.query.type, this.$route.query.value);
+      this.searchPlayer(this.search.type, this.search.value);
       
     //   var barobj=qs.stringify({
     //   })
@@ -139,23 +141,11 @@ export default {
             var obj=qs.stringify({
                 page:1
             })
-            this.$http.post('api/player/division_ranking/'+this.barId,obj,{
-                headers: {
-                    'authorization': this.tokenH
-                }
-            }).then((res)=>{
+            this.$http.post('api/player/division_ranking/'+this.barId,obj).then((res)=>{
                 if(res.data.code==200){
                      this.RankingData=res.data.data.data
                 }else{
-                     var self=this
-                    clearInterval(self.timer2);
-                            this.promptContent=res.data.msg
-                            this.showPrompt=true
-                            self.timer2=setTimeout(function(){
-                                self.showPrompt=false
-                                clearInterval(self.timer2);
-                            },2000)
-                        return false;
+                    this.alertText(res.data.msg)
                 }
 
             })

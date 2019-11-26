@@ -13,16 +13,6 @@
     <div class="withdraw" @click="toti">
       提现
     </div>
-    <!-- <ul class="AccountBalance">
-      <li v-for="(item, index) in accountBalance" :key="index">
-        <div class="Account"><span>{{item.desc}}</span>
-          <span class="Account_time">{{formatDate(item.change_time)}}</span></div>
-        <div class="Balance">
-          <span>余额：{{item.money}}</span>
-          <span class="Balance_right">+{{item.user_money}}</span>
-        </div>
-      </li>
-    </ul> -->
     <!-- 提示盒子 -->
     <transition name="fade">
       <div class="promptFather" v-if="showPrompt">

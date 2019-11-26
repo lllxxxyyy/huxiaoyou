@@ -8,7 +8,7 @@
 		</div>
 		<div class="withdraw_body">
 			<span>提现金额：</span>
-			<input @change="inputMoney"  v-model="inputMoneyText" type="number" name="withdrawMoney"   :placeholder="'您最高可提现'+billMoney+'元'">
+			<input @input="inputHandler"  v-model="inputMoneyText" type="text" name="withdrawMoney"   :placeholder="'您最高可提现'+billMoney+'元'">
 			<span class="allWithdraw" @click="allWithdraw">全部提现</span>
 		</div>
 		<div class="withdraw_zhu">
@@ -55,6 +55,16 @@ export default {
         var obj=qs.stringify({
             total:this.inputMoneyText
         })
+        if(!this.inputMoneyText){
+            this.alertText('请输入您要提现的金额')
+            return
+        }else if(this.inputMoneyText>this.billMoney){
+             this.alertText('您填写的金额超出可提现金额')
+            return
+        }else if(this.inputMoneyText<=0){
+            this.alertText('提现的金额不能为0')
+            return
+        }
         this.$http.post('/api/user/user_deposit',obj).then((res)=>{
             if(res.data.code==200){
                  this.alertText('提现成功')
@@ -63,29 +73,21 @@ export default {
             }
         })
     },
-    //   [只能输入数字和两位小数]
-    //    num(e){
-    //        console.log(e.target.value)
-    //        e.target.value = e.target.value.replace(/[^\d.]/g,""); //清除"数字"和"."以外的字符
-    //         e.target.value = e.target.value.replace(/^\./g,""); //验证第一个字符是数字
-            
-    //        e.target.value = e.target.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
-    //         this.inputMoneyText = e.target.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3'); //只能输入两个小数
-    //     },
     //   全部提现
     allWithdraw(){
         this.inputMoneyText=this.billMoney
     },
+    inputHandler() {//金额输入
+    let val = aa.replace(/[^\d.]/g, "")//只允许一个小数点              
+              .replace(/^\./g, "").replace(/\.{2,}/g, ".")//只能输入小数点后两位
+              .replace(".", "$#$")//把第一个'.'替换成'$#$',
+              .replace(/\./g, "")//把其余的字符'.'替换为空字符串(删除)
+              .replace("$#$", ".")//把字符'$#$'替换回原来的'.'
+              .replace(/^(\-)*(\d+)\.(\d{1,2}).*$/, '$1$2.$3')
+    this.inputMoneyText=val
+},
       toReturn(){
           this.$router.push('/AccountBalance')
-      },
-      inputMoney(){
-          if(this.inputMoneyText>this.billMoney){
-              this.inputMoneyText=''
-              this.alertText('您输入的金额超出最大可提现金额')
-          }else if(this.inputMoneyText<=0){
-              this.inputMoneyText=''
-          }
       },
       //   弹框提示
             alertText(text){

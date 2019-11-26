@@ -95,7 +95,7 @@
                             <!-- <div class="AssistTicket_title"> <span class="AssistTicket_title_first">卡包助力投票</span><span>(分享卡包，成功购买可获得卡包金额10倍的票数)</span> </div>   -->
                             <div class="AssistTicket_title"> <span class="AssistTicket_title_first">卡包助力投票</span> </div>  
 
-                            <span class="AssistTicket_text">助力票为实物，投票后请输入正确的收获地址，我司正常发货。</span>
+                            <span class="AssistTicket_text">助力票为实物，投票后请输入正确的收货地址，我司正常发货。</span>
                             <div class="SpecialTopicBody_bar">
                                 <!-- 商品列表 -->
                                 <ul>

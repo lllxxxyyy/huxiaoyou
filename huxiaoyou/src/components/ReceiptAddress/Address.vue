@@ -4,7 +4,7 @@
     <div class="hideDiv"></div>
       <div class="addressHead">
           <img @click="addressReturn" :src="staticImgH+'zuojiantou.png'" alt="">
-          <span class="addressHeadCenter">收获地址</span>
+          <span class="addressHeadCenter">收货地址</span>
           <span class="addressHeadAdd" @click="toaddAdress">添加</span>
       </div>
       <ul class="address_list" v-if="isKongPage">

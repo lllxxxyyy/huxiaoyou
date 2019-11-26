@@ -103,6 +103,7 @@ export default {
           this.$router.push('/')
       },
     toMore(item){
+        this.SearchConditions('')
         this.barIdINdexs(item.id)
         this.$router.push('/PlayerRankingList')
     },
@@ -164,7 +165,7 @@ export default {
             //
             // });
       },
-      ...mapMutations(['playerIds','PlayerDetailPages','addressIdIsSels','playDetailVoteDivs','barIdINdexs']),
+      ...mapMutations(['playerIds','PlayerDetailPages','addressIdIsSels','playDetailVoteDivs','barIdINdexs','SearchConditions']),
   }
 }
 

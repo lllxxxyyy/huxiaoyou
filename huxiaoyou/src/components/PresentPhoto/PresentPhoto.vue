@@ -19,9 +19,11 @@
                 <input type="file" class="upload" @change="uploadFile" ref="inputer" accept="image/*"/>
             </div>
       </div>
-      <div class="login_wrap" v-if="lodingShow">
-         <div class="loginImg">
+      <!-- loding -->
+      <div class="login_wrap" v-if="lodingShow" >
+         <div class="loginImg" >
            <img :src="staticImgH+'jiazai.gif'" alt="">
+           正在上传，请稍等...
          </div>
       </div>
   </div>
@@ -113,7 +115,7 @@
             for (let i = 0; i < this.fil.length; i++) {
               let size = this.fil[i].size;
               if (size > 5 * 1024 * 1024) {
-                alert('您选择的照片超过限制');
+                alert('您上传的照片不能超过5M');
                 this.lodingShow=false
                 return
               }
@@ -229,6 +231,49 @@
     >img{
       width:100%;
       height:100%;
+    }
+  }
+}
+// 提示盒子
+.promptFather{
+    width:100%;
+    position :absolute;
+    bottom:50%;
+    left:0;
+    z-index:999;
+    display :flex;
+    justify-content :center;
+    align-items :center;
+    >.prompt{
+        padding:0.15rem 0.3rem;
+        background :rgba(0,0,0,0.7);
+        color:#fff;
+        border-radius:0.5rem;
+        font-size:0.32rem;
+    }
+}
+.login_wrap{
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.9);
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:999;
+  .loginImg{
+     width:100%;
+    height:100%;
+    margin:auto;
+    display:flex;
+    flex-direction:column;
+    align-items :center;
+    justify-content :center;
+    font-size:0.347rem;
+    color:#fff;
+    >img{
+      width:1.28rem;
+      height:1.28rem;
+      margin-bottom:0.32rem;
     }
   }
 }

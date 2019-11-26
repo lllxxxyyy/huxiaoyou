@@ -10,7 +10,7 @@
 			<li><span>手机号码：</span><span class="phone">{{realInfo.mobile}}</span></li>
 			<li>
 				<span>短信验证码：</span>
-				<input name="SMSNum" type="number" v-model="codeNum" maxlength="4"  placeholder="请填写短信验证码">
+				<input oninput = "value=value.replace(/[^\d]/g,'')"  name="SMSNum" type="text" v-model="codeNum" maxlength="4"  placeholder="请填写短信验证码">
 				<button @click="verGetCode" :disabled="isDisabled" :class="['payPassPhoneCode',isDisabled?'payPassPhoneCodeChange':'']">{{getCode}}</button>
 
 			</li>

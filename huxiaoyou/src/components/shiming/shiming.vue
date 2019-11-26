@@ -98,6 +98,22 @@ export default {
                 }else if(this.isPerson==0){
                     type=1  //用户
                 }
+                var phoneReg=/^0?1[3|4|5|6|7|8][0-9]\d{8}$/
+                var idCardReg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
+                var regExp = /^([1-9]{1})(\d{15}|\d{18})$/
+    if(!this.userName){
+      this.alertText('请填写您的名字!')
+      return
+    }else if(!idCardReg.test(this.IDCard)){
+      this.alertText('您输入的身份证格式有误！')
+      return
+    }else if(!phoneReg.test(this.PhoneNum)){
+      this.alertText('您输入的手机号格式有误！')
+      return
+    }else if(!regExp.test(this.BankCard)){
+      this.alertText('您输入的银行卡格式有误！')
+      return
+    }
                 var obj=qs.stringify({
                     mobile:this.PhoneNum,
                     real_name:this.userName,
@@ -114,12 +130,6 @@ export default {
                         this.alertText(res.data.msg)
                     }
                 })
-                // var obj=qs.stringify({
-                //     total:
-                // })
-                // this.$http.post('api/user/user_deposit',obj).then((res)=>{
-                //     console.log(res)
-                // })
             },
             ...mapMutations(['realInfos']),
   }

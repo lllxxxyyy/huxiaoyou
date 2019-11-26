@@ -3,7 +3,7 @@
   <div class="addressAdd">
       <div class="addressAddHead">
           <img @click="returnHome" :src="staticImgH+'zuojiantou.png'" alt="">
-          <span class="addressAddHeadCenter">收获地址</span>
+          <span class="addressAddHeadCenter">收货地址</span>
           <span class="addressAddHeadAdd" @click="saveAddress">保存</span>
       </div>
       <div class="addressAddWrite">

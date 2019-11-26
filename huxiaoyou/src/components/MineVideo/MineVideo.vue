@@ -31,10 +31,11 @@
         </div>
       </div>
     </transition>
-    <!-- loding -->
-      <div class="login_wrap" v-if="lodingShow">
-         <div class="loginImg">
+   <!-- loding -->
+      <div class="login_wrap" v-if="lodingShow" >
+         <div class="loginImg" >
            <img :src="staticImgH+'jiazai.gif'" alt="">
+           正在上传，请稍等...
          </div>
       </div>
   </div>
@@ -104,7 +105,7 @@
               }else if(this.fil[0].size > 10*1024*1024){
                     this.$refs.inputer.value=''
                     this.lodingShow=false
-                    this.toastMsg('您选择的视频超过限制')
+                    this.toastMsg('您上传的视频不能超过10M')
                     return
               }else{
                     this.formData.delete('video_introduction');

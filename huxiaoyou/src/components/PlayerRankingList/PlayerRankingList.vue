@@ -98,11 +98,13 @@ export default {
   methods: {
       //to 跳转搜索结果页面
     toSearchResult(){
+        this.barIdINdexs(this.barId)
       this.SearchConditions(this.search);
-      this.$router.push({path: 'SearchResult', query: this.search});
+      this.$router.push({path: 'SearchResult', query: {searchValue: this.search}});
     },
     //   跳选手详情
     toPlayerDetail(id, voteFlag){
+        this.barIdINdexs(this.barId)
         this.playerIds(id)//保存选手id
         this.addressIdIsSels('false') //投票盒子不显示 
         this.PlayerDetailPages('/PlayerRankingList')  //选手详情返回页面
@@ -139,7 +141,7 @@ export default {
                
             })
       },
-      ...mapMutations(['playerIds','PlayerDetailPages','addressIdIsSels','playDetailVoteDivs', 'SearchConditions']),
+      ...mapMutations(['playerIds','PlayerDetailPages','addressIdIsSels','playDetailVoteDivs', 'SearchConditions','barIdINdexs']),
   }
 }
 
