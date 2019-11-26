@@ -347,6 +347,8 @@
                       }`
                       $('.money_detail').html(con)
                   	}
+                 }else{
+                 	animationChange(res.msg)
                  }
                 }
               })
@@ -387,8 +389,7 @@
 											<span class="play_list_ren">${isParent}</span>
 										</div>
 										<div class="play_list_right">${data.list[i].created_at}</div>
-									</li> 
-         //              			`
+									</li>`
                       }
                       $('.play_list').html(con)
                   }else{
