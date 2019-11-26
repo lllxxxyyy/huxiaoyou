@@ -59,6 +59,7 @@
           domainName='http://www.aibebi.net'
       }
     if(unionid && miniapp && nickname && head_pic && sex){
+        console.log(1)
         Islogin()
     }else{
         getCodes()
@@ -80,15 +81,15 @@
                       is_parent=data.result.is_parent
                       is_show=data.result.is_show
                       localStorage.setItem('token',data.result.token)
-                      // if(is_parent==1){
-                      //     if(is_show==0){
-                      //           window.location.href="Review.html"
-                      //     }else if(is_show==1){
-                      //           window.location.href="ChannelProvider.html"
-                      //     }else if(is_show==2){
-                      //           window.location.href="daisheng.html"
-                      //     }
-                      // }
+                      if(is_parent==1){
+                          if(is_show==0){
+                                window.location.href="Review.html"
+                          }else if(is_show==1){
+                                window.location.href="ChannelProvider.html"
+                          }else if(is_show==2){
+                                window.location.href="daisheng.html"
+                          }
+                      }
                   }else{
                         getCodes ()
                   }
@@ -125,7 +126,7 @@
                       unionid=res.data.unionid
                       nickname=res.data.nickname
                       head_pic=res.data.headimgurl
-                      miniapp=res.data.miniapp
+                      miniapp=res.data.openid
                       sex=res.data.sex
                       Islogin()                  
                     }else{
@@ -149,9 +150,18 @@
       }else if(is_parent==0){
           window.location.href="contract.html"
       }
-		
 	})
-// 
+  function animationChange(alertValue) {
+    $(".alertDIv").css('display', 'block')
+    $(".alertDIv").text(alertValue)
+    $('.alertDIv').addClass('animated bounce slow bounceOutDown')
+   
+    setTimeout(function() {
+
+      $(".alertDIv").css('display', 'none')
+      $('.alertDIv').removeClass('bounceOutDown')
+    }, 1000)
+  }
 	</script>
 </body>
 </html>
