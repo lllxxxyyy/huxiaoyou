@@ -43,11 +43,11 @@
 	<script src="../js/touch.js"></script>	
   <!-- <script src="../js/Gpublic.js"></script> -->
 	<script>
-  var unionid='1'
-  var miniapp="2"
-  var nickname="3"
-  var head_pic="4"
-  var sex="2"
+  var unionid=''
+  var miniapp=""
+  var nickname=""
+  var head_pic=""
+  var sex=""
   var is_parent=""
   var is_show=""
 // 获取域名
@@ -58,11 +58,11 @@
           // domainName='http://ceshi.aibebi.net'
           domainName='http://www.aibebi.net'
       }
-    // if(unionid && miniapp && nickname && head_pic && sex){
+    if(unionid && miniapp && nickname && head_pic && sex){
         Islogin()
-    // }else{
-    //     getCodes()
-    // }
+    }else{
+        getCodes()
+    }
 // 登录接口
       function Islogin(){
         var personInfo= $.param({'unionid':unionid,'miniapp':miniapp,'nickname':nickname,'head_pic':head_pic,'sex':sex})
