@@ -81,8 +81,13 @@
 			提交
 		</div>
 		<div class="alertDIv">
-
 		</div>
+		<div class="login_wrap"  style="display: none;">
+         <div class="loginImg" >
+           <img src="../img/jiazai.gif" alt="">
+           正在提交，请稍等...
+         </div>
+      	</div>
 	</div>
 	<script src="../js/font.min.js"></script>
 	<script src="../js/zepto.min.js"></script>
@@ -107,6 +112,7 @@
 					}else if(money<=0){
 						animationChange('您输入的金额不能为0！')
 					}else{
+						$('.login_wrap').show()
 						var personInfo= $.param({'money':$("input[name='withdrawMoney']").val()})
 	                      $.ajax({
 	                        url:domainName+'/channel/user_money',
@@ -116,10 +122,11 @@
 	                        data: personInfo,
 	                        jsonp:"callback",
 	                        success:function(res){
+	                        	$('.login_wrap').hide()
 	                             if(res.code==200){
 	                                    animationChange(res.data.msg)
 	                             }else {
-	                                  animationChange(res.data.msg)
+	                                  animationChange(res.msg)
 	                             }
 	                         }
 	                      })

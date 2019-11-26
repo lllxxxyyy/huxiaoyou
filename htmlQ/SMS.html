@@ -25,7 +25,12 @@
 		</ul>
 		<div class="renSumbit">提交</div>
 		<div class="alertDIv"></div>
-    
+    <div class="login_wrap"  style="display: none;">
+       <div class="loginImg" >
+         <img src="../img/jiazai.gif" alt="">
+         正在提交，请稍等...
+       </div>
+    </div>
 	</div>	
 	<script src="../js/font.min.js"></script>
 	<script src="../js/zepto.min.js"></script>
@@ -83,6 +88,7 @@
 	$(".Certi_wrapper").on("tap",'.renSumbit',function(){
 		var PhoneNum=$('.phone').text()
 		var code=$("input[name='SMSNum']").val()
+    $('.login_wrap').show()
 	 	var personInfo= $.param({'mobile':PhoneNum,'real_name':bb.real_name,'id_card':bb.id_card,'bank_card':bb.bank_card,code:code,'type':3})
               $.ajax({
                 url:domainName+'/user/bang_Name',
@@ -92,6 +98,7 @@
                 data: personInfo,
                 jsonp:"callback",
                 success:function(res){
+                  $('.login_wrap').hide()
                      if(res.code==200){
                      	 window.location.href="Review.html"
                      }else{

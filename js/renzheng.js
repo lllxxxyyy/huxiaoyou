@@ -20,6 +20,7 @@
       animationChange('您输入的银行卡格式有误！')
       return
     }
+    $('.login_wrap').show()
 	 	var personInfo= $.param({'mobile':PhoneNum,'real_name':userName,'id_card':IDCard,'bank_card':BankCard,'type':3})
               $.ajax({
                 url:domainName+'/user/real_Name',
@@ -29,6 +30,7 @@
                 data: personInfo,
                 jsonp:"callback",
                 success:function(res){
+                  $('.login_wrap').hide()
                   if(res.code==200){
                       localStorage.setItem('aa',window.btoa(window.encodeURIComponent(JSON.stringify({"mobile": PhoneNum,'real_name':userName,'id_card':IDCard,'bank_card':BankCard,'type':3}))))
                   		window.location.href="SMS.html"
