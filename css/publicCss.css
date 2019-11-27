@@ -64,3 +64,43 @@ html,body{
       height:1.28rem;
       margin-bottom:0.32rem;
     }
+
+.fail_Wrap{
+  width:100%;
+  height:100%;
+  background: rgba(0,0,0,0.9);
+  position: fixed;
+  top:0;
+  left:0;
+}
+.fail{
+  width:8rem;
+  height:4rem;
+  background: #fff;
+  border-radius: 0.133rem;
+  position: absolute;
+  top:50%;
+  left:50%;
+  margin-top:-2rem;
+  margin-left:-4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.fail_text{
+  width:100%;
+  flex:1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size:0.373rem;
+}
+.fail_btn{
+  width:100%;
+  height:1.33rem;
+  line-height: 1.33rem;
+  text-align: center;
+  font-size:0.373rem;
+  color:#FF3924;
+  border-top:0.03rem solid #CCCCCC;
+}

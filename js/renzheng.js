@@ -43,7 +43,9 @@
                   		window.location.href="SMS.html"
                   }else{
                     $('.login_wrap').hide()
-                    animationChange(res.msg)
+                    $('.fail_Wrap').show()
+                    $('.fail_text').text(res.msg)
+                    // animationChange(res.msg)
                   }
                  }
               })
@@ -57,6 +59,8 @@
                 animationChange('您输入的身份证格式有误！')
             }
   })
+
+
 
 
 

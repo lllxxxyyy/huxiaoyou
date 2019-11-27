@@ -21,3 +21,8 @@ var token=localStorage.getItem("token")
 $.ajaxSettings.beforeSend = function(xhr,request){ 
 	xhr.setRequestHeader('Authorization', token)
 }
+
+
+  $('.fail_btn').on('tap',function(){
+    $('.fail_Wrap').hide()
+  })

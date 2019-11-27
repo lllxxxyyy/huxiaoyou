@@ -31,6 +31,12 @@
          正在提交，请稍等...
        </div>
     </div>
+    <!-- 失败提示 -->
+      <div class="fail_Wrap" style="display:none">
+          <div class="fail" >
+             <span class="fail_text"></span><span class="fail_btn">确定</span>
+          </div>
+      </div>
 	</div>	
 	<script src="../js/font.min.js"></script>
 	<script src="../js/zepto.min.js"></script>
@@ -102,7 +108,9 @@
                      if(res.code==200){
                      	 window.location.href="Review.html"
                      }else{
-                        animationChange(res.msg)
+                        $('.fail_Wrap').show()
+                      $('.fail_text').text(res.msg)
+                        // animationChange(res.msg)
                      }
                  },
 
