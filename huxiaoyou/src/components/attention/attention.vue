@@ -6,7 +6,7 @@
         </div>
         <!-- 提示下载APP -->
         <div @click="downBtn" class="downBtn">
-            下载APP
+            关注公众号
         </div>
     </div>
   
