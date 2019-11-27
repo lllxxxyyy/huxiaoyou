@@ -44,6 +44,12 @@
 		<div class="enterprise CheckIn">企业入驻</div>
     
     <div class="alertDIv"></div>
+    <!-- 企业入驻提示 -->
+      <div class="fail_Wrap" style="display:none">
+          <div class="fail" >
+             <span class="fail_text">该功能等待上线,敬请期待</span><span class="fail_btn">确定</span>
+          </div>
+      </div>
 	</div>
 	<script src="../js/font.min.js"></script>
 	<script src="../js/zepto.min.js"></script>
@@ -157,6 +163,12 @@
           window.location.href="contract.html"
       }
 	})
+   $('.Home').on('tap','.enterprise',function(){
+        $('.fail_Wrap').show()
+   })
+   $('.Home').on('tap','.fail_btn',function(){
+        $('.fail_Wrap').hide()
+   })
   function animationChange(alertValue) {
     $(".alertDIv").css('display', 'block')
     $(".alertDIv").text(alertValue)
