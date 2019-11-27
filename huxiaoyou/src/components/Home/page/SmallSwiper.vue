@@ -37,7 +37,6 @@ export default {
   mounted(){
     this.$http.post('/api/first/vote_list').then((res)=>{
          this.slidersData=res.data.data
-         console.log(this.slidersData)
         })
   },
   methods: {

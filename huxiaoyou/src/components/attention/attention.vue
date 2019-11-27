@@ -1,8 +1,9 @@
 <!--  -->
 <template>
     <div>
-        <div class="attention" v-if="showAtten" @click="attentionHide">
+        <div class="attention" v-if="showAtten"  @click="attentionHide">
             <img @click.stop :src="staticImgH+'attention.png'" alt="">
+            <span>长按保存图片，关注歌游文旅公众号</span>
         </div>
         <!-- 提示下载APP -->
         <div @click="downBtn" class="downBtn">
@@ -23,13 +24,13 @@ export default {
     };
   },
 
-  components: {},
+//   components: {},
 
   computed:{
         ...mapState(['staticImgH'])
     },
 
-  mounted: {},
+//   mounted: {},
 
   methods: {
       attentionHide(){
@@ -49,6 +50,7 @@ export default {
     height:100%;
     background :rgba(0,0,0,0.9);
     display :flex;
+    flex-direction :column;
     align-items :center;
     justify-content :center;
     position :fixed;
@@ -58,6 +60,11 @@ export default {
     >img{
         width:8rem;
         height:7.27rem;
+    }
+    >span{
+        color:#fff;
+        font-size:0.53rem;
+        margin-top:0.8rem;
     }
 }
 // 下载App
