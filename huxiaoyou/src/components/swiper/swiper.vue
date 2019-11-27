@@ -36,7 +36,7 @@ export default {
         this.imgData= this.$route.query.imgData
         this.index=this.$route.query.index
           this.width= 10* this.imgData.length
-        this.transX1=this.index * 10+'rem'
+        this.transX1=-this.index * 10+'rem'
     },
     methods: {
         leftJ(){
