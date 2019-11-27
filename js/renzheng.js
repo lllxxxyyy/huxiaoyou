@@ -1,5 +1,6 @@
 
  	$(".Certi_wrapper").on("tap",'.renSumbit',function(){
+    $('.login_wrap').show()
 		var userName=$("input[name='userName']").val()
 		var IDCard=$("input[name='IDCard']").val()
 		var PhoneNum=$("input[name='PhoneNum']").val()
@@ -8,19 +9,23 @@
     var idCardReg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
     var regExp = /^([1-9]{1})(\d{15}|\d{18})$/
     if(!userName){
+      $('.login_wrap').hide()
       animationChange('请填写您的名字!')
       return
     }else if(!idCardReg.test(IDCard)){
+      $('.login_wrap').hide()
       animationChange('您输入的身份证格式有误！')
       return
     }else if(!phoneReg.test(PhoneNum)){
+      $('.login_wrap').hide()
       animationChange('您输入的手机号格式有误！')
       return
     }else if(!regExp.test(BankCard)){
+      $('.login_wrap').hide()
       animationChange('您输入的银行卡格式有误！')
       return
     }
-    $('.login_wrap').show()
+    
 	 	var personInfo= $.param({'mobile':PhoneNum,'real_name':userName,'id_card':IDCard,'bank_card':BankCard,'type':3})
               $.ajax({
                 url:domainName+'/user/real_Name',
@@ -30,11 +35,14 @@
                 data: personInfo,
                 jsonp:"callback",
                 success:function(res){
-                  $('.login_wrap').hide()
+                  
                   if(res.code==200){
+                    
                       localStorage.setItem('aa',window.btoa(window.encodeURIComponent(JSON.stringify({"mobile": PhoneNum,'real_name':userName,'id_card':IDCard,'bank_card':BankCard,'type':3}))))
+                      $('.login_wrap').hide()
                   		window.location.href="SMS.html"
                   }else{
+                    $('.login_wrap').hide()
                     animationChange(res.msg)
                   }
                  }
