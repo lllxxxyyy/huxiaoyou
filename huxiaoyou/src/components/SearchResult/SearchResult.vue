@@ -13,7 +13,7 @@
       <span @click="searchPlayer(search.type, search.value)">搜索</span>
     </div>
     <ul class="HomeAngel_listTwo" v-if="searchResult && searchResult.length > 0">
-      <li v-for="(item,index) in searchResult" :key="index" @click="toPlayerDetail(item.user_id, 'false')">
+      <li v-for="(item,index) in searchResult" :key="index" @click="toPlayerDetail(item.player_id, 'false')">
         <!-- {{item.RankingImgData[index]}} -->
          <div class="HomeAngel_listTwoImg"><img v-if="item.head_pic" :src="item.head_pic" alt=""></div>
         <div class="top_img">
@@ -77,10 +77,8 @@ export default {
 
     if (this.$route.query.searchValue) {
       this.search = this.$route.query.searchValue
-      console.log(this.search)
     } else {
       this.search = this.searchConditions
-      console.log(this.search)
     }
       this.searchPlayer(this.search.type, this.search.value);
       
