@@ -6,7 +6,7 @@
       <mineBtns v-bind:personData="personData"/>
       <div class="Mine_SingingChina">歌游中国</div>
       <div class="footer">
-         
+        
       </div>
        <Foot class="PublicFoot" />
   </div>
@@ -61,6 +61,7 @@ export default {
 <style scoped lang="stylus">
 .mine{
   width:100%;
+  height:100%;
   background :#fff;
 }
 .PublicFoot{

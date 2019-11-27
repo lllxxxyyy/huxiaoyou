@@ -34,7 +34,7 @@
                   <span class="minePerson_artickNum">{{personData.app_vote}}</span><span>剩余免费票</span>
                 </li>
                 <li @click="toAccountBalance">
-                  <span class="minePerson_artickNum">{{personData.user_moneys}}</span><span>账单详情</span>
+                  <span class="minePerson_artickNum">{{personData.user_moneys}}</span><span>账单余额</span>
                 </li>
               </ul>
               <div class="minePerson_InfoLike" v-if="personData.signature">{{personData.signature}}</div>
@@ -75,12 +75,13 @@
                         <span class="minePerson_InfoName">{{personData.username}}</span>
                         <div class="minePerson_InfoVip"><img :src="staticImgH+'Mine_vip.png'" alt=""><span>{{personData.level_name}}</span></div>
                       </div>
+                      <div class="minePerson_quRen"><span class="minePerson_InfoRiBott" >{{personData.names}}</span><span class="" v-if="personData.is_realname==1">已认证</span></div>
                       <span class="minePerson_InfoRiBotts" >{{personData.names}}</span>
                   </div>
               </div>
               <ul class="minePerson_artick ">
                 <li  @click="toAccountBalance">
-                  <span class="minePerson_artickNum">{{personData.user_moneys}}</span><span>账单详情</span>
+                  <span class="minePerson_artickNum">{{personData.user_moneys}}</span><span>账单余额</span>
                 </li>
                 <li>
                   <span class="minePerson_artickNum">{{personData.user_votes}}</span><span>免费票数</span>
@@ -191,12 +192,15 @@ export default {
               justify-content :space-between;
               margin-top:0.133rem;
               >.minePerson_InfoName{
-                    width:2.66rem;
+                    width:3.8rem;
                     font-size:0.53rem;
                     line-height :0.747rem;
                     margin-right:0.53rem;
                     color:rgba(0, 0, 0, 1);
                     line-height :0.747rem;
+                    overflow :hidden;
+                    text-overflow:ellipsis;
+                    white-space:nowrap;
               }
               >.minePerson_InfoVip{
                 display:flex;
@@ -214,12 +218,13 @@ export default {
           >.minePerson_quRen{
             font-size:0.32rem;
             color:rgba(255, 162, 0, 1);
-              >.minePerson_InfoRiBott{
-            font-size:0.32rem;
-            color:rgba(0, 0, 0, 0.36);
             margin-top:0.16rem;
-            margin-right:0.32rem;
-          }
+              >.minePerson_InfoRiBott{
+                font-size:0.32rem;
+                color:rgba(0, 0, 0, 0.36);
+                
+                margin-right:0.32rem;
+              }
           }
           
           >.minePerson_InfoRiBotts{
