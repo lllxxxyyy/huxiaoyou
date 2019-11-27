@@ -37,9 +37,8 @@
                 success:function(res){
                   
                   if(res.code==200){
-                    
-                      localStorage.setItem('aa',window.btoa(window.encodeURIComponent(JSON.stringify({"mobile": PhoneNum,'real_name':userName,'id_card':IDCard,'bank_card':BankCard,'type':3}))))
                       $('.login_wrap').hide()
+                      localStorage.setItem('aa',window.btoa(window.encodeURIComponent(JSON.stringify({"mobile": PhoneNum,'real_name':userName,'id_card':IDCard,'bank_card':BankCard,'type':3}))))
                   		window.location.href="SMS.html"
                   }else{
                     $('.login_wrap').hide()
