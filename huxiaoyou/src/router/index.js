@@ -81,6 +81,8 @@ import MoneyDetail from '@/components/MoneyDetail/MoneyDetail' //明细
 
 import swiper from '@/components/swiper/swiper' //明细
 
+import attention from '@/components/attention/attention' //扫码关注
+
 const routes = [{ //首页
         path: '/',
         name: 'Home',
@@ -527,6 +529,11 @@ const routes = [{ //首页
         path: '/swiper',
         name: 'swiper',
         component: swiper
+    },
+    { //扫码关注
+        path: '/attention',
+        name: 'attention',
+        component: attention
     },
 
 ]

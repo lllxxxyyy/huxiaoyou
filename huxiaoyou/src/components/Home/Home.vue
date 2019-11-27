@@ -8,6 +8,7 @@
       <HomeZone/>
       <wonderfulVideo/>
       <Foot class="PublicFoot" />  <!-- 公共底部 -->
+      <attention/>
       <div class="footer">
       </div>
       <!-- 判断是否第一次进入app    是（弹）提示去报名-->
@@ -34,6 +35,7 @@
 
 <script>
 import Foot from './../Foot/Foot'
+import attention from './../attention/attention'
 
 import HomeBanner from '././page/banner'
 import SmallSwiper from '././page/SmallSwiper'
@@ -69,6 +71,7 @@ export default {
       SmallSwiper,
       HomeZone,
       wonderfulVideo,
+      attention
 
     //   HomeHeader,
     //   HomeAngel,
