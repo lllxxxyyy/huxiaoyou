@@ -14,7 +14,7 @@
                 </swiper>
             </div>
         <!--顶部大头像  -->
-            <div @click.stop="changeBigImg(detailData.head_pic)" class="playerBigImg" >
+            <div class="playerBigImg" >
                 <img :src="staticImgH+'mineBg.png'" alt="">
             </div>
         <!-- 选手信息 -->
@@ -74,7 +74,7 @@
             </div>
         <!-- 小图 -->
             <ul class="playerImg_list">
-                <li @click="changeBigImg(item.src)" v-for="(item,index) in detailData.photo_introduction" :key="index">
+                <li @click="changeBigImg(index)" v-for="(item,index) in detailData.photo_introduction" :key="index">
                     <img :src="item.src" alt="">
                 </li>
             </ul>
@@ -528,9 +528,10 @@ export default {
                 this.showBigPlayImg=false
             },
         //   显示大图
-            changeBigImg(item){
-                this.showBigPlayImg=true
-                this.itemSrc=item
+            changeBigImg(index){
+                // this.showBigPlayImg=true
+                // this.itemSrc=item
+                this.$router.push({path:'/swiper',query:{imgData:this.detailData.photo_introduction,index:index}})
             },
         //   分享给朋友
             toFriend(){

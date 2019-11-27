@@ -62,9 +62,15 @@ const state = {
     isRealname: sessionStorage.getItem('isRealname'), //实名状态
     isPerson: sessionStorage.getItem('isPerson'), //判断是选手还是用户
     realInfo: sessionStorage.getItem('realInfo'), //保存实名认证信息
+    swiperPage: sessionStorage.getItem('swiperPage'), //选手详情图片轮播页面返回
 }
 
 const mutations = {
+    //选手详情图片轮播页面返回
+    swiperPages(state, swiperPage) {
+        sessionStorage.setItem('swiperPage', swiperPage);
+        state.swiperPage = swiperPage
+    },
     //保存实名认证信息
     realInfos(state, realInfo) {
         sessionStorage.setItem('realInfo', realInfo);

@@ -79,6 +79,8 @@ import SMS from '@/components/SMS/SMS' //短信验证
 
 import MoneyDetail from '@/components/MoneyDetail/MoneyDetail' //明细
 
+import swiper from '@/components/swiper/swiper' //明细
+
 const routes = [{ //首页
         path: '/',
         name: 'Home',
@@ -520,6 +522,11 @@ const routes = [{ //首页
             requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
         },
         component: MoneyDetail
+    },
+    { //短信
+        path: '/swiper',
+        name: 'swiper',
+        component: swiper
     },
 
 ]
