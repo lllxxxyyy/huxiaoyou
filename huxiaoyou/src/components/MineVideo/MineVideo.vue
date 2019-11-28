@@ -19,7 +19,7 @@
     <div class="video_text" v-if="this.videoSrc">此视频展示在选手详情页面</div>
     <div class="right_wrap">
       <div class="right">
-        修改视频<span><img :src="staticImgH+'tianjia.png'" alt=""></span>
+        上传视频<span><img :src="staticImgH+'tianjia.png'" alt=""></span>
         <input type="file" class="upload" @change="uploadFile" ref="inputer" accept="video/*"/>
       </div>
     </div>
