@@ -6,9 +6,12 @@
       <!--</video-player>-->
       <div class="contenter flex_center">
         <div class="videoBox" >
-		<div  @click="playOrPause()" class="play mask flex_center">
-            <img v-show="show" class="playBtn" :src="staticImgH+'bofang.png'"/>
-          </div>
+		    <div v-if="mobile==='android'"  @click="playOrPause()" class="play mask flex_center">
+                <img v-show="show" class="playBtn" :src="staticImgH+'bofang.png'"/>
+            </div>
+            <div  v-if="mobile==='iPhone'"  @click="playOrPause()" class="play mask flex_center">
+                <img v-show="phoneShow" class="playBtn" :src="staticImgH+'bofang.png'"/>
+            </div>
           <video v-if="mobile==='android'" id="video"
                  width="100%"
                  height="100%"
@@ -44,6 +47,7 @@ export default {
 	data () {
 		return {
             show:true,
+            phoneShow:false,
             videoSrc:'',
         }
     },
@@ -68,10 +72,12 @@ export default {
             // 正在播放
             if(this.video.paused) {
                 this.video.play();
+                this.phoneShow=false
                 this.show = false
             } else {
                 this.video.pause();
                 this.show = true
+                this.phoneShow=false
             }
 
       },
