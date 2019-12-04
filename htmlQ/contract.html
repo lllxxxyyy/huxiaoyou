@@ -113,7 +113,6 @@
                 data: personInfo,
                 jsonp:"callback",
                 success:function(res){
-                	console.log(res)
                   if(res.code==200){
 				          var con=res.data.result[0].content
 				          $('.contract_body').html(con)

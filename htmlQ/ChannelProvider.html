@@ -326,31 +326,26 @@
 	tiList()
 	function tiList(){
 		var con='';
+			var personInfo= $.param({'type':3})
 			$.ajax({
                 url:domainName+'/channel/ti_list',
                 type:'post',
                 async:false,
                 datatype:'jsonp',
+                data: personInfo,
                 jsonp:"callback",
                 success:function(res){
                   if(res.code==200){
                       var data=res.data.result
-                      console.log(res)
                       for(var i=0;i<data.length;i++){
-                      			var isParent=''
-                      			if(data[i].is_parent==0){
-                      				isParent='未认证'
-                      			}else if(data[i].is_parent==1){
-                      				isParent='已认证'
-                      			}
                       			con+=`
 									<li>
 									<div class="money_detail_left">
 										<span>邀请选手所得奖励</span>
-										<span class="money_detail_ren">${isParent}</span>
+										<span class="money_detail_ren">${data[i].money}</span>
 									</div>
-									<div class="money_detail_right"><span class="money_detail_rightMoney">余额：¥${data[i].money}</span><span>${data[i].ct_time}</span></div>
-								</li>`    			`
+									<div class="money_detail_right"><span class="money_detail_rightMoney">余额：¥${data[i].yu_money}</span><span>${data[i].ct_time}</span></div>
+								    </li>`    			`
                       }`
                       $('.money_detail').html(con)
                   	}
@@ -379,7 +374,6 @@
                       $('.yesParent').text(data.result.yes_parent+'人')
                       $('.parentInvite').text(data.result.avatar)
                       $('.isParent').text(data.result.no_parent * 5)
-                      console.log(res)
                       for(var i=0;i<data.list.length;i++){
                       			var isParent=''
                       			if(data.list[i].is_parent==0){
@@ -414,7 +408,6 @@
                 jsonp:"callback",
                 success:function(res){
                   if(res.code==200){
-                  	console.log(res)
                       $('.poster > img').attr('src',res.data.result)
                       $('.poster').show()
                   }else{
