@@ -58,31 +58,24 @@ import PowerPack from '@/components/PowerPack/PowerPack' //助力卡包
 import login from '@/components/login/login' //登录
 import videoDetail from '@/components/videoDetail/videoDetail' //登录
 import playDetailStyle from '@/components/playDetailStyle/playDetailStyle' //选手详情风采
-
 import comOrder from '@/components/comOrder/comOrder' //确认订单
-
 import RaceCheats from '@/components/RaceCheats/RaceCheats' //赛事秘籍  最新通告
-
 import changeAge from '@/components/changeAge/changeAge' //个人信息 修改年龄
 import changeHeight from '@/components/changeHeight/changeHeight' //个人信息 修改年龄
 import changeWeight from '@/components/changeWeight/changeWeight' //个人信息 修改年龄
-
 import changeConstellation from '@/components/changeConstellation/changeConstellation' //个人信息 修改年龄
 import unionDetail from '@/components/unionDetail/unionDetail' //公会详情
-
 import MineVideo from '@/components/MineVideo/MineVideo' //个人信息 上传视频
-
 import shiming from '@/components/shiming/shiming' //实名
-
 import withdraw from '@/components/withdraw/withdraw' //实名
 import SMS from '@/components/SMS/SMS' //短信验证
-
 import MoneyDetail from '@/components/MoneyDetail/MoneyDetail' //明细
-
 import swiper from '@/components/swiper/swiper' //明细
-
 import attention from '@/components/attention/attention' //扫码关注
+import inviteFriend from '@/components/inviteFriend/inviteFriend' //邀请朋友
+import withdrawPlayer from '@/components/withdrawPlayer/withdrawPlayer'
 
+import MineAttention from '@/components/MineAttention/MineAttention' //我的关注
 const routes = [{ //首页
         path: '/',
         name: 'Home',
@@ -535,6 +528,31 @@ const routes = [{ //首页
         name: 'attention',
         component: attention
     },
+    { //扫码关注
+        path: '/inviteFriend',
+        name: 'inviteFriend',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: inviteFriend
+    },
+    { //扫码关注
+        path: '/withdrawPlayer',
+        name: 'withdrawPlayer',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: withdrawPlayer
+    },
+    { //扫码关注
+        path: '/MineAttention',
+        name: 'MineAttention',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: MineAttention
+    },
+
 
 ]
 

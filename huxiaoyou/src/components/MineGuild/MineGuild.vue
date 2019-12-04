@@ -8,6 +8,7 @@
                 <span v-if="disabledXiu" @click="editYes">编辑</span>
                 <span v-else @click="saveYes">保存</span>
             </div>
+            <div class="hideDiv"></div>
             <div class="AddUnion_hide"></div>
             <div class="AddUnion_Info" v-if="guildData.is_show==1">
                     <ul class="AddUnion_InfoList">
@@ -585,6 +586,8 @@ export default {
 </script>
 <style scoped lang="stylus">
 .AddUnion_father{
+    width:100%;
+    background:#fff;
     letter-spacing :0.04rem;
 }
 .AddUnion_hide{
@@ -602,6 +605,7 @@ export default {
     top:0;
     left:0;
     padding:0 0.4rem;
+    background:#fff;
     >img{
         width:0.32rem;
         height:0.56rem;
@@ -610,6 +614,9 @@ export default {
         font-size:0.48rem;
         color:rgba(0, 0, 0, 1);
     }
+}
+.hideDiv{
+  height:1.23rem;
 }
 .AddUnion_Info{
     margin:0.4rem;

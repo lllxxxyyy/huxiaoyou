@@ -63,9 +63,15 @@ const state = {
     isPerson: sessionStorage.getItem('isPerson'), //判断是选手还是用户
     realInfo: sessionStorage.getItem('realInfo'), //保存实名认证信息
     swiperPage: sessionStorage.getItem('swiperPage'), //选手详情图片轮播页面返回
+    depositType: sessionStorage.getItem('swiperPage'), //邀请好友参赛提现type
 }
 
 const mutations = {
+    //邀请好友参赛提现type
+    depositTypes(state, depositType) {
+        sessionStorage.setItem('depositType', depositType);
+        state.depositType = depositType
+    },
     //选手详情图片轮播页面返回
     swiperPages(state, swiperPage) {
         sessionStorage.setItem('swiperPage', swiperPage);

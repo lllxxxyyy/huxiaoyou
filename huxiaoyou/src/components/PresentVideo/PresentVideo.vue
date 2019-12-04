@@ -2,10 +2,11 @@
 <template>
   <div class="PresentVideo">
     <div class="PlayerRanking_header">
-      <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
-      <span>介绍视频</span>
-      <div @click="delStatus()" class="PresentPhoto_admin">管理</div>
+        <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
+        <span>介绍视频</span>
+        <div @click="delStatus()" class="PresentPhoto_admin">管理</div>
     </div>
+    <div class="hideDiv"></div>
     <ul class="videoList">
       <li v-for="(item,index) in reply" :key="index">
         <div class="present_video">
@@ -218,8 +219,11 @@
     display :flex;
     align-items :center;
     justify-content :space-between;
-    position :relative;
+    position :fixed;
+    top:0;
+    left:0;
     padding:0 0.4rem;
+    background :#fff;
     >img{
         width:0.32rem;
         height:0.56rem;
@@ -229,6 +233,9 @@
         color:rgba(0, 0, 0, 1);
     }
 	>.PresentPhoto_admin{ font-size:0.42rem;}
+}
+.hideDiv{
+  height:1.23rem;
 }
 .right_wrap{
   width:100%;

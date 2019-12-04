@@ -12,6 +12,7 @@
       </div>
       <span @click="searchPlayer(search.type, search.value)">搜索</span>
     </div>
+    <div class="hideDiv"></div>
     <ul class="HomeAngel_listTwo" v-if="searchResult && searchResult.length > 0">
       <li v-for="(item,index) in searchResult" :key="index" @click="toPlayerDetail(item.player_id, 'false')">
         <!-- {{item.RankingImgData[index]}} -->
@@ -25,7 +26,7 @@
 		  		 }" @click.stop="toPlayerDetail(item.user_id, 'true')">给Ta投票
         </div>
         <span class="angelNameTwo">选手：{{item.username}}</span>
-        <span class="angelPriceTwo">{{item.votes}}+</span>
+        <span class="angelPriceTwo">编号：{{item.player_id}}</span>
       </li>
     </ul>
     <div class="search_k" v-if="!searchResult || (searchResult && searchResult.length < 1)">
@@ -176,7 +177,11 @@ export default {
     display :flex;
     align-items :center;
     justify-content :center;
-    position :relative;
+    position :fixed;
+    top:0;
+    left:0;
+    background :#fff;
+    z-index:5;
     >img{
         width:0.32rem;
         height:0.56rem;
@@ -192,7 +197,9 @@ export default {
 		width:1.4rem;
     }
 }
-
+.hideDiv{
+  height:1.23rem;
+}
 .SpecialTopicBody_bar{
     width:100%;
     height:1.147rem;

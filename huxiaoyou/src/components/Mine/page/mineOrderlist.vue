@@ -87,6 +87,7 @@ export default {
     border-radius:0.133rem;
     box-shadow :0 0.05rem 0.3rem rgba(241, 241, 241, 0.9);
     padding:0 0.27rem;
+    background :#fff;
 }
 .mineOrder_title{
     width:100%;

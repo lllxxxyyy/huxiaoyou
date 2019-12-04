@@ -5,12 +5,12 @@
       <div class="PlayerRanking_header_left">
         <img @click="toReturn" :src="staticImgH+'zuojiantoub.png'" alt="">
         <div>
-          <div class="player_top">
+          <div class="player_top" @click="toPlayerDetail">
               <div class="player_name">
                 <img v-if="video_info" :src="video_info.head_pic" alt="">
                 <span>{{video_info.username}}</span>
-                <span class="guanzhu" v-if="!video_info.concern" @click="follow()">关注</span>
-                <span class="guanzhu" v-if="video_info.concern" @click="follow()">已关注</span>
+                <span class="guanzhu" v-if="video_info.concern==0" @click.stop="follow()">关注</span>
+                <span class="guanzhu" v-if="video_info.concern==1" @click.stop="follow()">已关注</span>
               </div>
             </div>
         </div>
@@ -144,6 +144,7 @@
       this.mobile = navigator.appVersion.indexOf('iPhone') !== -1 ? 'iPhone' :  'android'
     },
     mounted() {
+      console.log(this.playerStyleDetailedPlayer)
       this.firstPanduan()
       this.video = document.getElementById('video')
       this.output = document.getElementById("output");
@@ -165,7 +166,6 @@
     },
 
     methods: {
-      
       // 点击了解更多
           toHome(){
             this.$router.push('/PlayerStyle')
@@ -320,9 +320,9 @@
 
       },
       //   跳选手详情
-      toPlayerDetail(id){
-        this.playerIds(id)//保存选手id
-        this.PlayerStyleDetailedInfo({currentPlayerData: this.currentPlayerData})
+      toPlayerDetail(){
+        this.playerIds(this.currentPlayerData.id)//保存选手id
+        this.PlayerStyleDetailedPlayer(this.currentPlayerData)
         this.addressIdIsSels('false') //投票盒子不显示
         this.PlayerDetailPages('/PlayerStyleDetailed')  //选手详情返回页面
         this.playDetailVoteDivs('true') //选手详情的投票盒子的消失
@@ -448,7 +448,7 @@
       //       img.height = 300;
       //       this.output.appendChild(img)
       // },
-      ...mapMutations(['playerIds','PlayerDetailPages','addressIdIsSels','playDetailVoteDivs', 'PlayerStyleDetailedInfo']),
+      ...mapMutations(['playerIds','PlayerDetailPages','addressIdIsSels','playDetailVoteDivs','PlayerStyleDetailedPlayer']),
 
     }
   }

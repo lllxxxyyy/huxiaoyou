@@ -2,11 +2,12 @@
 <template>
   <div class="changeName">
         <div class="change_title">
-        <img @click="changeRetuurn" :src="staticImgH+'zuojiantou.png'" alt="">
-        <span>修改年龄</span> 
+            <img @click="changeRetuurn" :src="staticImgH+'zuojiantou.png'" alt="">
+            <span>修改年龄</span> 
 
-        <span class="submit" @click="submit">保存</span>
+            <span class="submit" @click="submit">保存</span>
       </div>
+      <div class="hideDiv"></div>
       <div class="change_des">
           <span class="change_destitle">我的年龄</span>
            <select v-model="age">
@@ -68,6 +69,9 @@ export default {
   align-items :center;
   justify-content :space-between;
   padding:0.4rem;
+  position :fixed;
+  top:0;
+  left:0;
   >img{
     width:0.32rem;
     height:0.56rem;
@@ -80,6 +84,9 @@ export default {
     font-size:0.427rem;
     color:rgba(0, 0, 0, 1);
   }
+}
+.hideDiv{
+    height:1.23rem;
 }
 .change_des{
     margin:0.27rem 0.4rem;

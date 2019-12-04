@@ -6,6 +6,7 @@
                 <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
                 <span>赛事报名</span>
             </div>
+            <div class="hideDiv"></div>
             <div class="BeforeSubmit">
                   <ul class="sign_btn">
                     <li @click="LatestNotice(item.id)" v-for="(item,index) in signUpData" :key='index'>{{item.name}}</li>
@@ -399,7 +400,10 @@ export default {
     display :flex;
     align-items :center;
     justify-content :center;
-    position :relative;
+    position :fixed;
+    top:0;
+    left:0;
+    background:#fff;
     >img{
         width:0.32rem;
         height:0.56rem;
@@ -412,6 +416,9 @@ export default {
         font-size:0.48rem;
         color:rgba(0, 0, 0, 1);
     }
+}
+.hideDiv{
+  height:1.23rem;
 }
 .sign_btn{
   display:flex;

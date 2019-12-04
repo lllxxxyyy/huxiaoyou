@@ -6,12 +6,13 @@
             <span>个人签名</span>
             <span class="submit" @click="submit">提交</span>
       </div>
+      <div class="hideDiv"></div>
       <div class="Signature_des">
             <div class="Signature_title">
                 给一个选择你的理由
             </div>
             <div class="Signature_text">
-                <textarea rows="3" cols="20" maxlength="500" v-model="SignatureValue">
+                <textarea rows="3" cols="20" maxlength="500" v-model="SignatureValue" placeholder="请输入您的个性签名">
                 </textarea>
             </div>
             <div class="Signature_length">
@@ -73,6 +74,9 @@ export default {
   align-items :center;
   justify-content :space-between;
   padding:0.4rem;
+  position :fixed;
+  top:0;
+  left:0;
   >img{
     width:0.32rem;
     height:0.56rem;
@@ -85,6 +89,9 @@ export default {
     font-size:0.427rem;
     color:rgba(0, 0, 0, 1);
   }
+}
+.hideDiv{
+  height:1.23rem;
 }
 .Signature_des{
     padding:0.27rem 0.4rem;

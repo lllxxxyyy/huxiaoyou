@@ -29,10 +29,11 @@ export default {
               observeParents:true,
               loop:true,
               autoplay: {
-            　　    disableOnInteraction: false,
+                delay: 2000,
+            // 　　    disableOnInteraction: false,
             　　},
-                speed:300,
-                preventLinksPropagation : false,
+                speed:500,
+                // preventLinksPropagation : false,
         },
         swiperSlides: [1, 2, 3, 4, 5]
     };

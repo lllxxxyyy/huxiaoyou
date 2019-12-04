@@ -7,7 +7,7 @@
           </div>
           <div class="minePerson_des">
               <div class="minePerson_Info">
-                  <div class="minePerson_Avatar"><img :src="personData.head_pic" alt="" ></div>
+                  <div class="minePerson_Avatar"  @click="toMineInfo"><img :src="personData.head_pic" alt="" ></div>
                   <div class="minePerson_InfoRight">
                       <div class="minePerson_InfoRiTop">
                         <span class="minePerson_InfoName">{{personData.username}}</span>
@@ -69,7 +69,7 @@
           </div>
           <div class="minePerson_des">
               <div class="minePerson_Info">
-                  <div class="minePerson_Avatar"><img :src="personData.head_pic" alt="" ></div>
+                  <div class="minePerson_Avatar"  @click="toMineInfo"><img :src="personData.head_pic" alt="" ></div>
                   <div class="minePerson_InfoRight">
                       <div class="minePerson_InfoRiTop">
                         <span class="minePerson_InfoName">{{personData.username}}</span>
@@ -136,6 +136,7 @@ export default {
 <style scoped lang='stylus'>
 .Mineperson_wrap{
   margin-bottom:0.32rem;
+  background :#fff;
 }
 .minePerson{
     width:100%;

@@ -6,6 +6,7 @@
         <span>个人资料</span>
         <span class="submit" @click="mineHomepage">我的主页</span>
       </div>
+      <div class="hideDiv"></div>
       <ul class="MineInfo_List">
         <li>
           <span>头像</span>
@@ -361,6 +362,7 @@ export default {
 <style scoped lang="stylus">
 .MineInformation{
   width:100%;
+  height:100%;
   padding-bottom:0.4rem;
   background:#fff;
 }
@@ -371,7 +373,10 @@ export default {
   align-items :center;
   justify-content :center;
   padding:0 0.4rem;
-  position:relative;
+  position:fixed;
+  top:0;
+  left:0;
+  background :#fff;
   >img{
     width:0.32rem;
     height:0.56rem;
@@ -394,6 +399,9 @@ export default {
     right:0.4rem;
     line-height:0.6rem;
   }
+}
+.hideDiv{
+  height:1.23rem;
 }
 .MineInfo_List{
   margin:0.4rem 0.27rem;

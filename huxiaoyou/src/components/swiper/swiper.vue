@@ -1,14 +1,13 @@
 <!-- 选手详情图片轮播 -->
 <template>
-  <div class="swiper">
-      <ul :style="{transform: 'translateX('+transX1+')',width:width+'rem'}">
-          <li v-for="(item,index) in imgData" :key="index">
-              <img :src="item.src" alt="">
-          </li>
-      </ul>
-      <div class="jiantou">
-          <span @click="leftJ"> &#60 </span><span  @click="lrightJ"> &#62 </span>
-      </div>
+  <div class="swiper" @click="returnSwiper">
+      <v-touch class="swiperTouch" v-on:swipeleft="leftJ"  v-on:swiperight="lrightJ"  tag="div">
+            <ul :style="{transform: 'translateX('+transX1+')',width:width+'rem'}">
+                 <li v-for="(item,index) in imgData" :key="index">
+                    <img :src="item.src" alt="">
+                </li>
+            </ul>
+        </v-touch>
   </div>
 </template>
 
@@ -39,6 +38,9 @@ export default {
         this.transX1=-this.index * 10+'rem'
     },
     methods: {
+        returnSwiper(){
+            this.$router.push('/PlayerDetails')
+        },
         leftJ(){
             this.index--
             if(this.index<0){
@@ -55,26 +57,51 @@ export default {
         }
     }
 }
-
 </script>
 <style scoped lang="stylus">
+.PlayerRanking_header{
+    width:100%
+    height:1.23rem;
+    display :flex;
+    align-items :center;
+    justify-content :center;
+    position :relative;
+    background :#fff;
+    >img{
+        width:0.32rem;
+        height:0.56rem;
+        position :absolute;
+        top:50%;
+        margin-top:-0.28rem;
+        left:0.27rem;
+    }
+    >span{
+        font-size:0.48rem;
+        color:rgba(0, 0, 0, 1);
+    }
+}
 .swiper{
     width:100%;
     height :100%;
     overflow :hidden;
-    background :rgba(0,0,0,0.9)
-    >ul{
-        height:100%;
-        display :flex;
-
-        >li{
-            width:10rem;
+    background :rgba(0,0,0,0.9);
+    display:flex;
+    flex-direction :column;
+    >.swiperTouch{
+        flex:1;
+        width:100%;
+        ul{
             height:100%;
-            display :flex;
-            align-items :center;
-            justify-content :center;
-            >img{
-                width:100%;
+            display:flex;
+            >li{
+                width:10rem;
+                height:100%;
+                display :flex;
+                align-items :center;
+                justify-content :center;
+                >img{
+                    width:100%;
+                }
             }
         }
     }

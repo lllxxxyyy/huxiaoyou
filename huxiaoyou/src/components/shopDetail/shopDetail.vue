@@ -7,6 +7,7 @@
                 <span>卡包详情</span>
                 <img @click="shareC" class="img_right" :src="staticImgH+'shopDetailShare.png'" alt="">
             </div>
+            <div class="hideDiv"></div>
         <!-- 小轮播 -->
             <div class="shopDetail_con">
                 <div class="KcodeShopHeader">
@@ -517,6 +518,10 @@ export default {
     justify-content :space-between;
     padding:0 0.53rem;
     z-index:999;
+    position:fixed;
+    top:0;
+    left:0;
+    background:#fff;
     >.img_left{
          width:0.32rem;
         height:0.56rem;
@@ -528,6 +533,9 @@ export default {
         width:0.53rem;
         height:0.53rem;
     }
+}
+.hideDiv{
+  height:1.23rem;
 }
 .KcodeShopHeader>.KcodeShopSwiper{
     width:100%;

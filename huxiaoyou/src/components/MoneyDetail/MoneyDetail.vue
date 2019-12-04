@@ -68,7 +68,7 @@ export default {
         })
       },
     formatDate(value) {
-      let date = new Date(value);
+      let date = new Date(value*1000)
       let y = date.getFullYear();
       let MM = date.getMonth() + 1;
       MM = MM < 10 ? ('0' + MM) : MM;
@@ -82,6 +82,22 @@ export default {
       s = s < 10 ? ('0' + s) : s;
       return y + '-' + MM + '-' + d + ' ' + h + ':' + m + ':' + s;
     },
+    // formatDateTime(inputTime) {
+    //     let date = new Date(inputTime*1000)
+    //     console.log(date)
+    //     let y = date.getFullYear();
+    //     let m = date.getMonth() + 1;
+    //     m = m < 10 ? ('0' + m) : m;
+    //     let d = date.getDate();
+    //     d = d < 10 ? ('0' + d) : d;
+    //     let h = date.getHours();
+    //     h = h < 10 ? ('0' + h) : h;
+    //     let minute = date.getMinutes();
+    //     let second = date.getSeconds();
+    //     minute = minute < 10 ? ('0' + minute) : minute;
+    //     second = second < 10 ? ('0' + second) : second;
+    //     return `${y}-${m}-${d}`     //  ${h}:${minute}+':'+second;
+    // }, 
     //跳赚钱秘籍
     toZhuan(){
           var specialDetailInfo={projectId:54,type:3}

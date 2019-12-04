@@ -6,10 +6,11 @@
                 <span>常驻城市</span>
                 <span class="sureBtn" @click="sure">确定</span>
             </div>
-            <div class="city_input">
+            <div class="hideDiv"></div>
+            <!-- <div class="city_input">
                 <img :src="staticImgH+'citySearchImg.png'" alt="">
-                <input type="text" placeholder="请输入城市名称或字母">
-            </div>
+                <input @input="searchName()" v-model="cityNameOrLetter" type="text" placeholder="请输入城市名称或字母">
+            </div> -->
             <div class="city_wrapper">
                   <div class="nowCity">
                       <span class="nowCity_title">所在城市</span><span class="nowCity_name">{{cityName}}</span>
@@ -52,6 +53,7 @@ export default {
             cityName:'',
             cityData:'',
             scroll:'',
+            cityNameOrLetter:'',
         };
     },
     computed:{
@@ -113,7 +115,9 @@ export default {
     display :flex;
     justify-content :space-between;
     align-items :center;
-    position :relative;
+    position :fixed;
+    top:0;
+    left:0;
     background :#fff;
     padding:0 0.4rem;
     img{
@@ -135,6 +139,9 @@ export default {
         color:rgba(0, 0, 0, 1);
         
     }
+}
+.hideDiv{
+  height:1.23rem;
 }
 .city_input{
     width:8.933rem;
@@ -163,7 +170,7 @@ export default {
     }
 }
 .city_wrapper{
-    height:14.373rem;
+    height:15rem;
     margin:0.27rem;
     border-radius:0.133rem;
     box-shadow :0 0.05rem 0.3rem rgba(241, 241, 241, 1);

@@ -4,6 +4,7 @@
     <div class="PlayerRanking_header">
       <span>赛事商务</span>
     </div>
+    <div class="hideDiv"></div>
     <div class="kabao">
       <span>卡包助力投票</span>
       <ul>
@@ -142,19 +143,14 @@
     display :flex;
     align-items :center;
     justify-content :center;
-    position :relative;
-    >img{
-        width:0.32rem;
-        height:0.56rem;
-        position :absolute;
-        top:50%;
-        margin-top:-0.28rem;
-        left:0.27rem;
-    }
-    >span{
-        font-size:0.48rem;
-        color:rgba(0, 0, 0, 1);
-    }
+    position :fixed;
+    left:0;
+    top:0;
+    z-index:5;
+    background :#fff;
+}
+.hideDiv{
+  height:1.23rem;
 }
 .CoOperative{
 		padding:0 0.4rem;

@@ -4,8 +4,9 @@
        <div class="PlayerRanking_header">
           <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
           <span>添加照片</span>
-		  <div class="PresentPhoto_admin" @click="delFlag=!delFlag">管理</div>
+		      <div class="PresentPhoto_admin" @click="delFlag=!delFlag">管理</div>
       </div>
+      <div class="hideDiv"></div>
       <ul class="videoList">
           <li v-for="(item,index) in photoDataList" :key="index">
             <img :src="item.src" alt="">
@@ -146,8 +147,11 @@
     display :flex;
     align-items :center;
     justify-content :space-between;
-    position :relative;
+    position :fixed;
+    top:0;
+    left:0;
     padding:0 0.4rem;
+    background :#fff;
     >img{
         width:0.32rem;
         height:0.56rem;
@@ -157,6 +161,9 @@
         color:rgba(0, 0, 0, 1);
     }
 	>.PresentPhoto_admin{ font-size:0.42rem;}
+}
+.hideDiv{
+  height:1.23rem;
 }
 .right_wrap{
   width:100%;
@@ -210,29 +217,6 @@
           display:block;
         }
     }
-}
-.login_wrap{
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.9);
-  position:fixed;
-  top:0;
-  left:0;
-  z-index:999;
-  .loginImg{
-    width:1.28rem;
-    height:1.28rem;
-    position:absolute;
-    top:0;
-    bottom:0;
-    left:0;
-    right:0;
-    margin:auto;
-    >img{
-      width:100%;
-      height:100%;
-    }
-  }
 }
 // 提示盒子
 .promptFather{

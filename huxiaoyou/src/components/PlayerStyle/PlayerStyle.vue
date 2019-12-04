@@ -5,6 +5,7 @@
       <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
       <span>选手风采</span>
     </div>
+    <div class="hideDiv"></div>
     <div class="player_style_tuijian"><span>每日精彩推荐</span> <span class="more" @click="toHome">了解更多</span></div>
     <ul class="player_list">
       <li v-for="(item,index) in PlayerStyleData" :key="index" v-if="index<6">
@@ -210,7 +211,11 @@
     display :flex;
     align-items :center;
     justify-content :center;
-    position :relative;
+    position :fixed;
+    top:0;
+    left:0;
+    background:#fff;
+    z-index:5;
     >img{
         width:0.32rem;
         height:0.56rem;
@@ -223,6 +228,9 @@
         font-size:0.48rem;
         color:rgba(0, 0, 0, 1);
     }
+}
+.hideDiv{
+  height:1.23rem;
 }
 .player_list{
     padding:0 0.36rem;

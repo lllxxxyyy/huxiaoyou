@@ -45,8 +45,16 @@ export default {
     return {
         smallBtnsUser:[
             {
+                img:'inviteFriend.png',
+                name:'邀请好友参赛',
+            },
+            {
                 img:'MineUnion.png',
                 name:'我的公会',
+            },
+            {
+                img:'MineUnion.png',
+                name:'我的关注',
             },
             {
                 img:'MineZhuan.png',
@@ -70,6 +78,10 @@ export default {
                 img:'MineYao.png',
                 name:'邀请好友为我投票',
             },
+            {
+                img:'inviteFriend.png',
+                name:'邀请好友参赛',
+            },
              
             {
                 img:'MineInfo.png',
@@ -90,6 +102,10 @@ export default {
             {
                 img:'MineUnion.png',
                 name:'我的公会',
+            },
+            {
+                img:'MineUnion.png',
+                name:'我的关注',
             },
             {
                 img:'MineZhuan.png',
@@ -134,6 +150,9 @@ export default {
            this.playerIds(this.personData.player_id)
             this.$router.push('/PowerPack')
           }else if(index==1){
+              this.depositTypes(2)
+              this.$router.push('/inviteFriend')
+          }else if(index==2){
               this.cityNamePerXs('')   //城市
               this.SignaturePerXs('')  //个签
               this.nickNamePerXs('')   //昵称
@@ -144,43 +163,45 @@ export default {
               this.playerIds(this.personData.player_id)
               this.MineInformationPages('/Mine')
               this.$router.push('/MineInformation')
-          }else if(index==2){
-              this.$router.push('/PresentVideo')
           }else if(index==3){
-              this.$router.push({path:'/LivePlatform',query:{'platform':this.personData.live_platform,'platformId':this.personData.live_id}})
+              this.$router.push('/PresentVideo')
           }else if(index==4){
-              this.$router.push({path:'/ShortVideo',query:{'platform':this.personData.is_video,'platformId':this.personData.is_video_id}})
+              this.$router.push({path:'/LivePlatform',query:{'platform':this.personData.live_platform,'platformId':this.personData.live_id}})
           }else if(index==5){
+              this.$router.push({path:'/ShortVideo',query:{'platform':this.personData.is_video,'platformId':this.personData.is_video_id}})
+          }else if(index==6){
               var obj=qs.stringify({
                   type:1
               })
               this.$http.post('/api/user/me_gong',obj).then((res)=>{
-                  if(res.data.code==200){
-                      if(res.data.data.result==1){
-                          this.AddunionPages('/Mine')
-                          this.$router.push('/AddUnion')
-                      }else{
-                          this.MineGuildPages('/Mine')
-                            this.$router.push('/MineGuild')
-                      }
-                  }
+                    if(res.data.code==200){
+                        if(res.data.data.result==1){
+                                this.AddunionPages('/Mine')
+                                this.$router.push('/AddUnion')
+                        }else{
+                                this.MineGuildPages('/Mine')
+                                this.$router.push('/MineGuild')
+                        }
+                    }
               })
-          }else if(index==6){
-              var specialDetailInfo={projectId:54,type:3}
-            this.specialDetailInfos(specialDetailInfo)
-            this.SpecialDetailsPages('/Mine')
-            this.$router.push('/SpecialDetails')
           }else if(index==7){
+                this.$router.push('/MineAttention')
+          }else if(index==8){
+                var specialDetailInfo={projectId:54,type:3}
+                this.specialDetailInfos(specialDetailInfo)
+                this.SpecialDetailsPages('/Mine')
+                this.$router.push('/SpecialDetails')
+          }else if(index==9){
                 this.myOrderListPages('/Mine')
                 this.orderTypes('')
                 this.orderNums(0)
               this.$router.push('/orderList')
-          }else if(index==8){
+          }else if(index==10){
                this.ReceiptAddressPages('/Mine')
               this.$router.push('/ReceiptAddress')
-          }else if(index==9){
+          }else if(index==11){
             this.$router.push({path: '/CustomerService', query: {player_id: this.personData.player_id}})
-          }else if(index==10){
+          }else if(index==12){
               this.$router.push('/AboutWe')
           }
           
@@ -188,6 +209,9 @@ export default {
     //   普通用户跳转
     UsertriggerBtn(index){
         if(index==0){
+            this.depositTypes(1)
+            this.$router.push('/inviteFriend')
+        }else if(index==1){
              var obj=qs.stringify({
                   type:1
               })
@@ -202,24 +226,26 @@ export default {
                       }
                   }
               })
-        }else if(index==1){
+        }else if(index==2){
+           this.$router.push('/MineAttention')
+        }else if(index==3){
            var specialDetailInfo={projectId:54,type:3}
             this.specialDetailInfos(specialDetailInfo)
             this.SpecialDetailsPages('/Mine')
             this.$router.push('/SpecialDetails')
-        }else if(index==2){
+        }else if(index==4){
                 this.myOrderListPages('/Mine')
                 this.orderTypes('')
                 this.orderNums(0)
                 this.$router.push('/orderList')
-        }else if(index==3){
+        }else if(index==5){
             this.ReceiptAddressPages('/Mine')
             this.$router.push('/ReceiptAddress')
-        }else if(index==4){
+        }else if(index==6){
             this.$router.push('/AboutWe')
         }
     },
-    ...mapMutations(['ReceiptAddressPages','cityNamePerXs','SignaturePerXs','nickNamePerXs','agePerXs','heightPerXs','weightPerXs','constellationPerXs','myOrderListPages','orderTypes','orderNums','playerIds','MineInformationPages','MineGuildPages','AddunionPages','specialDetailInfos','SpecialDetailsPages']),
+    ...mapMutations(['ReceiptAddressPages','cityNamePerXs','SignaturePerXs','nickNamePerXs','agePerXs','heightPerXs','weightPerXs','constellationPerXs','myOrderListPages','orderTypes','orderNums','playerIds','MineInformationPages','MineGuildPages','AddunionPages','specialDetailInfos','SpecialDetailsPages','depositTypes']),
   }
 }
 

@@ -36,6 +36,13 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 Vue.use(VueAwesomeSwiper, /* { default global options } */ )
 
+
+import VueTouch from 'vue-touch'
+Vue.use(VueTouch, { name: 'v-touch' })
+VueTouch.config.swipe = {
+    threshold: 100 //手指左右滑动距离
+}
+
 /* eslint-disable no-new */
 new Vue({
     el: '#app',

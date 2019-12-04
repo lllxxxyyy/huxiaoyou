@@ -6,6 +6,7 @@
       <span>选手排名</span>
       <div class="top_list" @click="toPlayerRankingList()">top榜</div>
     </div>
+    <div class="hideDiv"></div>
     <div class="SpecialTopicBody_content">
       <div class="SpecialTopicBody_center" v-for="(item, index) in topThree" :key="index">
         <div class="SpecialTopicBody_li">
@@ -28,6 +29,8 @@
         </div>
       </div>
     </div>
+    
+    <returnTop/>
     <!-- 提示盒子 -->
     <transition name="fade">
       <div class="promptFather" v-if="showPrompt">
@@ -43,6 +46,7 @@
 import {mapState} from 'vuex'
 import {mapMutations} from 'vuex'
 import qs from 'qs'
+import returnTop from './../ReturnTop/ReturnTop'
 export default {
     name:'PlayerRanking',
     data () {
@@ -53,13 +57,16 @@ export default {
             RankingImgData:[],
             barId:0,
             topThree: [],
+            
 
              // 提示盒子
             promptContent:'', //提示盒子的内容
             showPrompt:false,//提示盒子的吸收和显示
         };
     },
-//   components: {},
+  components: {
+      returnTop
+  },
 //   created(){
 //     this.getTopThree();
 //   },
@@ -83,6 +90,7 @@ export default {
   },
 
   methods: {
+     
     toPlayerRankingList(){
       this.$router.push('/TopList')
     },
@@ -181,7 +189,11 @@ export default {
     display :flex;
     align-items :center;
     justify-content :center;
-    position :relative;
+    position :fixed;
+    top:0;
+    left:0;
+    z-index:5;
+    background :#fff;
     >img{
         width:0.32rem;
         height:0.56rem;
@@ -196,7 +208,9 @@ export default {
     }
 	>.top_list{right:0.27rem; position: absolute; font-size:0.44rem;}
 }
-
+.hideDiv{
+  height:1.23rem;
+}
 .SpecialTopicBody_bar{
     width:100%;
     height:1.147rem;
@@ -322,4 +336,5 @@ export default {
 .top_img img{ width:0.4rem; height:0.4rem; display:block;}
 .ta_vote{ position:absolute; font-size:0.37rem; margin-left:0.46rem; right:0; bottom:1.21rem; width:2rem; height:0.8rem; line-height:0.9rem; color:#fff; font-size:0.4rem; text-align:center; background:url(../../../static/mock/img/toupiao.png) right center no-repeat; background-size:cover;}
 .ta_vote1{ background:url(../../../static/mock/img/toupiao1.png) right center no-repeat; background-size:cover;}
+
 </style>

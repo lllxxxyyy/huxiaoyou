@@ -5,6 +5,7 @@
           <span>公会</span>
 		  <div class="Labour" @click="toaddUnion">加入公会</div>
       </div>
+      <div class="hideDiv"></div>
 	  <div class="LabourUnion_bar">
       <ul>
         <li @click="SpecialBarBtn(index,item.id)" :class="SpecialBarindex==index?'Special_barColor':''"
@@ -181,11 +182,16 @@ export default {
 .PlayerRankingHome{
     width:100%;
     background :#fff;
+    
 }
 .PlayerRanking_header{
     width:100%
     height:1.23rem;
-    position :relative;
+    position :fixed;
+    top:0;
+    left:0;
+    background :#fff;
+    z-index:10;
     >img{
         width:0.32rem;
         height:0.56rem;
@@ -205,14 +211,20 @@ export default {
     }
 	>.Labour{ position:absolute; right:0; font-size:0.48rem; height:1.23rem; padding-right:0.4rem; line-height:1.23rem;}
 }
+.hideDiv{
+  height:2.377rem;
+}
 .LabourUnion_bar{
     width:100%;
     height:1.147rem;
     // border-bottom:0.03rem solid #eeeeee;
     padding:0 0.27rem;
-	margin-top:0.27rem;
 	margin-bottom:0.37rem;
     background :#fff;
+    position :fixed;
+    top:1.23rem;
+    left:0;
+    z-index:10;
     >ul{
         height:1.147rem;
         display :flex;

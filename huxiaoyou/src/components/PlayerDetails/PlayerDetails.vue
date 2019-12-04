@@ -3,7 +3,7 @@
     <div>
         <!-- header -->
             <div class="PlayerRanking_header">
-                <img @click.stop="toReturn" :src="staticImgH+'zuojiantouWhite.png'" alt="">
+                <img @click.stop="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
                 <span @click.stop="toPlayDetailstyle">选手视频</span>
             </div>
         <!-- 小轮播 -->
@@ -20,7 +20,7 @@
         <!-- 选手信息 -->
             <div class="player_des">
                     <div class="player_des_top">
-                        <div class="player_desImg"><img  :src="detailData.head_pic" alt=""></div>
+                        <div class="player_desImg" @click="changeBigImg(0,1)"><img  :src="detailData.head_pic" alt=""></div>
                         <ul>
                             <li><span class="username">{{detailData.username}}</span>
                                 <span @click="toMineInfo" v-if="personData.player_id==playerId">编辑</span>
@@ -47,7 +47,9 @@
                     <li>
                         <span v-if="detailData.sex==2">女</span><span v-if="detailData.sex==1">男</span>
                     </li>
-                    <li><span v-if="detailData.age!==0">{{detailData.age}}岁</span></li>
+                    <li>
+                        <span v-if="detailData.age!==0">{{detailData.age}}岁</span>
+                    </li>
                     <li v-if="detailData.city!=0">{{detailData.city}}</li>
                     <li v-if="detailData.constellation">{{detailData.constellation}}</li>
                     <li v-if="detailData.height">{{detailData.height}}cm</li>
@@ -74,7 +76,7 @@
             </div>
         <!-- 小图 -->
             <ul class="playerImg_list">
-                <li @click="changeBigImg(index)" v-for="(item,index) in detailData.photo_introduction" :key="index">
+                <li @click="changeBigImg(index,2)" v-for="(item,index) in detailData.photo_introduction" :key="index">
                     <img :src="item.src" alt="">
                 </li>
             </ul>
@@ -109,6 +111,13 @@
                     </div>
                 </div>
             </div>
+        <!-- 投免费票输入框 -->
+            <div class="EnterTickets" @click="hideEnterTickets" v-if="EnterTicketsShow">
+                <div class="EnterTickets_input" @click.stop><input type="text" v-model="freeTicNum" oninput = "value=value.replace(/[^\d]/g,'')"  placeholder="请输入您要投的票数"/>  <span @click.stop="allticNumC">全部</span>  </div>
+                <div @click.stop="freeInput" class="EnterTickets_btn">
+                    立即投票
+                </div>
+            </div>
         <!-- 提示盒子 -->
             <transition name="fade">
                 <div class="promptFather" v-if="showPrompt">
@@ -118,12 +127,12 @@
                 </div>
             </transition>
         <!-- 提示分享 -->
-        <div class="shareText_wrap" v-if="shareTextShow"  @click="hideShare">
-            <img :src="staticImgH+'timg.jpg'"/>
-            <div class="shareText">
-                点击右上角，为ta分享助力投票
-            </div> 
-        </div>
+            <div class="shareText_wrap" v-if="shareTextShow"  @click="hideShare">
+                <img :src="staticImgH+'timg.jpg'"/>
+                <div class="shareText">
+                    点击右上角，为ta分享助力投票
+                </div> 
+            </div>
         <!-- 分享成功提示 -->
             <div class="share_success_wrap" v-if="ShowShareSuccess">
                 <div class="share_success">
@@ -161,6 +170,7 @@ export default {
             　　},
             speed:300,
         },
+        EnterTicketsShow:false,
         shareTextShow:false,//提示分享默认消失
         ShowShareSuccess:false,
         voteShow:false,   //投票盒子默认消失
@@ -172,6 +182,7 @@ export default {
         itemSrc:'',//初始化大图地址
         shopVotes:'',//商品票数
         orderTIshiSHow:false,//订单提示默认隐藏
+        freeTicNum:'',
         
         test:'',  //微信分享的认证数据
         dataResult:'',  //微信支付认证信息数据
@@ -219,7 +230,38 @@ export default {
                     this.playerIds(shopUrlId.player_id)
                 }
         }
-    //   选手信息
+    this.playerInfoMation()
+    //   助力商品列表
+        this.$http.post('/api/goods/goods_list').then((res)=>{
+                if(res.data.code==200){
+                    this.shopList=res.data.data.result
+                    if(this.Shopvote){
+                        this.shopVotes=this.Shopvote
+                    }
+                }else{
+                    var self=this
+                    clearInterval(self.timer2);
+                    this.promptContent=res.data.msg
+                    this.showPrompt=true
+                    self.timer2=setTimeout(function(){
+                        self.showPrompt=false
+                        clearInterval(self.timer2);
+                    },2000)
+                return false;
+                }
+        })
+    //   获取免费票数 
+        this.getpaioNUm()
+    //   微信分享
+        
+    //  获取小轮播数据
+        this.$http.post('/api/first/vote_list').then((res)=>{
+                this.smallSwiper=res.data.data
+        })
+  },
+  methods: {
+    playerInfoMation(){
+        //   选手信息
         var obj=qs.stringify({
                 player_id:this.playerId  
             })
@@ -259,44 +301,7 @@ export default {
                     return false;
                 }
         })
-    //   助力商品列表
-        this.$http.post('/api/goods/goods_list',obj,{
-            headers: {
-                    'authorization': this.tokenH
-                }
-            }).then((res)=>{
-                if(res.data.code==200){
-                    this.shopList=res.data.data.result
-                    if(this.Shopvote){
-                        this.shopVotes=this.Shopvote
-                        
-                    }
-                }else{
-                    var self=this
-                    clearInterval(self.timer2);
-                    this.promptContent=res.data.msg
-                    this.showPrompt=true
-                    self.timer2=setTimeout(function(){
-                        self.showPrompt=false
-                        clearInterval(self.timer2);
-                    },2000)
-                return false;
-                }
-        })
-    //   获取免费票数 
-        this.getpaioNUm()
-    //   微信分享
-        
-    //  获取小轮播数据
-        this.$http.post('/api/first/vote_list',obj,{
-                headers: {
-                        'authorization': this.tokenH
-                    }
-            }).then((res)=>{
-                this.smallSwiper=res.data.data
-        })
-  },
-  methods: {
+    },
     //   点击了解更多
     toHome(){
         this.$router.push('/')
@@ -528,10 +533,15 @@ export default {
                 this.showBigPlayImg=false
             },
         //   显示大图
-            changeBigImg(index){
+            changeBigImg(index,type){
                 // this.showBigPlayImg=true
                 // this.itemSrc=item
-                this.$router.push({path:'/swiper',query:{imgData:this.detailData.photo_introduction,index:index}})
+                if(type==1){
+                    this.$router.push({path:'/swiper',query:{imgData:[{src:this.detailData.head_pic}],index:index}})
+                }else if(type==2){
+                    this.$router.push({path:'/swiper',query:{imgData:this.detailData.photo_introduction,index:index}})
+                }
+                
             },
         //   分享给朋友
             toFriend(){
@@ -644,33 +654,54 @@ export default {
             },
         //   免费票（点击投票）
             freeticket(){
-                var obj=qs.stringify({
-                    player_id:this.playerId
+                this.EnterTicketsShow=true
+                
+            },
+        // 免费票输入框
+           freeInput(){
+               if(this.freeTicNum > this.personData.user_votes){
+                   this.alertText('您输入的票数超出了您现有的免费票数')
+                   return
+               }
+               if(this.freeTicNum <=0){
+                   this.alertText('您输入的票数不能小于0')
+                   return
+               }
+               var obj=qs.stringify({
+                    player_id:this.playerId,
+                    votes:this.freeTicNum
                 })
                 this.$http.post('api/user/spend_vote',obj).then((res)=>{
+                    this.EnterTicketsShow=false
+                    this.freeTicNum=''
                     if(res.data.code==200){
-                        var self=this
                         this.getpaioNUm()
-                        clearInterval(self.timer2);
-                                this.promptContent='投票成功'
-                                this.showPrompt=true
-                                self.timer2=setTimeout(function(){
-                                    self.showPrompt=false
-                                    clearInterval(self.timer2);
-                                },2000)
-                            return false;
+                        this.playerInfoMation()
+                        this.alertText('投票成功')
                     }else{
-                        var self=this
-                        clearInterval(self.timer2);
-                                this.promptContent=res.data.msg
-                                this.showPrompt=true
-                                self.timer2=setTimeout(function(){
-                                    self.showPrompt=false
-                                    clearInterval(self.timer2);
-                                },2000)
-                            return false;
+                        this.alertText(res.data.msg)
                     }
                 })
+           },
+        //  全部免费票
+            allticNumC(){
+                this.freeTicNum=this.personData.user_votes
+            },
+        //   弹框提示
+            alertText(text){
+                var self=this
+                clearInterval(self.timer2);
+                        this.promptContent=text
+                        this.showPrompt=true
+                        self.timer2=setTimeout(function(){
+                            self.showPrompt=false
+                            clearInterval(self.timer2);
+                        },2000)
+                    return false;
+            },
+        // 
+            hideEnterTickets(){
+                this.EnterTicketsShow=false
             },
         ...mapMutations(['playDetailVoteDivs','ReceiptAddressPages','ReceiptAddressAddPages','orderTypes','orderNums','playDetailShopDESs','addressIdIsSels','myOrderListPages','playerIds','shopgoodIds','barcolorIndexShops','shopDetatilshows','shopDetailReturns','userIdHs','userIdHInterests','playerNames','MineInformationPages','Shopvotes']),   
       },
@@ -693,12 +724,14 @@ export default {
     left:0;
     padding: 0 0.4rem;
     overflow:hidden;
+    z-index:555;
     >img{
-        width:0.53rem;
+        width:0.32rem;
+        height:0.56rem;
     }
     >span{
         font-size:0.427rem;
-        color:#fff;
+        color:rgba(0, 0, 0, 1);
     }
 }
 .playerBigImg{
@@ -1247,11 +1280,54 @@ export default {
             height:408%;
             border-radius:0.2rem;
             margin-top:-66%;
-            
         }
         .zz{ width:9.2rem; height:4.5rem; position:absolute; top:0;left:0; z-index:887; background: url(/../../static/mock/img/bofangBtn.png) no-repeat center center; background-size:1rem;}
     }
 }
-
+.EnterTickets{
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.9);
+    position:fixed;
+    top:0;
+    left:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    z-index:889;
+    >.EnterTickets_input{
+        width:7rem;
+        height:2rem;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        background:#fff;
+        border-radius:0.16rem;
+        >input{
+            width:5rem;
+            height:0.5rem;
+            line-height:0.5rem;
+            border:0;
+            outline:none;
+        }
+        >span{
+            font-size:0.347rem;
+            color:rgba(255, 0, 0, 1);
+        }
+    }
+    >.EnterTickets_btn{
+        width:5.5rem;
+        height:1rem;
+        border-radius:0.67rem;
+        background:rgba(255, 157, 172, 1);
+        margin-top:0.53rem;
+        color:#fff;
+        text-align:center;
+        line-height:1rem;
+        font-size:0.4rem;
+        color:rgba(255, 255, 255, 1);
+    }
+}
 </style>
 

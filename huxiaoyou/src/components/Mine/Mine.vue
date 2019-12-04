@@ -5,10 +5,8 @@
       <!-- <mineOrderlist/> -->
       <mineBtns v-bind:personData="personData"/>
       <div class="Mine_SingingChina">歌游中国</div>
-      <div class="footer">
-        
-      </div>
-       <Foot class="PublicFoot" />
+      <div class="footer"></div>
+      <Foot class="PublicFoot" />
   </div>
 </template>
 
@@ -53,7 +51,6 @@ export default {
       
     }) 
   },
-
   // methods: {}
 }
 
@@ -76,6 +73,7 @@ export default {
   color:#a5a4a9;
   margin-top:0.347rem;
   letter-spacing :0.04rem;
+  background :#fff;
 }
 .footer{
    width:100%;

@@ -5,6 +5,7 @@
       <img @click="toReturn" :src="staticImgH+'zuojiantou.png'" alt="">
       <span>赛区top榜</span>
     </div>
+    <div class="hideDiv"></div>
     <div class="SpecialTopicBody_bar">
       <ul>
         <li @click="SpecialBarBtn(index,item.id)" :class="SpecialBarindex==index?'Special_barColor':''"
@@ -148,7 +149,11 @@ export default {
     display :flex;
     align-items :center;
     justify-content :center;
-    position :relative;
+    position :fixed;
+    top:0;
+    left:0;
+    background :#fff;
+    z-index:10;
     >img{
         width:0.32rem;
         height:0.56rem;
@@ -162,15 +167,20 @@ export default {
         color:rgba(0, 0, 0, 1);
     }
 }
-
+.hideDiv{
+  height:2.377rem;
+}
 .SpecialTopicBody_bar{
     width:100%;
     height:1.147rem;
     // border-bottom:0.03rem solid #eeeeee;
     padding:0 0.27rem;
-	margin-top:0.08rem;
 	margin-bottom:0.37rem;
     background :#fff;
+    position :fixed;
+    top:1.23rem;
+    left:0;
+    z-index:5;
     >ul{
         height:1.147rem;
         display :flex;

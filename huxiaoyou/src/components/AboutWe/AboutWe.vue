@@ -47,6 +47,11 @@ computed:{
 
 </script>
 <style scoped lang="stylus">
+.customerService{
+    width:100%;
+    height:100%;
+    background :#fff;
+}
 .customer_header{
     height:1.23rem;
     display :flex;
