@@ -22,6 +22,13 @@
 			position: relative;
 			padding: 0 0.4rem;
 			padding-top:0.53rem;
+			position: fixed;
+			top:0;
+			left:0;
+		}
+		.Channel_InfoHide{
+			width:100%;
+			height:6.96rem;
 		}
 		.withdraw{
 			width:2.147rem;
@@ -172,6 +179,9 @@
 			height:0.53rem;
 		}
 		.play_list{
+			width:100%;
+	        height:8.5rem;
+	        overflow-y:scroll;
 			margin-top:1.68rem;
 			padding:0 0.4rem;
 		}
@@ -196,7 +206,6 @@
 		.play_list_Info>img{
 			width:0.827rem;
 			height:0.827rem;
-			background: pink;
 			border-radius: 50%;
 			margin-right:0.16rem;
 		}
@@ -214,6 +223,9 @@
 		}
 
 		.money_detail{
+			width:100%;
+		    height:8.5rem;
+		    overflow-y:scroll;
 			margin-top:1.68rem;
 			padding:0 0.4rem;
 		}
@@ -256,7 +268,7 @@
 			<div class="Channel_first">
 				<div class="Channel_first_left">
 					<img src="" alt="">
-					<span class="Channel_first_leftName">程先生</span><span>个人</span>
+					<span class="Channel_first_leftName"></span><span>个人</span>
 				</div>
 				<div class="Channel_first_right">
 					<span>生成海报 > </span>
@@ -278,7 +290,8 @@
 			
 			<div class="withdraw">提现</div>
 		</div>
-		<ul class="play_list">
+		<div class="Channel_InfoHide"></div>
+			<ul class="play_list">
 				<!-- <li>
 					<div class="play_list_left">
 						<div class="play_list_Info">
@@ -299,7 +312,6 @@
 					</div>
 					<div class="money_detail_right"><span class="money_detail_rightMoney">余额：¥200</span><span>2019-11-19</span></div>
 				</li>  -->
-				
 			</ul>
 		<div class="poster" style="display: none">
 				<div class="poster_cha"><img  src="../img/cha.png" alt=""></div>
@@ -313,15 +325,15 @@
 	 <script src="../js/Gpublic.js"></script>
 	<script>
 	$('.Channel_four_title').on('tap',function(){
-		$('.Channel_four_title').addClass('Channel_four_active').siblings().removeClass('.Channel_four_active')
+		$('.Channel_four_title').addClass('Channel_four_active').siblings().removeClass('Channel_four_active')
 		$('.play_list').show()
 		$('.money_detail').hide()
 	})
 	$('.Channel_four_Monry').on('tap',function(){
-		$('.Channel_four_Monry').addClass('Channel_four_active').siblings().removeClass('.Channel_four_active')
-
+		$('.Channel_four_Monry').addClass('Channel_four_active').siblings().removeClass('Channel_four_active')
 		$('.play_list').hide()
 		$('.money_detail').show()
+
 	})
 	tiList()
 	function tiList(){
@@ -338,17 +350,15 @@
                   if(res.code==200){
                       var data=res.data.result
                       for(var i=0;i<data.length;i++){
-                      			con+=`
-									<li>
-									<div class="money_detail_left">
-										<span>邀请选手所得奖励</span>
-										<span class="money_detail_ren">${data[i].money}</span>
-									</div>
-									<div class="money_detail_right"><span class="money_detail_rightMoney">余额：¥${data[i].yu_money}</span><span>${data[i].ct_time}</span></div>
-								    </li>`    			`
-                      }`
+                      			con+=`<li>
+										<div class="money_detail_left">
+											<span>邀请选手所得奖励</span>
+											<span class="money_detail_ren">${data[i].money}</span>
+										</div>
+										<div class="money_detail_right"><span class="money_detail_rightMoney">余额：¥${data[i].yu_money}</span><span>${data[i].ct_time}</span></div>
+								      </li>`
+                      }
                       $('.money_detail').html(con)
-                  	}
                  }else{
                  	animationChange(res.msg)
                  }
@@ -374,22 +384,22 @@
                       $('.yesParent').text(data.result.yes_parent+'人')
                       $('.parentInvite').text(data.result.avatar)
                       $('.isParent').text(data.result.no_parent * 5)
-                      for(var i=0;i<data.list.length;i++){
+                      for(var i=0;i<data.result.list.length;i++){
                       			var isParent=''
-                      			if(data.list[i].is_parent==0){
+                      			if(data.result.list[i].is_parent==0){
                       				isParent='未认证'
-                      			}else if(data.list[i].is_parent==1){
+                      			}else if(data.result.list[i].is_parent==1){
                       				isParent='已认证'
                       			}
                       			con+=`
 									<li>
 										<div class="play_list_left">
 											<div class="play_list_Info">
-												<img src="" alt=""><span>${data.list[i].username}</span>
+												<img src="" alt=""><span>${data.result.list[i].username}</span>
 											</div>
 											<span class="play_list_ren">${isParent}</span>
 										</div>
-										<div class="play_list_right">${data.list[i].created_at}</div>
+										<div class="play_list_right">${data.result.list[i].created_at}</div>
 									</li>`
                       }
                       $('.play_list').html(con)
