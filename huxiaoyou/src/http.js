@@ -16,7 +16,7 @@ let host = window.location.host; //主机
 let reg = /^localhost+/;
 if (reg.test(host)) {
     //若本地项目调试使用
-    axios.defaults.baseURL = 'http://localhost:8080';
+    axios.defaults.baseURL = 'http://localhost:8082';
 } else {
     //动态请求地址             协议               主机
     axios.defaults.baseURL = protocol + "//" + host + ":5000";

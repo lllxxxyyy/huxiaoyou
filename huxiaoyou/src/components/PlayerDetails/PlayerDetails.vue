@@ -8,7 +8,7 @@
             </div>
         <!-- 小轮播 -->
             <div @click.stop class="small_Carousel" v-if="smallSwiper.length>=1">
-                        <!-- swiper v-if="comment.length>=1" 为了解决swiper不循环轮播 -->
+                <!-- swiper v-if="comment.length>=1" 为了解决swiper不循环轮播 -->
                 <swiper v-if="smallSwiper.length>=1" class="small_swiperWrap" :options="swiperOption">
                     <swiper-slide class="swiperSlide" v-for="(item,index) in smallSwiper" :key="index">感谢「 <img :src="item.head_pic"><span>{{item.nickname}}</span>」为我助力投票{{item.amount}}票</swiper-slide>
                 </swiper>
@@ -113,8 +113,14 @@
             </div>
         <!-- 投免费票输入框 -->
             <div class="EnterTickets" @click="hideEnterTickets" v-if="EnterTicketsShow">
-                <div class="EnterTickets_input" @click.stop><input type="text" v-model="freeTicNum" oninput = "value=value.replace(/[^\d]/g,'')"  placeholder="请输入您要投的票数"/>  <span @click.stop="allticNumC">全部</span>  </div>
-                <div @click.stop="freeInput" class="EnterTickets_btn">
+                <div class="EnterTickets_input" @click.stop>
+                    <div class="EnterTickets_inputA">
+                        <input type="text" v-model="freeTicNum" @input = "inputing"  placeholder="请输入您要投的票数"/>
+                        <span @click.stop="allticNumC">全部</span>  
+                    </div> 
+                    <div class="EnterTickets_inputB">免费票:<span>{{personData.user_votes}}</span>票</div>
+                 </div>
+                 <div class="EnterTickets_btn" @click.stop="freeInput">
                     立即投票
                 </div>
             </div>
@@ -182,7 +188,7 @@ export default {
         itemSrc:'',//初始化大图地址
         shopVotes:'',//商品票数
         orderTIshiSHow:false,//订单提示默认隐藏
-        freeTicNum:'',
+        freeTicNum:1,
         
         test:'',  //微信分享的认证数据
         dataResult:'',  //微信支付认证信息数据
@@ -260,6 +266,14 @@ export default {
         })
   },
   methods: {
+    inputing(){
+        var val=this.freeTicNum.replace(/[^\d]/g,'')
+        this.freeTicNum=val
+        if(this.freeTicNum>this.personData.user_votes){
+                this.freeTicNum=this.personData.user_votes
+        }
+        
+    },
     playerInfoMation(){
         //   选手信息
         var obj=qs.stringify({
@@ -654,16 +668,22 @@ export default {
             },
         //   免费票（点击投票）
             freeticket(){
-                this.EnterTicketsShow=true
+                if(this.personData.user_votes>=1){
+                    this.EnterTicketsShow=true
+                }else{
+                    this.alertText('您的免费票数为0')
+                }
                 
             },
         // 免费票输入框
            freeInput(){
                if(this.freeTicNum > this.personData.user_votes){
+                   this.freeTicNum=1
                    this.alertText('您输入的票数超出了您现有的免费票数')
                    return
                }
                if(this.freeTicNum <=0){
+                   this.freeTicNum=1
                    this.alertText('您输入的票数不能小于0')
                    return
                }
@@ -673,7 +693,7 @@ export default {
                 })
                 this.$http.post('api/user/spend_vote',obj).then((res)=>{
                     this.EnterTicketsShow=false
-                    this.freeTicNum=''
+                    this.freeTicNum=1
                     if(res.data.code==200){
                         this.getpaioNUm()
                         this.playerInfoMation()
@@ -1298,23 +1318,38 @@ export default {
     z-index:889;
     >.EnterTickets_input{
         width:7rem;
-        height:2rem;
+        height:3rem;
         display:flex;
-        align-items:center;
+        flex-direction:column;
+        // align-items:center;
         justify-content:center;
         background:#fff;
         border-radius:0.16rem;
-        >input{
-            width:5rem;
-            height:0.5rem;
-            line-height:0.5rem;
-            border:0;
-            outline:none;
+        padding:0 0.27rem;
+        >.EnterTickets_inputA{
+            display:flex;
+            align-items:center;
+            margin-bottom:0.2rem;
+            >input{
+                width:5rem;
+                height:1rem;
+                line-height:0.5rem;
+                border:0.02rem solid #ccc;
+                outline:none;
+                margin-right:0.2rem;
+            }
+            >span{
+                font-size:0.347rem;
+                color:rgba(255, 0, 0, 1);
+            }
         }
-        >span{
+        >.EnterTickets_inputB{
             font-size:0.347rem;
-            color:rgba(255, 0, 0, 1);
+            >span{
+                color:rgba(255, 0, 0, 1);
+            }
         }
+        
     }
     >.EnterTickets_btn{
         width:5.5rem;

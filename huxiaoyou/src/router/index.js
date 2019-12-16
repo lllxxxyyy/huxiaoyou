@@ -76,12 +76,12 @@ import inviteFriend from '@/components/inviteFriend/inviteFriend' //邀请朋友
 import withdrawPlayer from '@/components/withdrawPlayer/withdrawPlayer'
 
 import MineAttention from '@/components/MineAttention/MineAttention' //我的关注
+
+import huxiaoyouHome from '@/components/huxiaoyouHome/huxiaoyouHome' //
+import EventSpecific from '@/components/EventSpecific/EventSpecific'
 const routes = [{ //首页
         path: '/',
         name: 'Home',
-        meta: {
-            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-        },
         component: Home
     },
     { //客服
@@ -551,6 +551,14 @@ const routes = [{ //首页
             requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
         },
         component: MineAttention
+    },
+    { //扫码关注
+        path: '/EventSpecific',
+        name: 'EventSpecific',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        },
+        component: EventSpecific
     },
 
 

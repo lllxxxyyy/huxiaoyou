@@ -40,6 +40,7 @@ export default {
         promptContent:'', //提示盒子的内容
         showPrompt:false,//提示盒子的吸收和显示
         timer2:'',
+        timer3:'',
     };
   },
 
@@ -58,15 +59,21 @@ export default {
         if(!this.inputMoneyText){
             this.alertText('请输入您要提现的金额')
             return
-        }else if(this.inputMoneyText>this.billMoney){
+        }else if(Number(this.inputMoneyText)>Number(this.billMoney)){
              this.alertText('您填写的金额超出可提现金额')
             return
-        }else if(this.inputMoneyText<=0){
+        }else if(Number(this.inputMoneyText)<=0){
             this.alertText('提现的金额不能为0')
             return
         }
         this.$http.post('/api/user/user_deposit',obj).then((res)=>{
             if(res.data.code==200){
+                this.billMoneys(this.billMoney-this.inputMoneyText)
+                var self=this
+                clearInterval(self.timer3);
+                self.timer3=setTimeout(function(){
+                    self.$router.push('/AccountBalance')
+                },2000)
                  this.alertText('提现成功')
             }else{
                 this.alertText(res.data.msg)
@@ -78,7 +85,7 @@ export default {
         this.inputMoneyText=this.billMoney
     },
     inputHandler() {//金额输入
-    let val = aa.replace(/[^\d.]/g, "")//只允许一个小数点              
+    let val = this.inputMoneyText.replace(/[^\d.]/g, "")//只允许一个小数点              
               .replace(/^\./g, "").replace(/\.{2,}/g, ".")//只能输入小数点后两位
               .replace(".", "$#$")//把第一个'.'替换成'$#$',
               .replace(/\./g, "")//把其余的字符'.'替换为空字符串(删除)
@@ -98,9 +105,10 @@ export default {
                         self.timer2=setTimeout(function(){
                             self.showPrompt=false
                             clearInterval(self.timer2);
-                        },2000)
+                        },1500)
                     return false;
             },
+        ...mapMutations(['billMoneys']),
   }
 }
 

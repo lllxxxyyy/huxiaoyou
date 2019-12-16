@@ -12,7 +12,7 @@
             <div  v-if="mobile==='iPhone'"  @click="playOrPause()" class="play mask flex_center">
                 <img v-show="phoneShow" class="playBtn" :src="staticImgH+'bofang.png'"/>
             </div>
-          <video v-if="mobile==='android'" id="video"
+          <video ref="player" v-if="mobile==='android'" id="video"
                  width="100%"
                  height="100%"
                  x5-video-player-type="h5"
@@ -22,7 +22,7 @@
                  :poster="videoSrc+'?x-oss-process=video/snapshot,t_10000,m_fast'"
                  :src="videoSrc"  >
           </video>
-          <video autoplay="autoplay" v-if="mobile==='iPhone'" id="video"
+          <video ref="player" autoplay="autoplay" v-if="mobile==='iPhone'" id="video"
                  width="100%"
                  height="100%"
                     preload="auto"
@@ -33,7 +33,10 @@
           </video>
         </div>
       </div>
-
+        <div class="scrollWrap" ref="scrollWrapWidth">
+            <div :style="{width:scrollwidth+'px'}" class="scrollDiv">  
+            </div>
+        </div>
     </div>
 </template>
  
@@ -49,6 +52,8 @@ export default {
             show:true,
             phoneShow:false,
             videoSrc:'',
+            scrollWrapWidthNum:'',
+            scrollwidth:0,
         }
     },
      computed: {
@@ -60,10 +65,20 @@ export default {
     },
     mounted(){
          this.video = document.getElementById('video')
-      this.video.currentTime = 0.1;
+        this.video.currentTime = 0.1;
             this.videoSrc=this.$route.query.videoSrc
+            this.scrollWrapWidthNum=this.$refs.scrollWrapWidth.offsetWidth;
+          this.$refs.player.addEventListener('timeupdate', this._currentTime);
     },
 	methods: {
+        _currentTime(){
+            if(this.$refs.player.currentTime==this.$refs.player.duration){
+                this.show=true
+                this.phoneShow=true
+            }
+            var scale=Math.min(1, this.$refs.player.currentTime / this.$refs.player.duration)
+            this.scrollwidth=this.scrollWrapWidthNum * scale
+        },
         //事件
         toReturn(){
             this.$router.push('/')
@@ -77,7 +92,7 @@ export default {
             } else {
                 this.video.pause();
                 this.show = true
-                this.phoneShow=false
+                this.phoneShow=true
             }
 
       },
@@ -246,4 +261,18 @@ export default {
 >img{ width:1.6rem; position:fixed; top:48%; left:42%; z-index:9999;}
 }
 .video-js.vjs-fluid, .video-js.vjs-16-9, .video-js.vjs-4-3{width:100%!important; height:100%!important; background:#444!important; position: fixed!important;}
+.scrollWrap{
+  width:100%;
+  height:0.05rem;
+  background:#251c1c;
+  position:fixed;
+  bottom:1.6rem;
+  left:0;
+  border-radius:0.5rem;
+  >.scrollDiv{
+    height:0.05rem;
+    background:#d67b8b;
+    border-radius:0.5rem;
+  }
+}
 </style>

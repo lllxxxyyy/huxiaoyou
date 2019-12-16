@@ -1,26 +1,28 @@
 <!-- 选手暂时 -->
 <template>
   <div class="PlayerRankingHome">
-    <div class="PlayerRanking_header">
-      <span>赛事商务</span>
-    </div>
-    <div class="hideDiv"></div>
-    <div class="kabao">
-      <span>卡包助力投票</span>
-      <ul>
-        <li v-for="(item, index) in cardList" @click.stop="toshopdetail(item.goods_id)" v-if=" Number(index+1)" :key="index">
-          <img :src="item.original_img" alt=""><span>{{item.goods_name}}</span>
-        </li>
-      </ul>
-    </div>
-    <div class="CoOperative">
-      <span>赛事合作品牌</span>
-      <ul class="brandList">
-        <li class="brand" @click="toSpecialDetails(item.content)" v-for="(item,index) in sponsorImg" :key="index">
-          <img :src="item.logo" alt="">
-        </li>
-      </ul>
-    </div>
+      <div class="PlayerRanking_header">
+          <span>赛事商务</span>
+      </div>
+      <div class="hideDiv">
+
+      </div>
+      <div class="kabao">
+        <span>卡包助力投票</span>
+        <ul>
+          <li v-for="(item, index) in cardList" @click.stop="toshopdetail(item.goods_id)" v-if=" Number(index+1)" :key="index">
+            <img :src="item.original_img" alt=""><span>{{item.goods_name}}</span>
+          </li>
+        </ul>
+      </div>
+      <div class="CoOperative">
+        <span>赛事合作品牌</span>
+        <ul class="brandList">
+          <li class="brand" @click="toSpecialDetails(item.content)" v-for="(item,index) in sponsorImg" :key="index">
+            <img :src="item.logo" alt="">
+          </li>
+        </ul>
+      </div>
     
     <!-- 提示盒子 -->
     <transition name="fade">
@@ -130,7 +132,6 @@
       ...mapMutations(['playerIds', 'PlayerDetailPages', 'addressIdIsSels', 'playDetailVoteDivs','shopDetailReturns','shopgoodIds','unionDetailPages']),
     }
   }
-
 </script>
 <style scoped lang='stylus'>
 .PlayerRankingHome{
@@ -148,6 +149,7 @@
     top:0;
     z-index:5;
     background :#fff;
+    font-size:0.48rem;
 }
 .hideDiv{
   height:1.23rem;

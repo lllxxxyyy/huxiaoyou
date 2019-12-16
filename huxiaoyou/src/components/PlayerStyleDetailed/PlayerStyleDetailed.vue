@@ -7,10 +7,10 @@
         <div>
           <div class="player_top" @click="toPlayerDetail">
               <div class="player_name">
-                <img v-if="video_info" :src="video_info.head_pic" alt="">
-                <span>{{video_info.username}}</span>
-                <span class="guanzhu" v-if="video_info.concern==0" @click.stop="follow()">关注</span>
-                <span class="guanzhu" v-if="video_info.concern==1" @click.stop="follow()">已关注</span>
+                  <img v-if="video_info" :src="video_info.head_pic" alt="">
+                  <span>{{video_info.username}}</span>
+                  <span class="guanzhu" v-if="video_info.concern==0" @click.stop="follow()">关注</span>
+                  <span class="guanzhu" v-if="video_info.concern==1" @click.stop="follow()">已关注</span>
               </div>
             </div>
         </div>
@@ -35,7 +35,7 @@
                   x5-playsinline  x-webkit-airplay 
                         x5-video-player-type="h5"  
                         x5-video-player-fullscreen="false" preload="preload" android :class="{'videoOpcity':videoOpcityY}"-->
-                    <video  id="video"    v-if="mobile==='android'"  width="100%" height="100%"
+                    <video  id="video" ref="player"    v-if="mobile==='android'"  width="100%" height="100%"
                             x5-video-player-type="h5"
                             x5-video-player-fullscreen="true"
                             preload="auto"
@@ -47,7 +47,7 @@
                               <source :src="video_info.video_introduction" type="vedio/ogg">
                               <source :src="video_info.video_introduction" type="vedio/webm"> -->
                     </video>
-                    <video autoplay="autoplay" v-if="mobile==='iPhone'" id="video"
+                    <video ref="player" autoplay="autoplay" v-if="mobile==='iPhone'" id="video"
                           width="100%"
                           height="100%"
                           preload="auto"
@@ -60,6 +60,11 @@
           </div>
       </div>
 
+    </div>
+    <div class="scrollWrap" ref="scrollWrapWidth">
+      <div :style="{width:scrollwidth+'px'}" class="scrollDiv">
+        
+      </div>
     </div>
     <div class="video_caozuo">
       <span @click="toShare" class="video_fenxiang"><img  :src="staticImgH+'fenxiang.png'" alt=""></span>
@@ -110,9 +115,11 @@
         showIPhone:false,
         mobile:"",
         text:"",
+        scrollWrapWidthNum:'',
 
         PlayerStyleData: '',
         currentPlayerData: {},
+        scrollwidth:0,
         // 提示盒子
         promptContent: '', //提示盒子的内容
         showPrompt: false,//提示盒子的吸收和显示,
@@ -126,12 +133,9 @@
           concern: 0,
           is_videos: 0,
           rank: 0,
-
           test:'',//分享视频数据
           output:'',
           video:'',
-         
-
         }
       };
     },
@@ -144,7 +148,6 @@
       this.mobile = navigator.appVersion.indexOf('iPhone') !== -1 ? 'iPhone' :  'android'
     },
     mounted() {
-      console.log(this.playerStyleDetailedPlayer)
       this.firstPanduan()
       this.video = document.getElementById('video')
       this.output = document.getElementById("output");
@@ -160,12 +163,23 @@
           this.video_info = res.data.data
           // this.video.play()
           this.WShare()
+          this.scrollWrapWidthNum=this.$refs.scrollWrapWidth.offsetWidth;
+          this.$refs.player.addEventListener('timeupdate', this._currentTime);
         }
       })
         
     },
 
     methods: {
+      _currentTime(){
+          if(this.$refs.player.currentTime==this.$refs.player.duration){
+            this.show=true
+            this.showIPhone=true
+          }
+          var scale=Math.min(1, this.$refs.player.currentTime / this.$refs.player.duration)
+          this.scrollwidth=this.scrollWrapWidthNum * scale
+      },
+      // 
       // 点击了解更多
           toHome(){
             this.$router.push('/PlayerStyle')
@@ -629,5 +643,20 @@
 }
 .videoOpcity{
   opacity:0;
+}
+
+.scrollWrap{
+  width:100%;
+  height:0.05rem;
+  background:#251c1c;
+  position:fixed;
+  bottom:1.6rem;
+  left:0;
+  border-radius:0.5rem;
+  >.scrollDiv{
+    height:0.05rem;
+    background:#d67b8b;
+    border-radius:0.5rem;
+  }
 }
 </style>
